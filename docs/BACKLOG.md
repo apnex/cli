@@ -1,6 +1,6 @@
 # Programmable CLI backlog
 
-**Status: CLI-010 repository bootstrap is active. Local preparation and prior selected implementation scopes remain closed; three follow-ups are parked.**
+**Status: CLI-010 private GitHub source bootstrap is complete. Local preparation and prior selected implementation scopes remain closed; three follow-ups are parked.**
 The [board](BOARD.md) proposes ordering and dependencies.
 This record retains findings and their disposition when that ordering changes.
 
@@ -27,8 +27,8 @@ The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns
 
 ## Open
 
-The owner selected CLI-010 to bootstrap `apnex/cli` with the prepared source.
-The release record below retains its earlier holds and current selection; broader follow-ups remain parked.
+No selected release or implementation work remains open.
+The release record below retains its earlier holds, selection, and completion; broader follow-ups remain parked.
 
 ---
 
@@ -57,7 +57,7 @@ The corrected headline above follows the durable rows; broader providers remain 
 
 ---
 
-## Release in progress
+## Closed source release
 
 This selected release retains the findings and decisions that preceded its authorization.
 
@@ -67,13 +67,16 @@ This selected release retains the findings and decisions that preceded its autho
 |---|---|
 | Finding | A prepared source tree is not yet an intentionally licensed and published repository. |
 | Initial evidence | The [publication guide](PUBLISHING.md) and [preparation review](publication/REVIEW.md) retain the missing license, destination, and release decisions. |
-| State | Open for the selected repository bootstrap. |
+| State | Closed for the private GitHub source bootstrap. |
 | Initial reason held | The request authorizes preparation; no project license, remote destination, or publication instruction has been supplied. |
 | Reason held after MIT selection | The owner selected MIT; the destination, visibility, release scope, intended disclosure of the retained records, and publication instruction remain open. |
 | Revival trigger | The owner supplies the remaining release decisions and authorizes release of the reviewed source. |
 | Selection | The owner instructed: "Bootstrap the apnex/cli remote"; the [source statement and interpretation](context/cli-010-bootstrap.json) retain the selected scope. |
-| Current work | Commit the prepared source, bootstrap the GitHub remote, push `main`, and verify the remote revision and hosted checks. |
+| Work at selection | Commit the prepared source, bootstrap the GitHub remote, push `main`, and verify the remote revision and hosted checks. |
 | Closure evidence required | Selected contents are committed, the exact release revision passes the documented checks, and the chosen destination is verified to contain those contents. |
+| Completion evidence | The [bootstrap record](publication/BOOTSTRAP.md) identifies the private remote, initial source commit and tree, matching remote clone, 70 normal tests, 87 instrumented tests, 13 documentation tests, literal consumer journey, and passing hosted CI. |
+| State history | Parked after preparation and the MIT selection; opened under the repository-bootstrap instruction; closed after the source push and hosted verification passed. |
+| Remaining boundary | Private source hosting is complete; public visibility, package/binary release, independent behavioral assurance, and broader platform qualification are not claimed. |
 
 #### Decision 0002: use the MIT license
 

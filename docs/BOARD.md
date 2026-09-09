@@ -1,10 +1,11 @@
 # Programmable CLI board
 
-**Status: CLI-010 repository bootstrap is active; CLI-009 local preparation is complete.**
+**Status: CLI-010 GitHub source bootstrap is complete; the repository is private.**
 
 The owner selected [repository bootstrap](context/cli-010-bootstrap.json) for `apnex/cli`.\
 The owner selected [MIT](BACKLOG.md#decision-0002-use-the-mit-license).\
-The current release action is [CLI-010](BACKLOG.md#cli-010): commit the prepared source, create the remote, push `main`, and verify its contents and hosted checks.\
+The [bootstrap record](publication/BOOTSTRAP.md) identifies the source delivered to [apnex/cli](https://github.com/apnex/cli), matching remote contents, and passing local and hosted checks.\
+Three broader follow-ups remain held with their original triggers.\
 The [publication review](publication/REVIEW.md) owns the current sweep, while the [workflow index](README.md) links each implemented capability to its contract and evidence.\
 Comparative agent savings remain unmeasured.\
 The [vision](../VISION.md) states value, the [target architecture](ARCHITECTURE.md) states responsibility boundaries, and the [backlog](BACKLOG.md) retains selection and disposition history.
@@ -44,7 +45,7 @@ Break remaining ties by how directly the move tests the construction loop, then 
 
 No current row establishes a demonstrated principle breach.\
 An explicitly provisional target or diagnostic finding is not a passing implementation claim.\
-Priority follows the selected publication workflow and its remaining decisions.
+The selected repository bootstrap is complete; broader moves retain explicit consumer and release triggers.
 
 ---
 
@@ -53,7 +54,7 @@ Priority follows the selected publication workflow and its remaining decisions.
 | Record | Candidate | Impact | Principle breach | Board state | Evidence and priority reason |
 |---|---|---|---|---|---|
 | [CLI-009](BACKLOG.md#cli-009) | Source publication preparation | 0 | 0 | Done | The [publication review](publication/REVIEW.md) records the four-document set, clean-copy build and tests, literal author/export/run journey, preservation checks, and explicit release holds. |
-| [CLI-010](BACKLOG.md#cli-010) | Publish the reviewed source | 2 | 0 | Active | The owner selected `apnex/cli`; the [bootstrap instruction](context/cli-010-bootstrap.json) authorizes the initial source push and verification. |
+| [CLI-010](BACKLOG.md#cli-010) | Publish the reviewed source | 0 | 0 | Done | The [bootstrap record](publication/BOOTSTRAP.md) verifies the private `apnex/cli` repository, matching source revision, local consumer journey, and passing hosted CI. |
 | [CLI-011](BACKLOG.md#cli-011) | Establish a strict lint gate | 1 | 0 | Held | Strict Clippy exposes an existing error-size design choice and syntax suggestions; the [review](publication/REVIEW.md) retains the failed diagnostic run. |
 | [CLI-012](BACKLOG.md#cli-012) | Derive current architecture from verified criteria | 1 | 0 | Held | The [open register](ARCHITECTURE.md#owed-and-open-register) identifies the projection gap; target generation is not current-state derivation. |
 | [CLI-008](BACKLOG.md#cli-008) | Direct CLI run mode | 0 | 0 | Done | [Measured run results](run/RESULTS.md) satisfy direct one-shot and actual terminal use, generated views, exact arguments, process status, optional persistent state, and existing invocation/recovery semantics. |
@@ -84,7 +85,7 @@ Ready means available for selection, not that implementation is already authoriz
 | M6: Connect a concrete read capability | [CLI-006](BACKLOG.md#cli-006) | Done | CLI-003, CLI-005 | The authored interface reads an explicitly granted file, transfers history without authority, preserves mock and authoring state, and recovers observed publication failures under its [contract](connected/CONTRACT.md). |
 | M7: Expose configured verbs directly | [CLI-008](BACKLOG.md#cli-008) | Done | CLI-003, CLI-005, CLI-006 | Direct one-shot and interactive calls, generated help/tree/completion, meaningful output and exits, and optional persistent state pass the [run acceptance task](run/acceptance/TASK.md). |
 | M8: Prepare source publication | [CLI-009](BACKLOG.md#cli-009) | Done | CLI-008 | The four-document set is coherent, literal consumer and contributor journeys pass, historical evidence remains intact, and publication choices are explicit. |
-| M9: Publish reviewed source | [CLI-010](BACKLOG.md#cli-010) | Active | CLI-009 | The owner-selected contents, license, and destination identify a published revision whose checks pass. |
+| M9: Publish reviewed source | [CLI-010](BACKLOG.md#cli-010) | Done | CLI-009 | The MIT source is pushed to private `apnex/cli`; its exact revision passes local and hosted checks and matches the remote contents. |
 
 Arrows below mean prerequisite to dependent move.\
 M3 and M4 are independent after M2; their ordering expresses the proposed emphasis on the self-authoring loop, not a mandatory product lifecycle.
@@ -131,7 +132,7 @@ The owner settles product direction; implementation choices follow the selected 
 
 | Decision | Proposed starting point | Exactly what it blocks |
 |---|---|---|
-| Broader release scope | The selected bootstrap publishes a source repository; package and binary distributions need a concrete consumer and their own release instruction. | Any package-registry or binary release beyond CLI-010. |
+| Public visibility or broader distribution | The private source bootstrap is complete; the owner may select public visibility or a concrete package/binary distribution. | Public disclosure or distributions beyond the completed CLI-010 scope. |
 | API task for CLI-007 | Select an API description and a useful requested operation, then specify mapping, authentication, and response expectations. | OpenAPI-derived invocation remains held until a concrete task supplies the requirements. |
 
 The first connected read boundary is settled by the [CLI-006 contract](connected/CONTRACT.md) and [measured results](connected/RESULTS.md).\

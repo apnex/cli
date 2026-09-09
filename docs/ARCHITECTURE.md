@@ -252,7 +252,7 @@ The [run results](run/RESULTS.md) and earlier linked results carry the tested lo
 | Comparative agent benefit | An actual engineering workflow | Independent tasks and repeated actor measurements that include construction, repair, and handover effort. |
 | Platform and minimum toolchain support | A consumer outside the tested environment | Build, terminal, filesystem, and recovery checks on that environment. |
 | Generated current architecture | A consumer comparing current and target at this altitude | A declaration linking verified binary exit criteria to this structure, with a mechanical projection and drift gate. The current responsibility renderer is not that projection. |
-| Broader distribution | Source consumers | [Decision 0002](BACKLOG.md#decision-0002-use-the-mit-license) settles MIT licensing and the owner selected the `apnex/cli` source bootstrap; package and binary distribution remain outside that [release scope](PUBLISHING.md). |
+| Broader distribution | Source consumers | The [MIT](BACKLOG.md#decision-0002-use-the-mit-license) source bootstrap is [verified](publication/BOOTSTRAP.md) in private `apnex/cli`; public visibility, package distribution, and binary releases remain outside that [completed scope](PUBLISHING.md). |
 
 Layer-specific questions remain with the generated local responsibility records.\
 The board selects concrete work from these questions; the target architecture does not prescribe its sequence.

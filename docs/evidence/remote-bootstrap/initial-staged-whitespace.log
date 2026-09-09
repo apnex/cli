@@ -1,0 +1,461 @@
+docs/constraints/acceptance/upstream/properties.json:233: trailing whitespace.
++                "data": { 
+docs/constraints/acceptance/upstream/required.json:160: trailing whitespace.
++                "data": { 
+docs/evidence/cli-001/scaffold-tests.log:33: new blank line at EOF.
+docs/evidence/cli-001/toolchain-install.log:13: trailing whitespace.
++To get started you need Cargo's bin directory 
+docs/evidence/cli-002/application-tests.log:234: new blank line at EOF.
+docs/evidence/cli-002/document-tests.log:73: new blank line at EOF.
+docs/evidence/cli-002/first-acceptance.log:125: new blank line at EOF.
+docs/evidence/cli-002/first-full-suite.log:223: new blank line at EOF.
+docs/evidence/cli-002/first-limits.log:15: new blank line at EOF.
+docs/evidence/cli-002/first-recovery.log:43: new blank line at EOF.
+docs/evidence/cli-002/frontend-build-corrected.log:16: new blank line at EOF.
+docs/evidence/cli-002/normal-build-tests.log:62: new blank line at EOF.
+docs/evidence/cli-002/project-records-final.log:10: new blank line at EOF.
+docs/evidence/cli-002/result-bounds-suite.log:223: new blank line at EOF.
+docs/evidence/cli-002/runtime-build.log:10: new blank line at EOF.
+docs/evidence/cli-002/scaffold-tests.log:35: new blank line at EOF.
+docs/evidence/cli-002/terminal-build.log:10: new blank line at EOF.
+docs/evidence/cli-003/application-tests.log:270: new blank line at EOF.
+docs/evidence/cli-003/composition-expanded-tests.log:35: new blank line at EOF.
+docs/evidence/cli-003/composition-final-tests.log:37: new blank line at EOF.
+docs/evidence/cli-003/composition-fourth-tests.log:29: new blank line at EOF.
+docs/evidence/cli-003/composition-normal-final-tests.log:30: new blank line at EOF.
+docs/evidence/cli-003/initial-build-tests.log:62: new blank line at EOF.
+docs/evidence/cli-003/normal-build-tests.log:219: new blank line at EOF.
+docs/evidence/cli-003/project-records-final.log:8: new blank line at EOF.
+docs/evidence/cli-003/scaffold-guards-final.log:17: new blank line at EOF.
+docs/evidence/cli-003/scaffold-tests.log:35: new blank line at EOF.
+docs/evidence/cli-004/all-features-tests.log:294: new blank line at EOF.
+docs/evidence/cli-004/application-tests-final.log:294: new blank line at EOF.
+docs/evidence/cli-004/document-tests.log:7: new blank line at EOF.
+docs/evidence/cli-004/final-constraints-tests.log:22: new blank line at EOF.
+docs/evidence/cli-004/format-write.log:15: new blank line at EOF.
+docs/evidence/cli-004/interactive.typescript:2: trailing whitespace.
++Session "c991a515-5777-43d3-b5d4-145a1a2a1acf" | revision "10" | accepted "10" | draft matches accepted
+docs/evidence/cli-004/interactive.typescript:3: trailing whitespace.
++Task: "# Schema construction and constraint task\n\nFixed before application implementation for CLI-004.\n\nBuild a schema for a service record using only navigation and typed value constructors. Its root is an object with no undeclared properties. It requires `name`, `port`, and `mode`. Name is a nonempty string. Port references a local `$defs/port` integer schema with inclusive bounds 1 and 65535. Mode is `development` or `production`. Optional `tags` is an array of unique strings. A schema with these rules must remain ordinary data until explicitly attached.\n\nSave the schema, then start an independent empty instance session, attach it, discover the missing fields, and author a valid service. Empty drafts and a string-valued port stay editable but cannot commit. Rejection identifies instance and schema paths and changes no saved byte. Fix the port, commit, reopen after removing the source file, inspect the attachment and continue. Changing and detaching constraints must be explicit. Human command and machine request journeys must agree on resulting documents, guidance, and findings.\n\nSeparately construct an OpenAPI 3.1.1 description with title `Service catalog`, version `1.0.0`, and GET `/services` operation `listServices`. Its successful `200` response has description `Service list`, JSON media type, and an array schema whose items reference `#/components/schemas/Service`. That component is an object requiring a string `name` and integer `port`. Preserve the slash-containing path and numeric-looking response key as literal object keys. No raw JSON containers may be typed into either construction trace. No API invocation is part of this task.\n\nValidation must also agree with retained, unmodified positive and negative cases from the JSON Schema project's Draft 2020-12 suite. Pin the downloaded bytes before application implementation. Exercise local references and their siblings, boolean schemas, numeric equivalence, invalid schemas, unsupported dialects and features, external and cyclic references, annotation data containing schema-looking keys, conditional guidance limits, and checkpoint failure recovery. This task fixes behavior; tests do not derive the expected service schema or API document from the produced artifact.\n"
+docs/evidence/cli-004/interactive.typescript:4: trailing whitespace.
++{
+docs/evidence/cli-004/interactive.typescript:5: trailing whitespace.
++  "accepted_revision": "10",
+docs/evidence/cli-004/interactive.typescript:6: trailing whitespace.
++  "active_constraint": {
+docs/evidence/cli-004/interactive.typescript:7: trailing whitespace.
++    "dialect": "https://json-schema.org/draft/2020-12/schema",
+docs/evidence/cli-004/interactive.typescript:8: trailing whitespace.
++    "policy": "local-2020-12-v1",
+docs/evidence/cli-004/interactive.typescript:9: trailing whitespace.
++    "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+docs/evidence/cli-004/interactive.typescript:10: trailing whitespace.
++  },
+docs/evidence/cli-004/interactive.typescript:11: trailing whitespace.
++  "constraint_mode": "json-schema-2020-12",
+docs/evidence/cli-004/interactive.typescript:12: trailing whitespace.
++  "context": [],
+docs/evidence/cli-004/interactive.typescript:13: trailing whitespace.
++  "definition_id": "bootstrap-json-constraints-v1",
+docs/evidence/cli-004/interactive.typescript:14: trailing whitespace.
++  "definition_sha256": "0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7",
+docs/evidence/cli-004/interactive.typescript:15: trailing whitespace.
++  "dirty": false,
+docs/evidence/cli-004/interactive.typescript:16: trailing whitespace.
++  "durability": "durable",
+docs/evidence/cli-004/interactive.typescript:17: trailing whitespace.
++  "node_kind": "object",
+docs/evidence/cli-004/interactive.typescript:18: trailing whitespace.
++  "revision": "10",
+docs/evidence/cli-004/interactive.typescript:19: trailing whitespace.
++  "session_id": "c991a515-5777-43d3-b5d4-145a1a2a1acf"
+docs/evidence/cli-004/interactive.typescript:20: trailing whitespace.
++}
+docs/evidence/cli-004/interactive.typescript:21: trailing whitespace.
++Last receipt: {
+docs/evidence/cli-004/interactive.typescript:22: trailing whitespace.
++  "request": {
+docs/evidence/cli-004/interactive.typescript:23: trailing whitespace.
++    "arguments": {},
+docs/evidence/cli-004/interactive.typescript:24: trailing whitespace.
++    "expected_revision": "9",
+docs/evidence/cli-004/interactive.typescript:25: trailing whitespace.
++    "operation": "commit",
+docs/evidence/cli-004/interactive.typescript:26: trailing whitespace.
++    "request_id": "02fd3918-43c9-4db7-b75c-a4ea269a41c5",
+docs/evidence/cli-004/interactive.typescript:27: trailing whitespace.
++    "session_id": "c991a515-5777-43d3-b5d4-145a1a2a1acf"
+docs/evidence/cli-004/interactive.typescript:28: trailing whitespace.
++  },
+docs/evidence/cli-004/interactive.typescript:29: trailing whitespace.
++  "response": {
+docs/evidence/cli-004/interactive.typescript:30: trailing whitespace.
++    "error": null,
+docs/evidence/cli-004/interactive.typescript:31: trailing whitespace.
++    "event": "response",
+docs/evidence/cli-004/interactive.typescript:32: trailing whitespace.
++    "mutation": "applied",
+docs/evidence/cli-004/interactive.typescript:33: trailing whitespace.
++    "operation": "commit",
+docs/evidence/cli-004/interactive.typescript:34: trailing whitespace.
++    "replayed": false,
+docs/evidence/cli-004/interactive.typescript:35: trailing whitespace.
++    "request_id": "02fd3918-43c9-4db7-b75c-a4ea269a41c5",
+docs/evidence/cli-004/interactive.typescript:36: trailing whitespace.
++    "result": {
+docs/evidence/cli-004/interactive.typescript:37: trailing whitespace.
++      "accepted_revision": "10"
+docs/evidence/cli-004/interactive.typescript:38: trailing whitespace.
++    },
+docs/evidence/cli-004/interactive.typescript:39: trailing whitespace.
++    "session": {
+docs/evidence/cli-004/interactive.typescript:40: trailing whitespace.
++      "accepted_revision": "10",
+docs/evidence/cli-004/interactive.typescript:41: trailing whitespace.
++      "active_constraint": {
+docs/evidence/cli-004/interactive.typescript:42: trailing whitespace.
++        "dialect": "https://json-schema.org/draft/2020-12/schema",
+docs/evidence/cli-004/interactive.typescript:43: trailing whitespace.
++        "policy": "local-2020-12-v1",
+docs/evidence/cli-004/interactive.typescript:44: trailing whitespace.
++        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+docs/evidence/cli-004/interactive.typescript:45: trailing whitespace.
++      },
+docs/evidence/cli-004/interactive.typescript:46: trailing whitespace.
++      "constraint_mode": "json-schema-2020-12",
+docs/evidence/cli-004/interactive.typescript:47: trailing whitespace.
++      "context": [],
+docs/evidence/cli-004/interactive.typescript:48: trailing whitespace.
++      "definition_id": "bootstrap-json-constraints-v1",
+docs/evidence/cli-004/interactive.typescript:49: trailing whitespace.
++      "definition_sha256": "0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7",
+docs/evidence/cli-004/interactive.typescript:50: trailing whitespace.
++      "dirty": false,
+docs/evidence/cli-004/interactive.typescript:51: trailing whitespace.
++      "durability": "durable",
+docs/evidence/cli-004/interactive.typescript:52: trailing whitespace.
++      "node_kind": "object",
+docs/evidence/cli-004/interactive.typescript:53: trailing whitespace.
++      "revision": "10",
+docs/evidence/cli-004/interactive.typescript:54: trailing whitespace.
++      "session_id": "c991a515-5777-43d3-b5d4-145a1a2a1acf"
+docs/evidence/cli-004/interactive.typescript:55: trailing whitespace.
++    },
+docs/evidence/cli-004/interactive.typescript:56: trailing whitespace.
++    "status": "ok"
+docs/evidence/cli-004/interactive.typescript:57: trailing whitespace.
++  }
+docs/evidence/cli-004/interactive.typescript:58: trailing whitespace.
++}
+docs/evidence/cli-004/interactive.typescript:59: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m[37mguide /port[0m78[?25h[J
+docs/evidence/cli-004/interactive.typescript:60: trailing whitespace.
++{
+docs/evidence/cli-004/interactive.typescript:61: trailing whitespace.
++  "guidance": {
+docs/evidence/cli-004/interactive.typescript:62: trailing whitespace.
++    "children": [],
+docs/evidence/cli-004/interactive.typescript:63: trailing whitespace.
++    "complete": true,
+docs/evidence/cli-004/interactive.typescript:64: trailing whitespace.
++    "notes": [],
+docs/evidence/cli-004/interactive.typescript:65: trailing whitespace.
++    "path": {
+docs/evidence/cli-004/interactive.typescript:66: trailing whitespace.
++      "base": "root",
+docs/evidence/cli-004/interactive.typescript:67: trailing whitespace.
++      "segments": [
+docs/evidence/cli-004/interactive.typescript:68: trailing whitespace.
++        {
+docs/evidence/cli-004/interactive.typescript:69: trailing whitespace.
++          "key": "port"
+docs/evidence/cli-004/interactive.typescript:70: trailing whitespace.
++        }
+docs/evidence/cli-004/interactive.typescript:71: trailing whitespace.
++      ]
+docs/evidence/cli-004/interactive.typescript:72: trailing whitespace.
++    },
+docs/evidence/cli-004/interactive.typescript:73: trailing whitespace.
++    "required": [],
+docs/evidence/cli-004/interactive.typescript:74: trailing whitespace.
++    "rules": [
+docs/evidence/cli-004/interactive.typescript:75: trailing whitespace.
++      {
+docs/evidence/cli-004/interactive.typescript:76: trailing whitespace.
++        "schema_json_text": "{\"maximum\":65535,\"minimum\":1,\"type\":\"integer\"}",
+docs/evidence/cli-004/interactive.typescript:77: trailing whitespace.
++        "schema_path": "/$defs/port"
+docs/evidence/cli-004/interactive.typescript:78: trailing whitespace.
++      },
+docs/evidence/cli-004/interactive.typescript:79: trailing whitespace.
++      {
+docs/evidence/cli-004/interactive.typescript:80: trailing whitespace.
++        "schema_json_text": "{\"$ref\":\"#/$defs/port\"}",
+docs/evidence/cli-004/interactive.typescript:81: trailing whitespace.
++        "schema_path": "/properties/port"
+docs/evidence/cli-004/interactive.typescript:82: trailing whitespace.
++      }
+docs/evidence/cli-004/interactive.typescript:83: trailing whitespace.
++    ],
+docs/evidence/cli-004/interactive.typescript:84: trailing whitespace.
++    "schema_paths": [
+docs/evidence/cli-004/interactive.typescript:85: trailing whitespace.
++      "/$defs/port",
+docs/evidence/cli-004/interactive.typescript:86: trailing whitespace.
++      "/properties/port"
+docs/evidence/cli-004/interactive.typescript:87: trailing whitespace.
++    ],
+docs/evidence/cli-004/interactive.typescript:88: trailing whitespace.
++    "terminal_path": "/port",
+docs/evidence/cli-004/interactive.typescript:89: trailing whitespace.
++    "types": [
+docs/evidence/cli-004/interactive.typescript:90: trailing whitespace.
++      "integer"
+docs/evidence/cli-004/interactive.typescript:91: trailing whitespace.
++    ],
+docs/evidence/cli-004/interactive.typescript:92: trailing whitespace.
++    "values": []
+docs/evidence/cli-004/interactive.typescript:93: trailing whitespace.
++  }
+docs/evidence/cli-004/interactive.typescript:94: trailing whitespace.
++}
+docs/evidence/cli-004/interactive.typescript:95: trailing whitespace.
++Mutation: "none" | replayed: false
+docs/evidence/cli-004/interactive.typescript:96: trailing whitespace.
++Session: {"accepted_revision":"10","active_constraint":{"dialect":"https://json-schema.org/draft/2020-12/schema","policy":"local-2020-12-v1","schema_sha256":"c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"},"constraint_mode":"json-schema-2020-12","context":[],"definition_id":"bootstrap-json-constraints-v1","definition_sha256":"0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7","dirty":false,"durability":"durable","node_kind":"object","revision":"10","session_id":"c991a515-5777-43d3-b5d4-145a1a2a1acf"}
+docs/evidence/cli-004/interactive.typescript:97: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m7[37m[0m8[?25h[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m| [35m[0m[0m[37mset /mode string p[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mp[0m[90m[1;7;32mroduction[0m[90m[1;7;32m  [33m"schema literal suggestion; validate the complete draft"[0m[0m8[?25h[J
+docs/evidence/cli-004/interactive.typescript:98: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m7[37m[0m8[?25h[J[37m[0m
+docs/evidence/cli-004/normal-tests-final.log:240: new blank line at EOF.
+docs/evidence/cli-004/normal-tests.log:240: new blank line at EOF.
+docs/evidence/cli-004/project-records-closeout.log:10: new blank line at EOF.
+docs/evidence/cli-004/scaffold-tests-final.log:34: new blank line at EOF.
+docs/evidence/cli-004/scaffold-tests-initial.log:35: new blank line at EOF.
+docs/evidence/cli-004/third-constraints-tests.log:21: new blank line at EOF.
+docs/evidence/cli-005/application-tests.log:321: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/continuation-trials/machine/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/continuation-trials/terminal/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/failed-trials/cli-continuation-4ccbf00b-86f6-46f0-9be0-a35592f88b18/comparison/cli-continuation/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/failed-trials/cli-continuation-4ccbf00b-86f6-46f0-9be0-a35592f88b18/comparison/cli-reconstruction/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/failed-trials/cli-continuation-4ccbf00b-86f6-46f0-9be0-a35592f88b18/comparison/shared/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/failed-trials/cli-continuation-4ccbf00b-86f6-46f0-9be0-a35592f88b18/comparison/targeted-json-editing/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/regression/failed-trials/cli-continuation-4ccbf00b-86f6-46f0-9be0-a35592f88b18/comparison/wrong-external-file/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/authoring-comparison/comparison/shared/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/continuation-trials/machine/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/release-regression/continuation-trials/terminal/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/scaffold-tests.log:34: new blank line at EOF.
+docs/evidence/cli-005/comparison/trial-tests-final.log:18: new blank line at EOF.
+docs/evidence/cli-005/comparison/walkthrough/cli-continuation/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/walkthrough/cli-reconstruction/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/walkthrough/shared/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/comparison/walkthrough/targeted-json-editing/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/focused/continuation-trials/machine/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/focused/continuation-trials/terminal/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/fresh-actor/scaffold-tests.log:36: new blank line at EOF.
+docs/evidence/cli-005/regression/continuation-trials/machine/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/regression/continuation-trials/terminal/package/incompatible-operations.json:373: new blank line at EOF.
+docs/evidence/cli-005/scaffold-tests.log:34: new blank line at EOF.
+docs/evidence/cli-005/trial-tests-first.log:18: new blank line at EOF.
+docs/evidence/component-assembly/application-tests.log:399: new blank line at EOF.
+docs/evidence/component-assembly/focused.log:18: new blank line at EOF.
+docs/evidence/component-assembly/normal-tests.log:323: new blank line at EOF.
+docs/evidence/component-assembly/regression/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/authoring-comparison/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/authoring-comparison/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/continuation-trials/machine/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/regression/continuation-trials/terminal/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/component-assembly/scaffold-tests.log:34: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/authoring-comparison/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/authoring-comparison/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/continuation-trials/machine/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-regression/continuation-trials/terminal/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/connected-json-read/application-tests.log:451: new blank line at EOF.
+docs/evidence/connected-json-read/documentation-tests.log:34: new blank line at EOF.
+docs/evidence/connected-json-read/focused.log:54: new blank line at EOF.
+docs/evidence/connected-json-read/normal-tests.log:370: new blank line at EOF.
+docs/evidence/document-import/application-tests.log:336: new blank line at EOF.
+docs/evidence/document-import/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/focused.log:10: new blank line at EOF.
+docs/evidence/document-import/integration/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/authoring-comparison/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/authoring-comparison/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/continuation-trials/machine/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/integration/continuation-trials/terminal/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/normal-tests.log:263: new blank line at EOF.
+docs/evidence/document-import/regression/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/authoring-comparison/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/authoring-comparison/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/continuation-trials/machine/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/regression/continuation-trials/terminal/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/document-import/scaffold-tests.log:35: new blank line at EOF.
+docs/evidence/document-import/walkthrough.log:11: new blank line at EOF.
+docs/evidence/publication/advisory-parser-failure.log:6: new blank line at EOF.
+docs/evidence/publication/advisory-tool-build-failure.log:712: trailing whitespace.
++  Your compiler (cc) is not supported due to a memcmp related bug reported in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=95189. We strongly recommend against using this compiler. 
+docs/evidence/publication/advisory-tool-build-failure.log:714: trailing whitespace.
++  ERROR: 
+docs/evidence/publication/advisory-tool-build-failure.log:715: trailing whitespace.
++  OUTPUT: 
+docs/evidence/publication/document-tests.log:34: new blank line at EOF.
+docs/evidence/publication/instrumented-tests.log:208: new blank line at EOF.
+docs/evidence/publication/license-mit-document-tests.log:34: new blank line at EOF.
+docs/evidence/publication/normal-tests.log:265: new blank line at EOF.
+docs/evidence/publication/source-document-tests.log:41: new blank line at EOF.
+docs/evidence/run-mode/application-regression/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/authoring-comparison/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/authoring-comparison/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/continuation-trials/machine/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/continuation-trials/terminal/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/application-regression/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/application-regression/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/application-regression/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/application-regression/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/application-regression/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/application-regression/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/application-tests.log:473: new blank line at EOF.
+docs/evidence/run-mode/documentation-tests.log:34: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/authoring-comparison/comparison/cli-continuation/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/authoring-comparison/comparison/cli-reconstruction/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/authoring-comparison/comparison/shared/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/authoring-comparison/comparison/targeted-json-editing/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/authoring-comparison/comparison/targeted-json-import/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/authoring-comparison/comparison/wrong-external-file/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/continuation-trials/machine/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/continuation-trials/terminal/package/incompatible-operations.json:394: new blank line at EOF.
+docs/evidence/run-mode/final-application-regression/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/final-application-regression/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/final-application-regression/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/final-application-regression/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/final-application-regression/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/final-application-regression/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/final-application-tests.log:473: new blank line at EOF.
+docs/evidence/run-mode/final-documentation-tests.log:34: new blank line at EOF.
+docs/evidence/run-mode/final-normal-regression/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/final-normal-regression/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/final-normal-regression/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/final-normal-regression/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/final-normal-regression/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/final-normal-regression/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/final-normal-tests.log:388: new blank line at EOF.
+docs/evidence/run-mode/hint-normal-regression/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/hint-normal-regression/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/hint-normal-regression/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/hint-normal-regression/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/hint-normal-regression/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/hint-normal-regression/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/hint-normal-tests.log:388: new blank line at EOF.
+docs/evidence/run-mode/normal-regression/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/normal-regression/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/normal-regression/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/normal-regression/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/normal-regression/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/normal-regression/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/normal-tests.log:388: new blank line at EOF.
+docs/evidence/run-mode/second-implementation.log:9: new blank line at EOF.
+docs/evidence/run-mode/targeted-final.log:24: new blank line at EOF.
+docs/evidence/run-mode/targeted-final/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/targeted-final/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/targeted-final/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/targeted-final/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/targeted-final/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/targeted-final/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/terminal-third.log:8: trailing whitespace.
++Terminal status signal: 9 (SIGKILL): [6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/terminal-third.log:9: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/terminal-third.log:10: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/terminal-third.log:11: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/terminal-third.log:12: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/terminal-third.log:13: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/run-mode/terminal-third/run-terminal.raw:1: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+docs/evidence/run-mode/terminal-third/run-terminal.raw:2: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+docs/evidence/run-mode/terminal-third/run-terminal.raw:3: trailing whitespace.
++[simulated] services catalog.quota
+docs/evidence/run-mode/terminal-third/run-terminal.raw:4: trailing whitespace.
++{"quota":1e400}
+docs/evidence/run-mode/terminal-third/run-terminal.raw:5: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+docs/evidence/run-mode/terminal-third/run-terminal.raw:6: trailing whitespace.
++[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+docs/evidence/tree-command/after.log:9: new blank line at EOF.
+docs/evidence/tree-command/all-features-tests.log:274: new blank line at EOF.
+docs/evidence/tree-command/normal-tests.log:224: new blank line at EOF.
+docs/evidence/tree-command/scaffold-tests.log:34: new blank line at EOF.
+docs/evidence/verb-tree/all-features-tests.log:274: new blank line at EOF.
+docs/evidence/verb-tree/normal-tests.log:224: new blank line at EOF.
+docs/evidence/verb-tree/project-records-final.log:10: new blank line at EOF.
+docs/evidence/verb-tree/scaffold-tests.log:42: new blank line at EOF.
+docs/evidence/verb-tree/toolchain-install.log:13: trailing whitespace.
++To get started you need Cargo's bin directory 
+docs/evidence/verb-tree/toolchain-install.log:18: trailing whitespace.
++the corresponding env file under 
+docs/evidence/verb-tree/toolchain-install.log:22: trailing whitespace.
++. "/home/apnex/.local/share/programmable-cli/toolchain/cargo/env" # For 
+docs/evidence/verb-tree/tree-after.log:9: new blank line at EOF.

@@ -5,18 +5,18 @@ The [preparation review](publication/REVIEW.md) records local checks and remaini
 This guide is a release checklist for the owner; it does not grant permission to publish or make a claim that a release exists.
 
 The owner has selected [repository bootstrap](context/cli-010-bootstrap.json) for `apnex/cli`.\
-The initial source commit, remote creation, push, and verification are in progress under [CLI-010](BACKLOG.md#cli-010).
+The [bootstrap record](publication/BOOTSTRAP.md) closes [CLI-010](BACKLOG.md#cli-010) with the delivered private source repository, exact source identity, and passing local and hosted checks.
 
 ## Current release boundary
 
 | Surface | Position |
 |---|---|
-| Source checkout | The intended initial distribution; retain source, manifests, lockfiles, declarations, tests, guides, and evidence. |
+| Source checkout | The initial distribution is the private GitHub source repository, including manifests, lockfiles, declarations, tests, guides, and retained evidence. |
 | Project license | [MIT](../LICENSE), selected by the owner in [decision 0002](BACKLOG.md#decision-0002-use-the-mit-license), with matching metadata in both Rust manifests. |
-| Hosting destination | The owner selected `apnex/cli` on GitHub; creation and the initial push are in progress. |
+| Hosting destination | [apnex/cli](https://github.com/apnex/cli), private, with `main` as the default branch. |
 | Package registry | `publish = false` remains in both [application](../Cargo.toml) and [scaffold](../tools/scaffold/Cargo.toml) manifests. No crates.io package is prepared or claimed. |
 | Binary release | Normal-feature builds only; platform coverage is the tested local Linux environment. |
-| Automated checks | A [GitHub Actions workflow](../.github/workflows/check.yml) is prepared with read-only repository permissions; hosted execution is unverified until it runs on the chosen repository. |
+| Automated checks | The [GitHub Actions workflow](../.github/workflows/check.yml) uses read-only repository permissions; the [initial hosted run](https://github.com/apnex/cli/actions/runs/34348866527) passed. Its [run history](https://github.com/apnex/cli/actions/workflows/check.yml) identifies later checked commits. |
 | Compatibility | Definition formats, checkpoint declarations, and Rust interfaces remain experimental; retain exact identities when transferring state. |
 
 ---
@@ -80,12 +80,12 @@ The strict Clippy baseline and any advisory-scan limits remain visible in the [r
 | Decision | Required result |
 |---|---|
 | License | Resolved: the owner selected [MIT](../LICENSE); both Rust manifests declare `license = "MIT"`. |
-| Destination and visibility | Destination resolved: `apnex/cli`; use a private repository unless the owner selects public visibility. |
+| Destination and visibility | Destination resolved: `apnex/cli`; bootstrapped as private using the stated default. Public visibility remains an owner choice. |
 | Historical disclosure | Retain the reviewed source discussion, approval records, paths, and test evidence in the bootstrap; public disclosure follows the owner's visibility selection. |
 | Release scope | Source repository for this bootstrap; package or binary distribution remains a separate selection. |
-| Release authorization | The owner's bootstrap instruction authorizes the initial source push and its verification. |
+| Release authorization | The owner's bootstrap instruction authorized the completed initial source push and verification; it does not authorize a separate package or binary release. |
 
-The [board](BOARD.md) retains these decisions as release work separate from preparation.\
+The [board](BOARD.md) closes the source bootstrap and retains broader distribution choices.\
 A published repository or successful upload does not establish production readiness or universal CLI coverage.
 
 ---

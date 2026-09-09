@@ -1,0 +1,265 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.24
+   Compiling libc v0.2.189
+   Compiling serde_core v1.0.229
+   Compiling autocfg v1.5.1
+   Compiling cfg-if v1.0.4
+   Compiling version_check v0.9.5
+   Compiling serde v1.0.229
+   Compiling memchr v2.8.3
+   Compiling parking_lot_core v0.9.12
+   Compiling getrandom v0.3.4
+   Compiling generic-array v0.14.7
+   Compiling zerocopy v0.8.56
+   Compiling zmij v1.0.23
+   Compiling num-traits v0.2.19
+   Compiling scopeguard v1.2.0
+   Compiling smallvec v1.16.0
+   Compiling lock_api v0.4.14
+   Compiling ahash v0.8.12
+   Compiling regex-syntax v0.8.11
+   Compiling syn v3.0.5
+   Compiling syn v2.0.119
+   Compiling unicode-segmentation v1.13.3
+   Compiling rustix v1.1.4
+   Compiling num-integer v0.1.47
+   Compiling errno v0.3.14
+   Compiling ref-cast v1.0.27
+   Compiling signal-hook v0.3.18
+   Compiling num-bigint v0.4.8
+   Compiling typenum v1.20.1
+   Compiling serde_json v1.0.151
+   Compiling num-iter v0.1.46
+   Compiling parking_lot v0.12.5
+   Compiling convert_case v0.10.0
+   Compiling signal-hook-registry v1.4.8
+   Compiling num-complex v0.4.6
+   Compiling bitflags v2.13.1
+   Compiling num-rational v0.4.2
+   Compiling aho-corasick v1.1.5
+   Compiling linux-raw-sys v0.12.1
+   Compiling log v0.4.34
+   Compiling serde_derive v1.0.229
+   Compiling ref-cast-impl v1.0.27
+   Compiling once_cell v1.21.4
+   Compiling heck v0.5.0
+   Compiling itoa v1.0.18
+   Compiling derive_more-impl v2.1.1
+   Compiling strum_macros v0.28.0
+   Compiling regex-automata v0.4.18
+   Compiling mio v1.2.3
+   Compiling num v0.4.3
+   Compiling allocator-api2 v0.2.21
+   Compiling borrow-or-share v0.2.4
+   Compiling unicode-general-category v1.1.0
+   Compiling litrs v1.0.0
+   Compiling thiserror v2.0.20
+   Compiling foldhash v0.2.0
+   Compiling getrandom v0.4.3
+   Compiling equivalent v1.0.2
+   Compiling bit-vec v0.8.0
+   Compiling hashbrown v0.17.1
+   Compiling bit-set v0.8.0
+   Compiling strum v0.28.0
+   Compiling document-features v0.2.12
+   Compiling signal-hook-mio v0.2.5
+   Compiling fraction v0.17.0
+   Compiling derive_more v2.1.1
+   Compiling thiserror-impl v2.0.20
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling vte v0.14.1
+   Compiling percent-encoding v2.3.2
+   Compiling num-cmp v0.1.0
+   Compiling outref v0.5.2
+   Compiling iana-time-zone v0.1.65
+   Compiling bytecount v0.6.9
+   Compiling micromap v0.3.0
+   Compiling either v1.18.0
+   Compiling vsimd v0.8.0
+   Compiling strip-ansi-escapes v0.2.1
+   Compiling itertools v0.15.0
+   Compiling digest v0.10.7
+   Compiling fluent-uri v0.4.1
+   Compiling chrono v0.4.45
+   Compiling uuid-simd v0.8.0
+   Compiling jsonschema-value v0.55.0
+   Compiling fancy-regex v0.19.1
+   Compiling regex v1.13.1
+   Compiling referencing v0.55.0
+   Compiling crossterm v0.29.0
+   Compiling email_address v0.2.9
+   Compiling fd-lock v4.0.4
+   Compiling jsonschema-regex v0.55.0
+   Compiling unicode-width v0.2.2
+   Compiling unicase v2.9.0
+   Compiling data-encoding v2.11.1
+   Compiling nu-ansi-term v0.50.3
+   Compiling cpufeatures v0.2.17
+   Compiling sha2 v0.10.9
+   Compiling jsonschema v0.55.0
+   Compiling uuid v1.26.0
+   Compiling reedline v0.51.0
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli/target/remote-bootstrap/source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 55.69s
+     Running unittests src/lib.rs (target/debug/deps/programmable_cli-9db73196faacc430)
+
+running 2 tests
+test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/cli-aef130db5b512f9a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_acceptance.rs (target/debug/deps/authoring_acceptance-9d1a3c05f7d1b954)
+
+running 4 tests
+test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+test recorded_operation_cases_execute_against_application ... ok
+test service_catalog_journey_through_both_process_presentations ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.08s
+
+     Running tests/authoring_discovery.rs (target/debug/deps/authoring_discovery-e0ce07965a1d9849)
+
+running 4 tests
+test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/authoring_limits.rs (target/debug/deps/authoring_limits-1f46e96ae037d978)
+
+running 5 tests
+test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+test receipt_overhead_and_response_bound_reject_before_publication ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.51s
+
+     Running tests/authoring_recovery.rs (target/debug/deps/authoring_recovery-20fef44756778c27)
+
+running 9 tests
+test normal_binary_ignores_test_fault_environment ... ok
+test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/cli_assembly.rs (target/debug/deps/cli_assembly-a09db9954779c16e)
+
+running 5 tests
+test assembly_keeps_constraints_and_active_behavior_and_is_order_independent ... ok
+test assembly_replay_and_transfer_validate_embedded_sources_without_reopening_files ... ok
+test component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation ... ok
+test authored_components_assemble_transfer_and_preserve_independent_behavior ... ok
+test component_graph_source_and_collision_failures_preserve_the_checkpoint ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.74s
+
+     Running tests/cli_composition.rs (target/debug/deps/cli_composition-e6dde866057be89b)
+
+running 10 tests
+test composition_registry_checks_actual_handler_and_argument_drift ... ok
+test configured_names_drive_discovery_completion_and_invocation ... ok
+test domain_word_collisions_and_scalar_types_are_configured_without_new_handlers ... ok
+test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+test exact_numbers_survive_arguments_literals_discovery_and_reopen ... ok
+test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+test definition_limits_unknown_fields_and_duplicate_keys_reject_before_activation ... ok
+test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.08s
+
+     Running tests/cli_run.rs (target/debug/deps/cli_run-cb33166410ddd6c7)
+
+running 9 tests
+test exported_cli_runs_direct_verbs_without_authoring_setup ... ok
+test ambiguous_routes_and_invalid_sources_reject_before_checkpoint_creation ... ok
+test generated_help_tree_and_completion_describe_callable_routes ... ok
+test actual_terminal_completes_context_and_executes_direct_commands ... ok
+test direct_connected_read_labels_history_and_requires_fresh_grants ... ok
+test command_authored_export_runs_and_agrees_with_canonical_invocation ... ok
+test persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes ... ok
+test argv_and_interactive_strings_are_literal_and_control_like_domain_words_remain_callable ... ok
+test assembled_nested_routes_use_local_words_and_keep_component_state_separate ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+
+     Running tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-e9aa9fdfa4a3c753)
+
+running 1 test
+test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.90s
+
+     Running tests/connected_json_read.rs (target/debug/deps/connected_json_read-8f949e276f42b071)
+
+running 7 tests
+test connected_grants_pin_parent_directories_and_launcher_rejects_invalid_authority ... ok
+test connected_definition_is_authored_with_typed_commands_and_activates_without_authority ... ok
+test connected_reads_observe_real_files_in_both_presentations_without_mutating_authored_or_mock_state ... ok
+test connected_read_replay_and_handover_preserve_history_without_transferring_grants ... ok
+test connected_read_rejects_bad_targets_documents_signatures_and_stale_requests_atomically ... ok
+test connected_definitions_and_saved_observations_reject_applied_inconsistencies ... ok
+test assembled_connected_components_preserve_requirements_and_share_only_explicit_read_authority ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.30s
+
+     Running tests/continuation_trials.rs (target/debug/deps/continuation_trials-ad652b18996cec6f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/document_import.rs (target/debug/deps/document_import-890e423cffcbc74a)
+
+running 5 tests
+test import_discovery_follows_declaration_and_corrupt_receipts_cannot_reopen ... ok
+test imported_draft_keeps_schema_and_active_cli_until_explicit_commit_and_activation ... ok
+test document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations ... ok
+test authored_cli_spec_exports_imports_and_runs_in_a_separate_resumable_session ... ok
+test rejected_document_import_preserves_checkpoint_and_missing_source_replay_is_idempotent ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+
+     Running tests/schema_constraints.rs (target/debug/deps/schema_constraints-4563d853cbd0e9cb)
+
+running 9 tests
+test failed_attachments_preserve_drafts_and_reference_policy_is_explicit ... ok
+test schema_guidance_and_completion_share_missing_fields_types_literals_and_limits ... ok
+test schema_reference_siblings_conditionals_and_admission_boundaries_are_observable ... ok
+test retained_upstream_positive_and_negative_instances_match_the_selected_dialect ... ok
+test attachment_replay_detachment_discard_and_checkpoint_profiles_remain_distinct ... ok
+test openapi_description_is_constructed_without_serialized_containers_or_activation ... ok
+test constraint_numbers_are_exact_and_resource_failures_do_not_certify_instances ... ok
+test authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen ... ok
+test constraints_compose_with_mock_interfaces_without_sharing_document_roles ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.15s
+
+     Running unittests tools/continuation/main.rs (target/debug/examples/continuation_trial-66e707a0c3ebe1aa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

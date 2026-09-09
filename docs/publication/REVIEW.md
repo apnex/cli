@@ -1,5 +1,8 @@
 # Publication preparation review
 
+**Later delivery:** the [private GitHub bootstrap](BOOTSTRAP.md) records the subsequent source push and hosted verification.\
+The review body below remains the original preparation record.
+
 **Later update:** the owner selected [MIT](../BACKLOG.md#decision-0002-use-the-mit-license) after this review.\
 The review body and its evidence below retain the state measured before that decision; [current release guidance](../PUBLISHING.md) tracks the remaining choices.
 

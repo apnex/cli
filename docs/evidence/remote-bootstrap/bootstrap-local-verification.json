@@ -1,0 +1,57 @@
+{
+  "status": "local-checks-and-initial-push-complete",
+  "source_revision": "c4e060feaf82b2d2af15f9b1edde133ba799018c",
+  "source_tree": "51c14205877e08a2d29e7b49d974398d192939fd",
+  "source_files": 5040,
+  "checks": [
+    {
+      "name": "normal-tests",
+      "exit_code": 0,
+      "passed": 70,
+      "log": "normal-tests.log"
+    },
+    {
+      "name": "instrumented-tests",
+      "exit_code": 0,
+      "passed": 87,
+      "log": "instrumented-tests.log"
+    },
+    {
+      "name": "source-format",
+      "exit_code": 0,
+      "log": "source-format.log"
+    },
+    {
+      "name": "document-tests",
+      "exit_code": 0,
+      "passed": 13,
+      "log": "document-tests.log"
+    },
+    {
+      "name": "scaffold-check",
+      "exit_code": 0,
+      "log": "scaffold-check.log"
+    },
+    {
+      "name": "scaffold-format",
+      "exit_code": 0,
+      "log": "scaffold-format.log"
+    },
+    {
+      "name": "release-build",
+      "exit_code": 0,
+      "log": "release-build.log"
+    }
+  ],
+  "getting_started": {
+    "exit_code": 0,
+    "literal_shell_blocks": 6,
+    "optional_install_and_remove": "not-repeated; see prior publication verification"
+  },
+  "normal_release_binary_sha256": "8a9fc5c1d30fa8a20e18982597b9923eb1d4f28875ae9ad4b63d912f2605d99c",
+  "initial_remote_revision": "c4e060feaf82b2d2af15f9b1edde133ba799018c",
+  "initial_remote_tree": "51c14205877e08a2d29e7b49d974398d192939fd",
+  "initial_source_identity_matches_remote": true,
+  "hosted_ci": "pending",
+  "assurance": "Local executor checks and GitHub source observation; not independent behavioral assurance"
+}

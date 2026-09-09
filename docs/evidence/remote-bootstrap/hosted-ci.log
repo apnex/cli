@@ -1,0 +1,1045 @@
+linux	Set up job	﻿2026-09-09T12:03:45.6453743Z Current runner version: '2.337.0'
+linux	Set up job	2026-09-09T12:03:45.6484147Z ##[group]Runner Image Provisioner
+linux	Set up job	2026-09-09T12:03:45.6485231Z Hosted Compute Agent
+linux	Set up job	2026-09-09T12:03:45.6485993Z Version: 20260828.587
+linux	Set up job	2026-09-09T12:03:45.6486781Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+linux	Set up job	2026-09-09T12:03:45.6487604Z Build Date: 2026-08-28T16:44:25Z
+linux	Set up job	2026-09-09T12:03:45.6488719Z Worker ID: {1896888e-6664-433f-955d-5a88981980f8}
+linux	Set up job	2026-09-09T12:03:45.6489633Z Azure Region: eastus
+linux	Set up job	2026-09-09T12:03:45.6490372Z ##[endgroup]
+linux	Set up job	2026-09-09T12:03:45.6492014Z ##[group]Operating System
+linux	Set up job	2026-09-09T12:03:45.6492772Z Ubuntu
+linux	Set up job	2026-09-09T12:03:45.6493567Z 24.04.4
+linux	Set up job	2026-09-09T12:03:45.6494229Z LTS
+linux	Set up job	2026-09-09T12:03:45.6495334Z ##[endgroup]
+linux	Set up job	2026-09-09T12:03:45.6496031Z ##[group]Runner Image
+linux	Set up job	2026-09-09T12:03:45.6496738Z Image: ubuntu-24.04
+linux	Set up job	2026-09-09T12:03:45.6497514Z Version: 20260831.293.1
+linux	Set up job	2026-09-09T12:03:45.6499059Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260831.293/images/ubuntu/Ubuntu2404-Readme.md
+linux	Set up job	2026-09-09T12:03:45.6501371Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260831.293
+linux	Set up job	2026-09-09T12:03:45.6502622Z ##[endgroup]
+linux	Set up job	2026-09-09T12:03:45.6504032Z ##[group]GITHUB_TOKEN Permissions
+linux	Set up job	2026-09-09T12:03:45.6506395Z Contents: read
+linux	Set up job	2026-09-09T12:03:45.6507159Z Metadata: read
+linux	Set up job	2026-09-09T12:03:45.6507875Z ##[endgroup]
+linux	Set up job	2026-09-09T12:03:45.6510463Z Secret source: Actions
+linux	Set up job	2026-09-09T12:03:45.6512026Z Prepare workflow directory
+linux	Set up job	2026-09-09T12:03:45.7096556Z Prepare all required actions
+linux	Set up job	2026-09-09T12:03:45.7203208Z Getting action download info
+linux	Set up job	2026-09-09T12:03:45.8982919Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+linux	Set up job	2026-09-09T12:03:46.2749312Z Complete job name: linux
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	﻿2026-09-09T12:03:46.3393603Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3394535Z with:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3394927Z   persist-credentials: false
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3395369Z   repository: apnex/cli
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3398637Z   token: ***
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3399022Z   ssh-strict: true
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3399411Z   ssh-user: git
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3399784Z   clean: true
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3400168Z   sparse-checkout-cone-mode: true
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3400623Z   fetch-depth: 1
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3400992Z   fetch-tags: false
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3401374Z   show-progress: true
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3401770Z   lfs: false
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3402140Z   submodules: false
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3402553Z   set-safe-directory: true
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3402999Z   allow-unsafe-pr-checkout: false
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3403597Z env:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3403955Z   CARGO_TERM_COLOR: always
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.3404371Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4320299Z Syncing repository: apnex/cli
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4326173Z ##[group]Getting Git version info
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4327114Z Working directory is '/home/runner/work/cli/cli'
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4393010Z [command]/usr/bin/git version
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4499138Z git version 2.55.0
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4520019Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4532211Z Temporarily overriding HOME='/home/runner/work/_temp/5385b85e-a302-418c-b144-eae74b1d7927' before making global git config changes
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4534738Z Adding repository directory to the temporary git global config as a safe directory
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4536508Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4580284Z Deleting the contents of '/home/runner/work/cli/cli'
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4582443Z ##[group]Determining repository object format
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4584683Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4586603Z ##[group]Initializing the repository
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4588299Z [command]/usr/bin/git init /home/runner/work/cli/cli
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4709548Z hint: Using 'master' as the name for the initial branch. This default branch name
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4711488Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4723283Z hint: to use in all of your new repositories, which will suppress this warning,
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4724579Z hint: call:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4725206Z hint:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4726014Z hint: 	git config --global init.defaultBranch <name>
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4735621Z hint:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4759246Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4840299Z hint: 'development'. The just-created branch can be renamed via this command:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4859158Z hint:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4912428Z hint: 	git branch -m <name>
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4913439Z hint:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4915758Z hint: Disable this message with "git config set advice.defaultBranchName false"
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4919711Z Initialized empty Git repository in /home/runner/work/cli/cli/.git/
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4924823Z [command]/usr/bin/git remote add origin https://github.com/apnex/cli
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4930782Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4932410Z ##[group]Disabling automatic garbage collection
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4933590Z [command]/usr/bin/git config --local gc.auto 0
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4937399Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4939452Z ##[group]Setting up auth
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4941118Z Removing SSH command configuration
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4942438Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.4949338Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5326951Z Removing HTTP extra header
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5328930Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5355704Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5645576Z Removing includeIf entries pointing to credentials config files
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5647888Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5682752Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5900985Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5929896Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/cli/cli/.git.path /home/runner/work/_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5960623Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.5993013Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.6024982Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.6165476Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.6166763Z ##[group]Fetching the repository
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:46.6169024Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c4e060feaf82b2d2af15f9b1edde133ba799018c:refs/remotes/origin/main
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2316248Z From https://github.com/apnex/cli
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2319395Z  * [new ref]         c4e060feaf82b2d2af15f9b1edde133ba799018c -> origin/main
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2324602Z [command]/usr/bin/git branch --list --remote origin/main
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2326270Z   origin/main
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2335576Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2363156Z c4e060feaf82b2d2af15f9b1edde133ba799018c
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2367661Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2370207Z ##[group]Determining the checkout info
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2379032Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2380530Z [command]/usr/bin/git sparse-checkout disable
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2420730Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2453343Z ##[group]Checking out the ref
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.2457845Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4606510Z Switched to a new branch 'main'
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4608921Z branch 'main' set up to track 'origin/main'.
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4614174Z ##[endgroup]
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4827022Z [command]/usr/bin/git log -1 --format=%H
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4830001Z c4e060feaf82b2d2af15f9b1edde133ba799018c
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4845755Z ##[group]Removing auth
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4847076Z Removing SSH command configuration
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4849015Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.4852757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5030694Z Removing HTTP extra header
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5033377Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5067086Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5286414Z Removing includeIf entries pointing to credentials config files
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5290200Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5319464Z includeif.gitdir:/home/runner/work/cli/cli/.git.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5321953Z includeif.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5324208Z includeif.gitdir:/github/workspace/.git.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5326495Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5331421Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/cli/cli/.git.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5356333Z /home/runner/work/_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5379202Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/cli/cli/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-5d7f345d\-75fd\-4cb5\-841a\-805fde728802\.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5403776Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5436614Z /home/runner/work/_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5447632Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-5d7f345d\-75fd\-4cb5\-841a\-805fde728802\.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5486640Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5518438Z /github/runner_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5533307Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-5d7f345d\-75fd\-4cb5\-841a\-805fde728802\.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5574933Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5592049Z /github/runner_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5603707Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-5d7f345d\-75fd\-4cb5\-841a\-805fde728802\.config
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5646112Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5847661Z Removing credentials config '/home/runner/work/_temp/git-credentials-5d7f345d-75fd-4cb5-841a-805fde728802.config'
+linux	Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:03:47.5858575Z ##[endgroup]
+linux	Install terminal test prerequisites	﻿2026-09-09T12:03:47.6069510Z ##[group]Run sudo apt-get update
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.6070515Z [36;1msudo apt-get update[0m
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.6071712Z [36;1msudo apt-get install --yes build-essential util-linux jq ripgrep[0m
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.6110596Z shell: /usr/bin/bash -e {0}
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.6111426Z env:
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.6112081Z   CARGO_TERM_COLOR: always
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.6112858Z ##[endgroup]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.7013899Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.7393240Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.7447036Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.7549956Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.7814360Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.8282680Z Get:6 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.8329815Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9334269Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1260 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9501895Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [292 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9537348Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9559185Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1690 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9713478Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [339 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9736893Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9761642Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1536 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9823466Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [352 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:47.9863265Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.0516579Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5760 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.0984916Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.2192144Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1005 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.2840191Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [213 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.2843843Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.5 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3071406Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1206 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3075444Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [241 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3131914Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.3 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3230982Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1441 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3671477Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [334 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3689649Z Get:27 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1405 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3887365Z Get:28 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [406 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:48.3991043Z Get:29 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [454 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:54.4894133Z Fetched 11.9 MB in 1s (8194 kB/s)
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.1676834Z Reading package lists...
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.3382237Z Reading package lists...
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.5266476Z Building dependency tree...
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.5273815Z Reading state information...
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7112816Z util-linux is already the newest version (2.39.3-9ubuntu6.6).
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7120758Z jq is already the newest version (1.7.1-3ubuntu0.24.04.2).
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7121653Z The following NEW packages will be installed:
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7122495Z   build-essential ripgrep
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7284421Z 0 upgraded, 2 newly installed, 0 to remove and 45 not upgraded.
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7285723Z Need to get 1556 kB of archives.
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7286413Z After this operation, 5352 kB of additional disk space will be used.
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7287295Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7519481Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
+linux	Install terminal test prerequisites	2026-09-09T12:03:55.7643838Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 ripgrep amd64 14.1.0-1 [1551 kB]
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.1599028Z Fetched 1556 kB in 0s (27.0 MB/s)
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.2816151Z Selecting previously unselected package build-essential.
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3010861Z (Reading database ... 
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3011431Z (Reading database ... 5%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3011880Z (Reading database ... 10%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3012351Z (Reading database ... 15%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3017926Z (Reading database ... 20%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3018768Z (Reading database ... 25%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3019638Z (Reading database ... 30%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3020371Z (Reading database ... 35%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3021016Z (Reading database ... 40%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3021660Z (Reading database ... 45%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3022283Z (Reading database ... 50%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.3051177Z (Reading database ... 55%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.5345212Z (Reading database ... 60%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.6469241Z (Reading database ... 65%
+linux	Install terminal test prerequisites	2026-09-09T12:03:56.8509209Z (Reading database ... 70%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.0349480Z (Reading database ... 75%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.3364007Z (Reading database ... 80%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.6209686Z (Reading database ... 85%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.8154412Z (Reading database ... 90%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9419778Z (Reading database ... 95%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9420506Z (Reading database ... 100%
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9421109Z (Reading database ... 201676 files and directories currently installed.)
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9463227Z Preparing to unpack .../build-essential_12.10ubuntu1_amd64.deb ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9614686Z Unpacking build-essential (12.10ubuntu1) ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9839093Z Selecting previously unselected package ripgrep.
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9937934Z Preparing to unpack .../ripgrep_14.1.0-1_amd64.deb ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:57.9947680Z Unpacking ripgrep (14.1.0-1) ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:58.3674997Z Setting up ripgrep (14.1.0-1) ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:58.5680322Z Setting up build-essential (12.10ubuntu1) ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:58.5713209Z Processing triggers for man-db (2.12.0-4build2) ...
+linux	Install terminal test prerequisites	2026-09-09T12:03:58.5735373Z Not building database; man-db/auto-update is not 'true'.
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4506248Z 
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4586516Z Running kernel seems to be up-to-date.
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4608796Z 
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4629088Z No services need to be restarted.
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4638477Z 
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4642481Z No containers need to be restarted.
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4642883Z 
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4643178Z No user sessions are running outdated binaries.
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4643590Z 
+linux	Install terminal test prerequisites	2026-09-09T12:03:59.4643975Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+linux	Resolve the repository toolchain	﻿2026-09-09T12:04:00.5264369Z ##[group]Run rustup show active-toolchain
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5264690Z [36;1mrustup show active-toolchain[0m
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5265106Z [36;1mrustc --version[0m
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5265323Z [36;1mcargo --version[0m
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5298238Z shell: /usr/bin/bash -e {0}
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5298529Z env:
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5298704Z   CARGO_TERM_COLOR: always
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.5298901Z ##[endgroup]
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.6413567Z info: syncing channel updates for 1.98.1-x86_64-unknown-linux-gnu
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.9667342Z info: latest update on 2026-09-03 for version 1.98.1 (48a229cea 2026-09-01)
+linux	Resolve the repository toolchain	2026-09-09T12:04:00.9736373Z info: downloading 4 components
+linux	Resolve the repository toolchain	2026-09-09T12:04:09.5022812Z 1.98.1-x86_64-unknown-linux-gnu (overridden by '/home/runner/work/cli/cli/rust-toolchain.toml')
+linux	Resolve the repository toolchain	2026-09-09T12:04:09.5319655Z rustc 1.98.1 (48a229cea 2026-09-01)
+linux	Resolve the repository toolchain	2026-09-09T12:04:09.5545238Z cargo 1.98.1 (797e8a9bc 2026-08-05)
+linux	Verify normal application	﻿2026-09-09T12:04:09.5577115Z ##[group]Run cargo test --locked --all-targets
+linux	Verify normal application	2026-09-09T12:04:09.5577431Z [36;1mcargo test --locked --all-targets[0m
+linux	Verify normal application	2026-09-09T12:04:09.5609531Z shell: /usr/bin/bash -e {0}
+linux	Verify normal application	2026-09-09T12:04:09.5609743Z env:
+linux	Verify normal application	2026-09-09T12:04:09.5609918Z   CARGO_TERM_COLOR: always
+linux	Verify normal application	2026-09-09T12:04:09.5610114Z ##[endgroup]
+linux	Verify normal application	2026-09-09T12:04:09.6151570Z [1m[92m    Updating[0m crates.io index
+linux	Verify normal application	2026-09-09T12:04:09.8338306Z [1m[92m Downloading[0m crates ...
+linux	Verify normal application	2026-09-09T12:04:09.9842583Z [1m[92m  Downloaded[0m bit-set v0.8.0
+linux	Verify normal application	2026-09-09T12:04:09.9886416Z [1m[92m  Downloaded[0m errno v0.3.14
+linux	Verify normal application	2026-09-09T12:04:09.9908860Z [1m[92m  Downloaded[0m heck v0.5.0
+linux	Verify normal application	2026-09-09T12:04:09.9924470Z [1m[92m  Downloaded[0m unicode-ident v1.0.24
+linux	Verify normal application	2026-09-09T12:04:09.9954420Z [1m[92m  Downloaded[0m ahash v0.8.12
+linux	Verify normal application	2026-09-09T12:04:09.9969772Z [1m[92m  Downloaded[0m allocator-api2 v0.2.21
+linux	Verify normal application	2026-09-09T12:04:09.9997891Z [1m[92m  Downloaded[0m autocfg v1.5.1
+linux	Verify normal application	2026-09-09T12:04:10.0017386Z [1m[92m  Downloaded[0m serde_derive v1.0.229
+linux	Verify normal application	2026-09-09T12:04:10.0068679Z [1m[92m  Downloaded[0m aho-corasick v1.1.5
+linux	Verify normal application	2026-09-09T12:04:10.0109987Z [1m[92m  Downloaded[0m unicase v2.9.0
+linux	Verify normal application	2026-09-09T12:04:10.0124166Z [1m[92m  Downloaded[0m uuid v1.26.0
+linux	Verify normal application	2026-09-09T12:04:10.0152484Z [1m[92m  Downloaded[0m uuid-simd v0.8.0
+linux	Verify normal application	2026-09-09T12:04:10.0165182Z [1m[92m  Downloaded[0m version_check v0.9.5
+linux	Verify normal application	2026-09-09T12:04:10.0177389Z [1m[92m  Downloaded[0m vsimd v0.8.0
+linux	Verify normal application	2026-09-09T12:04:10.0198348Z [1m[92m  Downloaded[0m zmij v1.0.23
+linux	Verify normal application	2026-09-09T12:04:10.0215668Z [1m[92m  Downloaded[0m crossterm v0.29.0
+linux	Verify normal application	2026-09-09T12:04:10.0277932Z [1m[92m  Downloaded[0m jsonschema-value v0.55.0
+linux	Verify normal application	2026-09-09T12:04:10.0296315Z [1m[92m  Downloaded[0m unicode-general-category v1.1.0
+linux	Verify normal application	2026-09-09T12:04:10.0309380Z [1m[92m  Downloaded[0m vte v0.14.1
+linux	Verify normal application	2026-09-09T12:04:10.0329518Z [1m[92m  Downloaded[0m unicode-segmentation v1.13.3
+linux	Verify normal application	2026-09-09T12:04:10.0353422Z [1m[92m  Downloaded[0m cfg-if v1.0.4
+linux	Verify normal application	2026-09-09T12:04:10.0366064Z [1m[92m  Downloaded[0m winnow v1.0.4
+linux	Verify normal application	2026-09-09T12:04:10.0468806Z [1m[92m  Downloaded[0m foldhash v0.2.0
+linux	Verify normal application	2026-09-09T12:04:10.0482095Z [1m[92m  Downloaded[0m unicode-width v0.2.2
+linux	Verify normal application	2026-09-09T12:04:10.0553138Z [1m[92m  Downloaded[0m crypto-common v0.1.7
+linux	Verify normal application	2026-09-09T12:04:10.0565451Z [1m[92m  Downloaded[0m block-buffer v0.10.4
+linux	Verify normal application	2026-09-09T12:04:10.0589230Z [1m[92m  Downloaded[0m derive_more v2.1.1
+linux	Verify normal application	2026-09-09T12:04:10.0701746Z [1m[92m  Downloaded[0m litrs v1.0.0
+linux	Verify normal application	2026-09-09T12:04:10.0726654Z [1m[92m  Downloaded[0m num v0.4.3
+linux	Verify normal application	2026-09-09T12:04:10.0735560Z [1m[92m  Downloaded[0m zerocopy v0.8.56
+linux	Verify normal application	2026-09-09T12:04:10.0912584Z [1m[92m  Downloaded[0m data-encoding v2.11.1
+linux	Verify normal application	2026-09-09T12:04:10.0921504Z [1m[92m  Downloaded[0m log v0.4.34
+linux	Verify normal application	2026-09-09T12:04:10.0942252Z [1m[92m  Downloaded[0m micromap v0.3.0
+linux	Verify normal application	2026-09-09T12:04:10.0984735Z [1m[92m  Downloaded[0m derive_more-impl v2.1.1
+linux	Verify normal application	2026-09-09T12:04:10.1030392Z [1m[92m  Downloaded[0m nu-ansi-term v0.50.3
+linux	Verify normal application	2026-09-09T12:04:10.1051411Z [1m[92m  Downloaded[0m proc-macro-crate v3.5.0
+linux	Verify normal application	2026-09-09T12:04:10.1063142Z [1m[92m  Downloaded[0m bitflags v2.13.1
+linux	Verify normal application	2026-09-09T12:04:10.1100905Z [1m[92m  Downloaded[0m cpufeatures v0.2.17
+linux	Verify normal application	2026-09-09T12:04:10.1113023Z [1m[92m  Downloaded[0m either v1.18.0
+linux	Verify normal application	2026-09-09T12:04:10.1125567Z [1m[92m  Downloaded[0m getrandom v0.4.3
+linux	Verify normal application	2026-09-09T12:04:10.1157515Z [1m[92m  Downloaded[0m jsonschema-macros v0.55.0
+linux	Verify normal application	2026-09-09T12:04:10.1322894Z [1m[92m  Downloaded[0m generic-array v0.14.7
+linux	Verify normal application	2026-09-09T12:04:10.1335387Z [1m[92m  Downloaded[0m num-iter v0.1.46
+linux	Verify normal application	2026-09-09T12:04:10.1344023Z [1m[92m  Downloaded[0m fluent-uri v0.4.1
+linux	Verify normal application	2026-09-09T12:04:10.1368196Z [1m[92m  Downloaded[0m equivalent v1.0.2
+linux	Verify normal application	2026-09-09T12:04:10.1376922Z [1m[92m  Downloaded[0m parking_lot v0.12.5
+linux	Verify normal application	2026-09-09T12:04:10.1397667Z [1m[92m  Downloaded[0m document-features v0.2.12
+linux	Verify normal application	2026-09-09T12:04:10.1408856Z [1m[92m  Downloaded[0m fd-lock v4.0.4
+linux	Verify normal application	2026-09-09T12:04:10.1429978Z [1m[92m  Downloaded[0m getrandom v0.3.4
+linux	Verify normal application	2026-09-09T12:04:10.1459688Z [1m[92m  Downloaded[0m num-cmp v0.1.0
+linux	Verify normal application	2026-09-09T12:04:10.1467238Z [1m[92m  Downloaded[0m num-integer v0.1.47
+linux	Verify normal application	2026-09-09T12:04:10.1480961Z [1m[92m  Downloaded[0m borrow-or-share v0.2.4
+linux	Verify normal application	2026-09-09T12:04:10.1489616Z [1m[92m  Downloaded[0m itertools v0.15.0
+linux	Verify normal application	2026-09-09T12:04:10.1550300Z [1m[92m  Downloaded[0m outref v0.5.2
+linux	Verify normal application	2026-09-09T12:04:10.1561022Z [1m[92m  Downloaded[0m email_address v0.2.9
+linux	Verify normal application	2026-09-09T12:04:10.1575054Z [1m[92m  Downloaded[0m rustc_version v0.4.1
+linux	Verify normal application	2026-09-09T12:04:10.1586219Z [1m[92m  Downloaded[0m itoa v1.0.18
+linux	Verify normal application	2026-09-09T12:04:10.1598927Z [1m[92m  Downloaded[0m percent-encoding v2.3.2
+linux	Verify normal application	2026-09-09T12:04:10.1606617Z [1m[92m  Downloaded[0m ref-cast-impl v1.0.27
+linux	Verify normal application	2026-09-09T12:04:10.1614899Z [1m[92m  Downloaded[0m ref-cast v1.0.27
+linux	Verify normal application	2026-09-09T12:04:10.1640247Z [1m[92m  Downloaded[0m digest v0.10.7
+linux	Verify normal application	2026-09-09T12:04:10.1657137Z [1m[92m  Downloaded[0m num-complex v0.4.6
+linux	Verify normal application	2026-09-09T12:04:10.1673625Z [1m[92m  Downloaded[0m num-rational v0.4.2
+linux	Verify normal application	2026-09-09T12:04:10.1688741Z [1m[92m  Downloaded[0m quote v1.0.47
+linux	Verify normal application	2026-09-09T12:04:10.1720227Z [1m[92m  Downloaded[0m scopeguard v1.2.0
+linux	Verify normal application	2026-09-09T12:04:10.1742578Z [1m[92m  Downloaded[0m signal-hook-mio v0.2.5
+linux	Verify normal application	2026-09-09T12:04:10.1747707Z [1m[92m  Downloaded[0m bytecount v0.6.9
+linux	Verify normal application	2026-09-09T12:04:10.1765196Z [1m[92m  Downloaded[0m jsonschema-regex v0.55.0
+linux	Verify normal application	2026-09-09T12:04:10.1772933Z [1m[92m  Downloaded[0m strip-ansi-escapes v0.2.1
+linux	Verify normal application	2026-09-09T12:04:10.1783333Z [1m[92m  Downloaded[0m strum v0.28.0
+linux	Verify normal application	2026-09-09T12:04:10.1791139Z [1m[92m  Downloaded[0m strum_macros v0.28.0
+linux	Verify normal application	2026-09-09T12:04:10.1812150Z [1m[92m  Downloaded[0m iana-time-zone v0.1.65
+linux	Verify normal application	2026-09-09T12:04:10.1840723Z [1m[92m  Downloaded[0m once_cell v1.21.4
+linux	Verify normal application	2026-09-09T12:04:10.1862169Z [1m[92m  Downloaded[0m bit-vec v0.8.0
+linux	Verify normal application	2026-09-09T12:04:10.1875780Z [1m[92m  Downloaded[0m sha2 v0.10.9
+linux	Verify normal application	2026-09-09T12:04:10.1897224Z [1m[92m  Downloaded[0m signal-hook-registry v1.4.8
+linux	Verify normal application	2026-09-09T12:04:10.1907655Z [1m[92m  Downloaded[0m smallvec v1.16.0
+linux	Verify normal application	2026-09-09T12:04:10.1919324Z [1m[92m  Downloaded[0m thiserror v2.0.20
+linux	Verify normal application	2026-09-09T12:04:10.1977301Z [1m[92m  Downloaded[0m thiserror-impl v2.0.20
+linux	Verify normal application	2026-09-09T12:04:10.1990144Z [1m[92m  Downloaded[0m toml_datetime v1.1.1+spec-1.1.0
+linux	Verify normal application	2026-09-09T12:04:10.2001105Z [1m[92m  Downloaded[0m convert_case v0.10.0
+linux	Verify normal application	2026-09-09T12:04:10.2015742Z [1m[92m  Downloaded[0m lock_api v0.4.14
+linux	Verify normal application	2026-09-09T12:04:10.2026684Z [1m[92m  Downloaded[0m parking_lot_core v0.9.12
+linux	Verify normal application	2026-09-09T12:04:10.2044672Z [1m[92m  Downloaded[0m proc-macro2 v1.0.107
+linux	Verify normal application	2026-09-09T12:04:10.2069496Z [1m[92m  Downloaded[0m serde v1.0.229
+linux	Verify normal application	2026-09-09T12:04:10.2098380Z [1m[92m  Downloaded[0m serde_core v1.0.229
+linux	Verify normal application	2026-09-09T12:04:10.2122219Z [1m[92m  Downloaded[0m toml_parser v1.1.3+spec-1.1.0
+linux	Verify normal application	2026-09-09T12:04:10.2141353Z [1m[92m  Downloaded[0m indexmap v2.14.2
+linux	Verify normal application	2026-09-09T12:04:10.2177583Z [1m[92m  Downloaded[0m num-traits v0.2.19
+linux	Verify normal application	2026-09-09T12:04:10.2200015Z [1m[92m  Downloaded[0m referencing v0.55.0
+linux	Verify normal application	2026-09-09T12:04:10.2237787Z [1m[92m  Downloaded[0m semver v1.0.28
+linux	Verify normal application	2026-09-09T12:04:10.2257413Z [1m[92m  Downloaded[0m signal-hook v0.3.18
+linux	Verify normal application	2026-09-09T12:04:10.2283048Z [1m[92m  Downloaded[0m fraction v0.17.0
+linux	Verify normal application	2026-09-09T12:04:10.2333084Z [1m[92m  Downloaded[0m memchr v2.8.3
+linux	Verify normal application	2026-09-09T12:04:10.2379281Z [1m[92m  Downloaded[0m toml_edit v0.25.13+spec-1.1.0
+linux	Verify normal application	2026-09-09T12:04:10.2412097Z [1m[92m  Downloaded[0m hashbrown v0.17.1
+linux	Verify normal application	2026-09-09T12:04:10.2455799Z [1m[92m  Downloaded[0m num-bigint v0.4.8
+linux	Verify normal application	2026-09-09T12:04:10.2495412Z [1m[92m  Downloaded[0m typenum v1.20.1
+linux	Verify normal application	2026-09-09T12:04:10.2525001Z [1m[92m  Downloaded[0m jsonschema-macros-core v0.55.0
+linux	Verify normal application	2026-09-09T12:04:10.2671856Z [1m[92m  Downloaded[0m mio v1.2.3
+linux	Verify normal application	2026-09-09T12:04:10.2722811Z [1m[92m  Downloaded[0m regex v1.13.1
+linux	Verify normal application	2026-09-09T12:04:10.2767359Z [1m[92m  Downloaded[0m serde_json v1.0.151
+linux	Verify normal application	2026-09-09T12:04:10.2829133Z [1m[92m  Downloaded[0m chrono v0.4.45
+linux	Verify normal application	2026-09-09T12:04:10.2883899Z [1m[92m  Downloaded[0m fancy-regex v0.19.1
+linux	Verify normal application	2026-09-09T12:04:10.2937635Z [1m[92m  Downloaded[0m syn v3.0.5
+linux	Verify normal application	2026-09-09T12:04:10.3024657Z [1m[92m  Downloaded[0m reedline v0.51.0
+linux	Verify normal application	2026-09-09T12:04:10.3114146Z [1m[92m  Downloaded[0m syn v2.0.119
+linux	Verify normal application	2026-09-09T12:04:10.3202751Z [1m[92m  Downloaded[0m regex-syntax v0.8.11
+linux	Verify normal application	2026-09-09T12:04:10.3258914Z [1m[92m  Downloaded[0m rustix v1.1.4
+linux	Verify normal application	2026-09-09T12:04:10.3488567Z [1m[92m  Downloaded[0m regex-automata v0.4.18
+linux	Verify normal application	2026-09-09T12:04:10.3605847Z [1m[92m  Downloaded[0m jsonschema v0.55.0
+linux	Verify normal application	2026-09-09T12:04:10.3773559Z [1m[92m  Downloaded[0m libc v0.2.189
+linux	Verify normal application	2026-09-09T12:04:10.4250108Z [1m[92m  Downloaded[0m linux-raw-sys v0.12.1
+linux	Verify normal application	2026-09-09T12:04:11.7439322Z [1m[92m   Compiling[0m proc-macro2 v1.0.107
+linux	Verify normal application	2026-09-09T12:04:11.7452270Z [1m[92m   Compiling[0m quote v1.0.47
+linux	Verify normal application	2026-09-09T12:04:12.1156239Z [1m[92m   Compiling[0m unicode-ident v1.0.24
+linux	Verify normal application	2026-09-09T12:04:12.1730377Z [1m[92m   Compiling[0m libc v0.2.189
+linux	Verify normal application	2026-09-09T12:04:12.3650826Z [1m[92m   Compiling[0m serde_core v1.0.229
+linux	Verify normal application	2026-09-09T12:04:13.3330122Z [1m[92m   Compiling[0m syn v3.0.5
+linux	Verify normal application	2026-09-09T12:04:14.3239720Z [1m[92m   Compiling[0m autocfg v1.5.1
+linux	Verify normal application	2026-09-09T12:04:14.5579429Z [1m[92m   Compiling[0m num-traits v0.2.19
+linux	Verify normal application	2026-09-09T12:04:14.6308489Z [1m[92m   Compiling[0m version_check v0.9.5
+linux	Verify normal application	2026-09-09T12:04:14.7999653Z [1m[92m   Compiling[0m cfg-if v1.0.4
+linux	Verify normal application	2026-09-09T12:04:15.0669315Z [1m[92m   Compiling[0m memchr v2.8.3
+linux	Verify normal application	2026-09-09T12:04:15.3804602Z [1m[92m   Compiling[0m serde v1.0.229
+linux	Verify normal application	2026-09-09T12:04:15.5144680Z [1m[92m   Compiling[0m serde_derive v1.0.229
+linux	Verify normal application	2026-09-09T12:04:15.5959460Z [1m[92m   Compiling[0m num-integer v0.1.47
+linux	Verify normal application	2026-09-09T12:04:15.8139654Z [1m[92m   Compiling[0m syn v2.0.119
+linux	Verify normal application	2026-09-09T12:04:17.5289767Z [1m[92m   Compiling[0m parking_lot_core v0.9.12
+linux	Verify normal application	2026-09-09T12:04:17.6292438Z [1m[92m   Compiling[0m generic-array v0.14.7
+linux	Verify normal application	2026-09-09T12:04:17.6899795Z [1m[92m   Compiling[0m zmij v1.0.23
+linux	Verify normal application	2026-09-09T12:04:17.7990781Z [1m[92m   Compiling[0m smallvec v1.16.0
+linux	Verify normal application	2026-09-09T12:04:17.9127342Z [1m[92m   Compiling[0m scopeguard v1.2.0
+linux	Verify normal application	2026-09-09T12:04:17.9449677Z [1m[92m   Compiling[0m zerocopy v0.8.56
+linux	Verify normal application	2026-09-09T12:04:18.0750067Z [1m[92m   Compiling[0m getrandom v0.3.4
+linux	Verify normal application	2026-09-09T12:04:18.1289990Z [1m[92m   Compiling[0m lock_api v0.4.14
+linux	Verify normal application	2026-09-09T12:04:18.2867706Z [1m[92m   Compiling[0m num-bigint v0.4.8
+linux	Verify normal application	2026-09-09T12:04:18.3622518Z [1m[92m   Compiling[0m ahash v0.8.12
+linux	Verify normal application	2026-09-09T12:04:18.4459672Z [1m[92m   Compiling[0m errno v0.3.14
+linux	Verify normal application	2026-09-09T12:04:18.5070752Z [1m[92m   Compiling[0m signal-hook v0.3.18
+linux	Verify normal application	2026-09-09T12:04:18.5920093Z [1m[92m   Compiling[0m regex-syntax v0.8.11
+linux	Verify normal application	2026-09-09T12:04:19.4759338Z [1m[92m   Compiling[0m unicode-segmentation v1.13.3
+linux	Verify normal application	2026-09-09T12:04:19.7529812Z [1m[92m   Compiling[0m typenum v1.20.1
+linux	Verify normal application	2026-09-09T12:04:20.3061274Z [1m[92m   Compiling[0m rustix v1.1.4
+linux	Verify normal application	2026-09-09T12:04:20.4670420Z [1m[92m   Compiling[0m ref-cast v1.0.27
+linux	Verify normal application	2026-09-09T12:04:20.6010256Z [1m[92m   Compiling[0m serde_json v1.0.151
+linux	Verify normal application	2026-09-09T12:04:20.9021983Z [1m[92m   Compiling[0m convert_case v0.10.0
+linux	Verify normal application	2026-09-09T12:04:21.0639355Z [1m[92m   Compiling[0m num-rational v0.4.2
+linux	Verify normal application	2026-09-09T12:04:21.1340249Z [1m[92m   Compiling[0m signal-hook-registry v1.4.8
+linux	Verify normal application	2026-09-09T12:04:21.3203737Z [1m[92m   Compiling[0m parking_lot v0.12.5
+linux	Verify normal application	2026-09-09T12:04:21.7909179Z [1m[92m   Compiling[0m num-iter v0.1.46
+linux	Verify normal application	2026-09-09T12:04:21.8139554Z [1m[92m   Compiling[0m aho-corasick v1.1.5
+linux	Verify normal application	2026-09-09T12:04:23.6690170Z [1m[92m   Compiling[0m num-complex v0.4.6
+linux	Verify normal application	2026-09-09T12:04:23.9659858Z [1m[92m   Compiling[0m ref-cast-impl v1.0.27
+linux	Verify normal application	2026-09-09T12:04:24.2039443Z [1m[92m   Compiling[0m bitflags v2.13.1
+linux	Verify normal application	2026-09-09T12:04:24.3239732Z [1m[92m   Compiling[0m heck v0.5.0
+linux	Verify normal application	2026-09-09T12:04:24.4249865Z [1m[92m   Compiling[0m log v0.4.34
+linux	Verify normal application	2026-09-09T12:04:24.4959330Z [1m[92m   Compiling[0m itoa v1.0.18
+linux	Verify normal application	2026-09-09T12:04:24.5129956Z [1m[92m   Compiling[0m once_cell v1.21.4
+linux	Verify normal application	2026-09-09T12:04:24.5829374Z [1m[92m   Compiling[0m linux-raw-sys v0.12.1
+linux	Verify normal application	2026-09-09T12:04:26.0029525Z [1m[92m   Compiling[0m mio v1.2.3
+linux	Verify normal application	2026-09-09T12:04:26.3529843Z [1m[92m   Compiling[0m strum_macros v0.28.0
+linux	Verify normal application	2026-09-09T12:04:26.7739467Z [1m[92m   Compiling[0m num v0.4.3
+linux	Verify normal application	2026-09-09T12:04:26.7979069Z [1m[92m   Compiling[0m regex-automata v0.4.18
+linux	Verify normal application	2026-09-09T12:04:27.9349277Z [1m[92m   Compiling[0m derive_more-impl v2.1.1
+linux	Verify normal application	2026-09-09T12:04:28.3449374Z [1m[92m   Compiling[0m bit-vec v0.8.0
+linux	Verify normal application	2026-09-09T12:04:28.4709977Z [1m[92m   Compiling[0m equivalent v1.0.2
+linux	Verify normal application	2026-09-09T12:04:28.4970316Z [1m[92m   Compiling[0m getrandom v0.4.3
+linux	Verify normal application	2026-09-09T12:04:28.5949843Z [1m[92m   Compiling[0m thiserror v2.0.20
+linux	Verify normal application	2026-09-09T12:04:28.7419795Z [1m[92m   Compiling[0m foldhash v0.2.0
+linux	Verify normal application	2026-09-09T12:04:28.8179833Z [1m[92m   Compiling[0m litrs v1.0.0
+linux	Verify normal application	2026-09-09T12:04:29.1290047Z [1m[92m   Compiling[0m unicode-general-category v1.1.0
+linux	Verify normal application	2026-09-09T12:04:29.3259742Z [1m[92m   Compiling[0m allocator-api2 v0.2.21
+linux	Verify normal application	2026-09-09T12:04:29.5308900Z [1m[92m   Compiling[0m borrow-or-share v0.2.4
+linux	Verify normal application	2026-09-09T12:04:29.5600806Z [1m[92m   Compiling[0m fluent-uri v0.4.1
+linux	Verify normal application	2026-09-09T12:04:30.1037848Z [1m[92m   Compiling[0m hashbrown v0.17.1
+linux	Verify normal application	2026-09-09T12:04:30.5323524Z [1m[92m   Compiling[0m document-features v0.2.12
+linux	Verify normal application	2026-09-09T12:04:30.8128952Z [1m[92m   Compiling[0m bit-set v0.8.0
+linux	Verify normal application	2026-09-09T12:04:30.8339993Z [1m[92m   Compiling[0m derive_more v2.1.1
+linux	Verify normal application	2026-09-09T12:04:30.8579512Z [1m[92m   Compiling[0m signal-hook-mio v0.2.5
+linux	Verify normal application	2026-09-09T12:04:30.8929693Z [1m[92m   Compiling[0m strum v0.28.0
+linux	Verify normal application	2026-09-09T12:04:30.9060701Z [1m[92m   Compiling[0m fraction v0.17.0
+linux	Verify normal application	2026-09-09T12:04:30.9330332Z [1m[92m   Compiling[0m crypto-common v0.1.7
+linux	Verify normal application	2026-09-09T12:04:30.9759989Z [1m[92m   Compiling[0m block-buffer v0.10.4
+linux	Verify normal application	2026-09-09T12:04:31.0299471Z [1m[92m   Compiling[0m vte v0.14.1
+linux	Verify normal application	2026-09-09T12:04:31.1179950Z [1m[92m   Compiling[0m thiserror-impl v2.0.20
+linux	Verify normal application	2026-09-09T12:04:31.2183544Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+linux	Verify normal application	2026-09-09T12:04:31.3109587Z [1m[92m   Compiling[0m vsimd v0.8.0
+linux	Verify normal application	2026-09-09T12:04:31.5870422Z [1m[92m   Compiling[0m either v1.18.0
+linux	Verify normal application	2026-09-09T12:04:31.7090129Z [1m[92m   Compiling[0m iana-time-zone v0.1.65
+linux	Verify normal application	2026-09-09T12:04:31.8427780Z [1m[92m   Compiling[0m num-cmp v0.1.0
+linux	Verify normal application	2026-09-09T12:04:31.9119816Z [1m[92m   Compiling[0m bytecount v0.6.9
+linux	Verify normal application	2026-09-09T12:04:31.9979299Z [1m[92m   Compiling[0m outref v0.5.2
+linux	Verify normal application	2026-09-09T12:04:32.0008842Z [1m[92m   Compiling[0m micromap v0.3.0
+linux	Verify normal application	2026-09-09T12:04:32.0269376Z [1m[92m   Compiling[0m uuid-simd v0.8.0
+linux	Verify normal application	2026-09-09T12:04:32.1619509Z [1m[92m   Compiling[0m referencing v0.55.0
+linux	Verify normal application	2026-09-09T12:04:32.2649659Z [1m[92m   Compiling[0m jsonschema-value v0.55.0
+linux	Verify normal application	2026-09-09T12:04:32.8075733Z [1m[92m   Compiling[0m chrono v0.4.45
+linux	Verify normal application	2026-09-09T12:04:33.4519735Z [1m[92m   Compiling[0m itertools v0.15.0
+linux	Verify normal application	2026-09-09T12:04:34.1289441Z [1m[92m   Compiling[0m strip-ansi-escapes v0.2.1
+linux	Verify normal application	2026-09-09T12:04:34.2207095Z [1m[92m   Compiling[0m digest v0.10.7
+linux	Verify normal application	2026-09-09T12:04:34.3249957Z [1m[92m   Compiling[0m fancy-regex v0.19.1
+linux	Verify normal application	2026-09-09T12:04:34.6129623Z [1m[92m   Compiling[0m crossterm v0.29.0
+linux	Verify normal application	2026-09-09T12:04:36.0249554Z [1m[92m   Compiling[0m regex v1.13.1
+linux	Verify normal application	2026-09-09T12:04:36.1253372Z [1m[92m   Compiling[0m fd-lock v4.0.4
+linux	Verify normal application	2026-09-09T12:04:36.1709979Z [1m[92m   Compiling[0m jsonschema-regex v0.55.0
+linux	Verify normal application	2026-09-09T12:04:36.3390137Z [1m[92m   Compiling[0m email_address v0.2.9
+linux	Verify normal application	2026-09-09T12:04:36.4660244Z [1m[92m   Compiling[0m unicode-width v0.2.2
+linux	Verify normal application	2026-09-09T12:04:36.4779731Z [1m[92m   Compiling[0m unicase v2.9.0
+linux	Verify normal application	2026-09-09T12:04:36.5759538Z [1m[92m   Compiling[0m nu-ansi-term v0.50.3
+linux	Verify normal application	2026-09-09T12:04:36.6019777Z [1m[92m   Compiling[0m data-encoding v2.11.1
+linux	Verify normal application	2026-09-09T12:04:36.7749679Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+linux	Verify normal application	2026-09-09T12:04:36.7969414Z [1m[92m   Compiling[0m sha2 v0.10.9
+linux	Verify normal application	2026-09-09T12:04:37.0519817Z [1m[92m   Compiling[0m jsonschema v0.55.0
+linux	Verify normal application	2026-09-09T12:04:37.2529690Z [1m[92m   Compiling[0m reedline v0.51.0
+linux	Verify normal application	2026-09-09T12:04:41.0019284Z [1m[92m   Compiling[0m uuid v1.26.0
+linux	Verify normal application	2026-09-09T12:04:41.2860151Z [1m[92m   Compiling[0m programmable-cli v0.1.0 (/home/runner/work/cli/cli)
+linux	Verify normal application	2026-09-09T12:05:02.7577080Z [1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 53.17s
+linux	Verify normal application	2026-09-09T12:05:02.7934147Z [1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/programmable_cli-9db73196faacc430)
+linux	Verify normal application	2026-09-09T12:05:02.7948903Z 
+linux	Verify normal application	2026-09-09T12:05:02.7949200Z running 2 tests
+linux	Verify normal application	2026-09-09T12:05:02.7958599Z test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+linux	Verify normal application	2026-09-09T12:05:02.7959532Z test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+linux	Verify normal application	2026-09-09T12:05:02.7960030Z 
+linux	Verify normal application	2026-09-09T12:05:02.7960349Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify normal application	2026-09-09T12:05:02.7960779Z 
+linux	Verify normal application	2026-09-09T12:05:02.7961212Z [1m[92m     Running[0m unittests src/main.rs (target/debug/deps/cli-aef130db5b512f9a)
+linux	Verify normal application	2026-09-09T12:05:02.7968401Z 
+linux	Verify normal application	2026-09-09T12:05:02.7968578Z running 0 tests
+linux	Verify normal application	2026-09-09T12:05:02.7969342Z 
+linux	Verify normal application	2026-09-09T12:05:02.7969862Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify normal application	2026-09-09T12:05:02.7972798Z [1m[92m     Running[0m tests/authoring_acceptance.rs (target/debug/deps/authoring_acceptance-9d1a3c05f7d1b954)
+linux	Verify normal application	2026-09-09T12:05:02.7973346Z 
+linux	Verify normal application	2026-09-09T12:05:02.7985446Z 
+linux	Verify normal application	2026-09-09T12:05:02.7986066Z running 4 tests
+linux	Verify normal application	2026-09-09T12:05:03.2525540Z test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+linux	Verify normal application	2026-09-09T12:05:11.5282623Z test recorded_operation_cases_execute_against_application ... ok
+linux	Verify normal application	2026-09-09T12:05:11.5461976Z test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+linux	Verify normal application	2026-09-09T12:05:11.6572415Z test service_catalog_journey_through_both_process_presentations ... ok
+linux	Verify normal application	2026-09-09T12:05:11.6573056Z 
+linux	Verify normal application	2026-09-09T12:05:11.6573444Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.86s
+linux	Verify normal application	2026-09-09T12:05:11.6573941Z 
+linux	Verify normal application	2026-09-09T12:05:11.6580495Z [1m[92m     Running[0m tests/authoring_discovery.rs (target/debug/deps/authoring_discovery-e0ce07965a1d9849)
+linux	Verify normal application	2026-09-09T12:05:11.6593987Z 
+linux	Verify normal application	2026-09-09T12:05:11.6594308Z running 4 tests
+linux	Verify normal application	2026-09-09T12:05:11.6667578Z test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+linux	Verify normal application	2026-09-09T12:05:11.6745102Z test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+linux	Verify normal application	2026-09-09T12:05:11.6758933Z test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+linux	Verify normal application	2026-09-09T12:05:11.6835899Z test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+linux	Verify normal application	2026-09-09T12:05:11.6836450Z 
+linux	Verify normal application	2026-09-09T12:05:11.6836824Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+linux	Verify normal application	2026-09-09T12:05:11.6837342Z 
+linux	Verify normal application	2026-09-09T12:05:11.6841183Z [1m[92m     Running[0m tests/authoring_limits.rs (target/debug/deps/authoring_limits-1f46e96ae037d978)
+linux	Verify normal application	2026-09-09T12:05:11.6854082Z 
+linux	Verify normal application	2026-09-09T12:05:11.6854394Z running 5 tests
+linux	Verify normal application	2026-09-09T12:05:11.7239141Z test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+linux	Verify normal application	2026-09-09T12:05:12.7895551Z test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+linux	Verify normal application	2026-09-09T12:05:17.6979402Z test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+linux	Verify normal application	2026-09-09T12:05:19.1725329Z test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+linux	Verify normal application	2026-09-09T12:05:25.3630889Z test receipt_overhead_and_response_bound_reject_before_publication ... ok
+linux	Verify normal application	2026-09-09T12:05:25.3631555Z 
+linux	Verify normal application	2026-09-09T12:05:25.3634391Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.68s
+linux	Verify normal application	2026-09-09T12:05:25.3635221Z 
+linux	Verify normal application	2026-09-09T12:05:25.3668855Z [1m[92m     Running[0m tests/authoring_recovery.rs (target/debug/deps/authoring_recovery-20fef44756778c27)
+linux	Verify normal application	2026-09-09T12:05:25.3684668Z 
+linux	Verify normal application	2026-09-09T12:05:25.3685017Z running 9 tests
+linux	Verify normal application	2026-09-09T12:05:25.3924355Z test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+linux	Verify normal application	2026-09-09T12:05:25.3960402Z test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+linux	Verify normal application	2026-09-09T12:05:25.4158727Z test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+linux	Verify normal application	2026-09-09T12:05:25.8409999Z test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+linux	Verify normal application	2026-09-09T12:05:25.8538934Z test normal_binary_ignores_test_fault_environment ... ok
+linux	Verify normal application	2026-09-09T12:05:25.8699390Z test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+linux	Verify normal application	2026-09-09T12:05:25.8748734Z test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+linux	Verify normal application	2026-09-09T12:05:26.0325325Z test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+linux	Verify normal application	2026-09-09T12:05:26.0769440Z test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+linux	Verify normal application	2026-09-09T12:05:26.0770137Z 
+linux	Verify normal application	2026-09-09T12:05:26.0770602Z test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+linux	Verify normal application	2026-09-09T12:05:26.0771641Z [1m[92m     Running[0m tests/cli_assembly.rs (target/debug/deps/cli_assembly-a09db9954779c16e)
+linux	Verify normal application	2026-09-09T12:05:26.0772368Z 
+linux	Verify normal application	2026-09-09T12:05:26.0785897Z 
+linux	Verify normal application	2026-09-09T12:05:26.0786226Z running 5 tests
+linux	Verify normal application	2026-09-09T12:05:26.6569267Z test assembly_keeps_constraints_and_active_behavior_and_is_order_independent ... ok
+linux	Verify normal application	2026-09-09T12:05:26.8589553Z test assembly_replay_and_transfer_validate_embedded_sources_without_reopening_files ... ok
+linux	Verify normal application	2026-09-09T12:05:29.3595169Z test authored_components_assemble_transfer_and_preserve_independent_behavior ... ok
+linux	Verify normal application	2026-09-09T12:05:32.2917715Z test component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation ... ok
+linux	Verify normal application	2026-09-09T12:05:32.9538458Z test component_graph_source_and_collision_failures_preserve_the_checkpoint ... ok
+linux	Verify normal application	2026-09-09T12:05:32.9541999Z [1m[92m     Running[0m tests/cli_composition.rs (target/debug/deps/cli_composition-e6dde866057be89b)
+linux	Verify normal application	2026-09-09T12:05:32.9548795Z 
+linux	Verify normal application	2026-09-09T12:05:32.9549726Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.87s
+linux	Verify normal application	2026-09-09T12:05:32.9550381Z 
+linux	Verify normal application	2026-09-09T12:05:32.9556065Z 
+linux	Verify normal application	2026-09-09T12:05:32.9556486Z running 10 tests
+linux	Verify normal application	2026-09-09T12:05:32.9798854Z test composition_registry_checks_actual_handler_and_argument_drift ... ok
+linux	Verify normal application	2026-09-09T12:05:33.4299660Z test configured_names_drive_discovery_completion_and_invocation ... ok
+linux	Verify normal application	2026-09-09T12:05:33.5118932Z test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+linux	Verify normal application	2026-09-09T12:05:33.9728288Z test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+linux	Verify normal application	2026-09-09T12:05:34.5299713Z test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... ok
+linux	Verify normal application	2026-09-09T12:05:34.6758677Z test definition_limits_unknown_fields_and_duplicate_keys_reject_before_activation ... ok
+linux	Verify normal application	2026-09-09T12:05:35.0344016Z test domain_word_collisions_and_scalar_types_are_configured_without_new_handlers ... ok
+linux	Verify normal application	2026-09-09T12:05:35.2489680Z test exact_numbers_survive_arguments_literals_discovery_and_reopen ... ok
+linux	Verify normal application	2026-09-09T12:05:35.4689464Z test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+linux	Verify normal application	2026-09-09T12:05:35.6569849Z test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+linux	Verify normal application	2026-09-09T12:05:35.6570870Z 
+linux	Verify normal application	2026-09-09T12:05:35.6573492Z [1m[92m     Running[0m tests/cli_run.rs (target/debug/deps/cli_run-cb33166410ddd6c7)
+linux	Verify normal application	2026-09-09T12:05:35.6574162Z test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.70s
+linux	Verify normal application	2026-09-09T12:05:35.6574988Z 
+linux	Verify normal application	2026-09-09T12:05:35.6585164Z 
+linux	Verify normal application	2026-09-09T12:05:35.6585469Z running 9 tests
+linux	Verify normal application	2026-09-09T12:05:35.6789170Z test ambiguous_routes_and_invalid_sources_reject_before_checkpoint_creation ... ok
+linux	Verify normal application	2026-09-09T12:05:35.8169312Z test actual_terminal_completes_context_and_executes_direct_commands ... ok
+linux	Verify normal application	2026-09-09T12:05:35.9082373Z test argv_and_interactive_strings_are_literal_and_control_like_domain_words_remain_callable ... ok
+linux	Verify normal application	2026-09-09T12:05:36.0949303Z test assembled_nested_routes_use_local_words_and_keep_component_state_separate ... ok
+linux	Verify normal application	2026-09-09T12:05:36.1319613Z test command_authored_export_runs_and_agrees_with_canonical_invocation ... ok
+linux	Verify normal application	2026-09-09T12:05:36.1499147Z test exported_cli_runs_direct_verbs_without_authoring_setup ... ok
+linux	Verify normal application	2026-09-09T12:05:36.1933597Z test direct_connected_read_labels_history_and_requires_fresh_grants ... ok
+linux	Verify normal application	2026-09-09T12:05:36.2168933Z test generated_help_tree_and_completion_describe_callable_routes ... ok
+linux	Verify normal application	2026-09-09T12:05:36.3434516Z test persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes ... ok
+linux	Verify normal application	2026-09-09T12:05:36.3435420Z 
+linux	Verify normal application	2026-09-09T12:05:36.3435894Z test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.68s
+linux	Verify normal application	2026-09-09T12:05:36.3436398Z 
+linux	Verify normal application	2026-09-09T12:05:36.3439718Z [1m[92m     Running[0m tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-e9aa9fdfa4a3c753)
+linux	Verify normal application	2026-09-09T12:05:36.3448264Z 
+linux	Verify normal application	2026-09-09T12:05:36.3448571Z running 1 test
+linux	Verify normal application	2026-09-09T12:05:36.8686514Z test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... ok
+linux	Verify normal application	2026-09-09T12:05:36.8687802Z [1m[92m     Running[0m tests/connected_json_read.rs (target/debug/deps/connected_json_read-8f949e276f42b071)
+linux	Verify normal application	2026-09-09T12:05:36.8698795Z 
+linux	Verify normal application	2026-09-09T12:05:36.8699273Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+linux	Verify normal application	2026-09-09T12:05:36.8699725Z 
+linux	Verify normal application	2026-09-09T12:05:36.8699756Z 
+linux	Verify normal application	2026-09-09T12:05:36.8708897Z running 7 tests
+linux	Verify normal application	2026-09-09T12:05:37.0257307Z test connected_definition_is_authored_with_typed_commands_and_activates_without_authority ... ok
+linux	Verify normal application	2026-09-09T12:05:37.2853003Z test connected_definitions_and_saved_observations_reject_applied_inconsistencies ... ok
+linux	Verify normal application	2026-09-09T12:05:37.3529854Z test connected_grants_pin_parent_directories_and_launcher_rejects_invalid_authority ... ok
+linux	Verify normal application	2026-09-09T12:05:37.4119446Z test assembled_connected_components_preserve_requirements_and_share_only_explicit_read_authority ... ok
+linux	Verify normal application	2026-09-09T12:05:37.5649398Z test connected_read_rejects_bad_targets_documents_signatures_and_stale_requests_atomically ... ok
+linux	Verify normal application	2026-09-09T12:05:37.5855411Z test connected_read_replay_and_handover_preserve_history_without_transferring_grants ... ok
+linux	Verify normal application	2026-09-09T12:05:37.6807091Z test connected_reads_observe_real_files_in_both_presentations_without_mutating_authored_or_mock_state ... ok
+linux	Verify normal application	2026-09-09T12:05:37.6808661Z [1m[92m     Running[0m tests/continuation_trials.rs (target/debug/deps/continuation_trials-ad652b18996cec6f)
+linux	Verify normal application	2026-09-09T12:05:37.6820920Z 
+linux	Verify normal application	2026-09-09T12:05:37.6822085Z [1m[92m     Running[0m tests/document_import.rs (target/debug/deps/document_import-890e423cffcbc74a)
+linux	Verify normal application	2026-09-09T12:05:37.6822888Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+linux	Verify normal application	2026-09-09T12:05:37.6826955Z 
+linux	Verify normal application	2026-09-09T12:05:37.6827130Z 
+linux	Verify normal application	2026-09-09T12:05:37.6827527Z running 0 tests
+linux	Verify normal application	2026-09-09T12:05:37.6827940Z 
+linux	Verify normal application	2026-09-09T12:05:37.6828551Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify normal application	2026-09-09T12:05:37.6829153Z 
+linux	Verify normal application	2026-09-09T12:05:37.6839361Z 
+linux	Verify normal application	2026-09-09T12:05:37.6839752Z running 5 tests
+linux	Verify normal application	2026-09-09T12:05:37.8907315Z test document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations ... ok
+linux	Verify normal application	2026-09-09T12:05:37.9583523Z test import_discovery_follows_declaration_and_corrupt_receipts_cannot_reopen ... ok
+linux	Verify normal application	2026-09-09T12:05:38.1305821Z test authored_cli_spec_exports_imports_and_runs_in_a_separate_resumable_session ... ok
+linux	Verify normal application	2026-09-09T12:05:38.1376993Z test imported_draft_keeps_schema_and_active_cli_until_explicit_commit_and_activation ... ok
+linux	Verify normal application	2026-09-09T12:05:38.3829770Z test rejected_document_import_preserves_checkpoint_and_missing_source_replay_is_idempotent ... ok
+linux	Verify normal application	2026-09-09T12:05:38.3830811Z 
+linux	Verify normal application	2026-09-09T12:05:38.3834369Z [1m[92m     Running[0m tests/schema_constraints.rs (target/debug/deps/schema_constraints-4563d853cbd0e9cb)
+linux	Verify normal application	2026-09-09T12:05:38.3836399Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+linux	Verify normal application	2026-09-09T12:05:38.3837059Z 
+linux	Verify normal application	2026-09-09T12:05:38.3846912Z 
+linux	Verify normal application	2026-09-09T12:05:38.3847346Z running 9 tests
+linux	Verify normal application	2026-09-09T12:05:38.5512164Z test attachment_replay_detachment_discard_and_checkpoint_profiles_remain_distinct ... ok
+linux	Verify normal application	2026-09-09T12:05:38.8233066Z test constraint_numbers_are_exact_and_resource_failures_do_not_certify_instances ... ok
+linux	Verify normal application	2026-09-09T12:05:38.8297561Z test authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen ... ok
+linux	Verify normal application	2026-09-09T12:05:38.8789809Z test failed_attachments_preserve_drafts_and_reference_policy_is_explicit ... ok
+linux	Verify normal application	2026-09-09T12:05:39.0877083Z test openapi_description_is_constructed_without_serialized_containers_or_activation ... ok
+linux	Verify normal application	2026-09-09T12:05:39.1959416Z test retained_upstream_positive_and_negative_instances_match_the_selected_dialect ... ok
+linux	Verify normal application	2026-09-09T12:05:39.2583962Z test schema_guidance_and_completion_share_missing_fields_types_literals_and_limits ... ok
+linux	Verify normal application	2026-09-09T12:05:39.3357586Z test schema_reference_siblings_conditionals_and_admission_boundaries_are_observable ... ok
+linux	Verify normal application	2026-09-09T12:05:39.4592304Z test constraints_compose_with_mock_interfaces_without_sharing_document_roles ... ok
+linux	Verify normal application	2026-09-09T12:05:39.4593210Z 
+linux	Verify normal application	2026-09-09T12:05:39.4594080Z test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.07s
+linux	Verify normal application	2026-09-09T12:05:39.4594845Z 
+linux	Verify normal application	2026-09-09T12:05:39.4597132Z [1m[92m     Running[0m unittests tools/continuation/main.rs (target/debug/examples/continuation_trial-66e707a0c3ebe1aa)
+linux	Verify normal application	2026-09-09T12:05:39.4607919Z 
+linux	Verify normal application	2026-09-09T12:05:39.4608601Z running 0 tests
+linux	Verify normal application	2026-09-09T12:05:39.4611975Z 
+linux	Verify normal application	2026-09-09T12:05:39.4612500Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify normal application	2026-09-09T12:05:39.4613333Z 
+linux	Verify instrumented application	﻿2026-09-09T12:05:39.4735917Z ##[group]Run cargo test --locked --all-features --all-targets
+linux	Verify instrumented application	2026-09-09T12:05:39.4736309Z [36;1mcargo test --locked --all-features --all-targets[0m
+linux	Verify instrumented application	2026-09-09T12:05:39.4768994Z shell: /usr/bin/bash -e {0}
+linux	Verify instrumented application	2026-09-09T12:05:39.4769221Z env:
+linux	Verify instrumented application	2026-09-09T12:05:39.4769399Z   CARGO_TERM_COLOR: always
+linux	Verify instrumented application	2026-09-09T12:05:39.4769601Z ##[endgroup]
+linux	Verify instrumented application	2026-09-09T12:05:39.5789232Z [1m[92m   Compiling[0m programmable-cli v0.1.0 (/home/runner/work/cli/cli)
+linux	Verify instrumented application	2026-09-09T12:06:02.4504641Z [1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 22.94s
+linux	Verify instrumented application	2026-09-09T12:06:02.4596995Z [1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/programmable_cli-69cd14dffea1ddd3)
+linux	Verify instrumented application	2026-09-09T12:06:02.4607993Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4608747Z running 2 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.4613820Z test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+linux	Verify instrumented application	2026-09-09T12:06:02.4614985Z test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+linux	Verify instrumented application	2026-09-09T12:06:02.4617161Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4617903Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:06:02.4618780Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4632909Z [1m[92m     Running[0m unittests src/main.rs (target/debug/deps/cli-a98c6a9b1d6256fd)
+linux	Verify instrumented application	2026-09-09T12:06:02.4633361Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4639034Z [1m[92m     Running[0m unittests tools/continuation/receiver.rs (target/debug/deps/cli_trial_receiver-b04768cdb963971b)
+linux	Verify instrumented application	2026-09-09T12:06:02.4640173Z running 0 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.4640341Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4640644Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:06:02.4641064Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4641068Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4641177Z running 0 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.4641356Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4641649Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:06:02.4642055Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4646539Z [1m[92m     Running[0m unittests tests/fixtures/changed_argument.rs (target/debug/deps/probe_changed_argument-b96384dea17bc0bf)
+linux	Verify instrumented application	2026-09-09T12:06:02.4648963Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4649089Z running 0 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.4649468Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4650168Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:06:02.4650620Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4653676Z [1m[92m     Running[0m unittests tests/fixtures/extra_handler.rs (target/debug/deps/probe_extra_handler-f0085e9fde5186ae)
+linux	Verify instrumented application	2026-09-09T12:06:02.4660869Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4661142Z running 0 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.4661498Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4662047Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:06:02.4662690Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4668917Z [1m[92m     Running[0m unittests tests/fixtures/missing_handler.rs (target/debug/deps/probe_missing_handler-620093e3a883942a)
+linux	Verify instrumented application	2026-09-09T12:06:02.4671503Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4671642Z running 0 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.4672043Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4672751Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:06:02.4673202Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4674589Z [1m[92m     Running[0m tests/authoring_acceptance.rs (target/debug/deps/authoring_acceptance-b85394a8bace3f30)
+linux	Verify instrumented application	2026-09-09T12:06:02.4688342Z 
+linux	Verify instrumented application	2026-09-09T12:06:02.4688647Z running 4 tests
+linux	Verify instrumented application	2026-09-09T12:06:02.6207059Z test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.4721964Z test recorded_operation_cases_execute_against_application ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.5859593Z test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6387061Z test service_catalog_journey_through_both_process_presentations ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6387754Z 
+linux	Verify instrumented application	2026-09-09T12:06:06.6388387Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.17s
+linux	Verify instrumented application	2026-09-09T12:06:06.6389153Z 
+linux	Verify instrumented application	2026-09-09T12:06:06.6394364Z [1m[92m     Running[0m tests/authoring_discovery.rs (target/debug/deps/authoring_discovery-afcdbee9a68b854b)
+linux	Verify instrumented application	2026-09-09T12:06:06.6409424Z 
+linux	Verify instrumented application	2026-09-09T12:06:06.6409730Z running 5 tests
+linux	Verify instrumented application	2026-09-09T12:06:06.6490084Z test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6548982Z test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6578967Z test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6684727Z test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6706918Z test separately_built_native_registry_drift_is_rejected_before_session_creation ... ok
+linux	Verify instrumented application	2026-09-09T12:06:06.6707521Z 
+linux	Verify instrumented application	2026-09-09T12:06:06.6707997Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+linux	Verify instrumented application	2026-09-09T12:06:06.6708774Z 
+linux	Verify instrumented application	2026-09-09T12:06:06.6714516Z [1m[92m     Running[0m tests/authoring_limits.rs (target/debug/deps/authoring_limits-f096504a2714fb2a)
+linux	Verify instrumented application	2026-09-09T12:06:06.6726662Z 
+linux	Verify instrumented application	2026-09-09T12:06:06.6726997Z running 5 tests
+linux	Verify instrumented application	2026-09-09T12:06:06.7138956Z test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+linux	Verify instrumented application	2026-09-09T12:06:07.6943098Z test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+linux	Verify instrumented application	2026-09-09T12:06:12.2222238Z test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+linux	Verify instrumented application	2026-09-09T12:06:15.6576890Z test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+linux	Verify instrumented application	2026-09-09T12:06:20.9457966Z test receipt_overhead_and_response_bound_reject_before_publication ... ok
+linux	Verify instrumented application	2026-09-09T12:06:20.9459012Z 
+linux	Verify instrumented application	2026-09-09T12:06:20.9459416Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.27s
+linux	Verify instrumented application	2026-09-09T12:06:20.9459941Z 
+linux	Verify instrumented application	2026-09-09T12:06:20.9497750Z [1m[92m     Running[0m tests/authoring_recovery.rs (target/debug/deps/authoring_recovery-31d994511b9e37f4)
+linux	Verify instrumented application	2026-09-09T12:06:20.9514123Z 
+linux	Verify instrumented application	2026-09-09T12:06:20.9514614Z running 12 tests
+linux	Verify instrumented application	2026-09-09T12:06:20.9769168Z test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+linux	Verify instrumented application	2026-09-09T12:06:20.9799407Z test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+linux	Verify instrumented application	2026-09-09T12:06:20.9964395Z test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.0483896Z test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.0834412Z test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.1433614Z test measured_publication_failures_preserve_or_explicitly_uncertain_state ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.1599770Z test killed_process_at_each_publication_boundary_recovers_a_complete_checkpoint ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.1634772Z test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.1794338Z test reopening_cannot_report_durable_before_file_and_directory_sync_succeed ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.1909247Z test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.2069627Z test uncertain_export_can_be_retried_without_changing_authoring_state ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.2146640Z test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.2147550Z 
+linux	Verify instrumented application	2026-09-09T12:06:21.2147974Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+linux	Verify instrumented application	2026-09-09T12:06:21.2148699Z 
+linux	Verify instrumented application	2026-09-09T12:06:21.2152129Z [1m[92m     Running[0m tests/cli_assembly.rs (target/debug/deps/cli_assembly-7420ba6e1c2e2c2a)
+linux	Verify instrumented application	2026-09-09T12:06:21.2168724Z 
+linux	Verify instrumented application	2026-09-09T12:06:21.2169159Z running 6 tests
+linux	Verify instrumented application	2026-09-09T12:06:21.3669301Z test assembly_keeps_constraints_and_active_behavior_and_is_order_independent ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.4408756Z test assembly_publication_failures_and_uncertainty_preserve_recoverability ... ok
+linux	Verify instrumented application	2026-09-09T12:06:21.6575819Z test assembly_replay_and_transfer_validate_embedded_sources_without_reopening_files ... ok
+linux	Verify instrumented application	2026-09-09T12:06:22.8129263Z test authored_components_assemble_transfer_and_preserve_independent_behavior ... ok
+linux	Verify instrumented application	2026-09-09T12:06:23.8070929Z test component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation ... ok
+linux	Verify instrumented application	2026-09-09T12:06:24.9289098Z test component_graph_source_and_collision_failures_preserve_the_checkpoint ... ok
+linux	Verify instrumented application	2026-09-09T12:06:24.9289863Z 
+linux	Verify instrumented application	2026-09-09T12:06:24.9290273Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.71s
+linux	Verify instrumented application	2026-09-09T12:06:24.9290734Z 
+linux	Verify instrumented application	2026-09-09T12:06:24.9295690Z [1m[92m     Running[0m tests/cli_composition.rs (target/debug/deps/cli_composition-8d78c62f41ea01a1)
+linux	Verify instrumented application	2026-09-09T12:06:24.9312357Z 
+linux	Verify instrumented application	2026-09-09T12:06:24.9312774Z running 12 tests
+linux	Verify instrumented application	2026-09-09T12:06:25.4250318Z test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+linux	Verify instrumented application	2026-09-09T12:06:25.4388525Z test composition_registry_checks_actual_handler_and_argument_drift ... ok
+linux	Verify instrumented application	2026-09-09T12:06:25.7469028Z test activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary ... ok
+linux	Verify instrumented application	2026-09-09T12:06:25.8569015Z test configured_names_drive_discovery_completion_and_invocation ... ok
+linux	Verify instrumented application	2026-09-09T12:06:26.3111853Z test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+linux	Verify instrumented application	2026-09-09T12:06:26.7869017Z test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... ok
+linux	Verify instrumented application	2026-09-09T12:06:26.9293202Z test definition_limits_unknown_fields_and_duplicate_keys_reject_before_activation ... ok
+linux	Verify instrumented application	2026-09-09T12:06:27.2503617Z test domain_word_collisions_and_scalar_types_are_configured_without_new_handlers ... ok
+linux	Verify instrumented application	2026-09-09T12:06:27.4569410Z test exact_numbers_survive_arguments_literals_discovery_and_reopen ... ok
+linux	Verify instrumented application	2026-09-09T12:06:27.7290332Z test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+linux	Verify instrumented application	2026-09-09T12:06:27.9289862Z test lost_mock_response_replays_after_process_death_without_another_transition ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.0917162Z test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.0918003Z 
+linux	Verify instrumented application	2026-09-09T12:06:28.0918639Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.16s
+linux	Verify instrumented application	2026-09-09T12:06:28.0919155Z 
+linux	Verify instrumented application	2026-09-09T12:06:28.0924773Z [1m[92m     Running[0m tests/cli_run.rs (target/debug/deps/cli_run-44baefec9ba7efb2)
+linux	Verify instrumented application	2026-09-09T12:06:28.0936453Z 
+linux	Verify instrumented application	2026-09-09T12:06:28.0937069Z running 10 tests
+linux	Verify instrumented application	2026-09-09T12:06:28.1179314Z test ambiguous_routes_and_invalid_sources_reject_before_checkpoint_creation ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.2419023Z test actual_terminal_completes_context_and_executes_direct_commands ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.3440235Z test argv_and_interactive_strings_are_literal_and_control_like_domain_words_remain_callable ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.5240359Z test command_authored_export_runs_and_agrees_with_canonical_invocation ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.5375512Z test assembled_nested_routes_use_local_words_and_keep_component_state_separate ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.5587486Z test exported_cli_runs_direct_verbs_without_authoring_setup ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.6315528Z test direct_connected_read_labels_history_and_requires_fresh_grants ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.6349467Z test generated_help_tree_and_completion_describe_callable_routes ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.7927492Z test run_publication_faults_preserve_recovery_and_never_acknowledge_uncertain_success ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.8300666Z test persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes ... ok
+linux	Verify instrumented application	2026-09-09T12:06:28.8301485Z 
+linux	Verify instrumented application	2026-09-09T12:06:28.8302029Z test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+linux	Verify instrumented application	2026-09-09T12:06:28.8302655Z 
+linux	Verify instrumented application	2026-09-09T12:06:28.8304129Z [1m[92m     Running[0m tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-7e76bc656dcf2c94)
+linux	Verify instrumented application	2026-09-09T12:06:28.8316007Z 
+linux	Verify instrumented application	2026-09-09T12:06:28.8316399Z running 1 test
+linux	Verify instrumented application	2026-09-09T12:06:29.3615628Z test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... ok
+linux	Verify instrumented application	2026-09-09T12:06:29.3616403Z 
+linux	Verify instrumented application	2026-09-09T12:06:29.3617059Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+linux	Verify instrumented application	2026-09-09T12:06:29.3618727Z [1m[92m     Running[0m tests/connected_json_read.rs (target/debug/deps/connected_json_read-7f0be215709bc759)
+linux	Verify instrumented application	2026-09-09T12:06:29.3619476Z 
+linux	Verify instrumented application	2026-09-09T12:06:29.3637069Z 
+linux	Verify instrumented application	2026-09-09T12:06:29.3671068Z running 8 tests
+linux	Verify instrumented application	2026-09-09T12:06:29.5166176Z test connected_definition_is_authored_with_typed_commands_and_activates_without_authority ... ok
+linux	Verify instrumented application	2026-09-09T12:06:29.7779744Z test connected_definitions_and_saved_observations_reject_applied_inconsistencies ... ok
+linux	Verify instrumented application	2026-09-09T12:06:29.8408791Z test connected_grants_pin_parent_directories_and_launcher_rejects_invalid_authority ... ok
+linux	Verify instrumented application	2026-09-09T12:06:29.9029579Z test assembled_connected_components_preserve_requirements_and_share_only_explicit_read_authority ... ok
+linux	Verify instrumented application	2026-09-09T12:06:30.1015846Z test connected_read_rejects_bad_targets_documents_signatures_and_stale_requests_atomically ... ok
+linux	Verify instrumented application	2026-09-09T12:06:30.2312137Z test connected_read_publication_failures_preserve_recoverable_observations_without_claiming_no_read ... ok
+linux	Verify instrumented application	2026-09-09T12:06:30.2911262Z test connected_read_replay_and_handover_preserve_history_without_transferring_grants ... ok
+linux	Verify instrumented application	2026-09-09T12:06:30.3739880Z test connected_reads_observe_real_files_in_both_presentations_without_mutating_authored_or_mock_state ... ok
+linux	Verify instrumented application	2026-09-09T12:06:30.3740783Z 
+linux	Verify instrumented application	2026-09-09T12:06:30.3741546Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.01s
+linux	Verify instrumented application	2026-09-09T12:06:30.3742504Z 
+linux	Verify instrumented application	2026-09-09T12:06:30.3750211Z [1m[92m     Running[0m tests/continuation_trials.rs (target/debug/deps/continuation_trials-48b07df57a6e9dc2)
+linux	Verify instrumented application	2026-09-09T12:06:30.3761772Z 
+linux	Verify instrumented application	2026-09-09T12:06:30.3762218Z running 6 tests
+linux	Verify instrumented application	2026-09-09T12:06:50.2060671Z test oracle_rejects_activatable_semantic_mutations_and_constraint_removal ... ok
+linux	Verify instrumented application	2026-09-09T12:07:30.3764171Z test authoring_comparison_preserves_file_activation_gap_and_checks_imported_continuation has been running for over 60 seconds
+linux	Verify instrumented application	2026-09-09T12:07:50.2040952Z test paired_rehearsals_preserve_whole_handover_and_meet_both_tasks has been running for over 60 seconds
+linux	Verify instrumented application	2026-09-09T12:08:18.2209514Z test paired_rehearsals_preserve_whole_handover_and_meet_both_tasks ... ok
+linux	Verify instrumented application	2026-09-09T12:09:14.3210209Z test receiver_detects_missing_or_changed_inputs_before_creating_work ... ok
+linux	Verify instrumented application	2026-09-09T12:09:39.7238721Z test receiver_reopens_edits_instead_of_replacing_them_from_handover ... ok
+linux	Verify instrumented application	2026-09-09T12:09:39.7256037Z test targeted_edit_rejects_missing_or_ambiguous_anchors_without_partial_write ... ok
+linux	Verify instrumented application	2026-09-09T12:09:52.2199643Z test authoring_comparison_preserves_file_activation_gap_and_checks_imported_continuation ... ok
+linux	Verify instrumented application	2026-09-09T12:09:52.2200472Z 
+linux	Verify instrumented application	2026-09-09T12:09:52.2200908Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 201.84s
+linux	Verify instrumented application	2026-09-09T12:09:52.2201507Z 
+linux	Verify instrumented application	2026-09-09T12:09:52.2206014Z [1m[92m     Running[0m tests/document_import.rs (target/debug/deps/document_import-25622f39a0ce258b)
+linux	Verify instrumented application	2026-09-09T12:09:52.2238687Z 
+linux	Verify instrumented application	2026-09-09T12:09:52.2239075Z running 6 tests
+linux	Verify instrumented application	2026-09-09T12:09:52.3121281Z test document_import_publication_failure_and_uncertainty_recover_without_source ... ok
+linux	Verify instrumented application	2026-09-09T12:09:53.4731620Z test document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations ... ok
+linux	Verify instrumented application	2026-09-09T12:09:53.6660262Z test import_discovery_follows_declaration_and_corrupt_receipts_cannot_reopen ... ok
+linux	Verify instrumented application	2026-09-09T12:09:53.8050013Z test authored_cli_spec_exports_imports_and_runs_in_a_separate_resumable_session ... ok
+linux	Verify instrumented application	2026-09-09T12:09:53.8221738Z test imported_draft_keeps_schema_and_active_cli_until_explicit_commit_and_activation ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.1104573Z test rejected_document_import_preserves_checkpoint_and_missing_source_replay_is_idempotent ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.1105454Z 
+linux	Verify instrumented application	2026-09-09T12:09:54.1106018Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.89s
+linux	Verify instrumented application	2026-09-09T12:09:54.1106668Z 
+linux	Verify instrumented application	2026-09-09T12:09:54.1110361Z [1m[92m     Running[0m tests/schema_constraints.rs (target/debug/deps/schema_constraints-d1a4f4ac7fdfcdf3)
+linux	Verify instrumented application	2026-09-09T12:09:54.1124469Z 
+linux	Verify instrumented application	2026-09-09T12:09:54.1124777Z running 10 tests
+linux	Verify instrumented application	2026-09-09T12:09:54.2170022Z test attachment_replay_detachment_discard_and_checkpoint_profiles_remain_distinct ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.4964859Z test authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.4999059Z test constraint_numbers_are_exact_and_resource_failures_do_not_certify_instances ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.5474630Z test failed_attachments_preserve_drafts_and_reference_policy_is_explicit ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.7728444Z test openapi_description_is_constructed_without_serialized_containers_or_activation ... ok
+linux	Verify instrumented application	2026-09-09T12:09:54.8875166Z test retained_upstream_positive_and_negative_instances_match_the_selected_dialect ... ok
+linux	Verify instrumented application	2026-09-09T12:09:55.1199290Z test schema_attachment_publication_faults_and_lost_response_recover_through_saved_receipts ... ok
+linux	Verify instrumented application	2026-09-09T12:09:55.2149556Z test schema_guidance_and_completion_share_missing_fields_types_literals_and_limits ... ok
+linux	Verify instrumented application	2026-09-09T12:09:55.3239585Z test constraints_compose_with_mock_interfaces_without_sharing_document_roles ... ok
+linux	Verify instrumented application	2026-09-09T12:09:55.3587038Z test schema_reference_siblings_conditionals_and_admission_boundaries_are_observable ... ok
+linux	Verify instrumented application	2026-09-09T12:09:55.3587840Z 
+linux	Verify instrumented application	2026-09-09T12:09:55.3588493Z test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.25s
+linux	Verify instrumented application	2026-09-09T12:09:55.3589010Z 
+linux	Verify instrumented application	2026-09-09T12:09:55.3594655Z [1m[92m     Running[0m unittests tools/continuation/main.rs (target/debug/examples/continuation_trial-db78bfe4161405b8)
+linux	Verify instrumented application	2026-09-09T12:09:55.3603724Z 
+linux	Verify instrumented application	2026-09-09T12:09:55.3604117Z running 0 tests
+linux	Verify instrumented application	2026-09-09T12:09:55.3604532Z 
+linux	Verify instrumented application	2026-09-09T12:09:55.3604969Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify instrumented application	2026-09-09T12:09:55.3605448Z 
+linux	Verify formatting and documentation	﻿2026-09-09T12:09:55.3660860Z ##[group]Run cargo fmt --all -- --check
+linux	Verify formatting and documentation	2026-09-09T12:09:55.3661174Z [36;1mcargo fmt --all -- --check[0m
+linux	Verify formatting and documentation	2026-09-09T12:09:55.3661551Z [36;1mCARGO_TARGET_DIR="$PWD/target" cargo test --locked --manifest-path tools/scaffold/Cargo.toml[0m
+linux	Verify formatting and documentation	2026-09-09T12:09:55.3662117Z [36;1mCARGO_TARGET_DIR="$PWD/target" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check[0m
+linux	Verify formatting and documentation	2026-09-09T12:09:55.3662577Z [36;1mcargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check[0m
+linux	Verify formatting and documentation	2026-09-09T12:09:55.4626907Z shell: /usr/bin/bash -e {0}
+linux	Verify formatting and documentation	2026-09-09T12:09:55.4627191Z env:
+linux	Verify formatting and documentation	2026-09-09T12:09:55.4627375Z   CARGO_TERM_COLOR: always
+linux	Verify formatting and documentation	2026-09-09T12:09:55.4627606Z ##[endgroup]
+linux	Verify formatting and documentation	2026-09-09T12:09:55.9446208Z [1m[92m   Compiling[0m proc-macro2 v1.0.107
+linux	Verify formatting and documentation	2026-09-09T12:09:55.9468891Z [1m[92m   Compiling[0m quote v1.0.47
+linux	Verify formatting and documentation	2026-09-09T12:09:56.0849222Z [1m[92m   Compiling[0m serde_core v1.0.229
+linux	Verify formatting and documentation	2026-09-09T12:09:56.9563487Z [1m[92m   Compiling[0m syn v3.0.5
+linux	Verify formatting and documentation	2026-09-09T12:09:58.0870818Z [1m[92m   Compiling[0m serde v1.0.229
+linux	Verify formatting and documentation	2026-09-09T12:09:58.2070891Z [1m[92m   Compiling[0m serde_json v1.0.151
+linux	Verify formatting and documentation	2026-09-09T12:09:58.2921257Z [1m[92m   Compiling[0m memchr v2.8.3
+linux	Verify formatting and documentation	2026-09-09T12:09:58.8022104Z [1m[92m   Compiling[0m serde_derive v1.0.229
+linux	Verify formatting and documentation	2026-09-09T12:10:00.8321611Z [1m[92m   Compiling[0m cli-layer-scaffold v0.1.0 (/home/runner/work/cli/cli/tools/scaffold)
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5597300Z [1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 6.65s
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5611858Z [1m[92m     Running[0m unittests src/main.rs (target/debug/deps/cli_layer_scaffold-7c083a71a2839dd0)
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5622371Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5622708Z running 0 tests
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5623040Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5623496Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5626060Z [1m[92m     Running[0m tests/project_records.rs (target/debug/deps/project_records-7f9f9aa28f0559bd)
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5626528Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5634200Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:02.5634519Z running 1 test
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1882821Z test project_records_resolve_and_keep_design_and_application_evidence_distinct ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1884064Z [1m[92m     Running[0m tests/scaffold_guards.rs (target/debug/deps/scaffold_guards-8619ff8d6674b836)
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1888581Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1889180Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.62s
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1889845Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1896028Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1896322Z running 12 tests
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1979488Z test current_scaffold_matches_its_declaration_under_docs ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.1996015Z test dependency_cycle_is_rejected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2040494Z test duplicate_identifiers_are_rejected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2059164Z test directories_outside_documentation_scope_are_rejected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2098965Z test duplicate_registry_keys_are_rejected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2123113Z test generation_preserves_authored_architecture ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2203642Z test repeated_generation_preserves_document_bytes ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2228898Z test invalid_registry_types_are_rejected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2286497Z test stale_generated_content_is_detected_and_repaired ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2308705Z test undeclared_layer_directory_is_detected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2347660Z test unknown_dependency_is_rejected ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2356883Z test unowned_content_is_preserved ... ok
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2357302Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2357738Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2358833Z 
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2756065Z [1m[92m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2761499Z [1m[92m     Running[0m `target/debug/cli-layer-scaffold --check`
+linux	Verify formatting and documentation	2026-09-09T12:10:04.2783341Z Layer scaffold verified: 7 declared layers, 15 synchronized views
+linux	Build the normal release executable	﻿2026-09-09T12:10:04.3408044Z ##[group]Run cargo build --locked --release --bin cli
+linux	Build the normal release executable	2026-09-09T12:10:04.3408941Z [36;1mcargo build --locked --release --bin cli[0m
+linux	Build the normal release executable	2026-09-09T12:10:04.3453292Z shell: /usr/bin/bash -e {0}
+linux	Build the normal release executable	2026-09-09T12:10:04.3453628Z env:
+linux	Build the normal release executable	2026-09-09T12:10:04.3453889Z   CARGO_TERM_COLOR: always
+linux	Build the normal release executable	2026-09-09T12:10:04.3454189Z ##[endgroup]
+linux	Build the normal release executable	2026-09-09T12:10:04.5173486Z [1m[92m   Compiling[0m proc-macro2 v1.0.107
+linux	Build the normal release executable	2026-09-09T12:10:04.5200353Z [1m[92m   Compiling[0m quote v1.0.47
+linux	Build the normal release executable	2026-09-09T12:10:04.6119778Z [1m[92m   Compiling[0m unicode-ident v1.0.24
+linux	Build the normal release executable	2026-09-09T12:10:04.6659619Z [1m[92m   Compiling[0m libc v0.2.189
+linux	Build the normal release executable	2026-09-09T12:10:04.8354041Z [1m[92m   Compiling[0m serde_core v1.0.229
+linux	Build the normal release executable	2026-09-09T12:10:05.2889532Z [1m[92m   Compiling[0m syn v3.0.5
+linux	Build the normal release executable	2026-09-09T12:10:07.1004446Z [1m[92m   Compiling[0m autocfg v1.5.1
+linux	Build the normal release executable	2026-09-09T12:10:07.3319241Z [1m[92m   Compiling[0m num-traits v0.2.19
+linux	Build the normal release executable	2026-09-09T12:10:07.3859670Z [1m[92m   Compiling[0m cfg-if v1.0.4
+linux	Build the normal release executable	2026-09-09T12:10:07.4097071Z [1m[92m   Compiling[0m version_check v0.9.5
+linux	Build the normal release executable	2026-09-09T12:10:07.7489342Z [1m[92m   Compiling[0m memchr v2.8.3
+linux	Build the normal release executable	2026-09-09T12:10:08.2959967Z [1m[92m   Compiling[0m serde v1.0.229
+linux	Build the normal release executable	2026-09-09T12:10:08.4193082Z [1m[92m   Compiling[0m serde_derive v1.0.229
+linux	Build the normal release executable	2026-09-09T12:10:08.7191974Z [1m[92m   Compiling[0m num-integer v0.1.47
+linux	Build the normal release executable	2026-09-09T12:10:09.0959513Z [1m[92m   Compiling[0m syn v2.0.119
+linux	Build the normal release executable	2026-09-09T12:10:10.8399990Z [1m[92m   Compiling[0m parking_lot_core v0.9.12
+linux	Build the normal release executable	2026-09-09T12:10:10.9214579Z [1m[92m   Compiling[0m generic-array v0.14.7
+linux	Build the normal release executable	2026-09-09T12:10:10.9769219Z [1m[92m   Compiling[0m zmij v1.0.23
+linux	Build the normal release executable	2026-09-09T12:10:11.0749760Z [1m[92m   Compiling[0m scopeguard v1.2.0
+linux	Build the normal release executable	2026-09-09T12:10:11.0799080Z [1m[92m   Compiling[0m zerocopy v0.8.56
+linux	Build the normal release executable	2026-09-09T12:10:11.1099696Z [1m[92m   Compiling[0m getrandom v0.3.4
+linux	Build the normal release executable	2026-09-09T12:10:11.2269271Z [1m[92m   Compiling[0m smallvec v1.16.0
+linux	Build the normal release executable	2026-09-09T12:10:11.2613355Z [1m[92m   Compiling[0m lock_api v0.4.14
+linux	Build the normal release executable	2026-09-09T12:10:11.4287153Z [1m[92m   Compiling[0m num-bigint v0.4.8
+linux	Build the normal release executable	2026-09-09T12:10:11.5539625Z [1m[92m   Compiling[0m ahash v0.8.12
+linux	Build the normal release executable	2026-09-09T12:10:11.6199242Z [1m[92m   Compiling[0m errno v0.3.14
+linux	Build the normal release executable	2026-09-09T12:10:11.6943443Z [1m[92m   Compiling[0m regex-syntax v0.8.11
+linux	Build the normal release executable	2026-09-09T12:10:15.1819579Z [1m[92m   Compiling[0m signal-hook v0.3.18
+linux	Build the normal release executable	2026-09-09T12:10:15.2333130Z [1m[92m   Compiling[0m unicode-segmentation v1.13.3
+linux	Build the normal release executable	2026-09-09T12:10:15.4959596Z [1m[92m   Compiling[0m typenum v1.20.1
+linux	Build the normal release executable	2026-09-09T12:10:16.0709949Z [1m[92m   Compiling[0m rustix v1.1.4
+linux	Build the normal release executable	2026-09-09T12:10:16.2159338Z [1m[92m   Compiling[0m ref-cast v1.0.27
+linux	Build the normal release executable	2026-09-09T12:10:16.3239802Z [1m[92m   Compiling[0m serde_json v1.0.151
+linux	Build the normal release executable	2026-09-09T12:10:16.9802940Z [1m[92m   Compiling[0m convert_case v0.10.0
+linux	Build the normal release executable	2026-09-09T12:10:17.1472560Z [1m[92m   Compiling[0m num-rational v0.4.2
+linux	Build the normal release executable	2026-09-09T12:10:18.2411993Z [1m[92m   Compiling[0m signal-hook-registry v1.4.8
+linux	Build the normal release executable	2026-09-09T12:10:18.2559335Z [1m[92m   Compiling[0m parking_lot v0.12.5
+linux	Build the normal release executable	2026-09-09T12:10:18.9559847Z [1m[92m   Compiling[0m num-iter v0.1.46
+linux	Build the normal release executable	2026-09-09T12:10:18.9920117Z [1m[92m   Compiling[0m num-complex v0.4.6
+linux	Build the normal release executable	2026-09-09T12:10:19.3119664Z [1m[92m   Compiling[0m aho-corasick v1.1.5
+linux	Build the normal release executable	2026-09-09T12:10:22.2120500Z [1m[92m   Compiling[0m bitflags v2.13.1
+linux	Build the normal release executable	2026-09-09T12:10:22.4919960Z [1m[92m   Compiling[0m ref-cast-impl v1.0.27
+linux	Build the normal release executable	2026-09-09T12:10:22.7200000Z [1m[92m   Compiling[0m once_cell v1.21.4
+linux	Build the normal release executable	2026-09-09T12:10:22.7944360Z [1m[92m   Compiling[0m itoa v1.0.18
+linux	Build the normal release executable	2026-09-09T12:10:22.9326970Z [1m[92m   Compiling[0m log v0.4.34
+linux	Build the normal release executable	2026-09-09T12:10:23.0490649Z [1m[92m   Compiling[0m linux-raw-sys v0.12.1
+linux	Build the normal release executable	2026-09-09T12:10:23.3049402Z [1m[92m   Compiling[0m heck v0.5.0
+linux	Build the normal release executable	2026-09-09T12:10:23.4239928Z [1m[92m   Compiling[0m strum_macros v0.28.0
+linux	Build the normal release executable	2026-09-09T12:10:24.8659543Z [1m[92m   Compiling[0m mio v1.2.3
+linux	Build the normal release executable	2026-09-09T12:10:27.6029439Z [1m[92m   Compiling[0m regex-automata v0.4.18
+linux	Build the normal release executable	2026-09-09T12:10:28.5169916Z [1m[92m   Compiling[0m num v0.4.3
+linux	Build the normal release executable	2026-09-09T12:10:28.8396372Z [1m[92m   Compiling[0m derive_more-impl v2.1.1
+linux	Build the normal release executable	2026-09-09T12:10:29.2559853Z [1m[92m   Compiling[0m borrow-or-share v0.2.4
+linux	Build the normal release executable	2026-09-09T12:10:29.2870847Z [1m[92m   Compiling[0m unicode-general-category v1.1.0
+linux	Build the normal release executable	2026-09-09T12:10:29.4749612Z [1m[92m   Compiling[0m litrs v1.0.0
+linux	Build the normal release executable	2026-09-09T12:10:29.7981079Z [1m[92m   Compiling[0m equivalent v1.0.2
+linux	Build the normal release executable	2026-09-09T12:10:29.8249849Z [1m[92m   Compiling[0m allocator-api2 v0.2.21
+linux	Build the normal release executable	2026-09-09T12:10:30.1009798Z [1m[92m   Compiling[0m foldhash v0.2.0
+linux	Build the normal release executable	2026-09-09T12:10:30.2309898Z [1m[92m   Compiling[0m getrandom v0.4.3
+linux	Build the normal release executable	2026-09-09T12:10:30.3099054Z [1m[92m   Compiling[0m thiserror v2.0.20
+linux	Build the normal release executable	2026-09-09T12:10:30.4409636Z [1m[92m   Compiling[0m bit-vec v0.8.0
+linux	Build the normal release executable	2026-09-09T12:10:30.6109513Z [1m[92m   Compiling[0m bit-set v0.8.0
+linux	Build the normal release executable	2026-09-09T12:10:30.7322951Z [1m[92m   Compiling[0m hashbrown v0.17.1
+linux	Build the normal release executable	2026-09-09T12:10:31.3386668Z [1m[92m   Compiling[0m document-features v0.2.12
+linux	Build the normal release executable	2026-09-09T12:10:31.9434067Z [1m[92m   Compiling[0m fluent-uri v0.4.1
+linux	Build the normal release executable	2026-09-09T12:10:33.1969537Z [1m[92m   Compiling[0m derive_more v2.1.1
+linux	Build the normal release executable	2026-09-09T12:10:33.2240078Z [1m[92m   Compiling[0m signal-hook-mio v0.2.5
+linux	Build the normal release executable	2026-09-09T12:10:33.2719187Z [1m[92m   Compiling[0m fraction v0.17.0
+linux	Build the normal release executable	2026-09-09T12:10:33.7289930Z [1m[92m   Compiling[0m strum v0.28.0
+linux	Build the normal release executable	2026-09-09T12:10:33.7841708Z [1m[92m   Compiling[0m crypto-common v0.1.7
+linux	Build the normal release executable	2026-09-09T12:10:33.8399956Z [1m[92m   Compiling[0m block-buffer v0.10.4
+linux	Build the normal release executable	2026-09-09T12:10:33.9079973Z [1m[92m   Compiling[0m vte v0.14.1
+linux	Build the normal release executable	2026-09-09T12:10:34.0849928Z [1m[92m   Compiling[0m thiserror-impl v2.0.20
+linux	Build the normal release executable	2026-09-09T12:10:35.1511132Z [1m[92m   Compiling[0m outref v0.5.2
+linux	Build the normal release executable	2026-09-09T12:10:35.2175094Z [1m[92m   Compiling[0m micromap v0.3.0
+linux	Build the normal release executable	2026-09-09T12:10:35.4372676Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+linux	Build the normal release executable	2026-09-09T12:10:35.7339439Z [1m[92m   Compiling[0m bytecount v0.6.9
+linux	Build the normal release executable	2026-09-09T12:10:35.8940061Z [1m[92m   Compiling[0m iana-time-zone v0.1.65
+linux	Build the normal release executable	2026-09-09T12:10:36.2406093Z [1m[92m   Compiling[0m num-cmp v0.1.0
+linux	Build the normal release executable	2026-09-09T12:10:36.4470534Z [1m[92m   Compiling[0m either v1.18.0
+linux	Build the normal release executable	2026-09-09T12:10:36.5854884Z [1m[92m   Compiling[0m vsimd v0.8.0
+linux	Build the normal release executable	2026-09-09T12:10:36.9184951Z [1m[92m   Compiling[0m uuid-simd v0.8.0
+linux	Build the normal release executable	2026-09-09T12:10:37.1786803Z [1m[92m   Compiling[0m itertools v0.15.0
+linux	Build the normal release executable	2026-09-09T12:10:38.5739673Z [1m[92m   Compiling[0m jsonschema-value v0.55.0
+linux	Build the normal release executable	2026-09-09T12:10:38.7459377Z [1m[92m   Compiling[0m chrono v0.4.45
+linux	Build the normal release executable	2026-09-09T12:10:40.4550460Z [1m[92m   Compiling[0m referencing v0.55.0
+linux	Build the normal release executable	2026-09-09T12:10:41.8969548Z [1m[92m   Compiling[0m strip-ansi-escapes v0.2.1
+linux	Build the normal release executable	2026-09-09T12:10:42.2764419Z [1m[92m   Compiling[0m digest v0.10.7
+linux	Build the normal release executable	2026-09-09T12:10:42.4030027Z [1m[92m   Compiling[0m crossterm v0.29.0
+linux	Build the normal release executable	2026-09-09T12:10:45.1329636Z [1m[92m   Compiling[0m fancy-regex v0.19.1
+linux	Build the normal release executable	2026-09-09T12:10:46.1130203Z [1m[92m   Compiling[0m regex v1.13.1
+linux	Build the normal release executable	2026-09-09T12:10:47.2669803Z [1m[92m   Compiling[0m fd-lock v4.0.4
+linux	Build the normal release executable	2026-09-09T12:10:47.3229451Z [1m[92m   Compiling[0m jsonschema-regex v0.55.0
+linux	Build the normal release executable	2026-09-09T12:10:48.3969831Z [1m[92m   Compiling[0m email_address v0.2.9
+linux	Build the normal release executable	2026-09-09T12:10:48.7639598Z [1m[92m   Compiling[0m nu-ansi-term v0.50.3
+linux	Build the normal release executable	2026-09-09T12:10:49.1299787Z [1m[92m   Compiling[0m unicase v2.9.0
+linux	Build the normal release executable	2026-09-09T12:10:49.2919070Z [1m[92m   Compiling[0m data-encoding v2.11.1
+linux	Build the normal release executable	2026-09-09T12:10:51.7045145Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+linux	Build the normal release executable	2026-09-09T12:10:51.7299444Z [1m[92m   Compiling[0m unicode-width v0.2.2
+linux	Build the normal release executable	2026-09-09T12:10:51.8902665Z [1m[92m   Compiling[0m sha2 v0.10.9
+linux	Build the normal release executable	2026-09-09T12:10:52.0980001Z [1m[92m   Compiling[0m reedline v0.51.0
+linux	Build the normal release executable	2026-09-09T12:10:53.0969740Z [1m[92m   Compiling[0m jsonschema v0.55.0
+linux	Build the normal release executable	2026-09-09T12:11:05.2770647Z [1m[92m   Compiling[0m uuid v1.26.0
+linux	Build the normal release executable	2026-09-09T12:11:05.7411219Z [1m[92m   Compiling[0m programmable-cli v0.1.0 (/home/runner/work/cli/cli)
+linux	Build the normal release executable	2026-09-09T12:11:51.0746466Z [1m[92m    Finished[0m `release` profile [optimized] target(s) in 1m 46s
+linux	Exercise direct configured verbs	﻿2026-09-09T12:11:51.0885517Z ##[group]Run target/release/cli run docs/connected/acceptance/expected-definition.json :tree
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0886431Z [36;1mtarget/release/cli run docs/connected/acceptance/expected-definition.json :tree[0m
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0887488Z [36;1mtarget/release/cli run docs/connected/acceptance/expected-definition.json services quota 12 > target/quota.json 2> target/quota.stderr[0m
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0888640Z [36;1mtest "$(cat target/quota.json)" = '{"quota":12}'[0m
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0889108Z [36;1mrg -q '^\[simulated\]' target/quota.stderr[0m
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0927939Z shell: /usr/bin/bash -e {0}
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0928330Z env:
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0928514Z   CARGO_TERM_COLOR: always
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.0928738Z ##[endgroup]
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.1025705Z service-catalog-connected
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.1026598Z `-- services/
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.1027146Z     |-- inspect [connected:json-file-read-v1]
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.1027748Z     |-- quota <value:number> [simulated]
+linux	Exercise direct configured verbs	2026-09-09T12:11:51.1028432Z     `-- restart [unbound]
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	﻿2026-09-09T12:11:51.1412766Z Post job cleanup.
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4445623Z [command]/usr/bin/git version
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4549805Z git version 2.55.0
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4643402Z Temporarily overriding HOME='/home/runner/work/_temp/b129e851-dfb1-4445-a571-20253ac28faf' before making global git config changes
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4644591Z Adding repository directory to the temporary git global config as a safe directory
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4651448Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4715923Z Removing SSH command configuration
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4716865Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.4779142Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.5075216Z Removing HTTP extra header
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.5098657Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.5139018Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.5461766Z Removing includeIf entries pointing to credentials config files
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.5462698Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+linux	Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1	2026-09-09T12:11:51.5485975Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+linux	Complete job	﻿2026-09-09T12:11:51.6017150Z Cleaning up orphan processes

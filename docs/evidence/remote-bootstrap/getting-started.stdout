@@ -1,0 +1,24 @@
+cli run <spec.json> [context ... command arguments ...]  (use cli run --help for options)
+
+cli --definition <operations.json> --session <checkpoint> [--create --intent-file <task>] [--compose] [--constraints] [--grant-json-read <capability> <file>] [--machine | --commands]
+
+Omit --create to reopen a saved draft. --create requires original task text in --intent-file.
+--compose enables CLI definition activation, contextual discovery, simulated commands, and declared connected reads.
+--grant-json-read grants one logical capability access to one local JSON file for this process only; repeat for distinct capabilities (at most 32). Requires --compose.
+--constraints enables explicit schema attachment, contextual guidance, validation, and constrained commits.
+Use the same profile when reopening a checkpoint; read grants must be supplied again for fresh connected invocations.
+--machine reads JSON request lines; --commands reads terminal command lines and emits JSON events.
+Without either flag, a terminal gets interactive editing and other input gets plain command output.
+Inside the session, use help to discover operations from the loaded definition.
+Ctrl-D closes the session; every acknowledged edit is already checkpointed.
+true
+true
+true
+service-catalog-connected
+`-- services/
+    |-- inspect [connected:json-file-read-v1]
+    |-- quota <value:number> [simulated]
+    `-- restart [unbound]
+[simulated] services catalog.quota
+true
+Your example files are in /tmp/tmp.Nt1IpRBPb4

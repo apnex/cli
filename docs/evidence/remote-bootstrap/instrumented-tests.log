@@ -1,0 +1,207 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli/target/remote-bootstrap/source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.59s
+     Running unittests src/lib.rs (target/debug/deps/programmable_cli-69cd14dffea1ddd3)
+
+running 2 tests
+test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/main.rs (target/debug/deps/cli-a98c6a9b1d6256fd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tools/continuation/receiver.rs (target/debug/deps/cli_trial_receiver-b04768cdb963971b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tests/fixtures/changed_argument.rs (target/debug/deps/probe_changed_argument-b96384dea17bc0bf)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tests/fixtures/extra_handler.rs (target/debug/deps/probe_extra_handler-f0085e9fde5186ae)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tests/fixtures/missing_handler.rs (target/debug/deps/probe_missing_handler-620093e3a883942a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_acceptance.rs (target/debug/deps/authoring_acceptance-b85394a8bace3f30)
+
+running 4 tests
+test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+test recorded_operation_cases_execute_against_application ... ok
+test service_catalog_journey_through_both_process_presentations ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.71s
+
+     Running tests/authoring_discovery.rs (target/debug/deps/authoring_discovery-afcdbee9a68b854b)
+
+running 5 tests
+test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+test separately_built_native_registry_drift_is_rejected_before_session_creation ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/authoring_limits.rs (target/debug/deps/authoring_limits-f096504a2714fb2a)
+
+running 5 tests
+test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+test receipt_overhead_and_response_bound_reject_before_publication ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.44s
+
+     Running tests/authoring_recovery.rs (target/debug/deps/authoring_recovery-31d994511b9e37f4)
+
+running 12 tests
+test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+test uncertain_export_can_be_retried_without_changing_authoring_state ... ok
+test reopening_cannot_report_durable_before_file_and_directory_sync_succeed ... ok
+test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+test measured_publication_failures_preserve_or_explicitly_uncertain_state ... ok
+test killed_process_at_each_publication_boundary_recovers_a_complete_checkpoint ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests/cli_assembly.rs (target/debug/deps/cli_assembly-7420ba6e1c2e2c2a)
+
+running 6 tests
+test assembly_keeps_constraints_and_active_behavior_and_is_order_independent ... ok
+test assembly_publication_failures_and_uncertainty_preserve_recoverability ... ok
+test assembly_replay_and_transfer_validate_embedded_sources_without_reopening_files ... ok
+test component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation ... ok
+test authored_components_assemble_transfer_and_preserve_independent_behavior ... ok
+test component_graph_source_and_collision_failures_preserve_the_checkpoint ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.94s
+
+     Running tests/cli_composition.rs (target/debug/deps/cli_composition-8d78c62f41ea01a1)
+
+running 12 tests
+test composition_registry_checks_actual_handler_and_argument_drift ... ok
+test configured_names_drive_discovery_completion_and_invocation ... ok
+test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+test domain_word_collisions_and_scalar_types_are_configured_without_new_handlers ... ok
+test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+test exact_numbers_survive_arguments_literals_discovery_and_reopen ... ok
+test definition_limits_unknown_fields_and_duplicate_keys_reject_before_activation ... ok
+test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+test lost_mock_response_replays_after_process_death_without_another_transition ... ok
+test activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary ... ok
+test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.70s
+
+     Running tests/cli_run.rs (target/debug/deps/cli_run-44baefec9ba7efb2)
+
+running 10 tests
+test ambiguous_routes_and_invalid_sources_reject_before_checkpoint_creation ... ok
+test exported_cli_runs_direct_verbs_without_authoring_setup ... ok
+test generated_help_tree_and_completion_describe_callable_routes ... ok
+test actual_terminal_completes_context_and_executes_direct_commands ... ok
+test direct_connected_read_labels_history_and_requires_fresh_grants ... ok
+test command_authored_export_runs_and_agrees_with_canonical_invocation ... ok
+test run_publication_faults_preserve_recovery_and_never_acknowledge_uncertain_success ... ok
+test persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes ... ok
+test argv_and_interactive_strings_are_literal_and_control_like_domain_words_remain_callable ... ok
+test assembled_nested_routes_use_local_words_and_keep_component_state_separate ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-7e76bc656dcf2c94)
+
+running 1 test
+test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.68s
+
+     Running tests/connected_json_read.rs (target/debug/deps/connected_json_read-7f0be215709bc759)
+
+running 8 tests
+test connected_grants_pin_parent_directories_and_launcher_rejects_invalid_authority ... ok
+test connected_definition_is_authored_with_typed_commands_and_activates_without_authority ... ok
+test connected_reads_observe_real_files_in_both_presentations_without_mutating_authored_or_mock_state ... ok
+test connected_read_replay_and_handover_preserve_history_without_transferring_grants ... ok
+test connected_read_rejects_bad_targets_documents_signatures_and_stale_requests_atomically ... ok
+test connected_definitions_and_saved_observations_reject_applied_inconsistencies ... ok
+test connected_read_publication_failures_preserve_recoverable_observations_without_claiming_no_read ... ok
+test assembled_connected_components_preserve_requirements_and_share_only_explicit_read_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.95s
+
+     Running tests/continuation_trials.rs (target/debug/deps/continuation_trials-48b07df57a6e9dc2)
+
+running 6 tests
+test targeted_edit_rejects_missing_or_ambiguous_anchors_without_partial_write ... ok
+test oracle_rejects_activatable_semantic_mutations_and_constraint_removal ... ok
+test authoring_comparison_preserves_file_activation_gap_and_checks_imported_continuation has been running for over 60 seconds
+test paired_rehearsals_preserve_whole_handover_and_meet_both_tasks has been running for over 60 seconds
+test receiver_detects_missing_or_changed_inputs_before_creating_work has been running for over 60 seconds
+test receiver_reopens_edits_instead_of_replacing_them_from_handover has been running for over 60 seconds
+test receiver_reopens_edits_instead_of_replacing_them_from_handover ... ok
+test receiver_detects_missing_or_changed_inputs_before_creating_work ... ok
+test paired_rehearsals_preserve_whole_handover_and_meet_both_tasks ... ok
+test authoring_comparison_preserves_file_activation_gap_and_checks_imported_continuation ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 390.12s
+
+     Running tests/document_import.rs (target/debug/deps/document_import-25622f39a0ce258b)
+
+running 6 tests
+test document_import_publication_failure_and_uncertainty_recover_without_source ... ok
+test import_discovery_follows_declaration_and_corrupt_receipts_cannot_reopen ... ok
+test imported_draft_keeps_schema_and_active_cli_until_explicit_commit_and_activation ... ok
+test document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations ... ok
+test authored_cli_spec_exports_imports_and_runs_in_a_separate_resumable_session ... ok
+test rejected_document_import_preserves_checkpoint_and_missing_source_replay_is_idempotent ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+
+     Running tests/schema_constraints.rs (target/debug/deps/schema_constraints-d1a4f4ac7fdfcdf3)
+
+running 10 tests
+test failed_attachments_preserve_drafts_and_reference_policy_is_explicit ... ok
+test schema_guidance_and_completion_share_missing_fields_types_literals_and_limits ... ok
+test attachment_replay_detachment_discard_and_checkpoint_profiles_remain_distinct ... ok
+test retained_upstream_positive_and_negative_instances_match_the_selected_dialect ... ok
+test openapi_description_is_constructed_without_serialized_containers_or_activation ... ok
+test constraint_numbers_are_exact_and_resource_failures_do_not_certify_instances ... ok
+test schema_reference_siblings_conditionals_and_admission_boundaries_are_observable ... ok
+test schema_attachment_publication_faults_and_lost_response_recover_through_saved_receipts ... ok
+test authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen ... ok
+test constraints_compose_with_mock_interfaces_without_sharing_document_roles ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+
+     Running unittests tools/continuation/main.rs (target/debug/examples/continuation_trial-db78bfe4161405b8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

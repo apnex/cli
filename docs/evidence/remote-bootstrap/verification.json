@@ -1,0 +1,137 @@
+{
+  "status": "complete-for-initial-source-bootstrap",
+  "record": "CLI-010",
+  "completed_at_utc": "2026-09-09T12:16:34.787Z",
+  "authorization": "docs/context/cli-010-bootstrap.json",
+  "repository": "https://github.com/apnex/cli",
+  "visibility": "private",
+  "visibility_basis": "Stated implementation default; no public visibility was selected",
+  "branch": "main",
+  "source_revision": "c4e060feaf82b2d2af15f9b1edde133ba799018c",
+  "source_tree": "51c14205877e08a2d29e7b49d974398d192939fd",
+  "source_files": 5040,
+  "local_environment": {
+    "setup": ". docs/evidence/verb-tree/toolchain-env.sh",
+    "toolchain": "rust-toolchain.toml",
+    "source": "Clean clone of the committed source; fresh Cargo target directory and shared dependency cache"
+  },
+  "local_checks": [
+    {
+      "name": "normal-tests",
+      "exit_code": 0,
+      "passed": 70,
+      "log": "normal-tests.log",
+      "command": "cargo test --locked --all-targets"
+    },
+    {
+      "name": "instrumented-tests",
+      "exit_code": 0,
+      "passed": 87,
+      "log": "instrumented-tests.log",
+      "command": "cargo test --locked --all-features --all-targets"
+    },
+    {
+      "name": "source-format",
+      "exit_code": 0,
+      "log": "source-format.log",
+      "command": "cargo fmt --all -- --check"
+    },
+    {
+      "name": "document-tests",
+      "exit_code": 0,
+      "passed": 13,
+      "log": "document-tests.log",
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture"
+    },
+    {
+      "name": "scaffold-check",
+      "exit_code": 0,
+      "log": "scaffold-check.log",
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check"
+    },
+    {
+      "name": "scaffold-format",
+      "exit_code": 0,
+      "log": "scaffold-format.log",
+      "command": "cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check"
+    },
+    {
+      "name": "release-build",
+      "exit_code": 0,
+      "log": "release-build.log",
+      "command": "cargo build --locked --release --bin cli"
+    }
+  ],
+  "local_consumer": {
+    "command": "bash -ex ../getting-started.sh",
+    "working_directory": "Clean source clone",
+    "exit_code": 0,
+    "scope": "Six literal main shell blocks; optional installation and removal retain earlier publication evidence",
+    "stdout": "getting-started.stdout",
+    "trace": "getting-started.stderr"
+  },
+  "normal_release_binary_sha256": "8a9fc5c1d30fa8a20e18982597b9923eb1d4f28875ae9ad4b63d912f2605d99c",
+  "remote_verification": {
+    "branch_response": "initial-remote-branch.json",
+    "repository_response": "initial-remote-repository.json",
+    "git_ls_remote_matches": true,
+    "network_clone_matches_commit_and_tree": true,
+    "network_clone_fsck_exit_code": 0,
+    "clone_log": "github-clone.log",
+    "clone_integrity_log": "github-clone-fsck.log"
+  },
+  "hosted_ci": {
+    "run_id": 34348866527,
+    "url": "https://github.com/apnex/cli/actions/runs/34348866527",
+    "head_sha": "c4e060feaf82b2d2af15f9b1edde133ba799018c",
+    "status": "completed",
+    "conclusion": "success",
+    "result": "hosted-ci.json",
+    "log": "hosted-ci.log",
+    "normal_tests": 70,
+    "instrumented_tests": 87,
+    "documentation_tests": 13
+  },
+  "closeout_documentation": {
+    "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+    "exit_code": 0,
+    "passed": 13,
+    "reconciliation": {
+      "application_acceptance_in_this_check": "not-executed",
+      "board_records": 13,
+      "board_state_mismatches": 0,
+      "declared_operations": 17,
+      "dependency_cycles": 0,
+      "design_corpus_status_at_creation": "not-run-against-application",
+      "documentation_layout_violations": 0,
+      "journey_steps": 38,
+      "local_inline_links": 936,
+      "markdown_documents": 83,
+      "milestones": 9,
+      "operation_cases": 34,
+      "scope": "Static project-record checks; no application requests executed",
+      "status": "pass",
+      "system_scenarios": 24,
+      "uncovered_operations": [],
+      "unmet_ready_prerequisites": 0,
+      "unresolved_local_inline_links": 0
+    },
+    "scope": "Documentation and evidence after the verified source revision; subsequent GitHub checks identify their own head revision"
+  },
+  "preservation_review": "preservation-review.json",
+  "credential_pattern_review": "credential-pattern-review.json",
+  "initial_whitespace_review": {
+    "full_staged_exit_code": 2,
+    "upstream_fixture_findings": 2,
+    "retained_evidence_findings": 305,
+    "findings_outside_those_inputs": 0,
+    "maintained_source_exit_code": 0,
+    "log": "initial-staged-whitespace.log"
+  },
+  "boundaries": [
+    "Source repository only; no package or binary release",
+    "Private visibility; no public disclosure claim",
+    "Self-authored tests and hosted CI; no independent behavioral assurance",
+    "Historical preparation and license-selection verification remain frozen"
+  ]
+}

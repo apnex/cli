@@ -1,0 +1,30 @@
++ set -eu
++ getting_started_repo=/home/apnex/taceng/cli/target/remote-bootstrap/source
++ cargo build --locked --release --bin cli
+    Finished `release` profile [optimized] target(s) in 0.06s
++ getting_started_cli=/home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli
+++ mktemp -d
++ getting_started_demo=/tmp/tmp.Nt1IpRBPb4
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli --help
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli --definition docs/authoring/operations.json --session /tmp/tmp.Nt1IpRBPb4/document.session.json --create --intent-file docs/authoring/acceptance/SERVICE-CATALOG.md --commands
++ jq -es 'all(.[]; .event == "session_open" or .status == "ok")' /tmp/tmp.Nt1IpRBPb4/document.events.jsonl
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli --definition docs/authoring/operations.json --session /tmp/tmp.Nt1IpRBPb4/document.session.json --commands
++ jq -es 'all(.[]; .event == "session_open" or .status == "ok")' /tmp/tmp.Nt1IpRBPb4/reopened.events.jsonl
++ mkdir /tmp/tmp.Nt1IpRBPb4/author /tmp/tmp.Nt1IpRBPb4/consumer
++ cd /tmp/tmp.Nt1IpRBPb4/author
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli --definition /home/apnex/taceng/cli/target/remote-bootstrap/source/docs/authoring/operations.json --session author.session.json --create --intent-file /home/apnex/taceng/cli/target/remote-bootstrap/source/docs/connected/acceptance/TASK.md --compose --commands
++ jq -es 'all(.[]; .event == "session_open" or .status == "ok")' /tmp/tmp.Nt1IpRBPb4/author/author.events.jsonl
++ cp /tmp/tmp.Nt1IpRBPb4/author/connected-cli.json /tmp/tmp.Nt1IpRBPb4/consumer/spec.json
++ cd /tmp/tmp.Nt1IpRBPb4/consumer
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli run spec.json :tree
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli run spec.json services --help
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli run spec.json services quota 12
++ cat /tmp/tmp.Nt1IpRBPb4/consumer/tree.txt
++ cat /tmp/tmp.Nt1IpRBPb4/consumer/quota.stderr
+++ cat /tmp/tmp.Nt1IpRBPb4/consumer/quota.json
++ test '{"quota":12}' = '{"quota":12}'
++ cd /tmp/tmp.Nt1IpRBPb4/consumer
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli run --session run.session.json spec.json
++ /home/apnex/taceng/cli/target/remote-bootstrap/source/target/release/cli run --json --session run.session.json - :status
++ jq -e '.result.last_invocation.output_json_text == "{\"quota\":15}"' /tmp/tmp.Nt1IpRBPb4/consumer/status.json
++ printf 'Your example files are in %s\n' /tmp/tmp.Nt1IpRBPb4
