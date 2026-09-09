@@ -1,0 +1,354 @@
+[
+  {
+    "error": {
+      "code": "INVALID_CONNECTED_DOCUMENT",
+      "message": "JSON value rejected: key must be a string at line 1 column 2",
+      "recovery": "Supply valid JSON with unique decoded keys and valid Unicode."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "c2d3940b-7f6c-4403-8ba5-48286999d1c6",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "INVALID_CONNECTED_DOCUMENT",
+      "message": "JSON value rejected: Duplicate decoded JSON key: \"a\" at line 1 column 18",
+      "recovery": "Supply valid JSON with unique decoded keys and valid Unicode."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "f53fdded-af7a-4610-86cb-371e6e48ce3c",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "INVALID_CONNECTED_DOCUMENT",
+      "message": "Connected JSON file is not UTF-8.",
+      "recovery": "Supply a valid UTF-8 JSON document in the granted file."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "a3f6f03c-7cdb-4c92-a5bb-e2d4d3c9061b",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "INVALID_CONNECTED_DOCUMENT",
+      "message": "JSON value rejected: EOF while parsing a value at line 1 column 0",
+      "recovery": "Supply valid JSON with unique decoded keys and valid Unicode."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "44192776-8c02-454d-bf50-086f4930e75e",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "LIMIT_EXCEEDED",
+      "message": "Connected JSON file exceeds the 1 MiB source limit.",
+      "recovery": "Reduce the input to the documented limit and retry."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "05fedf7b-367a-4efa-b195-214e8477284c",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "LIMIT_EXCEEDED",
+      "message": "String value exceeds 64 KiB.",
+      "recovery": "Reduce the input to the documented limit and retry."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "19311258-4a58-4291-ae29-a929026110ea",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "LIMIT_EXCEEDED",
+      "message": "JSON nesting depth exceeds the supported boundary.",
+      "recovery": "Reduce the input to the documented limit and retry."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "be085015-6b91-4234-b04f-be6ec858651c",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "CONNECTED_READ_FAILED",
+      "message": "Connected JSON file open failed for services.catalog: No such file or directory (os error 2)",
+      "recovery": "Inspect the granted local file; it must be a readable regular file. Retry with a new request to observe current bytes."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "5194d482-9e59-43e6-bc03-ff61bb2b33d2",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "CONNECTED_READ_FAILED",
+      "message": "Connected JSON file open failed for services.catalog: Too many levels of symbolic links (os error 40)",
+      "recovery": "Inspect the granted local file; it must be a readable regular file. Retry with a new request to observe current bytes."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "0a37d9dc-ead4-484a-a935-31db1e722bf5",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "CONNECTED_READ_FAILED",
+      "message": "Connected JSON file target is not a regular file.",
+      "recovery": "Inspect the granted local file; it must be a readable regular file. Retry with a new request to observe current bytes."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "b04d79c3-7465-49eb-bdfb-6fb7c4dff784",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  },
+  {
+    "error": {
+      "code": "CONNECTED_READ_FAILED",
+      "message": "Connected JSON file target is not a regular file.",
+      "recovery": "Inspect the granted local file; it must be a readable regular file. Retry with a new request to observe current bytes."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "01fad3e0-07ab-4642-bab8-50731756f448",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a9eb2519-842a-44f2-b12e-a1db05ba7bf8"
+    },
+    "status": "error"
+  }
+]

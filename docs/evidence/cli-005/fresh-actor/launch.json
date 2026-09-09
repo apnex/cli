@@ -1,0 +1,16 @@
+{
+  "task_name_returned_by_spawn": "/root/fresh_cli_continuation",
+  "fork_turns": "none",
+  "model_override": null,
+  "reasoning_effort_override": null,
+  "prompt": "prompt.txt",
+  "before_launch_observed_at_utc": "2026-09-08 22:31:19 UTC",
+  "after_launch_observed_at_utc": "2026-09-08 22:31:40 UTC",
+  "exact_launch_instant": null,
+  "originating_conversation_forked": false,
+  "isolation_enforced_by_filesystem": false,
+  "extra_context_received_or_accessed": "To be recorded from actor report and observable tools.",
+  "mechanics": "Launch one actor with the saved prompt and no forked turns; retain both clock observations around the launch.",
+  "rationale": "Separate the measured invocation settings from unobserved model internals and additional context.",
+  "consequence": "A fresh task name alone cannot establish that the actor lacked prior project context."
+}

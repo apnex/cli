@@ -1,0 +1,39 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+error[E0599]: no associated function or constant named `load_profile_definition` found for struct `OperationDefinition` in the current scope
+   --> tests/cli_assembly.rs:77:47
+    |
+ 77 | ...erationDefinition::load_profile_definition(&fixture.declaration, programmable_cli::kernel_profile::KernelProfile::ConstrainedCom...
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^ associated function or constant not found in `OperationDefinition`
+    |
+note: if you're trying to build a new `OperationDefinition` consider using one of the following associated functions:
+      OperationDefinition::load_kernel_profile
+      OperationDefinition::load_composition_definition
+      OperationDefinition::load_operation_definition
+      OperationDefinition::from_definition_bytes
+   --> src/operation_definition.rs:183:5
+    |
+183 | /     pub fn load_kernel_profile(
+184 | |         path: &Path,
+185 | |         profile: crate::kernel_profile::KernelProfile,
+186 | |     ) -> Result<Self, AuthoringError> {
+    | |_____________________________________^
+...
+240 |       pub fn load_composition_definition(path: &Path) -> Result<Self, AuthoringError> {
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+284 |       pub fn load_operation_definition(path: &Path) -> Result<Self, AuthoringError> {
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+294 | /     pub fn from_definition_bytes(
+295 | |         bytes: &[u8],
+296 | |         handlers: BTreeMap<String, RegisteredAuthoringHandler>,
+297 | |     ) -> Result<Self, AuthoringError> {
+    | |_____________________________________^
+help: there is an associated function `load_operation_definition` with a similar name
+   --> src/operation_definition.rs:284:5
+    |
+284 |     pub fn load_operation_definition(path: &Path) -> Result<Self, AuthoringError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `programmable-cli` (test "cli_assembly") due to 1 previous error

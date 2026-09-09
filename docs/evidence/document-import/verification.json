@@ -1,0 +1,486 @@
+{
+  "format_version": 1,
+  "record": "CLI-005",
+  "increment": "document-import",
+  "status": "implemented-locally",
+  "observed_at_utc": "2026-09-09 00:33:49 UTC",
+  "authority": "Local executor-run tests and actual CLI walkthroughs; no independent certification or new fresh-agent measurement.",
+  "selection": "../../context/cli-005-import-approval.json",
+  "contract": "../../authoring/IMPORT.md",
+  "audit": "../../authoring/IMPORT-AUDIT.md",
+  "account": "../../authoring/IMPORT-RESULTS.md",
+  "application_acceptance": {
+    "status": "pass",
+    "tests_passed": 63,
+    "import_tests": 6,
+    "continuation_tests": 6,
+    "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=\"$PWD/docs/evidence/document-import/regression\" cargo test --locked --release --all-features --all-targets -- --nocapture",
+    "log": "application-tests.log",
+    "exit_record": "application-tests.exit"
+  },
+  "normal_acceptance": {
+    "status": "pass",
+    "tests_passed": 49,
+    "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=\"$PWD/docs/evidence/document-import/normal-regression\" cargo test --locked --release --all-targets -- --nocapture",
+    "log": "normal-tests.log",
+    "exit_record": "normal-tests.exit",
+    "scope": "Normal build including inert test fault controls; feature-gated continuation and fault tests are covered by the separate instrumented run."
+  },
+  "falsifier": {
+    "status": "failed-before-passed-after",
+    "before_log": "failing-before.log",
+    "before_exit": "failing-before.exit",
+    "observed_rejection": "UNKNOWN_OPERATION",
+    "before_test_hashes": "failing-before-tests.sha256"
+  },
+  "correction": {
+    "initial_integration_status": "fail",
+    "log": "integration.log",
+    "exit_record": "integration.exit",
+    "test_source": "integration-tests-before-fix.rs.txt",
+    "reason": "New uncertainty test incorrectly expected a successful process exit. Existing contract and runtime exit nonzero after unresolved checkpoint publication.",
+    "disposition": "Corrected the test assertion; full suite then reached and passed source-free reopening and receipt replay. Runtime exit behavior was unchanged.",
+    "first_reopen_assertions": "not-reached"
+  },
+  "walkthrough": {
+    "status": "pass",
+    "source": "../../authoring/IMPORT-USE.md",
+    "script": "walkthrough.sh",
+    "log": "walkthrough.log",
+    "exit_record": "walkthrough.exit",
+    "archive": "walkthrough/",
+    "scope": "CLI-authored specification, exported bytes, separate importing session, commit, activation, tree, invocation, identical document export, then source rename and resumption."
+  },
+  "comparison": {
+    "status": "pass",
+    "source": "../../reuse/COMPARISON-USE.md",
+    "script": "comparison.sh",
+    "log": "comparison.log",
+    "exit_record": "comparison.exit",
+    "report": "comparison/comparison.json",
+    "methods": [
+      {
+        "method": "cli-continuation",
+        "definition_runtime": "pass",
+        "full_staged_continuation": {
+          "error": null,
+          "status": "pass"
+        },
+        "construction": {
+          "input_bytes": 1620,
+          "input_lines": 57,
+          "output_bytes": 64364
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "856",
+          "elapsed_receiver_ms": "129",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 2129,
+          "input_lines": 77,
+          "operations": {
+            "activate": 1,
+            "append": 6,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 12,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "set": 39,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 122290,
+          "recorded_processes": 3,
+          "response_events": 78,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "external_work": null,
+        "result": "comparison/cli-continuation/result.json"
+      },
+      {
+        "method": "targeted-json-editing",
+        "definition_runtime": "pass",
+        "full_staged_continuation": {
+          "error": "Worker definition differs from the fixed task or has not been committed",
+          "status": "fail"
+        },
+        "construction": {
+          "input_bytes": 31,
+          "input_lines": 1,
+          "output_bytes": 1214
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "128",
+          "elapsed_receiver_ms": "131",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 528,
+          "input_lines": 19,
+          "operations": {
+            "activate": 1,
+            "commit": 1,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 56935,
+          "recorded_processes": 3,
+          "response_events": 20,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "external_work": {
+          "editing": {
+            "after_sha256": "b5bf4ffd18c159a0631e2f694de8d17aa36aca8af9b3a696391c1ee17a266a97",
+            "before_sha256": "c7fc14e73d2b5f806865bb52cbc23e140d99ab9321818b16068541976696c1d9",
+            "document_bytes_read": 1771,
+            "document_bytes_written": 2490,
+            "edits_applied": 2,
+            "elapsed_editor_ms": "0",
+            "recipe_bytes": 994,
+            "scope": "Literal text replacement on an exported document; no checkpoint write or product transaction is implied.",
+            "status": "ok",
+            "timing_overlap": "Included in method and open-process wall time; do not add these timers."
+          },
+          "validation_after": {
+            "document_bytes_read": 2490,
+            "elapsed_validation_ms": "0",
+            "timing_overlap": "Included in method and open-process wall time.",
+            "validation": {
+              "findings": [],
+              "truncated": false,
+              "valid": true
+            },
+            "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+          },
+          "validation_before": {
+            "document_bytes_read": 1771,
+            "elapsed_validation_ms": "0",
+            "timing_overlap": "Included in method and open-process wall time.",
+            "validation": {
+              "findings": [
+                {
+                  "instance_path": "/mock_state/queue/paused",
+                  "keyword": "type",
+                  "message": "\"false\" is not of type \"boolean\"",
+                  "message_truncated": false,
+                  "schema_path": "/properties/mock_state/properties/queue/properties/paused/type"
+                }
+              ],
+              "truncated": false,
+              "valid": false
+            },
+            "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+          }
+        },
+        "result": "comparison/targeted-json-editing/result.json"
+      },
+      {
+        "method": "cli-reconstruction",
+        "definition_runtime": "pass",
+        "full_staged_continuation": {
+          "error": null,
+          "status": "pass"
+        },
+        "construction": {
+          "input_bytes": 4990,
+          "input_lines": 179,
+          "output_bytes": 196971
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "2316",
+          "elapsed_receiver_ms": "131",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 5499,
+          "input_lines": 199,
+          "operations": {
+            "activate": 1,
+            "append": 12,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 34,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "set": 128,
+            "show": 2,
+            "status": 1,
+            "top": 5,
+            "tree": 2
+          },
+          "output_bytes": 254901,
+          "recorded_processes": 3,
+          "response_events": 200,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "external_work": null,
+        "result": "comparison/cli-reconstruction/result.json"
+      },
+      {
+        "method": "targeted-json-import",
+        "definition_runtime": "pass",
+        "full_staged_continuation": {
+          "error": null,
+          "status": "pass"
+        },
+        "construction": {
+          "input_bytes": 89,
+          "input_lines": 3,
+          "output_bytes": 3694
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "202",
+          "elapsed_receiver_ms": "138",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 598,
+          "input_lines": 23,
+          "operations": {
+            "activate": 1,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 1,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "import": 1,
+            "invoke": 2,
+            "save": 2,
+            "schema": 1,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 61628,
+          "recorded_processes": 3,
+          "response_events": 24,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "external_work": {
+          "editing": {
+            "after_sha256": "b5bf4ffd18c159a0631e2f694de8d17aa36aca8af9b3a696391c1ee17a266a97",
+            "before_sha256": "c7fc14e73d2b5f806865bb52cbc23e140d99ab9321818b16068541976696c1d9",
+            "document_bytes_read": 1771,
+            "document_bytes_written": 2490,
+            "edits_applied": 2,
+            "elapsed_editor_ms": "0",
+            "recipe_bytes": 994,
+            "scope": "Literal text replacement on an exported document; no checkpoint write or product transaction is implied.",
+            "status": "ok",
+            "timing_overlap": "Included in method and open-process wall time; do not add these timers."
+          },
+          "validation_after": {
+            "document_bytes_read": 2490,
+            "elapsed_validation_ms": "0",
+            "timing_overlap": "Included in method and open-process wall time.",
+            "validation": {
+              "findings": [],
+              "truncated": false,
+              "valid": true
+            },
+            "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+          },
+          "validation_before": {
+            "document_bytes_read": 1771,
+            "elapsed_validation_ms": "0",
+            "timing_overlap": "Included in method and open-process wall time.",
+            "validation": {
+              "findings": [
+                {
+                  "instance_path": "/mock_state/queue/paused",
+                  "keyword": "type",
+                  "message": "\"false\" is not of type \"boolean\"",
+                  "message_truncated": false,
+                  "schema_path": "/properties/mock_state/properties/queue/properties/paused/type"
+                }
+              ],
+              "truncated": false,
+              "valid": false
+            },
+            "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+          }
+        },
+        "result": "comparison/targeted-json-import/result.json"
+      }
+    ],
+    "scope": "Controlled artifact and runtime comparison; consult each full_staged_continuation verdict for workflow parity.",
+    "timing_scope": "Experiment includes preparation, copies, methods, and evaluation; nested timers overlap. Compilation and recipe authoring are excluded.",
+    "sample_scope": "One execution per known method; no randomized or population timing inference.",
+    "agent_or_human_advantage": "not-claimed",
+    "full_workflow_economic_advantage": "not-claimed",
+    "older_experiment": "../cli-005/comparison/walkthrough/comparison.json"
+  },
+  "compatibility": {
+    "checkpoint_formats": "unchanged",
+    "profile_identities": "unchanged",
+    "base_declaration_digest": "changed",
+    "old_checkpoint_migration": "not-implemented; preserve original binary/declaration pair",
+    "previous_runtime": "before/runtime.sha256",
+    "previous_current_record": "before/docs_evidence_cli-005_verification.json.txt"
+  },
+  "archives": {
+    "status": "pass",
+    "script": "archive.sh",
+    "log": "archive.log",
+    "exit_record": "archive.exit",
+    "integrity": "archive-integrity.log",
+    "inventory": "artifact-inventory.sha256",
+    "scope": "All run text copied with cmp verification; Markdown package documents renamed .txt without changing bytes. Executables remain in original run directories with their source-inventory hashes."
+  },
+  "documentation_checks": {
+    "status": "pass",
+    "tests_passed": 13,
+    "test_command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+    "test_log": "scaffold-tests.log",
+    "test_exit_record": "scaffold-tests.exit",
+    "generated_view_command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+    "generated_view_log": "scaffold-check.log",
+    "generated_view_exit_record": "scaffold-check.exit",
+    "declared_layers": 7,
+    "synchronized_views": 15,
+    "board_state_mismatches": 0,
+    "unresolved_local_inline_links": 0,
+    "documentation_layout_violations": 0,
+    "markdown_documents": 62,
+    "local_inline_links": 667,
+    "dependency_cycles": 0,
+    "unmet_ready_prerequisites": 0,
+    "declared_operations": 17,
+    "uncovered_operations": [],
+    "scope": "Documentation placement, links, board/backlog correspondence, corpus checks, and generated views. No application acceptance tests run by this check.",
+    "current_documentation_hashes": "documentation.sha256",
+    "measurement_scope": "Checks ran after the import documentation changes and scaffold formatting. Verification summaries were updated afterward from captured results; the log's source hashes identify files as observed by the check."
+  },
+  "source_files_sha256": {
+    "Cargo.toml": "0f3d8f19321a74f27bb353f04cb064981744f63e8c6281eab8a7bbe540d3f0bf",
+    "Cargo.lock": "cc7553954f6ba5ca85a6bcb517b45396b3e63753c698cdb4e5a855c1b1acbccb",
+    "src/authoring_error.rs": "807aa3e50fafaa71614f2a325f161ce395e3dfe61c2c9b4760d4587783b2a580",
+    "src/authoring_frontend.rs": "1d19484c898ab9fbd418d1d0e6ca92e0f01093f14bd0178c7858838555d25d91",
+    "src/authoring_operations.rs": "b85916e447e1f33485dd1f7734ee6e6182f4b4f339678233185efe1754c738d8",
+    "src/authoring_protocol.rs": "cab2a7d74fa4b7af49066c6ba2b486c82224d0f91df29f7663463c670b75b000",
+    "src/authoring_result.rs": "38c51470b5a7b151560354ceecf2efe2d1b56d458240cabe8df2df540310d338",
+    "src/authoring_runtime.rs": "3514a30e25298f5ea6b7ca39eed7c812e493096ae3ef8cac645f76507fea99b8",
+    "src/cli_composition.rs": "c922e99461c20e64e7567fee8f7634b921a6c8e5957b22d3d61d2c39c9a1ece3",
+    "src/cli_definition.rs": "499ea313cc0e1465438623c331014d1e45568a22a78eb4e952db2b9fdab102ac",
+    "src/cli_interface.rs": "2d6f1ac29172762fe1be5217802d808632e74c931e25bbf04e654275c0166d21",
+    "src/cli_terminal.rs": "01cfd6954b298b8fc4bdd5fa725f9997d4b99d43c07d1953d55cfe86915eedb3",
+    "src/cli_verb_tree.rs": "9d521cc34ba110c98fafabc1dc98854ad0005d994e9ffd5a19a3451614b56a8d",
+    "src/constraint_operations.rs": "b607381c82928bf6a89e671569a849240629a81ce01869d371a0e2269fb59dc7",
+    "src/document_path.rs": "c3d5f24c70805d6251987d0ae383829a32dd5b44d9398ac16442c99d6dc58dd0",
+    "src/document_value.rs": "5e30da980a9a546aedfa06a3ff157133d877c07b3b2a46793a0b7551971e75c9",
+    "src/kernel_profile.rs": "e636c31ba3031f3db5aec7a9a9224463f812bb3cd7fb275195db381b35ffbc1c",
+    "src/lib.rs": "3e6be99885af31793634d82fbf60dea4446107188edc0735c5f7d05f48312104",
+    "src/main.rs": "6350525487a9143f064a6a6ddcd52484eed03d067e0fc49ce211c60b29dc8876",
+    "src/operation_definition.rs": "3f7feefbe47dd088e3880fff5348317ec492130894224767a60f507f61820d55",
+    "src/schema_constraint.rs": "44d0cb5589e6988a96afea0a5a5289c80263e8102bc1b373611477469eb6c5be",
+    "src/schema_guidance.rs": "e7d38a6208e5bd9fc14a7102d3c05119a619bfb26966df9d8a14d038791cac7f",
+    "src/session_storage.rs": "7d190cba2fa00d1b0301f85e2bdc2322dfcf6bf93d95cfcabe5e0b4addc04748",
+    "src/storage_faults.rs": "70e14680f4e4b307f38525c4e32538329705593abc384ee640637fcb36dd9e4a",
+    "src/terminal_completion.rs": "418005fb3e1f4209aaf56e8d87bfd8c3ecba7af50e5f24a97e12f0e94d9d8580",
+    "src/terminal_input.rs": "68f5a2d53c8e2570c093862b458933067e7e81e1b02058ad23e5e4818041cdac",
+    "tests/authoring_acceptance.rs": "4ccb3d1d7ba3e913868f3d768dc4ca5cefab84ef01cb2964fc61ce7136bbbe30",
+    "tests/authoring_discovery.rs": "41b3be7e48b26a82b5e85bfc6b892e38d83c74faaf10ec42ed40bfe40c99ac52",
+    "tests/authoring_limits.rs": "2fcc9d876c6fd1b60c04eed6e6985735c51c5fa030a3ad81b021aea6a756bf06",
+    "tests/authoring_recovery.rs": "b29125fdc3ec2a8151e683f2d6b8d9c0e6d23c3c9ac1ee0936ee47b95806145f",
+    "tests/cli_composition.rs": "7a65d0c1269435c29e11d9cfd2547f303fe570c22fb77318b799c3b47390907d",
+    "tests/cli_verb_tree.rs": "b3e50a4f0a420325ef3da20ae2a15e6ea52b5046f225e737f1ccf4e4244425d0",
+    "tests/continuation_trials.rs": "b7f721b0098772d0f51005c3b3afe36c5d2acd698b4aa3d09bd3d248bd5996db",
+    "tests/document_import.rs": "cc4d8d336c520e35a976bfaa4636bb2515c85ffa6a09b2a2052be64446a000dd",
+    "tests/schema_constraints.rs": "23261d61a40a17aa8c829d91cccb915fa51e3997dbc4f00b05b17414dc8b679c",
+    "tools/continuation/main.rs": "02587d53f54cb2db18c8ce70aaed8b97f01713e7dc79ca35d4f69d732fcdbab6",
+    "tools/continuation/receiver.rs": "94de12a17bedb7b2169c879a4b6ef195a27414129bf529b834c0e5bd643b94b9",
+    "tools/continuation/trial_comparison.rs": "bd13c77f457223faa0da295d309edfdf3fb5a494472c1d9cd6250e7f751e9ffb",
+    "tools/continuation/trial_manifest.rs": "0da2a3824af01b106bcbe4e755207cbd0bb01af79692a5e7d551e5a743e30aa3",
+    "tools/continuation/trial_oracle.rs": "8daff89de46e97ed78f6f49ef7bcef0aef8dd3d19f7cbf17a888046e3dacadb9",
+    "tools/continuation/trial_package.rs": "b830e260f1aacb4fd375367e9e5b932e8672111cec42bd8378c492cad9692185",
+    "tools/continuation/trial_process.rs": "61c7c0006b6c881021080974e3cb257336647a084c36a1e58a4e03e9caf5ecf3",
+    "tools/continuation/trial_rehearsal.rs": "f95597f3240aa76b76ae2bf655cd34120980263acf16a52861f49d6b36add43c",
+    "tools/continuation/trial_text_edit.rs": "f32ab932ca37981fe2bea72b919a248a505011dcada709a51f21e05f4aa28960",
+    "tools/scaffold/tests/project_records.rs": "0d1ddcd193a39d9295906f58e8b6afced9288c6f305d3732b24333521607fa3e",
+    "docs/authoring/operations.json": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+    "docs/authoring/acceptance/import-cases.json": "7dd84510eb76ff7bbad486c6de488978ad9312d128ba8c93ecbd333e32f90cba"
+  },
+  "release_binaries_sha256": {
+    "target/release/cli": "ef565f95d9a9f136a16afc3cb099fcd0552dcf3dc424945cf51686bf91f5a2b2",
+    "target/release/cli-trial-receiver": "6bd2977b88f92d55495c51a8ff74e125e0ada584c6fadc5e9d7a9a46c1e6853e",
+    "target/release/examples/continuation-trial": "d352a224637c52ba8c0774e538fc030d89911b3838fd37c6420b5673b6a32e25"
+  },
+  "format_check": {
+    "status": "pass",
+    "command": "cargo fmt --all -- --check",
+    "log": "format-check.log",
+    "exit_record": "format-check.exit"
+  },
+  "scaffold_format_check": {
+    "status": "pass",
+    "command": "cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check",
+    "log": "scaffold-format.log",
+    "exit_record": "scaffold-format.exit"
+  },
+  "normal_build": {
+    "status": "pass",
+    "command": "cargo build --locked --bin cli",
+    "log": "normal-build.log",
+    "exit_record": "normal-build.exit",
+    "binary": "target/debug/cli",
+    "binary_sha256": "501fd35da7d2ed439817b9cb4ae34bf3423de4e4ff7222e2d73d5529c6f53f14",
+    "purpose": "Restore the ordinary debug application after instrumented regression tests."
+  },
+  "source_files_sha256_scope": "Application sources match the passing application runs. The scaffold test source was formatted before its passing documentation run; its earlier hash is retained in source-before-scaffold-format.sha256."
+}

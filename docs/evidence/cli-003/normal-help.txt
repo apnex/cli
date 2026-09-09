@@ -1,0 +1,9 @@
+cli --definition <operations.json> --session <checkpoint> [--create --intent-file <task>] [--compose] [--machine | --commands]
+
+Omit --create to reopen a saved draft. --create requires original task text in --intent-file.
+--compose enables CLI definition activation, contextual discovery, and explicitly simulated commands.
+Use the same profile when reopening a checkpoint.
+--machine reads JSON request lines; --commands reads terminal command lines and emits JSON events.
+Without either flag, a terminal gets interactive editing and other input gets plain command output.
+Inside the session, use help to discover operations from the loaded definition.
+Ctrl-D closes the session; every acknowledged edit is already checkpointed.

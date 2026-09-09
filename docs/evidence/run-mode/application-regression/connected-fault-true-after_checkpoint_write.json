@@ -1,0 +1,32 @@
+{
+  "error": {
+    "code": "PERSISTENCE_FAILED",
+    "message": "Checkpoint publication failed: Injected storage failure after writing its boundary marker",
+    "recovery": "Inspect the local file or filesystem error and retry without replacing unrelated content."
+  },
+  "event": "response",
+  "mutation": "none",
+  "operation": "invoke",
+  "replayed": false,
+  "request_id": "017aaef2-b953-42c9-ae39-9eebcd912047",
+  "result": null,
+  "session": {
+    "accepted_revision": "2",
+    "active_interface": {
+      "binding_scope": "includes_connected_read",
+      "context": "services",
+      "definition_id": "service-catalog-connected",
+      "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+    },
+    "constraint_mode": "unconstrained",
+    "context": [],
+    "definition_id": "bootstrap-cli-constraints-v1",
+    "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+    "dirty": false,
+    "durability": "durable",
+    "node_kind": "object",
+    "revision": "4",
+    "session_id": "489fc4eb-cc51-4f21-baa5-5d2f8d62743c"
+  },
+  "status": "error"
+}

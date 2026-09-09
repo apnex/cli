@@ -1,0 +1,51 @@
+{
+  "definition_bytes": 2490,
+  "fresh_actor_attestation": null,
+  "interaction": {
+    "actor_elapsed_ms": null,
+    "elapsed_process_ms": "848",
+    "elapsed_receiver_ms": "1436",
+    "errors": {
+      "DEFINITION_MISMATCH": 1,
+      "INVALID_CLI_ARGUMENTS": 5,
+      "REVISION_CONFLICT": 1,
+      "SCHEMA_VIOLATION": 1,
+      "UNBOUND_OPERATION": 2
+    },
+    "human_interventions": null,
+    "input_bytes": 2635,
+    "input_lines": 96,
+    "operations": {
+      "activate": 2,
+      "append": 6,
+      "commit": 2,
+      "delete": 1,
+      "diff": 3,
+      "discover": 5,
+      "edit": 2,
+      "enter": 4,
+      "export-interface": 1,
+      "guide": 1,
+      "help": 2,
+      "invoke": 13,
+      "save": 1,
+      "schema": 2,
+      "set": 39,
+      "show": 5,
+      "status": 2,
+      "tree": 2,
+      "up": 2,
+      "validate": 1
+    },
+    "output_bytes": 186658,
+    "recorded_processes": 7,
+    "response_events": 97,
+    "response_scope": "Includes launcher rejection events without an input command.",
+    "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+    "tokens": null
+  },
+  "interface_export_bytes": 7795,
+  "scope": "Task fidelity and real CLI behavior; actor independence is attested separately.",
+  "status": "pass",
+  "submitted_checkpoint_sha256": "059833b9f497009e074b74eb8bca5874f01537c22c2c77c3652c56f54d02ff66"
+}

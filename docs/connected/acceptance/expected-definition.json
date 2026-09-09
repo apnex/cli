@@ -1,0 +1,43 @@
+{
+  "format": "cli-definition-v1",
+  "id": "service-catalog-connected",
+  "description": "Read an external catalog and explore explicit mocks.",
+  "contexts": {
+    "root": {
+      "parent": null,
+      "help": "Explore the service catalog.",
+      "related": [],
+      "commands": {}
+    },
+    "services": {
+      "parent": "root",
+      "help": "Read the granted catalog or change simulated quota.",
+      "related": [],
+      "commands": {
+        "inspect": {
+          "id": "catalog.inspect",
+          "help": "Read the external JSON catalog; this does not probe service health.",
+          "parameters": [],
+          "binding": {"kind":"connected","provider":"json-file-read-v1","capability":"services.catalog"}
+        },
+        "quota": {
+          "id": "catalog.quota",
+          "help": "Change only simulated quota.",
+          "parameters": [{"name":"value","type":"number","help":"New simulated quota."}],
+          "binding": {
+            "kind": "simulated",
+            "steps": [{"path":[{"key":"quota"}],"value":{"source":"argument","name":"value"}}],
+            "output": {"source":"state","path":[]}
+          }
+        },
+        "restart": {
+          "id": "catalog.restart",
+          "help": "Restart when an implementation is attached.",
+          "parameters": [],
+          "binding": {"kind":"unbound","reason":"No restart capability is attached."}
+        }
+      }
+    }
+  },
+  "mock_state": {"quota":7}
+}

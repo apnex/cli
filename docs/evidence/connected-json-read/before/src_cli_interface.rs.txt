@@ -1,0 +1,296 @@
+//! Active interfaces retain their own context, simulated document, and runtime-owned outcome labels.
+
+use crate::authoring_error::AuthoringError;
+use crate::authoring_protocol::SessionRevision;
+use crate::cli_definition::{
+    CliBehaviorBinding, CliCommand, CliContextParent, CliDefinition, CliMockExpression,
+    cli_definition_error,
+};
+use crate::document_path::{read_document_path, set_document_value};
+use crate::document_value::{DocumentValue, MAX_SCALAR_BYTES};
+use serde::{Deserialize, Serialize};
+use serde_json::{Value, json};
+use std::collections::BTreeMap;
+
+/// Interface headers identify the active content and navigation separately from the authored document.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliInterfaceHeader {
+    pub definition_id: String,
+    pub definition_sha256: String,
+    pub context: String,
+    pub binding_scope: String,
+}
+
+/// A simulated outcome cannot let an authored payload replace its outer effect classification.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliInvocationOutcome {
+    pub definition_sha256: String,
+    pub operation_id: String,
+    pub context: String,
+    pub binding: String,
+    pub effect: String,
+    pub output_json_text: String,
+    pub simulated_steps: usize,
+}
+
+/// Origin records are provenance only, never a grant of authority to a receiving session.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliInterfaceOrigin {
+    pub intent_text: String,
+    pub revision: SessionRevision,
+}
+
+/// Active interface state is persisted inside the same checkpoint as its activation and invocation receipts.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ActiveCliInterface {
+    pub definition: CliDefinition,
+    pub definition_sha256: String,
+    pub context: String,
+    pub mock_state: DocumentValue,
+    pub last_invocation: Option<CliInvocationOutcome>,
+    pub origin: CliInterfaceOrigin,
+}
+
+/// A portable interface export retains simulated state and outcomes rather than presenting a bare result.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliInterfaceExport {
+    pub format: String,
+    pub interface: ActiveCliInterface,
+    pub source_intent_text: String,
+    pub source_revision: SessionRevision,
+}
+
+/// Interface operations report missing activation with a repair the user can carry out locally.
+pub fn inactive_cli_error() -> AuthoringError {
+    AuthoringError::new(
+        "NO_ACTIVE_INTERFACE",
+        "CLI interface has not been activated.",
+        "Construct a definition, then activate it explicitly.",
+    )
+}
+
+fn invocation_arguments_error(message: impl Into<String>) -> AuthoringError {
+    AuthoringError::new(
+        "INVALID_CLI_ARGUMENTS",
+        message,
+        "Discover the current command and supply exactly its declared scalar arguments.",
+    )
+}
+
+impl ActiveCliInterface {
+    /// Initialize simulation from validated definition data; callers retain existing state for identical content.
+    pub fn initialize_cli_interface(definition: CliDefinition, origin: CliInterfaceOrigin) -> Self {
+        Self {
+            definition_sha256: definition.cli_definition_digest(),
+            mock_state: definition.mock_state.clone(),
+            definition,
+            context: "root".into(),
+            last_invocation: None,
+            origin,
+        }
+    }
+
+    /// Validate recovered or imported interface relationships before exposing them to a session.
+    pub fn validate_cli_interface(&self) -> Result<(), AuthoringError> {
+        self.definition.validate_cli_definition()?;
+        self.mock_state.validate_document_limits()?;
+        crate::cli_assembly::validate_assembled_state(&self.definition, &self.mock_state)?;
+        if self.definition_sha256 != self.definition.cli_definition_digest()
+            || !self.definition.contexts.contains_key(&self.context)
+            || self.origin.intent_text.len() > MAX_SCALAR_BYTES
+        {
+            return Err(cli_definition_error(
+                "CLI saved identity, context, or origin is invalid.",
+            ));
+        }
+        if let Some(outcome) = &self.last_invocation {
+            let command = self
+                .definition
+                .contexts
+                .get(&outcome.context)
+                .and_then(|context| {
+                    context
+                        .commands
+                        .values()
+                        .find(|command| command.id == outcome.operation_id)
+                });
+            let steps = command.and_then(|command| match &command.binding {
+                CliBehaviorBinding::Simulated { steps, .. } => Some(steps.len()),
+                _ => None,
+            });
+            if outcome.definition_sha256 != self.definition_sha256
+                || outcome.binding != "simulated"
+                || outcome.effect != "simulation_only"
+                || steps != Some(outcome.simulated_steps)
+            {
+                return Err(cli_definition_error(
+                    "CLI saved outcome disagrees with its simulated binding.",
+                ));
+            }
+            DocumentValue::parse_document(&outcome.output_json_text)?;
+        }
+        Ok(())
+    }
+
+    /// Report runtime-owned identity and simulation scope in every acknowledged session header.
+    pub fn cli_interface_header(&self) -> CliInterfaceHeader {
+        CliInterfaceHeader {
+            definition_id: self.definition.id.clone(),
+            definition_sha256: self.definition_sha256.clone(),
+            context: self.context.clone(),
+            binding_scope: "simulation_or_unbound".into(),
+        }
+    }
+
+    /// Resolve a local command word only in the currently selected interface context.
+    pub fn resolve_cli_command(&self, word: &str) -> Result<&CliCommand, AuthoringError> {
+        self.definition.contexts[&self.context]
+            .commands
+            .get(word)
+            .ok_or_else(|| {
+                AuthoringError::new(
+                    "UNKNOWN_CLI_COMMAND",
+                    "CLI command is not declared in the current context.",
+                    "Use discover or enter a context containing that command.",
+                )
+            })
+    }
+
+    /// Discovery returns local contracts, relationships, and explicitly simulated observations.
+    pub fn discover_cli_interface(&self) -> Value {
+        let context = &self.definition.contexts[&self.context];
+        let mut context_view = json!(context);
+        for (word, command) in &context.commands {
+            if matches!(command.binding, CliBehaviorBinding::Simulated { .. }) {
+                context_view["commands"][word]["binding"] = json!({"kind":"simulated","program_json_text":serde_json::to_string(&command.binding).unwrap()});
+            }
+        }
+        let children: BTreeMap<_, _> = self.definition.contexts.iter().filter(|(_, node)| matches!(&node.parent, CliContextParent::Context(parent) if parent == &self.context)).map(|(id, node)| (id, &node.help)).collect();
+        json!({"interface":self.cli_interface_header(),"description":self.definition.description,"context":context_view,"children":children,"mock_state_json_text":self.mock_state.compact_document_json(),"last_invocation":self.last_invocation,"origin":self.origin})
+    }
+
+    /// Change only interface context; parent and root navigation never move the document authoring path.
+    pub fn enter_cli_context(&mut self, target: &str) -> Result<(), AuthoringError> {
+        let target = match target {
+            "/" => "root".to_owned(),
+            ".." => match &self.definition.contexts[&self.context].parent {
+                CliContextParent::Root(()) => "root".into(),
+                CliContextParent::Context(parent) => parent.clone(),
+            },
+            target => target.into(),
+        };
+        if !self.definition.contexts.contains_key(&target) {
+            return Err(AuthoringError::new(
+                "UNKNOWN_CLI_CONTEXT",
+                "CLI target context is not declared.",
+                "Discover available context identities before entering one.",
+            ));
+        }
+        self.context = target;
+        Ok(())
+    }
+
+    /// Validate named scalar input once for machine requests and terminal-lowered invocations.
+    pub fn validate_cli_arguments(
+        &self,
+        word: &str,
+        values: &BTreeMap<String, Value>,
+    ) -> Result<BTreeMap<String, DocumentValue>, AuthoringError> {
+        let command = self.resolve_cli_command(word)?;
+        if values.len() != command.parameters.len()
+            || values.keys().any(|name| {
+                !command
+                    .parameters
+                    .iter()
+                    .any(|parameter| &parameter.name == name)
+            })
+        {
+            return Err(invocation_arguments_error(
+                "CLI argument names do not match the declared signature.",
+            ));
+        }
+        command
+            .parameters
+            .iter()
+            .map(|parameter| {
+                let value = values.get(&parameter.name).ok_or_else(|| {
+                    invocation_arguments_error("CLI required argument is missing.")
+                })?;
+                let value = crate::operation_definition::parse_value_constructor(value).map_err(
+                    |error| {
+                        if error.code == "LIMIT_EXCEEDED" {
+                            error
+                        } else {
+                            error.with_error_code("INVALID_CLI_ARGUMENTS")
+                        }
+                    },
+                )?;
+                if value.document_kind() != parameter.value_type {
+                    return Err(invocation_arguments_error(format!(
+                        "CLI argument {} requires {}.",
+                        parameter.name, parameter.value_type
+                    )));
+                }
+                Ok((parameter.name.clone(), value))
+            })
+            .collect()
+    }
+
+    /// Execute bounded mock instructions privately; the outer runtime alone can publish their receipt.
+    pub fn invoke_cli_command(
+        &mut self,
+        word: &str,
+        values: &BTreeMap<String, Value>,
+    ) -> Result<CliInvocationOutcome, AuthoringError> {
+        let arguments = self.validate_cli_arguments(word, values)?;
+        let command = self.resolve_cli_command(word)?;
+        let (steps, output) = match &command.binding {
+            CliBehaviorBinding::Unbound { reason } => {
+                return Err(AuthoringError::new(
+                    "UNBOUND_OPERATION",
+                    format!("CLI operation is unbound: {reason}"),
+                    "Inspect the declared expectation; no implementation or simulated success was supplied.",
+                ));
+            }
+            CliBehaviorBinding::Simulated { steps, output } => (steps, output),
+        };
+        let mut document = self.mock_state.clone();
+        for (index, step) in steps.iter().enumerate() {
+            let value = evaluate_mock_expression(&step.value, &arguments, &document)
+                .map_err(|error| error.at_batch_index(index))?;
+            set_document_value(&mut document, &mut Vec::new(), &step.path, value)
+                .map_err(|error| error.at_batch_index(index))?;
+            document.validate_document_limits()?;
+        }
+        let output = evaluate_mock_expression(output, &arguments, &document)?;
+        let outcome = CliInvocationOutcome {
+            definition_sha256: self.definition_sha256.clone(),
+            operation_id: command.id.clone(),
+            context: self.context.clone(),
+            binding: "simulated".into(),
+            effect: "simulation_only".into(),
+            output_json_text: output.compact_document_json(),
+            simulated_steps: steps.len(),
+        };
+        self.mock_state = document;
+        self.last_invocation = Some(outcome.clone());
+        Ok(outcome)
+    }
+}
+
+fn evaluate_mock_expression(
+    expression: &CliMockExpression,
+    arguments: &BTreeMap<String, DocumentValue>,
+    state: &DocumentValue,
+) -> Result<DocumentValue, AuthoringError> {
+    match expression {
+        CliMockExpression::Literal { value } => Ok(value.clone()),
+        CliMockExpression::Argument { name } => Ok(arguments[name].clone()),
+        CliMockExpression::State { path } => Ok(read_document_path(state, path)?.clone()),
+    }
+}

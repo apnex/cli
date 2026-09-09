@@ -1,0 +1,189 @@
+Session "4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1" | revision "209" | accepted "208" | draft matches accepted
+Task: "# Platform mock and verb tree\n\nConstruct a platform CLI from an empty document using authoring commands only.\nThe root has a version verb.\nServices expose simulated inspection and replica changes, plus an unbound restart.\nDeployments expose a simulated plan and an unbound apply, with a nested releases context for listing and unbound rollback.\nEnvironments expose simulated listing and selection.\nThe tree must derive context ownership, local command words, required parameters, and binding labels from the activated definition.\nDiscovery must leave the checkpoint unchanged and retain the current contextual details for machine consumers.\nDraft edits must appear in the tree only after successful activation.\n\nThis demonstrates local mocked behavior; it does not connect to a deployment platform.\n"
+{
+  "accepted_revision": "208",
+  "active_interface": {
+    "binding_scope": "simulation_or_unbound",
+    "context": "root",
+    "definition_id": "platform",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"
+  },
+  "constraint_mode": "unconstrained",
+  "context": [],
+  "definition_id": "bootstrap-cli-composition-v1",
+  "definition_sha256": "1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf",
+  "dirty": false,
+  "durability": "durable",
+  "node_kind": "object",
+  "revision": "209",
+  "session_id": "4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"
+}
+Last receipt: {
+  "request": {
+    "arguments": {},
+    "expected_revision": "208",
+    "operation": "activate",
+    "request_id": "c2301fc3-2122-4bd6-8231-13bb418924fc",
+    "session_id": "4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"
+  },
+  "response": {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "activate",
+    "replayed": false,
+    "request_id": "c2301fc3-2122-4bd6-8231-13bb418924fc",
+    "result": {
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "root",
+        "definition_id": "platform",
+        "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"
+      }
+    },
+    "session": {
+      "accepted_revision": "208",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "root",
+        "definition_id": "platform",
+        "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-composition-v1",
+      "definition_sha256": "1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "209",
+      "session_id": "4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"
+    },
+    "status": "ok"
+  }
+}
+platform
+|-- invoke version [simulated]
+|-- deployments/
+|   |-- invoke apply <release:string> [unbound]
+|   |-- invoke plan <environment:string> [simulated]
+|   `-- releases/
+|       |-- invoke list [simulated]
+|       `-- invoke rollback <version:string> [unbound]
+|-- environments/
+|   |-- invoke list [simulated]
+|   `-- invoke select <name:string> [simulated]
+`-- services/
+    |-- invoke inspect [simulated]
+    |-- invoke restart [unbound]
+    `-- invoke scale <replicas:number> [simulated]
+{
+  "children": {
+    "deployments": "Explore deployment plans and release operations.",
+    "environments": "List and select a simulated working environment.",
+    "services": "Inspect and simulate scaling the api service."
+  },
+  "context": {
+    "commands": {
+      "version": {
+        "binding": {
+          "kind": "simulated",
+          "program_json_text": "{\"kind\":\"simulated\",\"steps\":[],\"output\":{\"source\":\"literal\",\"value\":\"Platform CLI mock\"}}"
+        },
+        "help": "Describe this mock platform CLI.",
+        "id": "platform.version",
+        "parameters": []
+      }
+    },
+    "help": "Explore the platform prototype.",
+    "parent": null,
+    "related": []
+  },
+  "description": "Platform CLI prototype with simulated services, deployments, and environments.",
+  "interface": {
+    "binding_scope": "simulation_or_unbound",
+    "context": "root",
+    "definition_id": "platform",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"
+  },
+  "last_invocation": null,
+  "mock_state_json_text": "{\"environments\":[\"development\",\"production\"],\"releases\":[\"v1\",\"v2\"],\"selected_environment\":\"development\",\"service\":{\"name\":\"api\",\"replicas\":2}}",
+  "origin": {
+    "intent_text": "# Platform mock and verb tree\n\nConstruct a platform CLI from an empty document using authoring commands only.\nThe root has a version verb.\nServices expose simulated inspection and replica changes, plus an unbound restart.\nDeployments expose a simulated plan and an unbound apply, with a nested releases context for listing and unbound rollback.\nEnvironments expose simulated listing and selection.\nThe tree must derive context ownership, local command words, required parameters, and binding labels from the activated definition.\nDiscovery must leave the checkpoint unchanged and retain the current contextual details for machine consumers.\nDraft edits must appear in the tree only after successful activation.\n\nThis demonstrates local mocked behavior; it does not connect to a deployment platform.\n",
+    "revision": "209"
+  }
+}
+Mutation: "none" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"root","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"209","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}
+{
+  "active_interface": {
+    "binding_scope": "simulation_or_unbound",
+    "context": "services",
+    "definition_id": "platform",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"
+  }
+}
+Mutation: "applied" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"services","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"210","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}
+{
+  "invocation": {
+    "binding": "simulated",
+    "context": "services",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2",
+    "effect": "simulation_only",
+    "operation_id": "services.inspect",
+    "output_json_text": "{\"name\":\"api\",\"replicas\":2}",
+    "simulated_steps": 0
+  }
+}
+Mutation: "applied" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"services","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"211","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}
+{
+  "invocation": {
+    "binding": "simulated",
+    "context": "services",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2",
+    "effect": "simulation_only",
+    "operation_id": "services.scale",
+    "output_json_text": "{\"name\":\"api\",\"replicas\":4}",
+    "simulated_steps": 1
+  }
+}
+Mutation: "applied" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"services","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"212","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}
+{
+  "invocation": {
+    "binding": "simulated",
+    "context": "services",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2",
+    "effect": "simulation_only",
+    "operation_id": "services.inspect",
+    "output_json_text": "{\"name\":\"api\",\"replicas\":4}",
+    "simulated_steps": 0
+  }
+}
+Mutation: "applied" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"services","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"213","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}
+{
+  "active_interface": {
+    "binding_scope": "simulation_or_unbound",
+    "context": "releases",
+    "definition_id": "platform",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"
+  }
+}
+Mutation: "applied" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"releases","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"214","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}
+{
+  "invocation": {
+    "binding": "simulated",
+    "context": "releases",
+    "definition_sha256": "9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2",
+    "effect": "simulation_only",
+    "operation_id": "releases.list",
+    "output_json_text": "[\"v1\",\"v2\"]",
+    "simulated_steps": 0
+  }
+}
+Mutation: "applied" | replayed: false
+Session: {"accepted_revision":"208","active_interface":{"binding_scope":"simulation_or_unbound","context":"releases","definition_id":"platform","definition_sha256":"9059eeed155cb1fb5c314c5705a9a14c5603469ca69ca7b8809285f9eecdb1f2"},"constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"1f13e5fa6a91a591ecd65e22b250a8a4589d6c7772aec83fd0f78d16dd8579cf","dirty":false,"durability":"durable","node_kind":"object","revision":"215","session_id":"4d6c21fc-28f3-4955-ac62-f05dfb9dcfb1"}

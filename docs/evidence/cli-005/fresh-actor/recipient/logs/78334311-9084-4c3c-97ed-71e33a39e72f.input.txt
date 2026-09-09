@@ -1,0 +1,15 @@
+help set
+set /mock_state/queue/paused boolean false
+set ./inspect object
+set ./inspect/id string queue.inspect
+set ./inspect/help string "Read simulated queue state."
+set ./inspect/parameters array
+set ./inspect/binding object
+set ./inspect/binding/kind string simulated
+set ./inspect/binding/steps array
+set ./inspect/binding/output object
+set ./inspect/binding/output/source string state
+set ./inspect/binding/output/path array
+append ./inspect/binding/output/path object
+set ./inspect/binding/output/path/0/key string queue
+show ./inspect

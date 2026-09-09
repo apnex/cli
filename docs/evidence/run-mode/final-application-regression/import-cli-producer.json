@@ -1,0 +1,5876 @@
+[
+  {
+    "event": "session_open",
+    "intent_text": "# CLI-003 independent task\n\nThis task fixes required behavior before implementation of CLI-003.\nIt is an engineering-selected representative of the owner's [composition intent](../../../VISION.md#the-composition-loop).\n\nConstruct a service-catalog interface from an empty authoring document, using contextual commands and typed scalar/container constructors throughout.\nThe construction trace must not inject an existing serialized definition or be generated from the target document by a test helper.\nThe interface has root, service, and deployment contexts; services relate explicitly to deployments.\nThe root explains that the interface is a prototype.\nServices expose a simulated read, a quota-setting mock accepting an exact JSON number, and an unbound restart operation.\nInitial service state contains name `api`, quota `1.2300`, and enabled `true`.\nDeployments expose an example response with status `planned`.\n\nAcceptance predicates:\n\n- Authoring, committing, and saving the definition do not activate it.\n- Explicit activation exposes intended contexts, relationships, help, parameters, and bindings.\n- Setting quota to `1e400` changes only the simulated quota and retains number spelling; subsequent reads return it.\n- A string quota, extra arguments, and unbound restart reject without checkpoint or revision changes.\n- Editing a draft leaves the active surface unchanged; invalid activation preserves prior identity, context, simulation, and last outcome.\n- Missing references, duplicate operation IDs, unknown formats, and unsupported connected bindings fail activation.\n- A valid replacement activates deliberately; reactivating identical definition content preserves simulated state.\n- A mock with a successful first step and failing later step publishes neither its earlier step nor a success.\n- Export and import into another session preserve definition, context, exact values, simulation labels, and last outcome.\n- Reopening after response loss permits replay without repeating the mock; publication uncertainty stops writes until reopen.\n- Terminal and machine interactions agree on semantic requests, results, failures, active identities, and files.\n\nProcess continuation is tested here.\nIndependent fresh-agent trials and comparative workflow economics remain CLI-005.\n",
+    "last_receipt": null,
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "0",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    }
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "149f1ceb-05e6-49d5-870d-ea3252cbd35f",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "format"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "005fa33a-d1df-40ce-a461-652858032fa1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "2",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1b7c6010-f2c6-44af-ae02-aa493bd1bb77",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "description"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "3",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "ac66f852-05a0-4b57-9baf-11f801e344ea",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "mock_state"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "6902d8dc-def7-40a8-afc2-7cf51a39ffe7",
+    "result": {
+      "path": [
+        {
+          "key": "mock_state"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "mock_state"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "acd324df-e5b3-4ee7-9dfd-4e3efc7d2eb6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "mock_state"
+            },
+            {
+              "key": "name"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "mock_state"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "6",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "27a56037-97b9-450c-93e7-07d9696dd14a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "mock_state"
+            },
+            {
+              "key": "quota"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "mock_state"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "ac076b51-626e-4cdf-ae1b-da8a48121156",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "mock_state"
+            },
+            {
+              "key": "enabled"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "mock_state"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "8",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "f670999b-5b0c-4654-837b-5f7454d5fcfb",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f3e949c3-1408-4698-b831-b65afeef4109",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "10",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "12d941ef-e8dd-4a69-853d-8f044ad2f060",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "11",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "35b640ad-3d7a-4dc8-9dd5-e92f6493feb9",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "12",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c6e690c3-4541-4cdd-8844-a09a963c4076",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "parent"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "13",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "de3e41bf-ae00-44bf-8a76-510940efa6de",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "14",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "46e4f111-0579-467c-9acf-3b11e83b6083",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "related"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "15",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "76f9e9df-0503-4a60-8457-1138855a5c08",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "16",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a9b2e6be-edf5-4fea-8a1c-d3a98971e9d5",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "17",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "033fb0dd-868d-4dae-9b15-37d8eb2dae9a",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "18",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "3fe20b6f-5a07-4009-ae85-aeb78f9cceb9",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "19",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "14933f4d-08be-4eab-a578-13a9cbcb3c10",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "20",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e9f7c622-1dff-40b0-a290-e3efaa5859fa",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "21",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "61e71760-76de-4df3-8c26-08e022149cac",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "22",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "f8a5fb39-02ea-41a2-8a32-4b1177108adb",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "23",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "3db09282-c62c-4189-8626-9ee19fee6e3c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "24",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "ea7b0ec4-3d12-430f-955b-f0e56e9e4cab",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "25",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "7954f919-d08a-49b6-9abc-2262e6fa1d0c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "26",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "57a22c00-9291-41e5-9c85-12fda1ff5982",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "source"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "27",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "11f47523-d598-4390-ac09-e1b65b1b8ef8",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "about"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "value"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "root"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "about"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "28",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "a0343b62-f190-4079-ae0a-331b6894a453",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "29",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "2ac84001-b531-47e4-acc2-206324b17c11",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "30",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "a558ce2f-1d08-45df-bf71-45710958c1f9",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "31",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "898fee74-0bf1-438d-9fc5-055794d80488",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "parent"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "32",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f476d996-409e-4e67-858b-1eccefc6ce61",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "33",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "92ac1b46-27de-490b-823d-4b2ad7e73e0a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "related"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "34",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "79abd910-f479-46ad-88e6-51b9315d7487",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "related"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "35",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "74efffd0-af37-4016-8bb5-514647189a00",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "36",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "57f272eb-c943-4819-a157-efbe5600570c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "37",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "ae86f774-be7d-409b-9f14-ce575eca03fd",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "38",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f53236b7-60dc-4c45-8677-93921d0010e2",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "39",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "37508dd4-9364-4554-903b-4a71d48eaa7e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "40",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0f05048c-4127-495d-b279-a02763c2c0eb",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "41",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "114ada6b-a98d-4469-9338-f632090719ce",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "42",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "fd63e26f-ad7d-4cfe-97e0-9e99a5f98832",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "43",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "ba226b09-25f8-48de-a48d-b9e534e58e48",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "44",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c5341cc2-9b34-4812-9ec7-d14fe6d12a35",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "45",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a4218f3a-a84b-43fc-bc36-ed6c6ed80e78",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "46",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "38833f7d-6919-49f4-87c8-1f9cf31580ef",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "source"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "47",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "ab86c11a-5de5-474d-b367-beaf500f810e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "inspect"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "48",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "056a1cf4-eab3-453c-8803-6e09c00df71f",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "49",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "867c4d2f-f592-40ac-ad6d-f3460062147c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "50",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "5a2413cf-b083-4c4f-866b-e14699127ccf",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "51",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "5bc3d219-e09b-4cf1-b310-c9cd853fc320",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "52",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "aecfbc04-075f-4063-8289-b3dd387f1c98",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "53",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "4f6b5ac1-4430-4c60-b22f-4714422aa5c6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "54",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "32e08897-0bea-41aa-b94f-0dc17cae36bf",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "55",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "280740da-13a1-420a-b103-f34f9af598bc",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "parameters"
+        },
+        {
+          "index": 0
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "parameters"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "56",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "ba340ac5-5c25-46c2-9edb-2d133fefbe7c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "parameters"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "57",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1b60a5b3-5f74-456e-a1d7-1870208394e6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "parameters"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "58",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "d048f131-8329-4b8e-b669-d8e9044f1985",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "parameters"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "59",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "d0663f87-cec9-4b8b-a331-845ce3763875",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "60",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "303d5901-9692-4b0e-8fd7-067a53ca546a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "61",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "b94df8cd-4e19-4f3c-b813-a5cc2552fcfd",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "62",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "2fe4ec72-10a4-4554-a462-d341ff3b0dd1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "63",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "2f15cd33-c27e-4d97-ae79-10839a70fa75",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "64",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "9bdf0eca-84da-4d46-bd29-7f1e3cd5e19e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "65",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "95f9a14a-71d2-4f75-a259-e5c5bbe46b8e",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "66",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "78291a19-8c95-47ab-9680-3640df1ec50a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "67",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "6e98ac2d-3e19-4deb-a7ee-dd031556db6a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "68",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f7957dac-e6c6-42a3-9ffb-8301dc740aeb",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "69",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e6ecf044-4a31-41d1-bd65-ef451496673b",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "70",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c2a08491-f984-4768-87da-e40c1d298799",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "71",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "04162208-9059-4452-bab4-ec669403cc95",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        },
+        {
+          "key": "steps"
+        },
+        {
+          "index": 0
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "72",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "3dfd85e7-ca8e-4050-8ddd-c54a1f8f76fb",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "73",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "bdf41bf2-7d83-4d8a-86e8-3100eb8ee2c1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "74",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "fa381214-3ad6-4b78-a842-dc5eeaa61b7c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "source"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "75",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a10527aa-dcbe-4212-9a1b-39d8deffa0b7",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "76",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "b0d6c506-645e-4458-966f-a7b001f0d6a0",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "77",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "8bede805-35bd-414c-8116-2a098969b316",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "quota"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "78",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "6b3271a0-1a9d-408e-9a9b-26bab11e002c",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "79",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "83b6622a-c682-4bf3-ba61-697844a3c79e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "80",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "29f534b4-e038-472c-93cc-87d3038f182c",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "81",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "949a0007-aa30-4655-af14-b16efd4c12fb",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "82",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "2e365105-d884-4c51-b190-65bed45f541c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "83",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "3830b7fa-e2f3-4d87-821c-1b61a0c404e6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "84",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "3245b467-cdc2-4907-b6d4-79c4c925eb7f",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "85",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "42c3a4b3-5449-4046-824c-653f556632e8",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "86",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "01843b60-d10e-4644-a094-64bff94417b8",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "services"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "reason"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "restart"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "87",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "69a755c5-bcb6-46ae-8fe3-d724eff428be",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "88",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e18be45e-8105-497c-a8b2-143e22be7989",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "89",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "c68962e4-4c49-4366-80fb-eb8679428644",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "90",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f3e64b63-ae8e-41b1-8209-05043f81f3b8",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "parent"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "91",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "6a2d1d80-f3d7-4e0d-8d99-ea3179332b85",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "92",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "95061d6c-8e58-4ead-8c35-0c0d9fd342e1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "related"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "93",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "907fc8a2-4db2-4341-b6e2-a5ba5a197326",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "94",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0590e471-2924-493e-b4dd-0c1a371f9001",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "95",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "eaa7da75-3b8f-497c-8548-f3bc37fa9709",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "96",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a17bd14f-ef34-423e-8eeb-5c2aea338816",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "97",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "4447404b-bc82-419a-b7cc-6e0260610293",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "98",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "33b81712-22d8-448c-804f-79c48d005ac1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "99",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "2fbbbe4e-3dfb-4821-bc8a-0d7b8f9145c4",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "100",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "743dbd36-8f1e-4e08-911f-1f9ade8c3be1",
+    "result": {
+      "path": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "101",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1a6726df-2406-4141-bb70-c0dc63d1f3f1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "102",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f264943c-c113-4806-9252-da9f4881bd8a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "103",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "3e0720bf-e3ae-4f77-9b89-a8d2ee3ffee1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "104",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "4056d296-6057-4a49-aacc-d121474fe435",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "source"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "105",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "aeb4ee6a-237d-4231-b6f6-4c6c14063340",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "value"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "106",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "36be4714-059b-43c2-8a94-29dd146c1187",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "deployments"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "plan"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "value"
+            },
+            {
+              "key": "status"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "deployments"
+        },
+        {
+          "key": "commands"
+        },
+        {
+          "key": "plan"
+        },
+        {
+          "key": "binding"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "107",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "87866158-87d6-42d5-8285-375fe7577d38",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "108",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "d6e30ccc-bd37-4bcf-a3e0-1dffc090c28e",
+    "result": {
+      "accepted_revision": "109"
+    },
+    "session": {
+      "accepted_revision": "109",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "109",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "save",
+    "replayed": false,
+    "request_id": "8b722706-f6d8-4fc2-ac18-9cc17a659ee6",
+    "result": {
+      "destination": "/tmp/cli-acceptance-00220512-cac0-4e13-b78f-7da697bbc3a0/catalog-definition.json",
+      "publication": "created",
+      "revision": "109",
+      "sha256": "67d2d9cf86ec3c8061ed7ad4565417533da26296d6f6d6094cb9be3b6cfb4110"
+    },
+    "session": {
+      "accepted_revision": "109",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "109",
+      "session_id": "2f8a2a37-5e28-43b5-ae9e-7d426dc23064"
+    },
+    "status": "ok"
+  }
+]

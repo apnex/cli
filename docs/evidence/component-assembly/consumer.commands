@@ -1,0 +1,14 @@
+import spec.json
+commit
+activate
+tree
+enter services
+invoke inspect
+enter queues
+invoke pause true
+invoke inspect
+enter services
+invoke inspect
+invoke quota 1e400
+export-interface interface.json
+save same-definition.json

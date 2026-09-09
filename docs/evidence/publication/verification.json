@@ -1,0 +1,207 @@
+{
+  "status": "complete-with-recorded-release-holds",
+  "record": "CLI-009",
+  "scope": "Local source-publication preparation; no publication, hosted CI, or independent assurance claimed",
+  "completed_at_utc": "2026-09-09 06:54:20 UTC",
+  "initial_git_head": "50a2b4dec47bbd9f1124f0043e6d21406e7ad4a3",
+  "committed_application": false,
+  "remote_configured": false,
+  "project_license": "owner-selection-pending",
+  "distribution": "source repository preparation; Cargo registry publishing disabled",
+  "toolchain": {
+    "declaration": "rust-toolchain.toml",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "target": "x86_64-unknown-linux-gnu",
+    "terminal_utility": "script from util-linux 2.34"
+  },
+  "source_identity": {
+    "initial_source_copy_archive_sha256": "5c443d5cb544f10d12d3ea7257722ba6725128e6d72aceebb9ce3a6464d5e13b",
+    "final_manifest": "source-inputs.sha256",
+    "final_manifest_sha256": "578f56d4e3832bebc3b7f83c3978a0d95796b08db97997ccfb576a834d22f98c",
+    "final_manifest_files": 4998,
+    "exclusions": [
+      ".git",
+      "Cargo target directories",
+      "docs/evidence/publication evidence outputs"
+    ],
+    "qualification": "Runtime tests used a source copy and fresh target directory on this host. Final documentation and closeout edits have separate static checks. No product Rust source, operation declaration, acceptance task, or prior evidence changed."
+  },
+  "application_checks": [
+    {
+      "command": "cargo test --locked --all-targets",
+      "exit_code": 0,
+      "passed": 70,
+      "log": "normal-tests.log"
+    },
+    {
+      "command": "cargo test --locked --all-features --all-targets",
+      "exit_code": 0,
+      "passed": 87,
+      "log": "instrumented-tests.log"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "source-format.log"
+    },
+    {
+      "command": "cargo build --locked --release --bin cli",
+      "exit_code": 0,
+      "log": "source-release-build.log"
+    }
+  ],
+  "documentation_checks": {
+    "test_command": "CARGO_TARGET_DIR=source-copy/target cargo test --locked --manifest-path tools/scaffold/Cargo.toml",
+    "passed": 13,
+    "log": "source-document-tests.log",
+    "final_reconciliation": {
+      "application_acceptance_in_this_check": "not-executed",
+      "board_records": 13,
+      "board_state_mismatches": 0,
+      "declared_operations": 17,
+      "dependency_cycles": 0,
+      "design_corpus_status_at_creation": "not-run-against-application",
+      "documentation_layout_violations": 0,
+      "journey_steps": 38,
+      "local_inline_links": 905,
+      "markdown_documents": 82,
+      "milestones": 9,
+      "operation_cases": 34,
+      "scope": "Static project-record checks; no application requests executed",
+      "status": "pass",
+      "system_scenarios": 24,
+      "uncovered_operations": [],
+      "unmet_ready_prerequisites": 0,
+      "unresolved_local_inline_links": 0
+    },
+    "generated_layers": 7,
+    "synchronized_views": 15,
+    "scaffold_format_exit_code": 0,
+    "canonical_style_rules": [
+      "S6",
+      "S8",
+      "S10",
+      "S12",
+      "S13"
+    ],
+    "current_documents_checked": 12,
+    "historical_records_reformatted": false,
+    "standing_context": {
+      "exit_code": 0,
+      "address_resolution": true,
+      "log": "standing-context.log"
+    }
+  },
+  "consumer_checks": {
+    "getting_started": {
+      "exit_code": 0,
+      "stdout": "getting-started.stdout",
+      "trace": "getting-started.stderr",
+      "scope": "Literal main shell blocks; optional installation and removal tested separately"
+    },
+    "readme": {
+      "build": true,
+      "help": true,
+      "tree": true,
+      "quota_output_and_simulation_label": true,
+      "normal_test_command": "covered by normal application check",
+      "clean": true
+    },
+    "installation": {
+      "command": "cargo install --locked --path . --bin cli",
+      "exit_code": 0,
+      "isolated_install_root": true,
+      "invoked_outside_checkout": true,
+      "output": "installed-quota.json"
+    },
+    "removal": {
+      "uninstall_exit_code": 0,
+      "installed_binary_absent": true,
+      "clean_exit_code": 0,
+      "source_copy_target_directory_absent": true,
+      "example_checkpoints_and_export_preserved": true
+    },
+    "release_binary_sha256": "8a9fc5c1d30fa8a20e18982597b9923eb1d4f28875ae9ad4b63d912f2605d99c",
+    "installed_binary_matches_source_build": true,
+    "existing_release_binary_matches_source_build": true
+  },
+  "preservation": {
+    "product_source_equal": true,
+    "tests_equal": true,
+    "repository_tools_equal": true,
+    "operation_declarations_equal": true,
+    "source_discussion_and_approvals_equal": true,
+    "prior_execution_evidence_equal": true,
+    "comparison": "Byte comparisons against pre-edit working-content archive; only new publication evidence added"
+  },
+  "dependency_check": {
+    "instrument": "OSV querybatch API",
+    "package_versions": 159,
+    "responses": 159,
+    "vulnerability_matches": 0,
+    "pending_pages": 0,
+    "scope": "Known package/version advisories only; yanked or unmaintained status and project source vulnerabilities are not covered"
+  },
+  "advisory_tool_failures": [
+    {
+      "tool": "cargo-audit 0.22.2",
+      "result": "did not build: dependency rejected host C compiler",
+      "log": "advisory-tool-build-failure.log"
+    },
+    {
+      "tool": "cargo-audit 0.21.2",
+      "result": "database could not parse current CVSS 4 advisory",
+      "log": "advisory-parser-failure.log"
+    }
+  ],
+  "credential_scan": {
+    "patterns": [
+      "private-key headers",
+      "AWS access-key forms",
+      "GitHub token forms",
+      "OpenAI-style key forms",
+      "Slack token forms"
+    ],
+    "matching_files": 0,
+    "sensitive_filename_matches": 0,
+    "scope": "Bounded patterns and conventional filenames; no exhaustive sensitive-data certification"
+  },
+  "strict_clippy": {
+    "exit_code": 101,
+    "diagnostics": 139,
+    "large_error_diagnostics": 131,
+    "collapsible_condition_diagnostics": 7,
+    "byte_string_diagnostics": 1,
+    "coverage": "Compilation stopped in the library; not a complete all-target inventory",
+    "disposition": "CLI-011",
+    "log": "strict-clippy.log"
+  },
+  "triage": {
+    "considered": 11,
+    "completed": 6,
+    "held": 3,
+    "rejected": 2,
+    "runtime_code_changed": false
+  },
+  "board": {
+    "records": 13,
+    "done": 9,
+    "held": 4,
+    "active": 0,
+    "ready": 0,
+    "release": "CLI-010",
+    "lint_gate": "CLI-011",
+    "current_architecture_projection": "CLI-012",
+    "openapi_invocation": "CLI-007"
+  },
+  "assurance_limits": [
+    "same-host executor evidence",
+    "no independent verifier",
+    "no hosted CI run",
+    "no hardware power-loss or broader platform proof",
+    "no comparative agent-effort claim",
+    "no successful cargo-audit run",
+    "dependency yanked/unmaintained status unmeasured"
+  ]
+}

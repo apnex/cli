@@ -1,0 +1,61 @@
+[package]
+name = "programmable-cli"
+version = "0.1.0"
+edition = "2024"
+description = "Construct reusable CLI definitions through contextual JSON authoring and run their configured commands."
+readme = "README.md"
+repository = "https://github.com/apnex/cli"
+license = "MIT"
+default-run = "cli"
+publish = false
+
+[lib]
+name = "programmable_cli"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cli"
+path = "src/main.rs"
+
+[[example]]
+name = "continuation-trial"
+path = "tools/continuation/main.rs"
+
+[[bin]]
+name = "cli-trial-receiver"
+path = "tools/continuation/receiver.rs"
+required-features = ["continuation-trials"]
+test = false
+
+[[bin]]
+name = "probe-missing-handler"
+path = "tests/fixtures/missing_handler.rs"
+required-features = ["contract-probes"]
+test = false
+
+[[bin]]
+name = "probe-extra-handler"
+path = "tests/fixtures/extra_handler.rs"
+required-features = ["contract-probes"]
+test = false
+
+[[bin]]
+name = "probe-changed-argument"
+path = "tests/fixtures/changed_argument.rs"
+required-features = ["contract-probes"]
+test = false
+
+[features]
+default = []
+fault-injection = []
+contract-probes = []
+continuation-trials = []
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["raw_value", "arbitrary_precision"] }
+sha2 = "0.10"
+uuid = { version = "1", features = ["v4", "serde"] }
+reedline = "0.51"
+jsonschema = { version = "=0.55.0", default-features = false, features = ["arbitrary-precision"] }
+rustix = { version = "1.1.4", features = ["fs"] }

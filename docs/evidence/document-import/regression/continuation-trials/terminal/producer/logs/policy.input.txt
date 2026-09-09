@@ -1,0 +1,49 @@
+set /type string object
+set /required array
+append /required string format
+append /required string id
+append /required string contexts
+append /required string mock_state
+set /properties object
+edit /properties
+set ./format object
+set ./format/const string cli-definition-v1
+set ./id object
+set ./id/type string string
+set ./contexts object
+set ./contexts/type string object
+set ./mock_state object
+edit ./mock_state
+set ./type string object
+set ./required array
+append ./required string name
+append ./required string quota
+append ./required string enabled
+set ./properties object
+edit ./properties
+set ./name object
+set ./name/type string string
+set ./quota object
+set ./quota/type string number
+set ./enabled object
+set ./enabled/type string boolean
+set ./queue object
+edit ./queue
+set ./type string object
+set ./required array
+append ./required string name
+append ./required string depth
+append ./required string paused
+set ./additionalProperties boolean false
+set ./properties object
+edit ./properties
+set ./name object
+set ./name/type string string
+set ./depth object
+set ./depth/type string integer
+set ./depth/minimum number 0
+set ./paused object
+set ./paused/type string boolean
+top
+commit
+save queue-policy.json

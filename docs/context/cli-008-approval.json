@@ -1,0 +1,13 @@
+{
+  "format_version": 1,
+  "record": "CLI-008",
+  "observed_at_utc": "2026-09-09 04:33:57 UTC",
+  "user_correction": "So we are adding \"invoke\" as a verb, to invoke a verb? Isn't there a \"run\" mode whereby the real verbs are just verbs without \"invoke\"? like a real regular CLI",
+  "user_approval": "Approved for next best action",
+  "approved_direction": "Implement dedicated run mode before another provider: direct configured verbs, one-shot and interactive use, generated help and completion, suitable output, and meaningful exit codes.",
+  "survey_bypass": {
+    "authority": "The correction and approval above fix the intended user experience.",
+    "rationale": "Option syntax, collision handling, optional persistence, and command lowering are implementation choices within that selected direction; no survey answers are inferred."
+  },
+  "scope": "Local Rust implementation, documentation, and executor-run acceptance. Existing mock and read providers are reused; no new provider, external service, agent launch, or publication is authorized by this record."
+}

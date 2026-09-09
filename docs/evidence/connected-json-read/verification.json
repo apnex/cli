@@ -1,0 +1,173 @@
+{
+  "format_version": 1,
+  "record": "CLI-006",
+  "increment": "connected-json-read",
+  "status": "complete-within-selected-local-scope",
+  "scope": "Local native JSON file read provider, command-authored definition, explicit per-process grants, plain and assembled transfer, historical observations and receipt recovery.",
+  "authority": "Local executor evidence; no independent assurance, publication, deployment, or agent performance claim.",
+  "selection": "../../context/cli-006-approval.json",
+  "contract": "../../connected/CONTRACT.md",
+  "task": "../../connected/acceptance/TASK.md",
+  "audit": "../../connected/AXIOM-AUDIT.md",
+  "implementation": {
+    "provider": "json-file-read-v1",
+    "binding": "connected",
+    "effect": "external_read",
+    "launcher": "--grant-json-read <capability> <file>",
+    "target": "Local disposable service catalog; parent directory pinned at launch.",
+    "authority_serialized": false,
+    "source_limit_bytes": 1048576,
+    "grant_limit": 32,
+    "read_result": "Historical byte observation with raw source and exact output digests; not a service-health probe.",
+    "external_content_writes": false
+  },
+  "tests": {
+    "instrumented": {
+      "status": "pass",
+      "passed": 77,
+      "failed": 0,
+      "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=docs/evidence/connected-json-read/application-regression cargo test --locked --release --all-features --all-targets -- --nocapture",
+      "log": "application-tests.log",
+      "exit_file": "application-tests.exit"
+    },
+    "normal": {
+      "status": "pass",
+      "passed": 61,
+      "failed": 0,
+      "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=docs/evidence/connected-json-read/normal-regression cargo test --locked --release --all-targets -- --nocapture",
+      "log": "normal-tests.log",
+      "exit_file": "normal-tests.exit"
+    },
+    "connected": {
+      "status": "pass",
+      "instrumented_passed": 8,
+      "normal_passed": 7,
+      "log": "focused.log",
+      "faults_observed": 4,
+      "applied_invalid_definition_and_observation_cases": 34
+    },
+    "documentation": {
+      "status": "pass",
+      "passed": 13,
+      "failed": 0,
+      "command": "CARGO_TARGET_DIR=$PWD/target cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+      "log": "documentation-tests.log",
+      "exit_file": "documentation-tests.exit",
+      "checks": {
+        "application_acceptance_in_this_check": "not-executed",
+        "board_records": 8,
+        "board_state_mismatches": 0,
+        "declared_operations": 17,
+        "dependency_cycles": 0,
+        "design_corpus_status_at_creation": "not-run-against-application",
+        "documentation_layout_violations": 0,
+        "journey_steps": 38,
+        "local_inline_links": 776,
+        "markdown_documents": 72,
+        "milestones": 6,
+        "operation_cases": 34,
+        "scope": "Static project-record checks; no application requests executed",
+        "status": "pass",
+        "system_scenarios": 24,
+        "uncovered_operations": [],
+        "unmet_ready_prerequisites": 0,
+        "unresolved_local_inline_links": 0
+      }
+    },
+    "format": {
+      "status": "pass",
+      "command": "cargo fmt --all -- --check",
+      "log": "format.log",
+      "exit_file": "format.exit"
+    },
+    "scaffold": {
+      "status": "pass",
+      "layers": 7,
+      "views": 15,
+      "command": "CARGO_TARGET_DIR=$PWD/target cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "log": "scaffold-check.log",
+      "exit_file": "scaffold-check.exit"
+    }
+  },
+  "walkthrough": {
+    "status": "pass",
+    "guide": "../../connected/USE.md",
+    "script": "walkthrough.sh",
+    "log": "walkthrough.log",
+    "exit_file": "walkthrough.exit",
+    "location": "walkthrough-location.txt",
+    "original_directory": "/home/apnex/taceng/cli/target/connected-read-aS3bDM",
+    "archive": "walkthrough",
+    "archive_comparison": {
+      "status": "pass",
+      "log": "walkthrough-copy.log",
+      "exit_file": "walkthrough-copy.exit"
+    },
+    "metrics": "walkthrough-metrics.jsonl",
+    "expected_missing_grant_rejections": 1,
+    "construction_responses": 57,
+    "definition_containers_authored_as_raw_json": 0
+  },
+  "toolchain": {
+    "rust": "1.98.1",
+    "cargo": "1.98.1",
+    "verified_platform": "local Linux",
+    "dependency_change": "Direct rustix 1.1.4 dependency; existing lockfile version retained."
+  },
+  "binary_identity": {
+    "normal_debug": {
+      "path": "target/debug/cli",
+      "sha256": "e3ba23f76fa2b12e3dc7ad8d4c3ea5a07d093712877ff186f3c228d5d2977f0a"
+    },
+    "normal_release": {
+      "path": "target/release/cli",
+      "sha256": "454b371327c6a959b8d46742cf1c2800801fde9af9fac4cdd85a8cb0011b90ff"
+    },
+    "hash_file": "binaries.sha256",
+    "previous_pair": "before/runtime-location.txt"
+  },
+  "source_identity": {
+    "manifest": "source.sha256",
+    "files": 61,
+    "scope": "Runtime, application tests, continuation tools, root Cargo files, operation declarations, and selected connected acceptance inputs."
+  },
+  "retained_failures": [
+    {
+      "log": "failing-before.log",
+      "classification": "behavioral baseline",
+      "result": "Typed construction and expected-definition equality succeeded; activation rejected unsupported connected binding."
+    },
+    {
+      "log": "compile.log",
+      "classification": "compile failure",
+      "result": "Recovery message required a borrowed string."
+    },
+    {
+      "log": "first-supported.log",
+      "classification": "repeated compile failure",
+      "result": "Same borrowed-string error; not behavioral evidence."
+    },
+    {
+      "log": "focused-first.log",
+      "classification": "test compile failure",
+      "result": "Test compared Option<Value> with Value; repaired assertion shape without changing expected behavior."
+    }
+  ],
+  "limits": [
+    "Only a native local JSON file reader; no executable hooks, network requests, or remote/mutating provider contract.",
+    "File observation does not prove a service is running.",
+    "No atomic source snapshot across concurrent writes or deadline on unresponsive filesystems.",
+    "A failed checkpoint publication may follow a completed read; local transaction guarantees are not external transaction guarantees.",
+    "File reads can update access-time metadata.",
+    "Recovered observation validation establishes internal consistency, not authenticity or fresh source measurement.",
+    "Exact replay is limited to the latest persisted request; fresh invocations need a current grant.",
+    "Old checkpoints require matching binary and declaration; no silent migration.",
+    "No comparative actor-effort or token-saving measurement."
+  ],
+  "completed_at_utc": "2026-09-09 04:04:17 UTC",
+  "board": {
+    "cli_006": "Done within selected local JSON read scope",
+    "cli_007": "Held pending a representative API task",
+    "unselected": "Executable, remote, and mutating providers require concrete consumers and effect contracts."
+  }
+}

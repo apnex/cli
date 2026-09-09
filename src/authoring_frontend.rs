@@ -1,0 +1,307 @@
+//! JSON lines and terminal commands share dispatch, bounded delivery, and startup state.
+
+use crate::authoring_error::{AuthoringError, authoring_limit_error};
+use crate::authoring_protocol::AuthoringResponse;
+use crate::authoring_runtime::{AuthoringRuntime, checked_response_bytes};
+use crate::document_path::render_document_pointer;
+use crate::document_value::{MAX_REQUEST_BYTES, MAX_RESPONSE_BYTES};
+use crate::terminal_completion::AuthoringCompleter;
+use crate::terminal_input::{TerminalInputBuffer, TerminalInputOutcome, quote_terminal_token};
+use reedline::{
+    ColumnarMenu, DefaultPrompt, DefaultPromptSegment, Emacs, KeyCode, KeyModifiers, MenuBuilder,
+    Reedline, ReedlineEvent, ReedlineMenu, Signal, default_emacs_keybindings,
+};
+use serde_json::Value;
+use std::io::{self, BufRead, Write};
+
+/// Input framing consumes oversized lines completely while allocating at most the declared limit.
+pub fn read_authoring_line(
+    input: &mut impl BufRead,
+) -> io::Result<Option<Result<Vec<u8>, AuthoringError>>> {
+    let mut bytes = Vec::new();
+    let mut oversized = false;
+    let mut seen = false;
+    loop {
+        let available = input.fill_buf()?;
+        if available.is_empty() {
+            break;
+        }
+        seen = true;
+        let end = available
+            .iter()
+            .position(|byte| *byte == b'\n')
+            .map(|index| index + 1);
+        let count = end.unwrap_or(available.len());
+        if bytes.len().saturating_add(count) > MAX_REQUEST_BYTES {
+            oversized = true;
+        }
+        if !oversized {
+            bytes.extend_from_slice(&available[..count]);
+        }
+        input.consume(count);
+        if end.is_some() {
+            break;
+        }
+    }
+    if !seen {
+        Ok(None)
+    } else if oversized {
+        Ok(Some(Err(authoring_limit_error(
+            "Input line exceeds 2 MiB.",
+        ))))
+    } else {
+        Ok(Some(Ok(bytes)))
+    }
+}
+
+/// Render readable operation output; machine events retain the complete session metadata.
+pub fn render_authoring_event(event: &Value) -> String {
+    let rendered = render_readable_authoring_event(event);
+    if rendered.len() > MAX_RESPONSE_BYTES {
+        format!("{event}\n")
+    } else {
+        rendered
+    }
+}
+
+fn render_readable_authoring_event(event: &Value) -> String {
+    if event["event"] == "session_open" {
+        return format!(
+            "Session {} | revision {} | accepted {} | {}\nTask: {}\n{}\nLast receipt: {}\n",
+            event["session"]["session_id"],
+            event["session"]["revision"],
+            event["session"]["accepted_revision"],
+            if event["session"]["dirty"] == true {
+                "draft differs from accepted"
+            } else {
+                "draft matches accepted"
+            },
+            event["intent_text"],
+            serde_json::to_string_pretty(&event["session"]).unwrap(),
+            serde_json::to_string_pretty(&event["last_receipt"]).unwrap()
+        );
+    }
+    if event["event"] == "batch_input" {
+        return format!(
+            "Batch {}: {} unsent edits{}\n",
+            event["state"].as_str().unwrap_or("input"),
+            event["count"],
+            if event["error"].is_null() {
+                String::new()
+            } else {
+                format!("; {}", event["error"])
+            }
+        );
+    }
+    if !event["error"].is_null() {
+        return format!(
+            "{}: {} | mutation {}\n{}\n{}\n",
+            event["error"]["code"].as_str().unwrap_or("ERROR"),
+            event["error"]["message"],
+            event["mutation"],
+            serde_json::to_string_pretty(&event["error"]).unwrap(),
+            serde_json::to_string_pretty(&event["session"]).unwrap()
+        );
+    }
+    if let Some(tree) = event["result"]["verb_tree_text"].as_str() {
+        return tree.to_owned();
+    }
+    let result = if let Some(document) = event["result"]["json_text"].as_str() {
+        document.to_owned()
+    } else {
+        serde_json::to_string_pretty(&event["result"]).unwrap()
+    };
+    format!(
+        "{result}\nMutation: {} | replayed: {}\nSession: {}\n",
+        event["mutation"], event["replayed"], event["session"]
+    )
+}
+
+fn write_authoring_event(
+    output: &mut impl Write,
+    event: &Value,
+    structured: bool,
+) -> io::Result<()> {
+    let bytes = checked_response_bytes(event).map_err(io::Error::other)?;
+    if structured {
+        output.write_all(&bytes)?;
+    } else {
+        output.write_all(render_authoring_event(event).as_bytes())?;
+    }
+    output.flush()
+}
+
+fn deliver_authoring_response(
+    runtime: &AuthoringRuntime,
+    output: &mut impl Write,
+    response: AuthoringResponse,
+    structured: bool,
+) -> io::Result<()> {
+    if response.status == "ok" && response.mutation == "applied" && !response.replayed {
+        runtime.before_response_delivery()?;
+    }
+    write_authoring_event(output, &serde_json::to_value(response).unwrap(), structured)
+}
+
+fn dispatch_terminal_line(
+    runtime: &mut AuthoringRuntime,
+    buffer: &mut TerminalInputBuffer,
+    line: &str,
+    output: &mut impl Write,
+    structured: bool,
+) -> io::Result<()> {
+    match buffer.accept_terminal_line(
+        line,
+        runtime.operation_definition(),
+        runtime.session_checkpoint(),
+    ) {
+        TerminalInputOutcome::Request(request) => {
+            let response = runtime.execute_authoring_request(request);
+            deliver_authoring_response(runtime, output, response, structured)
+        }
+        TerminalInputOutcome::Rejected { operation, error } => deliver_authoring_response(
+            runtime,
+            output,
+            runtime.rejected_terminal_input(operation, error),
+            structured,
+        ),
+        TerminalInputOutcome::InputEvent(event) => {
+            write_authoring_event(output, &event, structured)
+        }
+        TerminalInputOutcome::Empty => Ok(()),
+    }
+}
+
+/// Run either JSON requests or scriptable terminal commands, emitting one complete event at a time.
+pub fn run_authoring_stream(
+    runtime: &mut AuthoringRuntime,
+    input: &mut impl BufRead,
+    output: &mut impl Write,
+    machine: bool,
+    structured: bool,
+) -> io::Result<()> {
+    write_authoring_event(output, &runtime.session_open_event(), structured)?;
+    let mut buffer = TerminalInputBuffer::default();
+    while let Some(line) = read_authoring_line(input)? {
+        match line {
+            Ok(bytes) if machine => {
+                let response = runtime.process_machine_line(&bytes);
+                deliver_authoring_response(runtime, output, response, structured)?;
+            }
+            Ok(bytes) => match std::str::from_utf8(&bytes) {
+                Ok(line) => dispatch_terminal_line(runtime, &mut buffer, line, output, structured)?,
+                Err(_) => deliver_terminal_framing_error(
+                    runtime,
+                    &mut buffer,
+                    output,
+                    AuthoringError::new(
+                        "INVALID_REQUEST",
+                        "Terminal line is not valid UTF-8.",
+                        "Supply a UTF-8 command line.",
+                    ),
+                    structured,
+                )?,
+            },
+            Err(error) if !machine => {
+                deliver_terminal_framing_error(runtime, &mut buffer, output, error, structured)?
+            }
+            Err(error) => deliver_authoring_response(
+                runtime,
+                output,
+                runtime.rejected_terminal_input(None, error),
+                structured,
+            )?,
+        }
+    }
+    if buffer.pending_edit_count().is_some() {
+        write_authoring_event(output, &buffer.cancel_pending_input(), structured)?;
+    }
+    Ok(())
+}
+
+fn deliver_terminal_framing_error(
+    runtime: &AuthoringRuntime,
+    buffer: &mut TerminalInputBuffer,
+    output: &mut impl Write,
+    error: AuthoringError,
+    structured: bool,
+) -> io::Result<()> {
+    let TerminalInputOutcome::Rejected { operation, error } = buffer.reject_input_line(error)
+    else {
+        unreachable!("Rejected framing input")
+    };
+    deliver_authoring_response(
+        runtime,
+        output,
+        runtime.rejected_terminal_input(operation, error),
+        structured,
+    )
+}
+
+/// Run a context-aware interactive editor; Ctrl-C drops unsent input and Ctrl-D preserves the session.
+pub fn run_authoring_terminal(runtime: &mut AuthoringRuntime) -> io::Result<()> {
+    let stdout = io::stdout();
+    let mut output = stdout.lock();
+    write_authoring_event(&mut output, &runtime.session_open_event(), false)?;
+    let completer = AuthoringCompleter::new_authoring_completer(
+        runtime.operation_definition().clone(),
+        runtime.session_checkpoint().clone(),
+    );
+    let menu = ColumnarMenu::default().with_name("authoring_completion");
+    let mut keys = default_emacs_keybindings();
+    keys.add_binding(
+        KeyModifiers::NONE,
+        KeyCode::Tab,
+        ReedlineEvent::UntilFound(vec![
+            ReedlineEvent::Menu("authoring_completion".into()),
+            ReedlineEvent::MenuNext,
+        ]),
+    );
+    let mut editor = Reedline::create()
+        .with_completer(Box::new(completer.clone()))
+        .with_menu(ReedlineMenu::EngineCompleter(Box::new(menu)))
+        .with_edit_mode(Box::new(Emacs::new(keys)));
+    let mut buffer = TerminalInputBuffer::default();
+    loop {
+        completer
+            .refresh_completion_context(buffer.completion_checkpoint(runtime.session_checkpoint()));
+        completer.set_batch_completion(buffer.pending_edit_count().is_some());
+        let header = runtime.current_session_header();
+        let pointer = quote_terminal_token(&render_document_pointer(&header.context));
+        let prompt = DefaultPrompt::new(
+            DefaultPromptSegment::Basic(format!(
+                "[{pointer}] r{}{}{}{}",
+                header.revision.0,
+                if header.dirty { " *" } else { "" },
+                buffer
+                    .pending_edit_count()
+                    .map(|count| format!(" | batch {count} unsent"))
+                    .unwrap_or_default(),
+                header
+                    .active_interface
+                    .as_ref()
+                    .map(|active| format!(" | CLI {}/{}", active.definition_id, active.context))
+                    .unwrap_or_default()
+            )),
+            DefaultPromptSegment::Empty,
+        );
+        match editor.read_line(&prompt)? {
+            Signal::Success(line) => {
+                dispatch_terminal_line(runtime, &mut buffer, &line, &mut output, false)?
+            }
+            Signal::CtrlC => {
+                if buffer.pending_edit_count().is_some() {
+                    write_authoring_event(&mut output, &buffer.cancel_pending_input(), false)?;
+                }
+            }
+            Signal::CtrlD => {
+                if buffer.pending_edit_count().is_some() {
+                    write_authoring_event(&mut output, &buffer.cancel_pending_input(), false)?;
+                }
+                break;
+            }
+            _ => {}
+        }
+    }
+    Ok(())
+}

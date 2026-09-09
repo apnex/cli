@@ -1,0 +1,15 @@
+error: expected one of `)`, `,`, `.`, `?`, or an operator, found `"}"`
+   --> /home/apnex/taceng/cli/tests/schema_constraints.rs:192:34
+    |
+192 |         (r#"{"$dynamicRef":"#node"}"#, "UNSUPPORTED_SCHEMA"),
+    |                                  -^^
+    |                                  |
+    |                                  expected one of `)`, `,`, `.`, `?`, or an operator
+    |                                  help: missing `,`
+
+error: expected one of `)`, `,`, `.`, `?`, or an operator, found `#`
+   --> /home/apnex/taceng/cli/tests/schema_constraints.rs:192:37
+    |
+192 |         (r#"{"$dynamicRef":"#node"}"#, "UNSUPPORTED_SCHEMA"),
+    |                                     ^ expected one of `)`, `,`, `.`, `?`, or an operator
+

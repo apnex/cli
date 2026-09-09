@@ -1,0 +1,464 @@
+//! Test real process transfer and an oracle capable of rejecting valid but wrong authored behavior.
+
+#![cfg(feature = "continuation-trials")]
+
+#[path = "../tools/continuation/trial_comparison.rs"]
+mod trial_comparison;
+#[path = "../tools/continuation/trial_manifest.rs"]
+mod trial_manifest;
+#[path = "../tools/continuation/trial_oracle.rs"]
+mod trial_oracle;
+#[path = "../tools/continuation/trial_package.rs"]
+mod trial_package;
+#[path = "../tools/continuation/trial_process.rs"]
+mod trial_process;
+#[path = "../tools/continuation/trial_rehearsal.rs"]
+mod trial_rehearsal;
+#[path = "../tools/continuation/trial_text_edit.rs"]
+mod trial_text_edit;
+
+use programmable_cli::authoring_protocol::SessionCheckpoint;
+use serde_json::Value;
+use std::fs;
+use std::path::{Path, PathBuf};
+use std::process::{Command, Stdio};
+use trial_manifest::verify_trial_manifest;
+use trial_oracle::{check_worker_state, evaluate_continuation};
+use trial_package::prepare_continuation;
+use trial_process::{TrialProcess, trial_commands};
+use trial_rehearsal::rehearse_continuation;
+
+#[test]
+fn authoring_comparison_preserves_outcomes_and_exposes_file_import_gap() {
+    let fixture = ContinuationFixture::new();
+    let destination = fixture.0.join("comparison");
+    let report = trial_comparison::compare_authoring_methods(
+        root(),
+        Path::new(env!("CARGO_BIN_EXE_cli")),
+        Path::new(env!("CARGO_BIN_EXE_cli-trial-receiver")),
+        &destination,
+    )
+    .unwrap();
+    assert_eq!(report["status"], "pass");
+    let methods = report["methods"].as_array().unwrap();
+    assert_eq!(methods.len(), 3);
+    let mut definitions = Vec::new();
+    for method in methods {
+        assert_eq!(method["evaluation"]["status"], "pass");
+        let name = method["method"].as_str().unwrap();
+        let package = destination.join(name).join("package");
+        verify_trial_manifest(&package).unwrap();
+        let state = checkpoint(&package.join("work.session.json"));
+        let seed = checkpoint(&package.join("handover.session.json"));
+        definitions.push(
+            programmable_cli::document_value::DocumentValue::parse_document(
+                &fs::read_to_string(package.join("completed.definition.json")).unwrap(),
+            )
+            .unwrap(),
+        );
+        if name == "targeted-json-editing" {
+            assert_eq!(
+                method["evaluation"]["full_staged_continuation"]["status"],
+                "fail"
+            );
+            assert_eq!(state.candidate, seed.candidate);
+            assert_eq!(state.accepted, seed.accepted);
+            assert_eq!(
+                method["workflow"]["external_work"]["editing"]["edits_applied"],
+                2
+            );
+            assert!(
+                method["workflow"]["external_work"]["editing"]["recipe_bytes"]
+                    .as_u64()
+                    .unwrap()
+                    > 0
+            );
+            assert!(
+                evaluate_continuation(
+                    root(),
+                    &package,
+                    &destination.join("strict-file-evaluation")
+                )
+                .is_err()
+            );
+        } else {
+            assert_eq!(
+                method["evaluation"]["full_staged_continuation"]["status"],
+                "pass"
+            );
+            assert_eq!(state.candidate, state.accepted);
+        }
+    }
+    assert!(definitions.windows(2).all(|pair| pair[0] == pair[1]));
+    assert!(
+        methods[2]["workflow"]["phases"]["construction"]["input_lines"]
+            .as_u64()
+            .unwrap()
+            > methods[0]["workflow"]["phases"]["construction"]["input_lines"]
+                .as_u64()
+                .unwrap()
+    );
+    assert!(methods.iter().all(|method| method["token_use"].is_null()));
+
+    // A valid external definition can violate the preserved contract even if activation succeeds.
+    let file_package = destination.join("wrong-external-file");
+    fs::create_dir(&file_package).unwrap();
+    let valid_package = destination.join("targeted-json-editing/package");
+    for name in trial_manifest::TRIAL_INPUT_FILES.into_iter().chain([
+        "manifest.json",
+        "work.session.json",
+        "completed.definition.json",
+    ]) {
+        fs::copy(valid_package.join(name), file_package.join(name)).unwrap();
+    }
+    let before = fs::read_to_string(file_package.join("completed.definition.json")).unwrap();
+    let mutated = before.replacen(
+        "Read simulated queue state.",
+        "Incorrect but structurally valid help.",
+        1,
+    );
+    assert_ne!(
+        before, mutated,
+        "INVALID: external-definition mutant did not land"
+    );
+    fs::write(file_package.join("completed.definition.json"), &mutated).unwrap();
+    assert_eq!(
+        fs::read_to_string(file_package.join("completed.definition.json")).unwrap(),
+        mutated
+    );
+    let mut process = TrialProcess::start(
+        &file_package.join("cli"),
+        &file_package,
+        "work.session.json",
+        "operations.json",
+        None,
+        true,
+        "logs/wrong-external-file",
+    )
+    .unwrap();
+    trial_commands(&mut process, "activate completed.definition.json\nenter services\ninvoke quota 1e400\nenter queues\ninvoke pause true\nexport-interface completed.interface.json\n").unwrap();
+    assert_eq!(process.close().unwrap()["exit_code"], 0);
+    assert!(
+        trial_oracle::evaluate_worker_artifacts(
+            root(),
+            &file_package,
+            &destination.join("wrong-file-evaluation")
+        )
+        .is_err()
+    );
+    println!("COMPARISON_EXTERNAL_MUTANT_LANDED_AND_REJECTED");
+    if let Ok(directory) = std::env::var("CLI_ACCEPTANCE_EVIDENCE_DIR") {
+        retain_trial_files(
+            &fixture.0,
+            &Path::new(&directory).join("authoring-comparison"),
+        );
+    }
+}
+
+#[test]
+fn targeted_edit_rejects_missing_or_ambiguous_anchors_without_partial_write() {
+    let fixture = ContinuationFixture::new();
+    let document = fixture.0.join("document.json");
+    let recipe = fixture.0.join("edits.json");
+    let before = br#"{"name":"same","description":"same","paused":"false"}"#;
+    for (index, bad_anchor) in ["missing", "same"].into_iter().enumerate() {
+        fs::write(&document, before).unwrap();
+        fs::write(
+            &recipe,
+            serde_json::to_vec(&serde_json::json!([
+                {"find":"\"paused\":\"false\"","replace":"\"paused\":false"},
+                {"find":bad_anchor,"replace":"changed"}
+            ]))
+            .unwrap(),
+        )
+        .unwrap();
+        assert!(
+            trial_text_edit::apply_trial_text_edits(
+                &document,
+                &recipe,
+                &fixture.0.join(format!("rejected-{index}"))
+            )
+            .is_err()
+        );
+        assert_eq!(fs::read(&document).unwrap(), before);
+        let rejected: Value = serde_json::from_slice(
+            &fs::read(fixture.0.join(format!("rejected-{index}/result.json"))).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(rejected["document_bytes_written"], 0);
+    }
+}
+
+struct ContinuationFixture(PathBuf);
+impl ContinuationFixture {
+    fn new() -> Self {
+        let directory =
+            std::env::temp_dir().join(format!("cli-continuation-{}", uuid::Uuid::new_v4()));
+        fs::create_dir(&directory).unwrap();
+        Self(directory)
+    }
+    fn prepare(&self, name: &str, terminal: bool) -> PathBuf {
+        let destination = self.0.join(name);
+        prepare_continuation(
+            root(),
+            Path::new(env!("CARGO_BIN_EXE_cli")),
+            Path::new(env!("CARGO_BIN_EXE_cli-trial-receiver")),
+            &destination,
+            terminal,
+        )
+        .unwrap();
+        destination.join("package")
+    }
+}
+impl Drop for ContinuationFixture {
+    fn drop(&mut self) {
+        if std::thread::panicking() {
+            if let Ok(directory) = std::env::var("CLI_ACCEPTANCE_EVIDENCE_DIR") {
+                let destination = Path::new(&directory)
+                    .join("failed-trials")
+                    .join(self.0.file_name().unwrap());
+                retain_trial_files(&self.0, &destination);
+                eprintln!(
+                    "Failed continuation evidence retained at {}",
+                    destination.display()
+                );
+            } else {
+                eprintln!(
+                    "Failed continuation fixture retained at {}",
+                    self.0.display()
+                );
+                return;
+            }
+        }
+        let _ = fs::remove_dir_all(&self.0);
+    }
+}
+fn root() -> &'static Path {
+    Path::new(env!("CARGO_MANIFEST_DIR"))
+}
+fn checkpoint(path: &Path) -> SessionCheckpoint {
+    serde_json::from_slice(&fs::read(path).unwrap()).unwrap()
+}
+
+fn retain_trial_files(source: &Path, destination: &Path) {
+    fs::create_dir_all(destination).unwrap();
+    for entry in fs::read_dir(source).unwrap() {
+        let entry = entry.unwrap();
+        let name = entry.file_name();
+        if entry.file_type().unwrap().is_dir() {
+            retain_trial_files(&entry.path(), &destination.join(&name));
+        } else if entry
+            .path()
+            .extension()
+            .is_some_and(|ext| ext == "json" || ext == "jsonl" || ext == "txt" || ext == "commands")
+        {
+            fs::copy(entry.path(), destination.join(name)).unwrap();
+        }
+    }
+}
+
+#[test]
+fn paired_rehearsals_preserve_whole_handover_and_meet_both_tasks() {
+    let fixture = ContinuationFixture::new();
+    let mut final_states = Vec::new();
+    for terminal in [false, true] {
+        let name = if terminal { "terminal" } else { "machine" };
+        let package = fixture.prepare(name, terminal);
+        verify_trial_manifest(&package).unwrap();
+        let seed = checkpoint(&package.join("handover.session.json"));
+        let source = checkpoint(&package.join("source.session.json"));
+        assert_eq!(seed.accepted, source.candidate);
+        assert_eq!(seed.active_interface, source.active_interface);
+        assert_eq!(seed.active_constraint, source.active_constraint);
+        assert_eq!(
+            seed.intent_text,
+            fs::read_to_string(package.join("CATALOG-TASK.md")).unwrap()
+        );
+        assert!(seed.candidate_is_dirty());
+        assert_eq!(seed.active_interface.as_ref().unwrap().context, "services");
+        assert_eq!(
+            seed.active_interface
+                .as_ref()
+                .unwrap()
+                .last_invocation
+                .as_ref()
+                .unwrap()
+                .output_json_text,
+            "1e400"
+        );
+        assert!(
+            check_worker_state(root(), &seed, &seed).is_err(),
+            "The oracle accepted unfinished work"
+        );
+        assert!(!package.join("work.session.json").exists());
+        rehearse_continuation(root(), &package, terminal).unwrap();
+        let report = evaluate_continuation(
+            root(),
+            &package,
+            &fixture.0.join(format!("{name}-evaluation")),
+        )
+        .unwrap();
+        assert_eq!(report["status"], "pass");
+        assert!(report["fresh_actor_attestation"].is_null());
+        for code in [
+            "SCHEMA_VIOLATION",
+            "DEFINITION_MISMATCH",
+            "REVISION_CONFLICT",
+        ] {
+            assert_eq!(report["interaction"]["errors"][code], 1);
+        }
+        final_states.push(checkpoint(&package.join("work.session.json")));
+    }
+    let left = &final_states[0];
+    let right = &final_states[1];
+    assert_eq!(left.candidate, right.candidate);
+    assert_eq!(left.accepted, right.accepted);
+    assert_eq!(left.context, right.context);
+    assert_eq!(left.active_interface, right.active_interface);
+    assert_eq!(left.active_constraint, right.active_constraint);
+    assert_eq!(left.revision, right.revision);
+    assert_eq!(left.accepted_revision, right.accepted_revision);
+    assert_eq!(
+        left.last_receipt.as_ref().unwrap().request.operation,
+        right.last_receipt.as_ref().unwrap().request.operation
+    );
+    assert_eq!(
+        left.last_receipt.as_ref().unwrap().request.arguments,
+        right.last_receipt.as_ref().unwrap().request.arguments
+    );
+    assert_eq!(
+        left.last_receipt.as_ref().unwrap().response.result,
+        right.last_receipt.as_ref().unwrap().response.result
+    );
+    if let Ok(directory) = std::env::var("CLI_ACCEPTANCE_EVIDENCE_DIR") {
+        retain_trial_files(
+            &fixture.0,
+            &Path::new(&directory).join("continuation-trials"),
+        );
+    }
+}
+
+#[test]
+fn oracle_rejects_activatable_semantic_mutations_and_constraint_removal() {
+    let fixture = ContinuationFixture::new();
+    let package = fixture.prepare("mutations", true);
+    rehearse_continuation(root(), &package, true).unwrap();
+    let seed = checkpoint(&package.join("handover.session.json"));
+    let original = checkpoint(&package.join("work.session.json"));
+    for (index, edits) in [
+        "set /contexts/services/commands/restart/help string wrong\n",
+        "set /contexts/queues/commands/pause/binding/steps/0/value/source string literal\ndelete /contexts/queues/commands/pause/binding/steps/0/value/name\nset /contexts/queues/commands/pause/binding/steps/0/value/value boolean false\n",
+        "unconstrain\n",
+    ].into_iter().enumerate() {
+        let mutant = fixture.0.join(format!("mutant-{index}"));
+        fs::create_dir(&mutant).unwrap();
+        fs::copy(package.join("work.session.json"), mutant.join("work.session.json")).unwrap();
+        fs::copy(package.join("operations.json"), mutant.join("operations.json")).unwrap();
+        let mut process = TrialProcess::start(&package.join("cli"), &mutant, "work.session.json", "operations.json", None, true, "logs/mutation").unwrap();
+        trial_commands(&mut process, edits).unwrap();
+        trial_commands(&mut process, "commit\nactivate\nenter services\ninvoke quota 1e400\nenter queues\ninvoke pause true\n").unwrap();
+        let mutated = process.state().unwrap();
+        assert!(mutated.candidate != original.candidate || mutated.active_constraint != original.active_constraint,
+            "INVALID: semantic mutant did not land");
+        mutated.active_interface.as_ref().unwrap().validate_cli_interface().unwrap();
+        assert!(check_worker_state(root(), &mutated, &seed).is_err(), "Task oracle accepted a valid but wrong continuation");
+        assert_eq!(process.close().unwrap()["exit_code"], 0);
+        println!("CONTINUATION_MUTANT_LANDED_AND_REJECTED {index}");
+    }
+}
+
+#[test]
+fn receiver_detects_missing_or_changed_inputs_before_creating_work() {
+    let fixture = ContinuationFixture::new();
+    let package = fixture.prepare("integrity", true);
+    let operations = fs::read(package.join("operations.json")).unwrap();
+    let mut changed = operations.clone();
+    changed.push(b'\n');
+    fs::write(package.join("operations.json"), &changed).unwrap();
+    assert_ne!(
+        fs::read(package.join("operations.json")).unwrap(),
+        operations,
+        "INVALID: dependency mutation did not land"
+    );
+    for missing in [false, true] {
+        if missing {
+            fs::remove_file(package.join("operations.json")).unwrap();
+        }
+        assert!(verify_trial_manifest(&package).is_err());
+        let output = Command::new(package.join("receiver"))
+            .current_dir(&package)
+            .args(["run", "."])
+            .stdin(Stdio::null())
+            .output()
+            .unwrap();
+        assert!(!output.status.success());
+        assert!(
+            !package.join("work.session.json").exists(),
+            "Rejected dependency created mutable work"
+        );
+    }
+    fs::write(package.join("operations.json"), operations).unwrap();
+    verify_trial_manifest(&package).unwrap();
+    let manifest_path = package.join("manifest.json");
+    let mut manifest: Value = serde_json::from_slice(&fs::read(&manifest_path).unwrap()).unwrap();
+    let files = manifest["files"].as_object_mut().unwrap();
+    let displaced = files.remove("operations.json").unwrap();
+    files.insert("unexpected.json".into(), displaced);
+    fs::write(&manifest_path, serde_json::to_vec(&manifest).unwrap()).unwrap();
+    let reread: Value = serde_json::from_slice(&fs::read(&manifest_path).unwrap()).unwrap();
+    assert!(
+        reread["files"].get("operations.json").is_none(),
+        "INVALID: missing inventory entry mutation did not land"
+    );
+    assert!(
+        verify_trial_manifest(&package).is_err(),
+        "A same-length inventory with a missing required key passed"
+    );
+}
+
+#[test]
+fn receiver_reopens_edits_instead_of_replacing_them_from_handover() {
+    let fixture = ContinuationFixture::new();
+    let package = fixture.prepare("resume", true);
+    let run = |input: &str| {
+        use std::io::Write;
+        let mut child = Command::new(package.join("receiver"))
+            .current_dir(&package)
+            .args(["run", "."])
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .unwrap();
+        child
+            .stdin
+            .take()
+            .unwrap()
+            .write_all(input.as_bytes())
+            .unwrap();
+        let output = child.wait_with_output().unwrap();
+        assert!(
+            output.status.success(),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        output.stdout
+    };
+    run("set /mock_state/queue/paused boolean false\n");
+    let edited = fs::read(package.join("work.session.json")).unwrap();
+    assert_ne!(
+        edited,
+        fs::read(package.join("handover.session.json")).unwrap()
+    );
+    let output = run("show /mock_state/queue/paused\n");
+    let response: Value = serde_json::from_slice(
+        output
+            .split(|byte| *byte == b'\n')
+            .filter(|line| !line.is_empty())
+            .last()
+            .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(response["result"]["json_text"], "false");
+    assert_eq!(fs::read(package.join("work.session.json")).unwrap(), edited);
+}

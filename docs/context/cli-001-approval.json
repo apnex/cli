@@ -1,0 +1,15 @@
+{
+  "format_version": 1,
+  "scope": "Selection of CLI-001 from the displayed board",
+  "source": "User-visible messages in the active project conversation",
+  "messages": [
+    {
+      "role": "assistant",
+      "text": "The current [BOARD.md](/home/apnex/taceng/cli/docs/BOARD.md) proposes this sequence. Only documentation and scaffolding are marked complete.\n\n| Record | Work | Status | Depends on | Completion means |\n|---|---|---|---|---|\n| CLI-000 | Vision, architecture, and layer scaffold | **Done** | — | Intent, proposed responsibilities, and scaffold tooling are documented. |\n| CLI-001 | Define the first authoring journey | **Ready** | None | A concrete task, acceptance examples, editing and recovery contracts, and minimum implementation choices. |\n| CLI-002 | Contextual JSON authoring | Waiting | CLI-001 | Construct documents through contextual operations, with precise values, incomplete drafts, saving, and recovery. |\n| CLI-003 | CLI self-authoring and mocks | Waiting | CLI-002 | Construct a CLI definition, activate it, discover its operations, and exercise explicitly simulated behavior. |\n| CLI-004 | Schema construction and constrained authoring | Waiting | CLI-002 | Author a schema, use it to constrain an instance, and construct an OpenAPI description as data. |\n| CLI-005 | Reuse and agent continuation | Waiting | CLI-003, CLI-004 | A fresh agent extends composed work from portable artifacts; evaluate correctness and total workflow effort. |\n\nCLI-003 and CLI-004 can proceed independently after contextual authoring exists.\n\nTwo capabilities are held with explicit triggers:\n\n| Record | Capability | Reconsider when |\n|---|---|---|\n| CLI-006 | Real hooks and connected behavior | A concrete operation establishes the capability, authority, effects, and failure cases required. |\n| CLI-007 | OpenAPI-derived invocation | A representative API task establishes operation mapping, authentication, and response expectations. |\n\nThe decisions recorded against those milestones are:\n\n- **First journey:** which concrete document and editing task proves the initial workflow?\n- **Editing semantics:** how do addressing, numeric fidelity, arrays, drafts, failed batches, and interrupted saves behave?\n- **Implementation:** what minimum Rust packaging and dependencies does that journey require?\n- **Self-authoring:** what definition vocabulary, activation rules, and mock behavior does a representative CLI need?\n- **Constraints:** which schema dialect and reference policy support the chosen examples?\n- **Continuation:** what second task and independent acceptance criteria demonstrate reuse and successful handover?\n\n**The next proposed move is CLI-001:** make the first authoring journey concrete enough to implement and evaluate."
+    },
+    {
+      "role": "user",
+      "text": "approved for next"
+    }
+  ]
+}

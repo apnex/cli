@@ -1,0 +1,72 @@
+   Compiling serde_core v1.0.229
+   Compiling num-traits v0.2.19
+   Compiling regex-syntax v0.8.11
+   Compiling zerocopy v0.8.56
+   Compiling getrandom v0.3.4
+   Compiling aho-corasick v1.1.5
+   Compiling once_cell v1.21.4
+   Compiling ref-cast v1.0.27
+   Compiling foldhash v0.2.0
+   Compiling bit-vec v0.8.0
+   Compiling borrow-or-share v0.2.4
+   Compiling equivalent v1.0.2
+   Compiling allocator-api2 v0.2.21
+   Compiling micromap v0.3.0
+   Compiling bit-set v0.8.0
+   Compiling num-cmp v0.1.0
+   Compiling hashbrown v0.17.1
+   Compiling percent-encoding v2.3.2
+   Compiling num-integer v0.1.47
+   Compiling num-complex v0.4.6
+   Compiling vsimd v0.8.0
+   Compiling num-bigint v0.4.8
+   Compiling num-iter v0.1.46
+   Compiling bytecount v0.6.9
+   Compiling outref v0.5.2
+   Compiling unicode-general-category v1.1.0
+   Compiling uuid-simd v0.8.0
+   Compiling data-encoding v2.11.1
+   Compiling regex-automata v0.4.18
+   Compiling jsonschema-regex v0.55.0
+   Compiling serde v1.0.229
+   Compiling bitflags v2.13.1
+   Compiling num-rational v0.4.2
+   Compiling serde_json v1.0.151
+   Compiling rustix v1.1.4
+   Compiling uuid v1.26.0
+   Compiling num v0.4.3
+   Compiling fraction v0.17.0
+   Compiling fluent-uri v0.4.1
+   Compiling chrono v0.4.45
+   Compiling email_address v0.2.9
+   Compiling ahash v0.8.12
+   Compiling regex v1.13.1
+   Compiling fancy-regex v0.19.1
+   Compiling jsonschema-value v0.55.0
+   Compiling referencing v0.55.0
+   Compiling crossterm v0.29.0
+   Compiling fd-lock v4.0.4
+   Compiling jsonschema v0.55.0
+   Compiling reedline v0.51.0
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+error[E0425]: cannot find value `operation` in this scope
+   --> src/terminal_completion.rs:180:55
+    |
+180 |                     self.constructor_schema_guidance(&operation.handler, &previous);
+    |                                                       ^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `schema_guidance` in this scope
+   --> src/terminal_completion.rs:224:54
+    |
+224 | ...                   if let Some(guidance) = &schema_guidance && !guidance.types.is_empty() {
+    |                                                ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `schema_guidance` in this scope
+   --> src/terminal_completion.rs:236:50
+    |
+236 |                         if let Some(guidance) = &schema_guidance {
+    |                                                  ^^^^^^^^^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `programmable-cli` (lib) due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...

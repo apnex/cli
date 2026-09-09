@@ -1,0 +1,2914 @@
+[
+  {
+    "event": "session_open",
+    "intent_text": "# Component assembly acceptance task\n\nConstruct independent services and queues components entirely through contextual CLI commands.\nEach component must remain a complete, inspectable document with its dependency requirements.\nThe receiving project assembles both components into a worker-platform interface and carries the result to a separate session.\n\n## Required outcomes\n\n| Component | Required behavior |\n|---|---|\n| Services | Own a service named api with exact quota 1.2300; inspect returns only the service state; quota accepts an exact number and returns it; restart remains explicitly unbound. |\n| Queues | Require the services component; own a queue named jobs with paused false; inspect returns only queue state; pause accepts a boolean, changes paused, and returns that boolean. |\n| Assembly | Mount services and queues as distinct contexts below root; retain help, signatures, dependency requirements, original component definitions, and simulated labels. |\n| Transfer | Save the assembled definition, import into a new session, commit, activate, print tree, and use both components after the original component files are removed. |\n\nThe service quota must remain exact when set to 1e400.\nPausing the queue must not change the service inspection result.\nChanging service quota must not change queue state.\nBoth terminal commands and structured machine requests must satisfy this same task.\n\n## Required failures\n\nMissing dependencies, cyclic dependencies, duplicate identities, mount collisions, derived-name collisions, invalid definitions, and unreadable source files must reject assembly without changing checkpoint bytes.\nA definition whose executable paths disagree with its embedded components must reject activation and recovery.\nA root state read or write inside one component must stay inside that component, including scalar and array state.\nSource removal must not break last-receipt replay or committed definition use.\nPublication failure and uncertainty must retain the existing transaction contract.\n\n## Mechanics, rationale, and consequence\n\n### Mechanics\n\nEvaluate independently authored pieces before and after assembly and after a separate-session transfer.\n\n### Rationale\n\nReuse requires preserving each piece's meaning when another piece is added.\n\n### Consequence of violation\n\nA working combined tree could conceal cross-component state access or dependence on the original author's filesystem.\n",
+    "last_receipt": null,
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "0",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    }
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c59ffeaf-c020-4fc6-b4ed-589b35b308ae",
+    "result": {
+      "changed_paths": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "89855a3e-199a-4173-bce1-0ed86d641ba2",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "format"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "2",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1b64e6f6-3573-405b-9421-5636174efff9",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "requires"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "3",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "8ba67510-c0c2-4b2c-9648-5a0c0e1bbeb1",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "46d9d3f2-84ea-4f83-aea8-a54d5130bfef",
+    "result": {
+      "path": [
+        {
+          "key": "definition"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "61bb9120-d476-4adb-a899-dc64a18c6e26",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "format"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "6",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "cb95bf2e-0d77-42eb-a755-b3e6e00b920d",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "d3afe0eb-fea6-4ec2-af5e-d5af5e393fee",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "description"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "8",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "99afa5e7-ada1-441d-bb69-df03adcf738b",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "72a9a770-0856-4d79-97fd-2830c061f3df",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "10",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "5d3c1ee6-4b29-41a8-9c3b-16b2c31a7f58",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "parent"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "11",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0afcc481-5e37-415d-a7e8-8c778d9d43cd",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "12",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "8a4f07db-c487-46cd-8e00-ba905e8f8737",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "related"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "13",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "585e831b-5c82-4770-8656-07b6c6bc609b",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "14",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "439b31b9-ca83-41be-b2c4-0c3b781902ee",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "15",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "49ec6389-cfe5-4bca-9690-75529f9edc1c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "16",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "d7e843e9-b941-4a02-bd5f-e554e58fbdd8",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "17",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "025631bf-7366-48b0-ae08-10369b476c96",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "18",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "16a636b4-98e4-45e8-8d57-5c05502adfeb",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "19",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "41040e82-4a09-41e7-aada-7f59f9b37c0a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "20",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "4b4d7186-415a-41c7-a42e-2d6826127993",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "21",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "4e916995-3d96-4c7f-b2ef-430d1993ec45",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "22",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c43b281c-2335-4b51-bd08-68880bfeb7ee",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "source"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "23",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "67470dbd-3eb8-40ee-9b26-69cabaaa3364",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "inspect"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "24",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "bfa50699-b16a-486f-a2ca-665b63333294",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "25",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "92a7bfaa-cfa5-4bf1-b59c-e0cbb2814e1e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "26",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "9dd6258a-2ed7-4430-9df1-650c73a81a59",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "27",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "9aea0429-ad47-42e3-953c-d5461152ff99",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "28",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "f93e7ea1-3503-4bc9-86e9-936ecbcaaf62",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "29",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a2315026-6f11-44b0-9f9d-e0506569c4ac",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "30",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c839e63c-74f5-4822-b1b6-8fe548501efe",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "31",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "8f6c19e6-ee3a-473c-b4f5-6b07c98da232",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "32",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "90130fdd-d115-47a9-8de9-9a51540e3a35",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "33",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "bdd7d463-779e-4cf4-8579-a929f7cd0e3c",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "34",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "56211e43-05e9-4608-8e02-13c554b2435e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "35",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "e8ff2cb2-56f1-450c-9812-a68754483212",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "36",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c6f89e01-8246-4325-b217-7139d66beaef",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "37",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "0be2e834-bc5a-457d-b3f8-d4f156ffffbc",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "38",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "af7ac384-9851-4de0-9a34-12eadeac6023",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "39",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "88127962-377e-4ff0-9c04-40ee510ffd0a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "40",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a39b5a04-5b54-4295-9804-cf45fefc53ca",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "41",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c0e5483a-fd60-4c9d-987b-21aa88d48688",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "steps"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "42",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "6c5d6e9a-f73d-4232-91bb-d297a7378272",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "43",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1beea94c-2a70-485e-96b9-84b82678de43",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "source"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "44",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "fb4d4178-966c-4f9f-873f-7b5b58eaebc6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "45",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "60d98fb5-b59a-45a3-880a-a55301e9c7ab",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "46",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "69eb6c05-ac45-47ae-a7f0-12df6c24f2af",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "quota"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "output"
+            },
+            {
+              "key": "path"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "47",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "add64241-55f6-42d5-8129-8589f00a94c9",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "48",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "dd183da3-5a4e-4974-8cd3-bc1640856607",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "id"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "49",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "8dd86ec4-6789-46c5-857a-39d20858bbd6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "help"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "50",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "417c1433-e83e-43ab-b2eb-6aa8c19a3bf0",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "parameters"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "51",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0cbdc850-d8e0-493c-a701-1e591650a37e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "binding"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "52",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1a30fe17-8abc-4702-8cb0-da1a7f367fef",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "kind"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "53",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e4aaac72-4157-46bc-a2f6-b43b12b7b5dc",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "contexts"
+            },
+            {
+              "key": "root"
+            },
+            {
+              "key": "commands"
+            },
+            {
+              "key": "restart"
+            },
+            {
+              "key": "binding"
+            },
+            {
+              "key": "reason"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "54",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "59c1d5a4-b9c4-4372-9810-9ad1fb7bcb37",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "mock_state"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "55",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "19357eef-a647-4eb0-a977-75e6651e0e8b",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "mock_state"
+            },
+            {
+              "key": "name"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "56",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0bf1cd18-bd3b-4eac-bb7d-ff2ffa1153f3",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "definition"
+            },
+            {
+              "key": "mock_state"
+            },
+            {
+              "key": "quota"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "definition"
+        }
+      ],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "57",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "ec5106d2-01e6-48ec-9895-84c55188dd57",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "58",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "2c7273aa-275d-442d-ac34-d99ae8445fa0",
+    "result": {
+      "accepted_revision": "59"
+    },
+    "session": {
+      "accepted_revision": "59",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "59",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "save",
+    "replayed": false,
+    "request_id": "0d022999-321f-4d12-81e5-f5d3d1df3cb9",
+    "result": {
+      "destination": "/tmp/cli-acceptance-085fe570-ee2e-4571-9a68-eed3b65adfdc/services.component.json",
+      "publication": "created",
+      "revision": "59",
+      "sha256": "b5cf3dffd0f313c3308aaa010176d54107bb5e2a5a9939462f8e4529dd9cc454"
+    },
+    "session": {
+      "accepted_revision": "59",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-authoring-v1",
+      "definition_sha256": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "59",
+      "session_id": "ceb96f39-38b8-4e2f-920b-ff62afb30bef"
+    },
+    "status": "ok"
+  }
+]

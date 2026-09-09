@@ -1,0 +1,31 @@
+//! Real file observations are measured separately from mock state and receiving-process authority.
+
+mod authoring_fixture;
+use authoring_fixture::*;
+use programmable_cli::document_value::DocumentValue;
+use std::fs;
+
+#[test]
+fn connected_definition_is_authored_with_typed_commands_and_activates_without_authority() {
+    let fixture = AuthoringFixture::new();
+    let mut command = fixture.command(true, true);
+    command.arg("--compose");
+    let mut process = AuthoringProcess::spawn(command);
+    assert_eq!(process.header["event"], "session_open", "{}", process.header);
+    let recipe = fs::read_to_string(repository_path("docs/connected/acceptance/catalog.commands")).unwrap();
+    let mut events = vec![process.header.clone()];
+    for line in recipe.lines() {
+        let response = process.terminal(line);
+        assert_eq!(response["status"], "ok", "{line}: {response}");
+        events.push(response);
+    }
+    let expected = DocumentValue::parse_document(&fs::read_to_string(repository_path("docs/connected/acceptance/expected-definition.json")).unwrap()).unwrap();
+    assert_eq!(fixture.checkpoint_state().candidate, expected);
+    assert_eq!(fixture.checkpoint_state().accepted, expected);
+    let activation = process.terminal("activate");
+    assert_eq!(activation["status"], "ok", "{activation}");
+    events.push(activation);
+    retain_acceptance_bytes("connected-author.json", &serde_json::to_vec_pretty(&events).unwrap());
+    retain_acceptance_bytes("connected-authored-cli.json", &fs::read(fixture.directory.join("connected-cli.json")).unwrap());
+    assert!(process.close().success());
+}

@@ -1,0 +1,294 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.11s
+     Running unittests src/lib.rs (target/debug/deps/programmable_cli-f4af6497a22ecd8a)
+
+running 2 tests
+test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/cli-d2735ac9aa9ba27b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tests/fixtures/changed_argument.rs (target/debug/deps/probe_changed_argument-d650efe581ae2293)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tests/fixtures/extra_handler.rs (target/debug/deps/probe_extra_handler-372123317aedaa73)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests tests/fixtures/missing_handler.rs (target/debug/deps/probe_missing_handler-51486b666b032632)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_acceptance.rs (target/debug/deps/authoring_acceptance-a05a30d853ababc6)
+
+running 4 tests
+test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+PASS service-catalog:machine:1
+PASS numeric-object-key
+PASS service-catalog:machine:2
+PASS service-catalog:machine:3
+PASS wrong-segment-kind
+PASS malformed-machine-line
+PASS missing-revision
+test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+PASS service-catalog:machine:4
+PASS service-catalog:machine:5
+PASS missing-intermediate
+PASS service-catalog:machine:6
+PASS service-catalog:machine:7
+PASS root-replacement
+PASS service-catalog:machine:8
+PASS service-catalog:machine:9
+PASS root-delete
+PASS service-catalog:machine:10
+PASS set-is-not-append
+PASS service-catalog:machine:11
+PASS service-catalog:machine:12
+PASS service-catalog:machine:13
+PASS insert-shifts-context
+PASS service-catalog:machine:14
+PASS service-catalog:machine:15
+PASS delete-shifts-context
+PASS service-catalog:machine:16
+PASS service-catalog:machine:17
+PASS replace-ancestor-context
+PASS service-catalog:machine:18
+PASS service-catalog:machine:19
+PASS service-catalog:machine:20
+PASS delete-current-context
+PASS service-catalog:machine:21
+PASS service-catalog:machine:22
+PASS batch-rollback
+PASS service-catalog:machine:23
+PASS service-catalog:machine:24
+PASS batch-one-revision
+PASS service-catalog:machine:25
+PASS service-catalog:machine:26
+PASS batch-context-path-rejected
+PASS service-catalog:machine:27
+PASS service-catalog:machine:28
+PASS stale-revision
+PASS service-catalog:machine:29
+PASS wrong-session
+PASS service-catalog:machine:30
+PASS service-catalog:machine:31
+PASS wrong-value-type
+PASS service-catalog:machine:32
+PASS service-catalog:machine:33
+PASS unknown-argument
+PASS service-catalog:machine:34
+PASS service-catalog:machine:35
+PASS unknown-operation
+PASS service-catalog:machine:36
+PASS service-catalog:machine:37
+PASS no-op-consumes-revision
+PASS service-catalog:machine:38
+PASS number-spelling-is-authored
+PASS service-catalog:terminal:1
+PASS service-catalog:terminal:2
+PASS complete-is-paginated
+PASS service-catalog:terminal:3
+PASS service-catalog:terminal:4
+PASS accepted-needs-root-path
+PASS service-catalog:terminal:5
+PASS service-catalog:terminal:6
+PASS service-catalog:terminal:7
+PASS service-catalog:terminal:8
+PASS empty-key-terminal
+PASS service-catalog:terminal:9
+PASS service-catalog:terminal:10
+PASS service-catalog:terminal:11
+PASS service-catalog:terminal:12
+PASS one-pass-pointer-escape
+PASS service-catalog:terminal:13
+PASS array-leading-zero-terminal
+PASS service-catalog:terminal:14
+PASS service-catalog:terminal:15
+PASS invalid-number-25
+PASS service-catalog:terminal:16
+PASS service-catalog:terminal:17
+PASS invalid-number-26
+PASS service-catalog:terminal:18
+PASS service-catalog:terminal:19
+PASS invalid-number-27
+PASS service-catalog:terminal:20
+PASS invalid-number-28
+PASS service-catalog:terminal:21
+PASS service-catalog:terminal:22
+PASS service-catalog:terminal:23
+PASS invalid-number-29
+PASS service-catalog:terminal:24
+PASS invalid-number-30
+PASS service-catalog:terminal:25
+PASS service-catalog:terminal:26
+PASS invalid-number-31
+PASS service-catalog:terminal:27
+PASS service-catalog:terminal:28
+PASS help-exposes-value-contract
+PASS service-catalog:terminal:29
+PASS service-catalog:terminal:30
+PASS second-completion-page
+test recorded_operation_cases_execute_against_application ... ok
+PASS service-catalog:terminal:31
+PASS service-catalog:terminal:32
+PASS service-catalog:terminal:33
+PASS service-catalog:terminal:34
+PASS service-catalog:terminal:35
+PASS service-catalog:terminal:36
+PASS service-catalog:terminal:37
+PASS service-catalog:terminal:38
+PASS terminal-machine-parity
+test service_catalog_journey_through_both_process_presentations ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+     Running tests/authoring_discovery.rs (target/debug/deps/authoring_discovery-a1884311d7d8d676)
+
+running 5 tests
+test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+PASS declaration-handler-drift
+test separately_built_native_registry_drift_is_rejected_before_session_creation ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring_limits.rs (target/debug/deps/authoring_limits-3516e8cd63f87a29)
+
+running 5 tests
+test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+PASS declared-limits:scalar-depth-document-request-checkpoint-batch
+test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+PASS declared-limits:receipt-overhead
+PASS bounded-result-delivery
+test receipt_overhead_and_response_bound_reject_before_publication ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.43s
+
+     Running tests/authoring_recovery.rs (target/debug/deps/authoring_recovery-16442212ac6a015b)
+
+running 12 tests
+PASS duplicate-decoded-checkpoint-key
+PASS outside-checkpoint-edit
+PASS unpaired-surrogate-checkpoint
+FAULT_LANDED {"action":"error","pid":124995,"point":"after_checkpoint_write"}
+PASS failure-before-rename
+PASS create-only-export
+PASS unsupported-checkpoint-version
+PASS receipt-identifier-reuse
+PASS definition-change-on-reopen
+test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+FAULT_LANDED {"action":"pause","pid":124993,"point":"before_checkpoint_write"}
+test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+PASS repeat-identical-export
+test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+PASS old-retry-is-not-rebased
+test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+PASS crash-boundary:before_checkpoint_write
+FAULT_LANDED {"action":"error","pid":125021,"point":"reopen_file_sync"}
+PASS bootstrap-reuse-boundary
+test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+FAULT_LANDED {"action":"error","pid":125020,"point":"after_checkpoint_rename"}
+FAULT_LANDED {"action":"error","pid":125035,"point":"reopen_directory_sync"}
+test reopening_cannot_report_durable_before_file_and_directory_sync_succeed ... ok
+FAULT_LANDED {"action":"error","pid":125025,"point":"after_export_publish"}
+PASS failure-after-rename
+FAULT_LANDED {"action":"pause","pid":125029,"point":"after_checkpoint_file_sync"}
+PASS uncertain-export
+test uncertain_export_can_be_retried_without_changing_authoring_state ... ok
+PASS second-writer-lock
+test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+PASS crash-boundary:after_checkpoint_file_sync
+test measured_publication_failures_preserve_or_explicitly_uncertain_state ... ok
+PASS terminal-batch-buffer
+test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+FAULT_LANDED {"action":"pause","pid":125053,"point":"after_checkpoint_rename"}
+PASS checkpoint-cross-field-corruption
+test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+PASS crash-boundary:after_checkpoint_rename
+FAULT_LANDED {"action":"pause","pid":125061,"point":"after_checkpoint_directory_sync"}
+PASS crash-boundary:after_checkpoint_directory_sync
+FAULT_LANDED {"action":"pause","pid":125065,"point":"before_response_delivery"}
+PASS crash-boundary:before_response_delivery
+PASS crash-publication-boundaries
+PASS receipt-replay-after-lost-response
+test killed_process_at_each_publication_boundary_recovers_a_complete_checkpoint ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/cli_composition.rs (target/debug/deps/cli_composition-72990c3752ef24cd)
+
+running 12 tests
+PASS cli-003-live-registry-drift
+test composition_registry_checks_actual_handler_and_argument_drift ... ok
+PASS cli-003-configured-signature-discovery
+test configured_names_drive_discovery_completion_and_invocation ... ok
+PASS cli-003-configured-domain-words-and-types
+test domain_word_collisions_and_scalar_types_are_configured_without_new_handlers ... ok
+FAULT_LANDED {"action":"error","pid":125102,"point":"before_checkpoint_write"}
+PASS cli-003-explicit-replacement
+test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+PASS cli-003-exact-number-boundaries
+test exact_numbers_survive_arguments_literals_discovery_and_reopen ... ok
+PASS cli-003-checkpoint-validation
+test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+PASS cli-003-definition-input-boundaries
+test definition_limits_unknown_fields_and_duplicate_keys_reject_before_activation ... ok
+FAULT_LANDED {"action":"pause","pid":125132,"point":"before_response_delivery"}
+FAULT_LANDED {"action":"error","pid":125134,"point":"after_checkpoint_rename"}
+PASS cli-003-lost-mock-response
+test lost_mock_response_replays_after_process_death_without_another_transition ... ok
+PASS cli-003-invalid-definition-and-atomic-mock
+test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+PASS cli-003-activation-publication-faults
+test activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary ... ok
+PASS cli-003-simulation-provenance
+test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+PASS cli-003-construction-parity-transfer
+test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.67s
+
+     Running tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-d3cb962400cec689)
+
+running 1 test
+test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+     Running tests/schema_constraints.rs (target/debug/deps/schema_constraints-34e4a9ccaa260257)
+
+running 10 tests
+FAULT_LANDED {"action":"error","pid":125173,"point":"before_checkpoint_write"}
+test failed_attachments_preserve_drafts_and_reference_policy_is_explicit ... ok
+FAULT_LANDED {"action":"error","pid":125184,"point":"after_checkpoint_rename"}
+test schema_guidance_and_completion_share_missing_fields_types_literals_and_limits ... ok
+test attachment_replay_detachment_discard_and_checkpoint_profiles_remain_distinct ... ok
+test openapi_description_is_constructed_without_serialized_containers_or_activation ... ok
+UPSTREAM_CASES positive=141 negative=168
+test retained_upstream_positive_and_negative_instances_match_the_selected_dialect ... ok
+FAULT_LANDED {"action":"pause","pid":125203,"point":"before_response_delivery"}
+test constraint_numbers_are_exact_and_resource_failures_do_not_certify_instances ... ok
+test schema_reference_siblings_conditionals_and_admission_boundaries_are_observable ... ok
+test schema_attachment_publication_faults_and_lost_response_recover_through_saved_receipts ... ok
+test authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen ... ok
+test constraints_compose_with_mock_interfaces_without_sharing_document_roles ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+

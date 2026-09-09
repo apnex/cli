@@ -1,0 +1,89 @@
+# Scaffold workflow
+
+## Prerequisites
+
+The repository currently provides documentation, a declared layer graph, and a renderer for its local responsibility records.
+There is no CLI binary or runtime behavior to install or exercise.
+The renderer and guard tests are Rust code in the [scaffold package](../tools/scaffold/Cargo.toml).
+They require a Rust toolchain with Cargo and a C linker; locked dependencies may require network access on the first build.
+
+The renderer defaults to the repository containing its Cargo manifest, so it does not depend on the caller's working directory.
+Its optional `--root` argument selects a different scaffold root, as used by the isolated guard tests.
+The commands below use the repository root as their working directory.
+
+---
+
+## Verify the scaffold
+
+Check the declaration and its generated views:
+```bash
+cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check
+```
+
+Success means the declaration has the supported shape, layer names and dependencies resolve, its proposed dependency graph is acyclic, and every generated view matches the declaration.
+It does not validate a runtime import graph, implement JSON Schema, or prove any product behavior.
+
+Exercise the guards against deliberately broken declarations and stale generated content:
+```bash
+cargo test --locked --manifest-path tools/scaffold/Cargo.toml
+```
+
+These tests use temporary copies and check that rejected input does not change the generated documents.
+They also check preservation of authored content and invocation from another working directory.
+The project-record checks validate documentation placement, local links, board correspondence, and acceptance-fixture structure; they do not execute the authoring application.
+
+---
+
+## Edit the scaffold
+
+Read the relevant source before changing it.
+The [layer registry](layers.json) owns the generated anchored-core view and each layer's local vision and responsibility record.
+The surrounding architecture, project vision, approach, and source discussion are separate authored records.
+
+Project documentation lives under `docs/`, except the root `README.md` and `VISION.md`.
+Generated layer documents live at `docs/layers/<id>/VISION.md` and `docs/layers/<id>/contract.md`.
+The renderer rejects declarations that would place them outside that scope.
+`AGENTS.md` remains at the workspace root as governing agent instructions.
+
+Regenerate after changing the registry:
+```bash
+cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --write
+```
+
+The renderer refuses to replace an existing local layer document that is not marked as its generated output.
+The historical discussion is a source artifact; preserve it when correcting derived interpretations.
+
+---
+
+## Remove
+
+There is no application installation to undo.
+Generated views can be reconstructed from the registry and the architecture's generation markers.
+Retain source intent, the registry, and authored documents when removing generated output.
+The whole directory is a Git repository, so deleting it is a separate repository-disposition decision.
+
+---
+
+## Correction: keep repository tooling in Rust
+
+The initial scaffold used a Python renderer and Python guard tests as a bootstrap convenience.
+The owner challenged that choice: "why all the python, when we are building a rust app?"
+The repository tooling now uses Rust, removing that second runtime requirement while preserving the generator's ownership and rejection checks.
+This correction changes the scaffold tooling; CLI-002 still owns implementation of the JSON authoring application.
+
+---
+
+## Mechanics, rationale, and consequence
+
+### Mechanics
+
+The registry is validated before any generated file is written.
+The check mode compares expected content with the existing files without rewriting them.
+
+### Rationale
+
+The responsibility map and local records describe the same declaration and must not drift independently.
+
+### Consequence of violation
+
+A hand-edited generated view can give the next actor a different boundary or dependency from the source registry.

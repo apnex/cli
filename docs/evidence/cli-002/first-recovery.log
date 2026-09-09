@@ -1,0 +1,43 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.31s
+     Running tests/authoring_recovery.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/authoring_recovery-f80116818a8de558)
+
+running 12 tests
+PASS duplicate-decoded-checkpoint-key
+PASS create-only-export
+PASS unpaired-surrogate-checkpoint
+PASS failure-before-rename
+PASS outside-checkpoint-edit
+PASS receipt-identifier-reuse
+PASS old-retry-is-not-rebased
+PASS unsupported-checkpoint-version
+test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+PASS definition-change-on-reopen
+test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+PASS repeat-identical-export
+test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+PASS crash-boundary:before_checkpoint_write
+PASS bootstrap-reuse-boundary
+test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+test reopening_cannot_report_durable_before_file_and_directory_sync_succeed ... ok
+PASS uncertain-export
+test uncertain_export_can_be_retried_without_changing_authoring_state ... ok
+PASS failure-after-rename
+PASS second-writer-lock
+test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+test measured_publication_failures_preserve_or_explicitly_uncertain_state ... ok
+PASS terminal-batch-buffer
+test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... PASS crash-boundary:after_checkpoint_file_sync
+ok
+PASS checkpoint-cross-field-corruption
+test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+PASS crash-boundary:after_checkpoint_rename
+PASS crash-boundary:after_checkpoint_directory_sync
+PASS crash-boundary:before_response_delivery
+PASS crash-publication-boundaries
+PASS receipt-replay-after-lost-response
+test killed_process_at_each_publication_boundary_recovers_a_complete_checkpoint ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+

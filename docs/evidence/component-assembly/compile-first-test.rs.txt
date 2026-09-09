@@ -1,0 +1,133 @@
+mod authoring_fixture;
+use authoring_fixture::*;
+use programmable_cli::document_value::DocumentValue;
+use programmable_cli::operation_definition::OperationDefinition;
+use programmable_cli::terminal_input::compile_terminal_request;
+use serde_json::{Value, json};
+use std::fs;
+
+fn assembly_start(fixture: &AuthoringFixture, terminal: bool, create: bool) -> AuthoringProcess {
+    let mut command = fixture.command(terminal, create);
+    command.args(["--compose", "--constraints"]);
+    let process = AuthoringProcess::spawn(command);
+    assert_eq!(process.header["event"], "session_open", "{}", process.header);
+    process
+}
+
+fn assembly_request(process: &AuthoringProcess, operation: &str, arguments: Value) -> Value {
+    let mut request = json!({"request_id":uuid::Uuid::new_v4().to_string(),"session_id":process.header["session"]["session_id"],"operation":operation,"arguments":arguments});
+    if !["tree", "discover", "show", "diff", "status", "help", "complete", "validate", "guide"].contains(&operation) {
+        request["expected_revision"] = process.header["session"]["revision"].clone();
+    }
+    request
+}
+
+fn assembly_step(process: &mut AuthoringProcess, terminal: bool, line: &str, operation: &str, arguments: Value) -> Value {
+    let response = if terminal { process.terminal(line) } else { process.submit(&assembly_request(process, operation, arguments)) };
+    assert_eq!(response["status"], "ok", "{line}: {response}");
+    response
+}
+
+fn author_component(name: &str, terminal: bool) -> AuthoringFixture {
+    let fixture = AuthoringFixture::new();
+    fs::copy(repository_path("docs/components/acceptance/TASK.md"), &fixture.intent).unwrap();
+    let mut process = fixture.start(terminal, true);
+    let definition = OperationDefinition::load_operation_definition(&fixture.declaration).unwrap();
+    let recipe = fs::read_to_string(repository_path(&format!("docs/components/acceptance/{name}.commands"))).unwrap();
+    let mut events = vec![process.header.clone()];
+    for line in recipe.lines() {
+        assert!(!line.contains(['{', '}', '[', ']']), "Raw container literal: {line}");
+        let request = compile_terminal_request(line, &definition, &fixture.checkpoint_state()).unwrap();
+        let response = if terminal { process.terminal(line) } else { process.submit(&serde_json::to_value(request).unwrap()) };
+        assert_eq!(response["status"], "ok", "{line}: {response}");
+        events.push(response);
+    }
+    let expected = DocumentValue::parse_document(&fs::read_to_string(repository_path(&format!("docs/components/acceptance/{name}.expected.json"))).unwrap()).unwrap();
+    assert_eq!(fixture.checkpoint_state().candidate, expected);
+    assert_eq!(fixture.checkpoint_state().accepted, expected);
+    assert_eq!(DocumentValue::parse_document(&fs::read_to_string(fixture.directory.join(format!("{name}.component.json"))).unwrap()).unwrap(), expected);
+    retain_acceptance_bytes(&format!("component-{name}-{terminal}.json"), &serde_json::to_vec_pretty(&events).unwrap());
+    assert!(process.close().success());
+    fixture
+}
+
+fn assembly_inputs(fixture: &AuthoringFixture) {
+    for name in ["services", "queues"] {
+        fs::copy(repository_path(&format!("docs/components/acceptance/{name}.expected.json")), fixture.directory.join(format!("{name}.component.json"))).unwrap();
+    }
+    fs::copy(repository_path("docs/components/acceptance/assembly.expected.json"), fixture.directory.join("assembly.json")).unwrap();
+}
+
+fn invocation_output(response: &Value) -> DocumentValue {
+    assert_eq!(response["result"]["invocation"]["effect"], "simulation_only");
+    DocumentValue::parse_document(response["result"]["invocation"]["output_json_text"].as_str().unwrap()).unwrap()
+}
+
+#[test]
+fn authored_components_assemble_transfer_and_preserve_independent_behavior() {
+    let mut artifacts = Vec::new();
+    for terminal in [false, true] {
+        let services = author_component("services", terminal);
+        let queues = author_component("queues", terminal);
+        let fixture = AuthoringFixture::new();
+        for (source,name) in [(&services,"services"),(&queues,"queues")] {
+            fs::copy(source.directory.join(format!("{name}.component.json")), fixture.directory.join(format!("{name}.component.json"))).unwrap();
+        }
+        let mut process = assembly_start(&fixture, terminal, true);
+        let definition = OperationDefinition::load_profile_definition(&fixture.declaration, programmable_cli::kernel_profile::KernelProfile::ConstrainedComposition).unwrap();
+        let recipe = fs::read_to_string(repository_path("docs/components/acceptance/assembly.commands")).unwrap();
+        for line in recipe.lines() {
+            assert!(!line.contains(['{','}','[',']']));
+            let request = compile_terminal_request(line, &definition, &fixture.checkpoint_state()).unwrap();
+            let response = if terminal { process.terminal(line) } else { process.submit(&serde_json::to_value(request).unwrap()) };
+            assert_eq!(response["status"],"ok","{line}: {response}");
+        }
+        let before = fixture.checkpoint_state();
+        let response = assembly_step(&mut process,terminal,"assemble","assemble",json!({}));
+        let assembled = fixture.checkpoint_state();
+        assert!(assembled.context.is_empty());
+        assert_eq!(assembled.accepted,before.accepted);
+        assert_eq!(assembled.active_constraint,before.active_constraint);
+        assert_eq!(assembled.active_interface,before.active_interface);
+        assert_eq!(serde_json::to_value(&assembled.candidate).unwrap()["format"],"cli-definition-v2");
+        assert!(!response["result"]["changed_paths"].as_array().unwrap().is_empty());
+        artifacts.push(assembled.candidate.clone());
+        assembly_step(&mut process,terminal,"commit","commit",json!({}));
+        assembly_step(&mut process,terminal,"save worker-platform.json","save",json!({"destination":"worker-platform.json"}));
+        assert!(process.close().success());
+
+        let consumer = AuthoringFixture::new();
+        fs::copy(fixture.directory.join("worker-platform.json"),consumer.directory.join("spec.json")).unwrap();
+        fs::remove_file(fixture.directory.join("services.component.json")).unwrap();
+        fs::remove_file(fixture.directory.join("queues.component.json")).unwrap();
+        let mut receiver = assembly_start(&consumer,terminal,true);
+        assembly_step(&mut receiver,terminal,"import spec.json","import",json!({"source":"spec.json"}));
+        assembly_step(&mut receiver,terminal,"commit","commit",json!({}));
+        assembly_step(&mut receiver,terminal,"activate","activate",json!({}));
+        let tree=assembly_step(&mut receiver,terminal,"tree","tree",json!({}));
+        let text=tree["result"]["verb_tree_text"].as_str().unwrap();
+        for fragment in ["services","queues","inspect","quota","pause","restart","unbound"] { assert!(text.contains(fragment),"{text}"); }
+        assembly_step(&mut receiver,terminal,"enter services","enter",json!({"context":"services"}));
+        let service_before=invocation_output(&assembly_step(&mut receiver,terminal,"invoke inspect","invoke",json!({"command":"inspect"})));
+        assert_eq!(service_before,DocumentValue::parse_document(r#"{"name":"api","quota":1.2300}"#).unwrap());
+        assembly_step(&mut receiver,terminal,"enter queues","enter",json!({"context":"queues"}));
+        let paused=assembly_step(&mut receiver,terminal,"invoke pause true","invoke",json!({"command":"pause","values":{"value":{"kind":"boolean","value":true}}}));
+        assert_eq!(invocation_output(&paused),DocumentValue::Boolean(true));
+        let queue_before=invocation_output(&assembly_step(&mut receiver,terminal,"invoke inspect","invoke",json!({"command":"inspect"})));
+        assert_eq!(queue_before,DocumentValue::parse_document(r#"{"name":"jobs","paused":true}"#).unwrap());
+        assembly_step(&mut receiver,terminal,"enter services","enter",json!({"context":"services"}));
+        assert_eq!(invocation_output(&assembly_step(&mut receiver,terminal,"invoke inspect","invoke",json!({"command":"inspect"}))),service_before);
+        assert_eq!(invocation_output(&assembly_step(&mut receiver,terminal,"invoke quota 1e400","invoke",json!({"command":"quota","values":{"value":{"kind":"number","value":"1e400"}}}))).compact_document_json(),"1e400");
+        assembly_step(&mut receiver,terminal,"export-interface interface.json","export-interface",json!({"destination":"interface.json"}));
+        retain_acceptance_bytes(&format!("assembled-interface-{terminal}.json"),&fs::read(consumer.directory.join("interface.json")).unwrap());
+        fs::remove_file(consumer.directory.join("spec.json")).unwrap();
+        assert!(receiver.close().success());
+        let mut reopened=assembly_start(&consumer,terminal,false);
+        assembly_step(&mut reopened,terminal,"enter queues","enter",json!({"context":"queues"}));
+        assert_eq!(invocation_output(&assembly_step(&mut reopened,terminal,"invoke inspect","invoke",json!({"command":"inspect"}))),queue_before);
+        assembly_step(&mut reopened,terminal,"save resumed.json","save",json!({"destination":"resumed.json"}));
+        assert_eq!(fs::read(fixture.directory.join("worker-platform.json")).unwrap(),fs::read(consumer.directory.join("resumed.json")).unwrap());
+        assert!(reopened.close().success());
+    }
+    assert_eq!(artifacts[0],artifacts[1],"Terminal and machine assembly diverged");
+}

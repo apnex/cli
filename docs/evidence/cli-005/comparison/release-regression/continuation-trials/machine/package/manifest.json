@@ -1,0 +1,139 @@
+{
+  "dependencies": {
+    "active_constraint": {
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "policy": "local-2020-12-v1",
+      "schema": {
+        "properties": {
+          "contexts": {
+            "type": "object"
+          },
+          "format": {
+            "const": "cli-definition-v1"
+          },
+          "id": {
+            "type": "string"
+          },
+          "mock_state": {
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "queue": {
+                "additionalProperties": false,
+                "properties": {
+                  "depth": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "paused": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "depth",
+                  "paused"
+                ],
+                "type": "object"
+              },
+              "quota": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "name",
+              "quota",
+              "enabled"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "format",
+          "id",
+          "contexts",
+          "mock_state"
+        ],
+        "type": "object"
+      },
+      "schema_sha256": "368e48fcb0595a91fc3bc5882609f6ab5fa8abb2cf4671e9235f0ab4908f9399"
+    },
+    "active_interface": {
+      "binding_scope": "simulation_or_unbound",
+      "context": "services",
+      "definition_id": "service-catalog",
+      "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+    },
+    "continuation_task": "TASK.md",
+    "handover_revision": "129",
+    "kernel_profile": "bootstrap-cli-constraints-v1",
+    "kernel_sha256": "a2df364f24d6610881b3228bcaa0272001c4cab6e9d806ed80deca1c1c5e5584",
+    "source_revision": "113",
+    "source_task": "CATALOG-TASK.md"
+  },
+  "files": {
+    "CATALOG-TASK.md": {
+      "bytes": 2291,
+      "sha256": "3db2e7e5ee87216abe604694ec846b4be5fb2d3d6183b55f2e4509e891541116"
+    },
+    "START.md": {
+      "bytes": 3748,
+      "sha256": "c942c7e4fa417bbbb8dfa12a60bf8e961f82ab6659daf1cbb76ea44ccf0547fc"
+    },
+    "TASK.md": {
+      "bytes": 4589,
+      "sha256": "5ec5aaf716a1900abf68d5dca4f4349143d2d2c63dd86f53dd762a016493c533"
+    },
+    "abandoned-request.json": {
+      "bytes": 239,
+      "sha256": "e2ba89158a134156559bd68857ff2a21f9503eaa0d57f1825e2ba0de8ca99ace"
+    },
+    "cli": {
+      "bytes": 11036136,
+      "sha256": "6058d0f1a2b8fc638757d550718dcf8a1186245047b52d978e08c63728cfcdfd"
+    },
+    "handover.session.json": {
+      "bytes": 12557,
+      "sha256": "f4382dc27f8ac00292bb938d68db5e0ec20386f216f7e9308f1a2050781d74ae"
+    },
+    "incompatible-operations.json": {
+      "bytes": 8722,
+      "sha256": "241464f59e91d23a15970f1932b26ab811daab48efa983aa52ac7f26ba0ca000"
+    },
+    "operations.json": {
+      "bytes": 8721,
+      "sha256": "0f3d174ce523f1ae7149e1476bd6d960f963d16cebd62e29654df5a4ad1ba363"
+    },
+    "queue-policy.json": {
+      "bytes": 538,
+      "sha256": "564938ae4de1495d830c6ab22adc4fe2f526c8c9c7a59bc9afb2f88eb78daca7"
+    },
+    "receiver": {
+      "bytes": 10263104,
+      "sha256": "3773c3e4e603311e924d09fa1c0a76863c1a3431217321060be62bf00f946ab9"
+    },
+    "source.session.json": {
+      "bytes": 12493,
+      "sha256": "f849fc5c6020bfdb7eb5d7b5faa73423bd78f257e2c5f87ad2ddc331a0bf2a55"
+    }
+  },
+  "format": "cli-continuation-trial-v1",
+  "integrity_scope": "Accidental drift relative to this manifest; not authentication or task fidelity.",
+  "mutable_files": [
+    "work.session.json",
+    "completed.definition.json",
+    "completed.interface.json",
+    "logs/"
+  ],
+  "platform": {
+    "arch": "x86_64",
+    "os": "linux"
+  }
+}

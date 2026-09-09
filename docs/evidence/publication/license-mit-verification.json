@@ -1,0 +1,92 @@
+{
+  "status": "complete",
+  "record": "CLI-010",
+  "decision": "docs/BACKLOG.md#decision-0002-use-the-mit-license",
+  "scope": "Owner-selected MIT license and current documentation; no runtime code or publication changes",
+  "completed_at_utc": "2026-09-09T07:09:32.134Z",
+  "owner_statement": "MIT",
+  "license": {
+    "spdx_identifier": "MIT",
+    "copyright_notice": "Copyright (c) 2026 Programmable CLI contributors",
+    "reference_url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/MIT.txt",
+    "reference": "license-mit-reference.txt",
+    "reference_sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5",
+    "comparison": "Full text equality after substituting the copyright notice and normalizing whitespace",
+    "result": "pass",
+    "log": "license-mit-text-check.log"
+  },
+  "packages": [
+    {
+      "name": "programmable-cli",
+      "license": "MIT",
+      "publish": []
+    },
+    {
+      "name": "cli-layer-scaffold",
+      "license": "MIT",
+      "publish": []
+    }
+  ],
+  "metadata_commands": [
+    "cargo metadata --locked --offline --no-deps --format-version 1",
+    "cargo metadata --locked --offline --no-deps --format-version 1 --manifest-path tools/scaffold/Cargo.toml"
+  ],
+  "environment_setup": ". docs/evidence/verb-tree/toolchain-env.sh",
+  "documentation_checks": {
+    "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+    "exit_code": 0,
+    "passed": 13,
+    "log": "license-mit-document-tests.log",
+    "reconciliation": {
+      "application_acceptance_in_this_check": "not-executed",
+      "board_records": 13,
+      "board_state_mismatches": 0,
+      "declared_operations": 17,
+      "dependency_cycles": 0,
+      "design_corpus_status_at_creation": "not-run-against-application",
+      "documentation_layout_violations": 0,
+      "journey_steps": 38,
+      "local_inline_links": 916,
+      "markdown_documents": 82,
+      "milestones": 9,
+      "operation_cases": 34,
+      "scope": "Static project-record checks; no application requests executed",
+      "status": "pass",
+      "system_scenarios": 24,
+      "uncovered_operations": [],
+      "unmet_ready_prerequisites": 0,
+      "unresolved_local_inline_links": 0
+    },
+    "scaffold_command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+    "scaffold_exit_code": 0,
+    "scaffold_log": "license-mit-scaffold-check.log",
+    "style_command": "node target/publication-prep/mission-kit/tools/s6-one-sentence-per-line.mjs --check README.md docs/PUBLISHING.md docs/BOARD.md docs/ARCHITECTURE.md docs/CONTRIBUTING.md docs/publication/REVIEW.md",
+    "style_exit_code": 0,
+    "style_log": "license-mit-style-check.log"
+  },
+  "changed_inputs_sha256": {
+    "LICENSE": "9e54a8a27bb077204b48a31eabdd1073d98478d3231ad93476e9af5219d3dff4",
+    "Cargo.toml": "44bb2c7c944c5804f8a8363a3e067b26c4b593282f20afa51fdf035ca2442f63",
+    "tools/scaffold/Cargo.toml": "5e1dd7fa3689c7af0796e575093a9d40d53f2b7cac53d9e345c3f96d33da5164",
+    "README.md": "fb64b41c19de103fc09cb1a9fd06e6e53c0838ba464a92bc8d81abfc98e28e5f",
+    "docs/PUBLISHING.md": "988d49977b81eed88a075ca11ed0762855a883ade0d81d4d584a5b16c27c6c50",
+    "docs/BOARD.md": "8128fbc6aab183c1a22b9c435d9e168a0843dfb8d75c301ff2562b836f050deb",
+    "docs/BACKLOG.md": "cf6a58d73a4c9138f7384a82a0b6d7f02a2b4f7b753df8d5c8cb770d863fe7a6",
+    "docs/CONTRIBUTING.md": "04c6da4e894b95ccbda5adb99a91dd16305e3295b19a50d99b1a95e22ec99051",
+    "docs/ARCHITECTURE.md": "a04341f905801e5013e92bf0c472205b8f06b401d64374bb260643fa0ed7c6da",
+    "docs/publication/REVIEW.md": "d3b96b63d11f44324ea8943585d03cb72fd70eff0837c10636c18ad9056515e5"
+  },
+  "preserved_inputs_sha256": {
+    "docs/evidence/publication/verification.json": "bc0377c24184bb1261d41d2968dec1e53e9d878497ff7ed510e8e2dd24ee8bcd",
+    "docs/evidence/publication/source-inputs.sha256": "578f56d4e3832bebc3b7f83c3978a0d95796b08db97997ccfb576a834d22f98c",
+    "docs/constraints/acceptance/upstream/LICENSE": "837402bd25fad9b704265801ca3f92566a98157c1f9a7acd6f446299ba1c305a",
+    "Cargo.lock": "60b5c6a4289101f9e95eb4e02a02d3158fafda1059f9ec8c820b969e5237f0cf",
+    "tools/scaffold/Cargo.lock": "ebe0aae85fb91cd027b504e193edc8311b5916bc75ed860a7fde39624c81506a"
+  },
+  "release_state": "CLI-010 remains held for the remaining owner release decisions",
+  "assurance_limits": [
+    "Local executor checks, not independent assurance",
+    "Application suites not repeated for license metadata and documentation changes",
+    "Historical publication verification and its source manifest remain unchanged and describe their original inputs"
+  ]
+}

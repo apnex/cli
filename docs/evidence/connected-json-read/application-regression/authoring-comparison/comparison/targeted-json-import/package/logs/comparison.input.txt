@@ -1,0 +1,22 @@
+status
+help
+schema
+guide /mock_state/queue/paused
+show "" candidate
+show "" accepted
+diff
+discover
+tree
+commit
+save edited.definition.json
+import edited.definition.json
+edit /contexts/queues/commands
+commit
+activate
+tree
+enter services
+invoke quota 1e400
+enter queues
+invoke pause true
+save completed.definition.json
+export-interface completed.interface.json

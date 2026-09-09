@@ -1,0 +1,74 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 41.51s
+     Running tests/cli_assembly.rs (target/release/deps/cli_assembly-92a44ca3d7ed2c34)
+
+running 6 tests
+ASSEMBLY_REJECTED missing-dependency terminal=false code=CLI_COMPONENT_DEPENDENCY
+FAULT_LANDED {"action":"error","pid":95244,"point":"after_checkpoint_write"}
+ASSEMBLY_REJECTED cycle terminal=false code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_REJECTED self-dependency terminal=false code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_MUTANT_REJECTED /contexts/services/commands/inspect/binding/output/path
+FAULT_LANDED {"action":"error","pid":95254,"point":"after_checkpoint_rename"}
+test assembly_keeps_constraints_and_active_behavior_and_is_order_independent ... ok
+ASSEMBLY_MUTANT_REJECTED /contexts/services/commands/quota/binding/steps/0/path
+ASSEMBLY_REJECTED duplicate-dependency terminal=false code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_MUTANT_REJECTED /assembly/components/queues/component/requires
+ASSEMBLY_MUTANT_REJECTED /assembly/components/services/component_sha256
+ASSEMBLY_MUTANT_REJECTED /assembly/components/services/source_sha256
+ASSEMBLY_MUTANT_REJECTED /assembly
+ASSEMBLY_REJECTED duplicate-identity terminal=false code=CLI_COMPONENT_COLLISION
+test assembly_publication_failures_and_uncertainty_preserve_recoverability ... ok
+ASSEMBLY_REJECTED duplicate-mount terminal=false code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED reserved-mount terminal=false code=CLI_COMPONENT_COLLISION
+test assembly_replay_and_transfer_validate_embedded_sources_without_reopening_files ... ok
+ASSEMBLY_REJECTED derived-context-collision terminal=false code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED derived-operation-collision terminal=false code=CLI_COMPONENT_COLLISION
+
+thread 'component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation' (95231) panicked at tests/cli_assembly.rs:569:9:
+assertion `left == right` failed
+  left: Array([String("x"), Number(RawValue(1e+400))])
+ right: Array([String("x"), Number(RawValue(1e400))])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation ... FAILED
+ASSEMBLY_REJECTED bad-context terminal=false code=INVALID_CLI_DEFINITION
+ASSEMBLY_REJECTED unknown-field terminal=false code=INVALID_CLI_ASSEMBLY
+ASSEMBLY_REJECTED missing-file terminal=false code=CLI_COMPONENT_SOURCE
+ASSEMBLY_REJECTED directory-source terminal=false code=CLI_COMPONENT_SOURCE
+ASSEMBLY_REJECTED duplicate-json-key terminal=false code=INVALID_CLI_ASSEMBLY
+ASSEMBLY_REJECTED oversized-source terminal=false code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED oversized-output terminal=false code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED empty-components terminal=false code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED too-many-components terminal=false code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED long-derived-name terminal=false code=INVALID_CLI_DEFINITION
+ASSEMBLY_REJECTED nested-component terminal=false code=INVALID_CLI_ASSEMBLY
+test authored_components_assemble_transfer_and_preserve_independent_behavior ... ok
+ASSEMBLY_REJECTED missing-dependency terminal=true code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_REJECTED cycle terminal=true code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_REJECTED self-dependency terminal=true code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_REJECTED duplicate-dependency terminal=true code=CLI_COMPONENT_DEPENDENCY
+ASSEMBLY_REJECTED duplicate-identity terminal=true code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED duplicate-mount terminal=true code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED reserved-mount terminal=true code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED derived-context-collision terminal=true code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED derived-operation-collision terminal=true code=CLI_COMPONENT_COLLISION
+ASSEMBLY_REJECTED bad-context terminal=true code=INVALID_CLI_DEFINITION
+ASSEMBLY_REJECTED unknown-field terminal=true code=INVALID_CLI_ASSEMBLY
+ASSEMBLY_REJECTED missing-file terminal=true code=CLI_COMPONENT_SOURCE
+ASSEMBLY_REJECTED directory-source terminal=true code=CLI_COMPONENT_SOURCE
+ASSEMBLY_REJECTED duplicate-json-key terminal=true code=INVALID_CLI_ASSEMBLY
+ASSEMBLY_REJECTED oversized-source terminal=true code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED oversized-output terminal=true code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED empty-components terminal=true code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED too-many-components terminal=true code=LIMIT_EXCEEDED
+ASSEMBLY_REJECTED long-derived-name terminal=true code=INVALID_CLI_DEFINITION
+ASSEMBLY_REJECTED nested-component terminal=true code=INVALID_CLI_ASSEMBLY
+test component_graph_source_and_collision_failures_preserve_the_checkpoint ... ok
+
+failures:
+
+failures:
+    component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+
+error: test failed, to rerun pass `--test cli_assembly`

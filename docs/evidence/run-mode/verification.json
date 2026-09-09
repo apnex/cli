@@ -1,0 +1,208 @@
+{
+  "format_version": 1,
+  "record": "CLI-008",
+  "increment": "direct-run",
+  "status": "complete-within-selected-local-scope",
+  "scope": "Direct configured verbs in one-shot, piped, and interactive modes; shared invocation engine, generated routes/help/tree/completion, exact output, process status, and optional persistent state.",
+  "authority": "Local executor measurements; no deployment, independent review, new agent trial, or comparative agent-savings claim.",
+  "selection": "../../context/cli-008-approval.json",
+  "contract": "../../run/CONTRACT.md",
+  "task": "../../run/acceptance/TASK.md",
+  "audit": "../../run/AXIOM-AUDIT.md",
+  "results": "../../run/RESULTS.md",
+  "implementation": {
+    "launcher": "cli run [options] <spec.json> [context ... command arguments ...]",
+    "source_formats": [
+      "cli-definition-v1",
+      "cli-definition-v2",
+      "cli-interface-export-v1"
+    ],
+    "options": [
+      "--json",
+      "--session <checkpoint>",
+      "--grant-json-read <capability> <file>"
+    ],
+    "controls": [
+      ":help",
+      ":tree",
+      ":up",
+      ":top",
+      ":status",
+      ":export",
+      ":exit"
+    ],
+    "execution": "Qualified context-id/word lowered to the existing composition invocation handler; one receipt publication and no navigation mutation.",
+    "persistence": "Existing checkpoint storage, fresh temporary directory by default, optional persistent composition checkpoint; - resumes without source.",
+    "argument_policy": "Ordered required string, number, and boolean scalars, with exact OS argv preservation and existing interactive quoted-token grammar.",
+    "stdout": "Exact invocation JSON text plus newline, or explicit generated views; structured response envelopes with --json.",
+    "stderr": "Mock labels and errors; transport failure after publication remains a transport stop.",
+    "exit_codes": {
+      "0": "success",
+      "1": "definition/provider/grant/storage/delivery failure",
+      "2": "usage/route/arguments"
+    }
+  },
+  "tests": {
+    "instrumented": {
+      "status": "pass",
+      "passed": 87,
+      "failed": 0,
+      "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=docs/evidence/run-mode/final-application-regression cargo test --locked --release --all-features --all-targets -- --nocapture",
+      "log": "final-application-tests.log",
+      "exit_file": "final-application-tests.exit"
+    },
+    "normal": {
+      "status": "pass",
+      "passed": 70,
+      "failed": 0,
+      "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=docs/evidence/run-mode/final-normal-regression cargo test --locked --release --all-targets -- --nocapture",
+      "log": "final-normal-tests.log",
+      "exit_file": "final-normal-tests.exit"
+    },
+    "run": {
+      "status": "pass",
+      "instrumented_passed": 10,
+      "normal_passed": 9,
+      "initial_focused_log": "targeted-final.log",
+      "final_log": "final-application-tests.log",
+      "faults_observed": 3,
+      "applied_invalid_definition_cases": 3,
+      "terminal_transcript": "final-application-regression/run-terminal.raw"
+    },
+    "documentation": {
+      "status": "pass",
+      "passed": 13,
+      "failed": 0,
+      "command": "CARGO_TARGET_DIR=$PWD/target cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+      "log": "final-documentation-tests.log",
+      "exit_file": "final-documentation-tests.exit",
+      "checks": {
+        "application_acceptance_in_this_check": "not-executed",
+        "board_records": 9,
+        "board_state_mismatches": 0,
+        "declared_operations": 17,
+        "dependency_cycles": 0,
+        "design_corpus_status_at_creation": "not-run-against-application",
+        "documentation_layout_violations": 0,
+        "journey_steps": 38,
+        "local_inline_links": 825,
+        "markdown_documents": 77,
+        "milestones": 7,
+        "operation_cases": 34,
+        "scope": "Static project-record checks; no application requests executed",
+        "status": "pass",
+        "system_scenarios": 24,
+        "uncovered_operations": [],
+        "unmet_ready_prerequisites": 0,
+        "unresolved_local_inline_links": 0
+      }
+    },
+    "format": {
+      "status": "pass",
+      "command": "cargo fmt --all -- --check",
+      "log": "format.log",
+      "exit_file": "format.exit"
+    },
+    "scaffold": {
+      "status": "pass",
+      "layers": 7,
+      "views": 15,
+      "command": "CARGO_TARGET_DIR=$PWD/target cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "log": "scaffold-check.log",
+      "exit_file": "scaffold-check.exit"
+    },
+    "debug_build": {
+      "status": "pass",
+      "command": "cargo build --locked --bin cli",
+      "log": "final-debug-build.log",
+      "exit_file": "final-debug-build.exit"
+    }
+  },
+  "walkthrough": {
+    "status": "pass",
+    "guide": "../../run/USE.md",
+    "script": "walkthrough.sh",
+    "log": "walkthrough.log",
+    "exit_file": "walkthrough.exit",
+    "location": "walkthrough-location.txt",
+    "archive": "walkthrough",
+    "archive_comparison": {
+      "status": "pass",
+      "log": "walkthrough-copy.log",
+      "exit_file": "walkthrough-copy.exit"
+    },
+    "metrics": "walkthrough-metrics.json",
+    "construction_responses": 57,
+    "definition_containers_authored_as_raw_json": 0,
+    "original_directory": "/home/apnex/taceng/cli/target/run-mode-7qFYEw",
+    "binary_sha256": "11191ca3e4e2a2095837696a42757fa01c01533722dd2ada8451a742bc5af50a"
+  },
+  "toolchain": {
+    "rust": "1.98.1",
+    "cargo": "1.98.1",
+    "verified_platform": "local Linux",
+    "dependency_change": "No Cargo manifest or lockfile changes; terminal acceptance uses the host script utility.",
+    "capture": "toolchain.txt"
+  },
+  "source_identity": {
+    "manifest": "source.sha256",
+    "scope": "Application source/tests, continuation tools, root Cargo files, operation declarations, run contract/task and authored connected fixture inputs.",
+    "files": 65,
+    "verification_log": "source-verification.log"
+  },
+  "binary_identity": {
+    "hash_file": "binaries.sha256",
+    "previous_pair": "before/runtime-location.txt",
+    "normal_debug": {
+      "path": "target/debug/cli",
+      "sha256": "11191ca3e4e2a2095837696a42757fa01c01533722dd2ada8451a742bc5af50a"
+    },
+    "normal_release": {
+      "path": "target/release/cli",
+      "sha256": "8a9fc5c1d30fa8a20e18982597b9923eb1d4f28875ae9ad4b63d912f2605d99c"
+    },
+    "verification_log": "binary-verification.log"
+  },
+  "retained_failures": [
+    {
+      "log": "failing-before.log",
+      "classification": "behavioral baseline",
+      "result": "Test compiled; the prior launcher rejected run."
+    },
+    {
+      "log": "first-implementation.log",
+      "classification": "compile failure",
+      "result": "Conditional directory creation expression did not bind its Result."
+    },
+    {
+      "log": "targeted-first.log",
+      "classification": "behavioral failure",
+      "result": "Read requests incorrectly carried expected_revision; initial terminal driver sent keys during cursor queries."
+    },
+    {
+      "log": "targeted-second.log",
+      "classification": "terminal driver failure",
+      "result": "Tab opened the menu; the driver omitted the Enter needed to accept its selection."
+    },
+    {
+      "log": "terminal-third.log",
+      "classification": "terminal driver failure",
+      "result": "The full interaction succeeded but the driver killed the wrapper during its process-exit race."
+    }
+  ],
+  "limits": [
+    "Current scalar signature only: no optional/named parameters or automatic API mapping.",
+    "No additional providers; the connected capability remains the existing local JSON reader.",
+    "Historical observations do not measure service health or establish current source state.",
+    "Temporary default state is removed on normal exit; forced termination can leave its directory.",
+    "Persistent composition checkpoints require compatible declaration bytes; older binary/declaration pairs are preserved rather than migrated.",
+    "Repeating a shell command is a fresh invocation; exact latest-request replay remains a canonical protocol feature.",
+    "Failure to deliver a response can follow durable execution; inspect a persistent receipt before retrying.",
+    "No comparative agent-effort measurement or claim to cover every possible CLI."
+  ],
+  "board": {
+    "cli_008": "Done within selected direct-run scope",
+    "cli_007": "Held pending a representative API task"
+  },
+  "completed_at_utc": "2026-09-09 05:14:11 UTC"
+}

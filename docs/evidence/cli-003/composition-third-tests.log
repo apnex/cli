@@ -1,0 +1,45 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.11s
+     Running tests/cli_composition.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/cli_composition-39d77a22ea4af991)
+
+running 9 tests
+PASS cli-003-live-registry-drift
+test composition_registry_checks_actual_handler_and_argument_drift ... ok
+
+thread 'constructed_cli_activates_and_runs_through_both_presentations_and_transfers' (74102) panicked at tests/cli_composition.rs:224:22:
+assertion `left == right` failed
+  left: String("1e+400")
+ right: "1e400"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... FAILED
+PASS cli-003-simulation-provenance
+test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+FAULT_LANDED {"action":"error","pid":74127,"point":"before_checkpoint_write"}
+FAULT_LANDED {"action":"pause","pid":74129,"point":"before_response_delivery"}
+
+thread 'lost_mock_response_replays_after_process_death_without_another_transition' (74107) panicked at tests/cli_composition.rs:760:5:
+assertion `left == right` failed
+  left: "1e+400"
+ right: "1e400"
+test lost_mock_response_replays_after_process_death_without_another_transition ... FAILED
+PASS cli-003-explicit-replacement
+test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+PASS cli-003-invalid-definition-and-atomic-mock
+test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+PASS cli-003-configured-signature-discovery
+test configured_names_drive_discovery_completion_and_invocation ... ok
+PASS cli-003-checkpoint-validation
+test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+FAULT_LANDED {"action":"error","pid":74141,"point":"after_checkpoint_rename"}
+PASS cli-003-activation-publication-faults
+test activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary ... ok
+
+failures:
+
+failures:
+    constructed_cli_activates_and_runs_through_both_presentations_and_transfers
+    lost_mock_response_replays_after_process_death_without_another_transition
+
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.21s
+
+error: test failed, to rerun pass `--test cli_composition`

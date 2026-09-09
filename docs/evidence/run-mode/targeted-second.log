@@ -1,0 +1,36 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 49.36s
+     Running tests/cli_run.rs (target/release/deps/cli_run-f94e0ffa3a2f3b64)
+
+running 10 tests
+RUN_REJECTION_LANDED collision
+RUN_REJECTION_LANDED invalid-parent
+test exported_cli_runs_direct_verbs_without_authoring_setup ... ok
+RUN_REJECTION_LANDED invalid-parameter
+test generated_help_tree_and_completion_describe_callable_routes ... ok
+test ambiguous_routes_and_invalid_sources_reject_before_checkpoint_creation ... ok
+test direct_connected_read_labels_history_and_requires_fresh_grants ... ok
+test command_authored_export_runs_and_agrees_with_canonical_invocation ... ok
+FAULT_LANDED {"action":"error","pid":177131,"point":"before_checkpoint_write"}
+FAULT_LANDED {"action":"error","pid":177142,"point":"after_checkpoint_rename"}
+test assembled_nested_routes_use_local_words_and_keep_component_state_separate ... ok
+FAULT_LANDED {"action":"error","pid":177150,"point":"before_response_delivery"}
+test argv_and_interactive_strings_are_literal_and_control_like_domain_words_remain_callable ... ok
+test run_publication_faults_preserve_recovery_and_never_acknowledge_uncertain_success ... ok
+test persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes ... ok
+
+thread 'actual_terminal_completes_context_and_executes_direct_commands' (177080) panicked at tests/cli_run.rs:737:5:
+assertion `left == right` failed: Terminal transcript: [6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h
+  left: 2
+ right: 9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test actual_terminal_completes_context_and_executes_direct_commands ... FAILED
+
+failures:
+
+failures:
+    actual_terminal_completes_context_and_executes_direct_commands
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.04s
+
+error: test failed, to rerun pass `--test cli_run`

@@ -1,0 +1,210 @@
+set /format string cli-definition-v1
+set /id string platform
+set /description string "Platform CLI prototype with simulated services, deployments, and environments."
+set /mock_state object
+edit /mock_state
+set ./service object
+set ./service/name string api
+set ./service/replicas number 2
+set ./releases array
+append ./releases string v1
+append ./releases string v2
+set ./environments array
+append ./environments string development
+append ./environments string production
+set ./selected_environment string development
+top
+set /contexts object
+set /contexts/root object
+edit /contexts/root
+set ./parent null
+set ./help string "Explore the platform prototype."
+set ./related array
+set ./commands object
+set ./commands/version object
+edit ./commands/version
+set ./id string platform.version
+set ./help string "Describe this mock platform CLI."
+set ./parameters array
+set ./binding object
+set ./binding/kind string simulated
+set ./binding/steps array
+set ./binding/output object
+set ./binding/output/source string literal
+set ./binding/output/value string "Platform CLI mock"
+top
+set /contexts/services object
+edit /contexts/services
+set ./parent string root
+set ./help string "Inspect and simulate scaling the api service."
+set ./related array
+append ./related string deployments
+set ./commands object
+set ./commands/inspect object
+edit ./commands/inspect
+set ./id string services.inspect
+set ./help string "Inspect the simulated api service."
+set ./parameters array
+set ./binding object
+set ./binding/kind string simulated
+set ./binding/steps array
+set ./binding/output object
+set ./binding/output/source string state
+set ./binding/output/path array
+append ./binding/output/path object
+set ./binding/output/path/0/key string service
+edit /contexts/services/commands
+set ./scale object
+edit ./scale
+set ./id string services.scale
+set ./help string "Change the simulated api replica count."
+set ./parameters array
+append ./parameters object
+set ./parameters/0/name string replicas
+set ./parameters/0/type string number
+set ./parameters/0/help string "Desired simulated replica count."
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+append ./steps object
+set ./steps/0/path array
+append ./steps/0/path object
+set ./steps/0/path/0/key string service
+append ./steps/0/path object
+set ./steps/0/path/1/key string replicas
+set ./steps/0/value object
+set ./steps/0/value/source string argument
+set ./steps/0/value/name string replicas
+set ./output object
+set ./output/source string state
+set ./output/path array
+append ./output/path object
+set ./output/path/0/key string service
+edit /contexts/services/commands
+set ./restart object
+edit ./restart
+set ./id string services.restart
+set ./help string "Restart the api service when an implementation is attached."
+set ./parameters array
+set ./binding object
+set ./binding/kind string unbound
+set ./binding/reason string "No real restart implementation is attached."
+top
+set /contexts/deployments object
+edit /contexts/deployments
+set ./parent string root
+set ./help string "Explore deployment plans and release operations."
+set ./related array
+set ./commands object
+set ./commands/plan object
+edit ./commands/plan
+set ./id string deployments.plan
+set ./help string "Preview the requested environment as a simulated plan target."
+set ./parameters array
+append ./parameters object
+set ./parameters/0/name string environment
+set ./parameters/0/type string string
+set ./parameters/0/help string "Environment to preview."
+set ./binding object
+set ./binding/kind string simulated
+set ./binding/steps array
+set ./binding/output object
+set ./binding/output/source string argument
+set ./binding/output/name string environment
+edit /contexts/deployments/commands
+set ./apply object
+edit ./apply
+set ./id string deployments.apply
+set ./help string "Apply a release when a deployment implementation is attached."
+set ./parameters array
+append ./parameters object
+set ./parameters/0/name string release
+set ./parameters/0/type string string
+set ./parameters/0/help string "Release to deploy."
+set ./binding object
+set ./binding/kind string unbound
+set ./binding/reason string "No real deployment implementation is attached."
+top
+set /contexts/releases object
+edit /contexts/releases
+set ./parent string deployments
+set ./help string "Inspect example releases and the rollback contract."
+set ./related array
+set ./commands object
+set ./commands/list object
+edit ./commands/list
+set ./id string releases.list
+set ./help string "List simulated release names."
+set ./parameters array
+set ./binding object
+set ./binding/kind string simulated
+set ./binding/steps array
+set ./binding/output object
+set ./binding/output/source string state
+set ./binding/output/path array
+append ./binding/output/path object
+set ./binding/output/path/0/key string releases
+edit /contexts/releases/commands
+set ./rollback object
+edit ./rollback
+set ./id string releases.rollback
+set ./help string "Roll back when a release implementation is attached."
+set ./parameters array
+append ./parameters object
+set ./parameters/0/name string version
+set ./parameters/0/type string string
+set ./parameters/0/help string "Release version to restore."
+set ./binding object
+set ./binding/kind string unbound
+set ./binding/reason string "No real rollback implementation is attached."
+top
+set /contexts/environments object
+edit /contexts/environments
+set ./parent string root
+set ./help string "List and select a simulated working environment."
+set ./related array
+set ./commands object
+set ./commands/list object
+edit ./commands/list
+set ./id string environments.list
+set ./help string "List example environments."
+set ./parameters array
+set ./binding object
+set ./binding/kind string simulated
+set ./binding/steps array
+set ./binding/output object
+set ./binding/output/source string state
+set ./binding/output/path array
+append ./binding/output/path object
+set ./binding/output/path/0/key string environments
+edit /contexts/environments/commands
+set ./select object
+edit ./select
+set ./id string environments.select
+set ./help string "Record a simulated working environment name."
+set ./parameters array
+append ./parameters object
+set ./parameters/0/name string name
+set ./parameters/0/type string string
+set ./parameters/0/help string "Simulated environment name."
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+append ./steps object
+set ./steps/0/path array
+append ./steps/0/path object
+set ./steps/0/path/0/key string selected_environment
+set ./steps/0/value object
+set ./steps/0/value/source string argument
+set ./steps/0/value/name string name
+set ./output object
+set ./output/source string state
+set ./output/path array
+append ./output/path object
+set ./output/path/0/key string selected_environment
+top
+commit
+save platform-definition.json
+activate

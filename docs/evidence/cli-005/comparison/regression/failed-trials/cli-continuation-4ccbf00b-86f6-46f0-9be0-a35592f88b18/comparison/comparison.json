@@ -1,0 +1,584 @@
+{
+  "agent_or_human_advantage": "not-claimed",
+  "elapsed_experiment_ms": "285413",
+  "full_workflow_economic_advantage": "not-claimed",
+  "method_order": [
+    "cli-continuation",
+    "targeted-json-editing",
+    "cli-reconstruction"
+  ],
+  "methods": [
+    {
+      "actor": "scripted known recipe",
+      "actor_effort": null,
+      "checkpoint_bytes": 15363,
+      "comparison_to_fresh_agent_timing": "not-comparable",
+      "elapsed_method_and_evaluation_ms": "111783",
+      "elapsed_workflow_wall_ms": "88134",
+      "evaluation": {
+        "definition_bytes": 2490,
+        "fresh_actor_attestation": null,
+        "full_staged_continuation": {
+          "error": null,
+          "status": "pass"
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "1066",
+          "elapsed_receiver_ms": "22961",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 2129,
+          "input_lines": 77,
+          "operations": {
+            "activate": 1,
+            "append": 6,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 12,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "set": 39,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 121860,
+          "recorded_processes": 3,
+          "response_events": 78,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "interface_export_bytes": 7795,
+        "scope": "Fixed definition, unchanged schema, exports, and real CLI behavior; staged continuation and actor independence are separate verdicts.",
+        "status": "pass",
+        "submitted_checkpoint_sha256": "233a54813c9be7ca08c16dc916e31bea0913c190945eafe238679f246c5f839c"
+      },
+      "method": "cli-continuation",
+      "package_copy": {
+        "bytes_copied": 199107433,
+        "elapsed_copy_ms": "64279",
+        "scope": "Full immutable package copy and both manifest checks; included in method wall time."
+      },
+      "status": "pass",
+      "submitted_definition_sha256": "60863d7ba06f06705062cb811cc86864c91c857cffc334b294db187cb8246ce5",
+      "token_use": null,
+      "workflow": {
+        "candidate_import_supported": false,
+        "external_work": null,
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "1066",
+          "elapsed_receiver_ms": "22961",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 2129,
+          "input_lines": 77,
+          "operations": {
+            "activate": 1,
+            "append": 6,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 12,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "set": 39,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 121860,
+          "recorded_processes": 3,
+          "response_events": 78,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "phase_note": "Phase counters use retained wire records; intermediate process timers are incomplete until close. External edit/validation costs are separate, not zero.",
+        "phases": {
+          "completion": {
+            "input_bytes": 159,
+            "input_lines": 9,
+            "output_bytes": 10954
+          },
+          "construction": {
+            "input_bytes": 1620,
+            "input_lines": 57,
+            "output_bytes": 64364
+          },
+          "shared_controls": {
+            "actor_elapsed_ms": null,
+            "elapsed_process_ms": "190",
+            "elapsed_receiver_ms": "22961",
+            "errors": {
+              "DEFINITION_MISMATCH": 1,
+              "REVISION_CONFLICT": 1,
+              "SCHEMA_VIOLATION": 1
+            },
+            "human_interventions": null,
+            "input_bytes": 350,
+            "input_lines": 11,
+            "operations": {
+              "commit": 1,
+              "delete": 1,
+              "diff": 1,
+              "discover": 1,
+              "guide": 1,
+              "help": 1,
+              "schema": 1,
+              "show": 2,
+              "status": 1,
+              "tree": 1
+            },
+            "output_bytes": 46542,
+            "recorded_processes": 2,
+            "response_events": 12,
+            "response_scope": "Includes launcher rejection events without an input command.",
+            "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+            "tokens": null
+          }
+        }
+      }
+    },
+    {
+      "actor": "scripted known recipe",
+      "actor_effort": null,
+      "checkpoint_bytes": 13764,
+      "comparison_to_fresh_agent_timing": "not-comparable",
+      "elapsed_method_and_evaluation_ms": "78846",
+      "elapsed_workflow_wall_ms": "60322",
+      "evaluation": {
+        "definition_bytes": 2490,
+        "fresh_actor_attestation": null,
+        "full_staged_continuation": {
+          "error": "Worker definition differs from the fixed task or has not been committed",
+          "status": "fail"
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "385",
+          "elapsed_receiver_ms": "19477",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 528,
+          "input_lines": 19,
+          "operations": {
+            "activate": 1,
+            "commit": 1,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 56505,
+          "recorded_processes": 3,
+          "response_events": 20,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "interface_export_bytes": 7795,
+        "scope": "Fixed definition, unchanged schema, exports, and real CLI behavior; staged continuation and actor independence are separate verdicts.",
+        "status": "pass",
+        "submitted_checkpoint_sha256": "0edc35605ab30a455589101313a49f9f1f181780e4ce832408651b0ffbaec90a"
+      },
+      "method": "targeted-json-editing",
+      "package_copy": {
+        "bytes_copied": 199107433,
+        "elapsed_copy_ms": "40616",
+        "scope": "Full immutable package copy and both manifest checks; included in method wall time."
+      },
+      "status": "pass",
+      "submitted_definition_sha256": "b5bf4ffd18c159a0631e2f694de8d17aa36aca8af9b3a696391c1ee17a266a97",
+      "token_use": null,
+      "workflow": {
+        "candidate_import_supported": false,
+        "external_work": {
+          "editing": {
+            "after_sha256": "b5bf4ffd18c159a0631e2f694de8d17aa36aca8af9b3a696391c1ee17a266a97",
+            "before_sha256": "c7fc14e73d2b5f806865bb52cbc23e140d99ab9321818b16068541976696c1d9",
+            "document_bytes_read": 1771,
+            "document_bytes_written": 2490,
+            "edits_applied": 2,
+            "elapsed_editor_ms": "0",
+            "recipe_bytes": 994,
+            "scope": "Literal text replacement on an exported document; no checkpoint write or product transaction is implied.",
+            "status": "ok",
+            "timing_overlap": "Included in method and open-process wall time; do not add these timers."
+          },
+          "validation_after": {
+            "document_bytes_read": 2490,
+            "elapsed_validation_ms": "5",
+            "timing_overlap": "Included in method and open-process wall time.",
+            "validation": {
+              "findings": [],
+              "truncated": false,
+              "valid": true
+            },
+            "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+          },
+          "validation_before": {
+            "document_bytes_read": 1771,
+            "elapsed_validation_ms": "4",
+            "timing_overlap": "Included in method and open-process wall time.",
+            "validation": {
+              "findings": [
+                {
+                  "instance_path": "/mock_state/queue/paused",
+                  "keyword": "type",
+                  "message": "\"false\" is not of type \"boolean\"",
+                  "message_truncated": false,
+                  "schema_path": "/properties/mock_state/properties/queue/properties/paused/type"
+                }
+              ],
+              "truncated": false,
+              "valid": false
+            },
+            "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+          }
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "385",
+          "elapsed_receiver_ms": "19477",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 528,
+          "input_lines": 19,
+          "operations": {
+            "activate": 1,
+            "commit": 1,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "show": 2,
+            "status": 1,
+            "tree": 2
+          },
+          "output_bytes": 56505,
+          "recorded_processes": 3,
+          "response_events": 20,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "phase_note": "Phase counters use retained wire records; intermediate process timers are incomplete until close. External edit/validation costs are separate, not zero.",
+        "phases": {
+          "completion": {
+            "input_bytes": 147,
+            "input_lines": 7,
+            "output_bytes": 8741
+          },
+          "construction": {
+            "input_bytes": 31,
+            "input_lines": 1,
+            "output_bytes": 1222
+          },
+          "shared_controls": {
+            "actor_elapsed_ms": null,
+            "elapsed_process_ms": "168",
+            "elapsed_receiver_ms": "19477",
+            "errors": {
+              "DEFINITION_MISMATCH": 1,
+              "REVISION_CONFLICT": 1,
+              "SCHEMA_VIOLATION": 1
+            },
+            "human_interventions": null,
+            "input_bytes": 350,
+            "input_lines": 11,
+            "operations": {
+              "commit": 1,
+              "delete": 1,
+              "diff": 1,
+              "discover": 1,
+              "guide": 1,
+              "help": 1,
+              "schema": 1,
+              "show": 2,
+              "status": 1,
+              "tree": 1
+            },
+            "output_bytes": 46542,
+            "recorded_processes": 2,
+            "response_events": 12,
+            "response_scope": "Includes launcher rejection events without an input command.",
+            "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+            "tokens": null
+          }
+        }
+      }
+    },
+    {
+      "actor": "scripted known recipe",
+      "actor_effort": null,
+      "checkpoint_bytes": 15363,
+      "comparison_to_fresh_agent_timing": "not-comparable",
+      "elapsed_method_and_evaluation_ms": "58483",
+      "elapsed_workflow_wall_ms": "45215",
+      "evaluation": {
+        "definition_bytes": 2490,
+        "fresh_actor_attestation": null,
+        "full_staged_continuation": {
+          "error": null,
+          "status": "pass"
+        },
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "1151",
+          "elapsed_receiver_ms": "13099",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 5499,
+          "input_lines": 199,
+          "operations": {
+            "activate": 1,
+            "append": 12,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 34,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "set": 128,
+            "show": 2,
+            "status": 1,
+            "top": 5,
+            "tree": 2
+          },
+          "output_bytes": 254471,
+          "recorded_processes": 3,
+          "response_events": 200,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "interface_export_bytes": 7795,
+        "scope": "Fixed definition, unchanged schema, exports, and real CLI behavior; staged continuation and actor independence are separate verdicts.",
+        "status": "pass",
+        "submitted_checkpoint_sha256": "67bc7cc8fceb829cc431266606cfdc75d34967ee44fab65c3d258a3117312c85"
+      },
+      "method": "cli-reconstruction",
+      "package_copy": {
+        "bytes_copied": 199107433,
+        "elapsed_copy_ms": "31071",
+        "scope": "Full immutable package copy and both manifest checks; included in method wall time."
+      },
+      "status": "pass",
+      "submitted_definition_sha256": "60863d7ba06f06705062cb811cc86864c91c857cffc334b294db187cb8246ce5",
+      "token_use": null,
+      "workflow": {
+        "candidate_import_supported": false,
+        "external_work": null,
+        "interaction": {
+          "actor_elapsed_ms": null,
+          "elapsed_process_ms": "1151",
+          "elapsed_receiver_ms": "13099",
+          "errors": {
+            "DEFINITION_MISMATCH": 1,
+            "REVISION_CONFLICT": 1,
+            "SCHEMA_VIOLATION": 1
+          },
+          "human_interventions": null,
+          "input_bytes": 5499,
+          "input_lines": 199,
+          "operations": {
+            "activate": 1,
+            "append": 12,
+            "commit": 2,
+            "delete": 1,
+            "diff": 1,
+            "discover": 1,
+            "edit": 34,
+            "enter": 2,
+            "export-interface": 1,
+            "guide": 1,
+            "help": 1,
+            "invoke": 2,
+            "save": 1,
+            "schema": 1,
+            "set": 128,
+            "show": 2,
+            "status": 1,
+            "top": 5,
+            "tree": 2
+          },
+          "output_bytes": 254471,
+          "recorded_processes": 3,
+          "response_events": 200,
+          "response_scope": "Includes launcher rejection events without an input command.",
+          "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+          "tokens": null
+        },
+        "phase_note": "Phase counters use retained wire records; intermediate process timers are incomplete until close. External edit/validation costs are separate, not zero.",
+        "phases": {
+          "completion": {
+            "input_bytes": 159,
+            "input_lines": 9,
+            "output_bytes": 10958
+          },
+          "construction": {
+            "input_bytes": 4990,
+            "input_lines": 179,
+            "output_bytes": 196971
+          },
+          "shared_controls": {
+            "actor_elapsed_ms": null,
+            "elapsed_process_ms": "122",
+            "elapsed_receiver_ms": "13099",
+            "errors": {
+              "DEFINITION_MISMATCH": 1,
+              "REVISION_CONFLICT": 1,
+              "SCHEMA_VIOLATION": 1
+            },
+            "human_interventions": null,
+            "input_bytes": 350,
+            "input_lines": 11,
+            "operations": {
+              "commit": 1,
+              "delete": 1,
+              "diff": 1,
+              "discover": 1,
+              "guide": 1,
+              "help": 1,
+              "schema": 1,
+              "show": 2,
+              "status": 1,
+              "tree": 1
+            },
+            "output_bytes": 46542,
+            "recorded_processes": 2,
+            "response_events": 12,
+            "response_scope": "Includes launcher rejection events without an input command.",
+            "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+            "tokens": null
+          }
+        }
+      }
+    }
+  ],
+  "sample_scope": "One execution per known method; no randomized or population timing inference.",
+  "scope": "Controlled artifact and runtime comparison; consult each full_staged_continuation verdict for workflow parity.",
+  "shared_preparation": {
+    "actor": "scripted producer",
+    "artifact_bytes": {
+      "CATALOG-TASK.md": 2291,
+      "START.md": 3748,
+      "TASK.md": 4589,
+      "abandoned-request.json": 239,
+      "cli": 100183384,
+      "handover.session.json": 12557,
+      "incompatible-operations.json": 8722,
+      "operations.json": 8721,
+      "queue-policy.json": 538,
+      "receiver": 98866072,
+      "source.session.json": 12493
+    },
+    "directory": "/tmp/cli-continuation-4ccbf00b-86f6-46f0-9be0-a35592f88b18/comparison/shared",
+    "elapsed_preparation_ms": "36292",
+    "fresh_actor_trial": "not-run",
+    "manifest_bytes": 4079,
+    "partial_extension": {
+      "actor_reasoning_time": null,
+      "applied": 16,
+      "elapsed_process_ms": "381",
+      "exit_code": 0,
+      "failures": 0,
+      "input_bytes": 538,
+      "output_bytes": 20923,
+      "presentation": "terminal",
+      "requests": 16,
+      "started_unix_ms": "1788909495857",
+      "token_use": null
+    },
+    "policy_construction": {
+      "actor_reasoning_time": null,
+      "applied": 48,
+      "elapsed_process_ms": "186",
+      "exit_code": 0,
+      "failures": 0,
+      "input_bytes": 1220,
+      "output_bytes": 37908,
+      "presentation": "terminal",
+      "requests": 49,
+      "started_unix_ms": "1788909495118",
+      "token_use": null
+    },
+    "reuse_scope": "Complete catalog definition and checkpoint, extended into a second task; no general component resolver.",
+    "source_asset_construction": {
+      "actor_reasoning_time": null,
+      "applied": 113,
+      "elapsed_process_ms": "551",
+      "exit_code": 0,
+      "failures": 0,
+      "input_bytes": 3157,
+      "output_bytes": 83072,
+      "presentation": "terminal",
+      "requests": 114,
+      "started_unix_ms": "1788909495305",
+      "token_use": null
+    },
+    "status": "prepared",
+    "targeted_edit_comparison": "not-run",
+    "timing_scope": "Includes source and policy construction, partial extension, file copying, executable hashing, and manifest creation; excludes compilation.",
+    "token_use": null
+  },
+  "status": "pass",
+  "timing_scope": "Experiment includes preparation, copies, methods, and evaluation; nested timers overlap. Compilation and recipe authoring are excluded."
+}

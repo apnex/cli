@@ -1,0 +1,76 @@
+status
+help
+schema
+guide /mock_state/queue/paused
+show "" candidate
+show "" accepted
+diff
+discover
+tree
+commit
+set /mock_state/queue/paused boolean false
+set ./inspect object
+edit ./inspect
+set ./id string queue.inspect
+set ./help string "Read simulated queue state."
+set ./parameters array
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+set ./output object
+set ./output/source string state
+set ./output/path array
+append ./output/path object
+set ./output/path/0/key string queue
+edit /contexts/queues/commands
+set ./pause object
+edit ./pause
+set ./id string queue.pause
+set ./help string "Set the simulated queue pause state."
+set ./parameters array
+append ./parameters object
+edit ./parameters/0
+set ./name string paused
+set ./type string boolean
+set ./help string "New simulated pause state."
+edit /contexts/queues/commands/pause
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+append ./steps object
+edit ./steps/0
+set ./path array
+append ./path object
+set ./path/0/key string queue
+append ./path object
+set ./path/1/key string paused
+set ./value object
+set ./value/source string argument
+set ./value/name string paused
+edit /contexts/queues/commands/pause/binding
+set ./output object
+set ./output/source string state
+set ./output/path array
+append ./output/path object
+set ./output/path/0/key string queue
+edit /contexts/queues/commands
+set ./drain object
+edit ./drain
+set ./id string queue.drain
+set ./help string "Drain the real queue when an implementation is attached."
+set ./parameters array
+set ./binding object
+set ./binding/kind string unbound
+set ./binding/reason string "No queue-drain capability has been attached."
+edit /contexts/queues/commands
+commit
+activate
+tree
+enter services
+invoke quota 1e400
+enter queues
+invoke pause true
+save completed.definition.json
+export-interface completed.interface.json

@@ -1,0 +1,21 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 23.53s
+     Running tests/document_import.rs (target/release/deps/document_import-634bad6113907fdf)
+
+running 1 test
+
+thread 'document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations' (70417) panicked at tests/document_import.rs:39:13:
+assertion `left == right` failed: {"error":{"code":"UNKNOWN_OPERATION","message":"Request operation is not present in the loaded declaration.","recovery":"Inspect help for available operation names."},"event":"response","mutation":"none","operation":null,"replayed":false,"request_id":"c2228c55-a4fb-4c00-b94c-29e8040a440e","result":null,"session":{"accepted_revision":"0","constraint_mode":"unconstrained","context":[{"key":"draft"}],"definition_id":"bootstrap-json-authoring-v1","definition_sha256":"0f3d174ce523f1ae7149e1476bd6d960f963d16cebd62e29654df5a4ad1ba363","dirty":true,"durability":"durable","node_kind":"object","revision":"0","session_id":"61134ed7-ffe7-4e61-afcd-552b543d04ef"},"status":"error"}
+  left: String("error")
+ right: "ok"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations ... FAILED
+
+failures:
+
+failures:
+    document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test document_import`

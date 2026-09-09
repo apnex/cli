@@ -1,0 +1,19 @@
+{
+  "document_bytes_read": 1771,
+  "elapsed_validation_ms": "4",
+  "timing_overlap": "Included in method and open-process wall time.",
+  "validation": {
+    "findings": [
+      {
+        "instance_path": "/mock_state/queue/paused",
+        "keyword": "type",
+        "message": "\"false\" is not of type \"boolean\"",
+        "message_truncated": false,
+        "schema_path": "/properties/mock_state/properties/queue/properties/paused/type"
+      }
+    ],
+    "truncated": false,
+    "valid": false
+  },
+  "validator": "Existing Rust schema checker called by trial tooling on the actual external file; not a CLI commit."
+}

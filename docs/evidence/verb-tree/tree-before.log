@@ -1,0 +1,151 @@
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded fd-lock v4.0.4
+  Downloaded autocfg v1.5.1
+  Downloaded generic-array v0.14.7
+  Downloaded litrs v1.0.0
+  Downloaded block-buffer v0.10.4
+  Downloaded cpufeatures v0.2.17
+  Downloaded itoa v1.0.18
+  Downloaded cfg-if v1.0.4
+  Downloaded crypto-common v0.1.7
+  Downloaded errno v0.3.14
+  Downloaded heck v0.5.0
+  Downloaded document-features v0.2.12
+  Downloaded convert_case v0.10.0
+  Downloaded digest v0.10.7
+  Downloaded scopeguard v1.2.0
+  Downloaded strum v0.28.0
+  Downloaded rustc_version v0.4.1
+  Downloaded version_check v0.9.5
+  Downloaded strip-ansi-escapes v0.2.1
+  Downloaded lock_api v0.4.14
+  Downloaded either v1.18.0
+  Downloaded nu-ansi-term v0.50.3
+  Downloaded quote v1.0.47
+  Downloaded sha2 v0.10.9
+  Downloaded signal-hook-mio v0.2.5
+  Downloaded thiserror-impl v2.0.20
+  Downloaded unicase v2.9.0
+  Downloaded iana-time-zone v0.1.65
+  Downloaded signal-hook-registry v1.4.8
+  Downloaded smallvec v1.16.0
+  Downloaded strum_macros v0.28.0
+  Downloaded thiserror v2.0.20
+  Downloaded zmij v1.0.23
+  Downloaded bitflags v2.13.1
+  Downloaded log v0.4.34
+  Downloaded parking_lot_core v0.9.12
+  Downloaded parking_lot v0.12.5
+  Downloaded semver v1.0.28
+  Downloaded getrandom v0.4.3
+  Downloaded proc-macro2 v1.0.107
+  Downloaded serde_core v1.0.229
+  Downloaded serde_derive v1.0.229
+  Downloaded unicode-ident v1.0.24
+  Downloaded vte v0.14.1
+  Downloaded num-traits v0.2.19
+  Downloaded signal-hook v0.3.18
+  Downloaded derive_more v2.1.1
+  Downloaded uuid v1.26.0
+  Downloaded derive_more-impl v2.1.1
+  Downloaded memchr v2.8.3
+  Downloaded serde v1.0.229
+  Downloaded mio v1.2.3
+  Downloaded unicode-segmentation v1.13.3
+  Downloaded typenum v1.20.1
+  Downloaded crossterm v0.29.0
+  Downloaded serde_json v1.0.151
+  Downloaded itertools v0.15.0
+  Downloaded chrono v0.4.45
+  Downloaded unicode-width v0.2.2
+  Downloaded reedline v0.51.0
+  Downloaded syn v2.0.119
+  Downloaded syn v3.0.5
+  Downloaded rustix v1.1.4
+  Downloaded libc v0.2.189
+  Downloaded linux-raw-sys v0.12.1
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.47
+   Compiling libc v0.2.189
+   Compiling serde_core v1.0.229
+   Compiling cfg-if v1.0.4
+   Compiling version_check v0.9.5
+   Compiling rustix v1.1.4
+   Compiling unicode-segmentation v1.13.3
+   Compiling parking_lot_core v0.9.12
+   Compiling serde v1.0.229
+   Compiling autocfg v1.5.1
+   Compiling signal-hook v0.3.18
+   Compiling generic-array v0.14.7
+   Compiling typenum v1.20.1
+   Compiling convert_case v0.10.0
+   Compiling linux-raw-sys v0.12.1
+   Compiling scopeguard v1.2.0
+   Compiling log v0.4.34
+   Compiling num-traits v0.2.19
+   Compiling smallvec v1.16.0
+   Compiling memchr v2.8.3
+   Compiling lock_api v0.4.14
+   Compiling getrandom v0.4.3
+   Compiling syn v3.0.5
+   Compiling syn v2.0.119
+   Compiling thiserror v2.0.20
+   Compiling litrs v1.0.0
+   Compiling errno v0.3.14
+   Compiling signal-hook-registry v1.4.8
+   Compiling mio v1.2.3
+   Compiling zmij v1.0.23
+   Compiling heck v0.5.0
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling document-features v0.2.12
+   Compiling parking_lot v0.12.5
+   Compiling vte v0.14.1
+   Compiling signal-hook-mio v0.2.5
+   Compiling serde_json v1.0.151
+   Compiling iana-time-zone v0.1.65
+   Compiling either v1.18.0
+   Compiling strip-ansi-escapes v0.2.1
+   Compiling itertools v0.15.0
+   Compiling digest v0.10.7
+   Compiling unicase v2.9.0
+   Compiling unicode-width v0.2.2
+   Compiling nu-ansi-term v0.50.3
+   Compiling itoa v1.0.18
+   Compiling cpufeatures v0.2.17
+   Compiling sha2 v0.10.9
+   Compiling bitflags v2.13.1
+   Compiling uuid v1.26.0
+   Compiling derive_more-impl v2.1.1
+   Compiling strum_macros v0.28.0
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.20
+   Compiling derive_more v2.1.1
+   Compiling strum v0.28.0
+   Compiling fd-lock v4.0.4
+   Compiling crossterm v0.29.0
+   Compiling chrono v0.4.45
+   Compiling reedline v0.51.0
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 21.06s
+     Running tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-498a921bc4d09dda)
+
+running 1 test
+
+thread 'constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session' (56377) panicked at tests/cli_verb_tree.rs:40:5:
+assertion `left == right` failed
+  left: Null
+ right: "platform\n|-- invoke version [simulated]\n|-- deployments/\n|   |-- invoke apply <release:string> [unbound]\n|   |-- invoke plan <environment:string> [simulated]\n|   `-- releases/\n|       |-- invoke list [simulated]\n|       `-- invoke rollback <version:string> [unbound]\n|-- environments/\n|   |-- invoke list [simulated]\n|   `-- invoke select <name:string> [simulated]\n`-- services/\n    |-- invoke inspect [simulated]\n    |-- invoke restart [unbound]\n    `-- invoke scale <replicas:number> [simulated]\n"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... FAILED
+
+failures:
+
+failures:
+    constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+error: test failed, to rerun pass `--test cli_verb_tree`

@@ -1,0 +1,140 @@
+# CLI composition contract
+
+**Status: implemented within the selected CLI-003 scope; [application evidence](CLI-003.md#acceptance-observations) is recorded separately.**
+Authority is the [approval](../context/cli-003-approval.json), [board selection](../context/cli-003-selection-board.txt), and [independent task](acceptance/TASK.md).
+The [authoring contract](../authoring/SESSION-CONTRACT.md) continues to govern ordinary document operations.
+This contract retains the plain `cli-definition-v1` scope.
+The later [component assembly contract](../components/CONTRACT.md) defines `assemble` and the distinct assembled `cli-definition-v2` format.
+The later [connected read contract](../connected/CONTRACT.md) extends the binding vocabulary with `connected`, the native `json-file-read-v1` provider, and separately supplied runtime grants.
+The original CLI-003 task and evidence remain scoped to simulated and unbound behavior.
+
+## Scope and fixed intent
+
+The survey skill's fixed-intent bypass applies: the owner selected contextual construction, explicit activation, and visible mocks.
+Remaining format and implementation choices are engineering work within that scope.
+No survey answers or additional owner preferences are inferred.
+The read skill at `/home/apnex/.codex/skills/survey/SKILL.md` says, "When direction is already fully specified, do not fabricate a survey."
+
+One Rust runtime owns authoring and interface state.
+`--compose` adds a declared composition surface to the supplied bootstrap declaration.
+Both declarations identify the kernel profile; the old profile remains available for CLI-002 checkpoints.
+Bootstrap declarations remain identified as hand-authored.
+The constructed service-catalog definition supplies self-authorship evidence.
+
+Terminal invocation uses `invoke <command> <positional values>`.
+The prefix separates configured words from authoring controls, including domain commands named `set` or `help`.
+A standalone domain shell is a future presentation choice, not part of this closure claim.
+
+**CLI-008 extension:** the preceding deferral describes the original CLI-003 boundary.
+The [direct run contract](../run/CONTRACT.md) now supplies that domain shell separately from the authoring workspace.
+The shared invocation target accepts a local command or `context-id/word`; qualified calls record the owning context without moving navigation.
+Receipt validation checks that qualified target, preserving one transaction per invocation.
+
+## Definition interpretation
+
+A definition contains exactly `format`, `id`, `description`, `contexts`, and `mock_state`.
+Format is `cli-definition-v1`.
+An author-supplied ID plus SHA-256 of canonical document JSON identifies an active version.
+Canonical serialization sorts decoded keys and preserves number tokens; its digest is not a signature or task-fidelity proof.
+
+Contexts form an object keyed by stable IDs.
+Each contains `parent`, `help`, `related`, and `commands`.
+`root` is required with null parent; other parent chains must resolve to root without cycles.
+`related` lists existing context IDs and represents relationships beyond ownership.
+No reference downloads or implicit dependency resolution occur.
+
+Commands are keyed by local word and contain `id`, `help`, `parameters`, and `binding`.
+Operation IDs are globally unique within a definition.
+Parameters are ordered required entries containing `name`, `type`, and `help`.
+Types are `string`, `number`, and `boolean`; argument names match exactly.
+Terminal values use the declared type and existing whole-token string quoting.
+Machine values use the existing typed constructors, such as `{"kind":"number","value":"1e400"}` or `{"kind":"boolean","value":true}`.
+The parameter name maps to a constructor, and its kind must match the declared type.
+Defaults, coercion, dynamic entities, and general schema interpretation are not implemented by this format.
+
+Names and IDs contain 1-64 ASCII letters, digits, underscores, hyphens, or periods.
+Limits: 128 contexts, 1024 commands total, 64 parameters per command, 256 steps per mock.
+Existing document limits apply independently to the definition and simulated state.
+Unknown fields and binding kinds reject activation.
+
+## Bindings
+
+An unbound binding contains `kind: unbound` and nonempty `reason`.
+Invocation rejects with `UNBOUND_OPERATION` without mutation.
+A simulated binding contains `kind: simulated`, `steps`, and `output`.
+Each step contains an absolute typed segment array `path` and a `value` expression.
+Expressions are `source: literal` with `value`, `source: argument` with `name`, or `source: state` with `path`.
+Output uses the same vocabulary after all steps.
+Empty steps provide a static example or simulated read.
+Steps use the existing exact-value set operation on a private simulated document.
+Referenced arguments and path shapes are checked at activation; paths resolve against actual evolving state at invocation.
+Any failure rejects the whole mock, including prior steps.
+
+Every successful invocation is a durable event, including simulated reads.
+It consumes one revision and records a replayable outcome.
+For a mock, the runtime-owned outcome carries `binding: simulated`, `effect: simulation_only`, definition digest, operation ID, context, exact `output_json_text`, and step count.
+Authored output cannot override these outer labels.
+The last successful invocation remains in interface state even when authoring replaces the general last receipt.
+A mock outcome is not a complete audit log or evidence of an external effect.
+Connected reads instead carry `binding: connected`, `effect: external_read`, and a file observation under the later contract; saved observations are historical and grants are never part of interface state.
+
+## Activation and discovery
+
+`activate [source]` validates the candidate when source is omitted.
+A named file can contain a definition or `cli-interface-export-v1` bundle.
+Activation copies the validated definition into separate interface state.
+Candidate, accepted document, and authoring context remain independent.
+A changed definition initializes its mock state and root context, clearing the prior outcome.
+An identical definition preserves current interface state.
+An explicit bundle restores its recorded state even if its definition digest matches.
+Rejected activation leaves the entire acknowledged checkpoint unchanged.
+`commit` and `discard` still refer only to the authoring document.
+
+`enter <context>` selects an interface context by ID; `/` selects root and `..` its parent.
+It does not change the authoring path.
+`discover` exposes identity, parent, relationships, children, complete local command contracts, simulated state, and last outcome.
+Simulated binding programs are returned as exact `program_json_text` within a binding descriptor, preserving literal number spelling through generic JSON clients.
+
+`tree` returns `verb_tree_text`, an ASCII tree of every active context and its local verbs, alongside the active interface identity.
+The tree follows parent ownership from root; related-context links remain in the contextual metadata.
+Commands precede child contexts, each group is sorted by its configured key, and required parameters retain their declared order and types.
+Context names end with a slash; command lines carry the `invoke` prefix and runtime-derived `simulated`, `unbound`, or `connected:json-file-read-v1` labels.
+Human presentation prints only the tree for this operation; machine events retain the full response envelope.
+This read-only projection uses the active definition, so draft edits appear only after successful activation.
+Oversized views reject at the existing 8 MiB envelope boundary; there is no silent truncation.
+Tab completion derives contexts, command words, and boolean values from the same active definition.
+Prompt and response headers distinguish interface context from document context.
+
+## State and transfer
+
+Composition operations are `activate`, `enter`, `discover`, `tree`, `invoke`, and `export-interface`.
+Activation, navigation, and invocation have state effect; discovery and tree are read-only; export writes a file without changing the session.
+Machine invocation arguments are `{command: string, values: object}` within the existing request envelope.
+The existing private execution, revision, receipt, publication, and uncertainty path owns every transition.
+
+The composition profile uses checkpoint format 2 and kernel ID `bootstrap-cli-composition-v1`.
+It adds optional interface state and header information; format 1 cannot contain interface state.
+Wrong-profile reopen rejects without migration or rewriting.
+Different kernel declaration bytes also reject; interface export/import is the explicit transfer boundary between sessions.
+Reopen validates definition, digest, context, state, outcome labels, and receipt relationships.
+Failed or uncertain publication cannot acknowledge an in-memory activation as authoritative.
+
+`export-interface <destination>` uses existing create-only publication and observed-byte receipts.
+Its bundle contains active definition and digest, simulated state, context, last outcome, source task, and source revision.
+Bundle input/output is bounded at 8 MiB; each embedded document remains bounded at 1 MiB.
+Imported task and revision remain provenance; the receiver retains its own task and revision sequence.
+
+## Verification scope
+
+The [task predicates](acceptance/TASK.md) govern acceptance against the real Rust binary.
+Verification covers declaration changes, terminal lowering, rejected checkpoint bytes, transfer, restart, and observed fault injection.
+CLI-002 application regressions remain required; its historical evidence is not overwritten.
+Local executor evidence does not claim merged PRs, remote CI, independent certification, deployment, cross-project reuse, fresh-agent evaluation, or measured token savings.
+
+## Correction: machine scalar representation
+
+The initial design said, "Machine values use corresponding native JSON scalar types, retaining exact number tokens."
+The [third application test run](../evidence/cli-003/composition-third-tests.log) refuted that representation: the generic request value changed `1e400` to `1e+400`.
+The exact-value requirement is retained; configured arguments now reuse typed value constructors, matching the existing authoring boundary.
+Terminal syntax is unchanged.
+The same finding requires exact binding-program text in discovery instead of round-tripping literal values through a generic JSON response object.

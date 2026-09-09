@@ -1,0 +1,11 @@
+service-catalog-connected / services
+Read the granted catalog or change simulated quota.
+  inspect [connected:json-file-read-v1]
+    Read the external JSON catalog; this does not probe service health.
+    Requires --grant-json-read services.catalog <file>; granted: false
+  quota <value:number> [simulated]
+    Change only simulated quota.
+  restart [unbound]
+    Restart when an implementation is attached.
+    No restart capability is attached.
+Controls: :help :tree :up :top :status :export <file> :exit

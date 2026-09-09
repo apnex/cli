@@ -1,0 +1,77 @@
+{
+  "source_instruction": "Ensure all documentations is rooted under /docs (With the exception of README and VISION)",
+  "tooling_correction": "The owner asked: why all the python, when we are building a rust app? The Python scaffold tooling was replaced with Rust; its prior role is retained in docs/scaffold-workflow.md.",
+  "reason": "Owner requested all project documentation under docs except root README and VISION. AGENTS.md remains governing instructions.",
+  "relocations": [
+    {
+      "source": "layers/document/VISION.md",
+      "destination": "docs/layers/document/VISION.md",
+      "sha256_before": "f03965d85a58635b363fb19bd6296adc258a2a8f282e411b3f135bd4e2468922"
+    },
+    {
+      "source": "layers/document/docs/contract.md",
+      "destination": "docs/layers/document/contract.md",
+      "sha256_before": "9946e7a8074cf78e08c6062f93a75b99487702e7fdf084cba1acd54f2ffd38c6"
+    },
+    {
+      "source": "layers/authoring/VISION.md",
+      "destination": "docs/layers/authoring/VISION.md",
+      "sha256_before": "8524bab7e0a41edaa475b092ff38a47870196a97d1b755d184a173bad41164db"
+    },
+    {
+      "source": "layers/authoring/docs/contract.md",
+      "destination": "docs/layers/authoring/contract.md",
+      "sha256_before": "0acc3cdc36db5b3724e58f0a750083879b565a99a3ded06ec0d3edc0fee35d47"
+    },
+    {
+      "source": "layers/constraints/VISION.md",
+      "destination": "docs/layers/constraints/VISION.md",
+      "sha256_before": "2e2775b31498b923d2608396d703690c1c9f50beb10fc04761513a4d4e8dd375"
+    },
+    {
+      "source": "layers/constraints/docs/contract.md",
+      "destination": "docs/layers/constraints/contract.md",
+      "sha256_before": "61b3d3f351617ea691a77e68e88ef6c56c6fe906553dbb0df433d39e9ee54217"
+    },
+    {
+      "source": "layers/definitions/VISION.md",
+      "destination": "docs/layers/definitions/VISION.md",
+      "sha256_before": "f5513533a6011c50f0e0bc18cea6d2cc264f001cde3b24b3d1d85dcaaadf13ad"
+    },
+    {
+      "source": "layers/definitions/docs/contract.md",
+      "destination": "docs/layers/definitions/contract.md",
+      "sha256_before": "e3dfa78c337112f3d88979eb7f247c18d96b9de2319c6789d50ad6950961009e"
+    },
+    {
+      "source": "layers/bindings/VISION.md",
+      "destination": "docs/layers/bindings/VISION.md",
+      "sha256_before": "7decf1ae247e9a85b05a1480aeccad300f7adca30e1c0cf1667eb9bd2800ec0f"
+    },
+    {
+      "source": "layers/bindings/docs/contract.md",
+      "destination": "docs/layers/bindings/contract.md",
+      "sha256_before": "d2fef5b33ce3ef6511fc91581133f44e17cd50ed8e37408c9e356d874e6ffe4f"
+    },
+    {
+      "source": "layers/runtime/VISION.md",
+      "destination": "docs/layers/runtime/VISION.md",
+      "sha256_before": "8e8a8b9ec4d0bfeefe0a947841fdea654a61facce08e463c900532dd95b342fa"
+    },
+    {
+      "source": "layers/runtime/docs/contract.md",
+      "destination": "docs/layers/runtime/contract.md",
+      "sha256_before": "361b8b98c9c2e208fd1b6128aa77830f245907a43853951d8627532dc8afe82d"
+    },
+    {
+      "source": "layers/interaction/VISION.md",
+      "destination": "docs/layers/interaction/VISION.md",
+      "sha256_before": "aab85d6b4d7683a8a54d668c02d06a4a7f808f65ac9f3b49443215e8612c73da"
+    },
+    {
+      "source": "layers/interaction/docs/contract.md",
+      "destination": "docs/layers/interaction/contract.md",
+      "sha256_before": "5cda8b43beb89b8b46e1d30b7965a15d2b21019ff3084f80dfdf25b325aa8c83"
+    }
+  ]
+}

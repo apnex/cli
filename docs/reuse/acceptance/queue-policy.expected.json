@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": ["format", "id", "contexts", "mock_state"],
+  "properties": {
+    "format": {"const": "cli-definition-v1"},
+    "id": {"type": "string"},
+    "contexts": {"type": "object"},
+    "mock_state": {
+      "type": "object",
+      "required": ["name", "quota", "enabled"],
+      "properties": {
+        "name": {"type": "string"},
+        "quota": {"type": "number"},
+        "enabled": {"type": "boolean"},
+        "queue": {
+          "type": "object",
+          "required": ["name", "depth", "paused"],
+          "additionalProperties": false,
+          "properties": {
+            "name": {"type": "string"},
+            "depth": {"type": "integer", "minimum": 0},
+            "paused": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  }
+}

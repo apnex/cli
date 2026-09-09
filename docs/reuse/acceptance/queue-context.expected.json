@@ -1,0 +1,33 @@
+{
+  "parent": "root",
+  "help": "Inspect and simulate a job queue.",
+  "related": ["services"],
+  "commands": {
+    "inspect": {
+      "id": "queue.inspect",
+      "help": "Read simulated queue state.",
+      "parameters": [],
+      "binding": {
+        "kind": "simulated",
+        "steps": [],
+        "output": {"source": "state", "path": [{"key": "queue"}]}
+      }
+    },
+    "pause": {
+      "id": "queue.pause",
+      "help": "Set the simulated queue pause state.",
+      "parameters": [{"name": "paused", "type": "boolean", "help": "New simulated pause state."}],
+      "binding": {
+        "kind": "simulated",
+        "steps": [{"path": [{"key": "queue"}, {"key": "paused"}], "value": {"source": "argument", "name": "paused"}}],
+        "output": {"source": "state", "path": [{"key": "queue"}]}
+      }
+    },
+    "drain": {
+      "id": "queue.drain",
+      "help": "Drain the real queue when an implementation is attached.",
+      "parameters": [],
+      "binding": {"kind": "unbound", "reason": "No queue-drain capability has been attached."}
+    }
+  }
+}

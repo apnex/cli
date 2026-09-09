@@ -1,0 +1,68 @@
+{
+  "scope": "Normal binary PTY smoke. Output capture begins at activation; startup was observed separately.",
+  "outputs": [
+    {
+      "chunk_id": "c37907",
+      "wall_time_seconds": 1.001506367,
+      "session_id": 87967,
+      "original_token_count": 257,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r109\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b[37mactivate\u001b[0m\u001b7\u001b8\u001b[?25h\u001b[J\r\n{\r\n  \"active_interface\": {\r\n    \"binding_scope\": \"simulation_or_unbound\",\r\n    \"context\": \"root\",\r\n    \"definition_id\": \"service-catalog\",\r\n    \"definition_sha256\": \"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"\r\n  }\r\n}\r\nMutation: \"applied\" | replayed: false\r\nSession: {\"accepted_revision\":\"109\",\"active_interface\":{\"binding_scope\":\"simulation_or_unbound\",\"context\":\"root\",\"definition_id\":\"service-catalog\",\"definition_sha256\":\"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"},\"constraint_mode\":\"unconstrained\",\"context\":[],\"definition_id\":\"bootstrap-cli-composition-v1\",\"definition_sha256\":\"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2\",\"dirty\":false,\"durability\":\"durable\",\"node_kind\":\"object\",\"revision\":\"110\",\"session_id\":\"1c7fe507-dfe3-4205-96af-8c4f532af616\"}\r\n\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r110 | CLI service-catalog/root (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b7\u001b[37m\u001b[0m\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "8bdff1",
+      "wall_time_seconds": 1.001961209,
+      "session_id": 87967,
+      "original_token_count": 68,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r110 | CLI service-catalog/root (mock)\u001b[96m| \u001b[35m\u001b[0m\u001b[0m\u001b[37menter se\u001b[0m\u001b7\u001b[2;1H\u001b[J\u001b[0m\u001b[90m\u001b[1;7;32m\u001b[0m\u001b[90m\u001b[1;4;7;32mse\u001b[0m\u001b[90m\u001b[1;7;32mrvices\u001b[0m\u001b[90m\u001b[1;7;32m  \u001b[33m\"Inspect and simulate changes to a service.\"\u001b[0m\u001b[0m\r\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "09a714",
+      "wall_time_seconds": 1.001288966,
+      "session_id": 87967,
+      "original_token_count": 32,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r110 | CLI service-catalog/root (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b[37menter services \u001b[0m\u001b7\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "197946",
+      "wall_time_seconds": 1.001064048,
+      "session_id": 87967,
+      "original_token_count": 271,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r110 | CLI service-catalog/root (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b[37menter services \u001b[0m\u001b7\u001b8\u001b[?25h\u001b[J\r\n{\r\n  \"active_interface\": {\r\n    \"binding_scope\": \"simulation_or_unbound\",\r\n    \"context\": \"services\",\r\n    \"definition_id\": \"service-catalog\",\r\n    \"definition_sha256\": \"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"\r\n  }\r\n}\r\nMutation: \"applied\" | replayed: false\r\nSession: {\"accepted_revision\":\"109\",\"active_interface\":{\"binding_scope\":\"simulation_or_unbound\",\"context\":\"services\",\"definition_id\":\"service-catalog\",\"definition_sha256\":\"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"},\"constraint_mode\":\"unconstrained\",\"context\":[],\"definition_id\":\"bootstrap-cli-composition-v1\",\"definition_sha256\":\"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2\",\"dirty\":false,\"durability\":\"durable\",\"node_kind\":\"object\",\"revision\":\"111\",\"session_id\":\"1c7fe507-dfe3-4205-96af-8c4f532af616\"}\r\n\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r111 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b7\u001b[37m\u001b[0m\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "f139c6",
+      "wall_time_seconds": 1.001556624,
+      "session_id": 87967,
+      "original_token_count": 70,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r111 | CLI service-catalog/services (mock)\u001b[96m| \u001b[35m\u001b[0m\u001b[0m\u001b[37minvoke qu\u001b[0m\u001b7\u001b[2;1H\u001b[J\u001b[0m\u001b[90m\u001b[1;7;32m\u001b[0m\u001b[90m\u001b[1;4;7;32mqu\u001b[0m\u001b[90m\u001b[1;7;32mota\u001b[0m\u001b[90m\u001b[1;7;32m  \u001b[33m\"Set the simulated quota to an exact JSON number.\"\u001b[0m\u001b[0m\r\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "6ecc85",
+      "wall_time_seconds": 1.001289035,
+      "session_id": 87967,
+      "original_token_count": 289,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r111 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b[37minvoke quota 1e400\u001b[0m\u001b7\u001b8\u001b[?25h\u001b[J\r\n{\r\n  \"invocation\": {\r\n    \"binding\": \"simulated\",\r\n    \"context\": \"services\",\r\n    \"definition_sha256\": \"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\",\r\n    \"effect\": \"simulation_only\",\r\n    \"operation_id\": \"catalog.quota\",\r\n    \"output_json_text\": \"1e400\",\r\n    \"simulated_steps\": 1\r\n  }\r\n}\r\nMutation: \"applied\" | replayed: false\r\nSession: {\"accepted_revision\":\"109\",\"active_interface\":{\"binding_scope\":\"simulation_or_unbound\",\"context\":\"services\",\"definition_id\":\"service-catalog\",\"definition_sha256\":\"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"},\"constraint_mode\":\"unconstrained\",\"context\":[],\"definition_id\":\"bootstrap-cli-composition-v1\",\"definition_sha256\":\"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2\",\"dirty\":false,\"durability\":\"durable\",\"node_kind\":\"object\",\"revision\":\"112\",\"session_id\":\"1c7fe507-dfe3-4205-96af-8c4f532af616\"}\r\n\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r112 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b7\u001b[37m\u001b[0m\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "c543eb",
+      "wall_time_seconds": 1.00101055,
+      "session_id": 87967,
+      "original_token_count": 304,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r112 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b[37minvoke restart\u001b[0m\u001b7\u001b8\u001b[?25h\u001b[J\r\nUNBOUND_OPERATION: \"CLI operation is unbound: No restart capability has been attached.\" | mutation \"none\"\r\n{\r\n  \"code\": \"UNBOUND_OPERATION\",\r\n  \"message\": \"CLI operation is unbound: No restart capability has been attached.\",\r\n  \"recovery\": \"Inspect the declared expectation; no implementation or simulated success was supplied.\"\r\n}\r\n{\r\n  \"accepted_revision\": \"109\",\r\n  \"active_interface\": {\r\n    \"binding_scope\": \"simulation_or_unbound\",\r\n    \"context\": \"services\",\r\n    \"definition_id\": \"service-catalog\",\r\n    \"definition_sha256\": \"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"\r\n  },\r\n  \"constraint_mode\": \"unconstrained\",\r\n  \"context\": [],\r\n  \"definition_id\": \"bootstrap-cli-composition-v1\",\r\n  \"definition_sha256\": \"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2\",\r\n  \"dirty\": false,\r\n  \"durability\": \"durable\",\r\n  \"node_kind\": \"object\",\r\n  \"revision\": \"112\",\r\n  \"session_id\": \"1c7fe507-dfe3-4205-96af-8c4f532af616\"\r\n}\r\n\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r112 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b7\u001b[37m\u001b[0m\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "8b7376",
+      "wall_time_seconds": 1.001246257,
+      "session_id": 87967,
+      "original_token_count": 265,
+      "output": "\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r112 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b[37mexport-interface interface.json\u001b[0m\u001b7\u001b[2;1H\u001b[?25h\u001b[J\r\n{\r\n  \"destination\": \"/tmp/cli-composition-vzwa3J/interface.json\",\r\n  \"publication\": \"created\",\r\n  \"revision\": \"112\",\r\n  \"sha256\": \"0b4b228ce6e2e33504aa18f2907f5006836b734fb31408aa991d020e05ae5f34\"\r\n}\r\nMutation: \"none\" | replayed: false\r\nSession: {\"accepted_revision\":\"109\",\"active_interface\":{\"binding_scope\":\"simulation_or_unbound\",\"context\":\"services\",\"definition_id\":\"service-catalog\",\"definition_sha256\":\"590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552\"},\"constraint_mode\":\"unconstrained\",\"context\":[],\"definition_id\":\"bootstrap-cli-composition-v1\",\"definition_sha256\":\"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2\",\"dirty\":false,\"durability\":\"durable\",\"node_kind\":\"object\",\"revision\":\"112\",\"session_id\":\"1c7fe507-dfe3-4205-96af-8c4f532af616\"}\r\n\u001b[0m\u001b[?25l\u001b[1;2H\u001b[J\u001b[1;1H\u001b[92m[\"\"] r112 | CLI service-catalog/services (mock)\u001b[96m> \u001b[35m\u001b[0m\u001b[0m\u001b7\u001b[37m\u001b[0m\u001b8\u001b[?25h"
+    },
+    {
+      "chunk_id": "66d32e",
+      "wall_time_seconds": 0.000009985,
+      "exit_code": 0,
+      "original_token_count": 4,
+      "output": "\u001b[J\u001b[37m\u001b[0m\r\n"
+    }
+  ]
+}

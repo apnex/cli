@@ -1,0 +1,186 @@
+warning: function `create_trial_manifest` is never used
+  --> tools/continuation/trial_manifest.rs:31:8
+   |
+31 | pub fn create_trial_manifest(directory: &Path, dependencies: Value) -> TrialResult<()> {
+   |        ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `trial_commands` is never used
+   --> tools/continuation/trial_process.rs:187:8
+    |
+187 | pub fn trial_commands(process: &mut TrialProcess, text: &str) -> TrialResult<()> {
+    |        ^^^^^^^^^^^^^^
+
+warning: `programmable-cli` (bin "cli-trial-receiver") generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+{
+  "actor": "scripted producer",
+  "artifact_bytes": {
+    "CATALOG-TASK.md": 2291,
+    "START.md": 3748,
+    "TASK.md": 4589,
+    "abandoned-request.json": 239,
+    "cli": 100183384,
+    "handover.session.json": 12557,
+    "incompatible-operations.json": 8722,
+    "operations.json": 8721,
+    "queue-policy.json": 538,
+    "receiver": 98866096,
+    "source.session.json": 12493
+  },
+  "fresh_actor_trial": "not-run",
+  "manifest_bytes": 4079,
+  "partial_extension": {
+    "actor_reasoning_time": null,
+    "applied": 16,
+    "elapsed_process_ms": "152",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 538,
+    "output_bytes": 20923,
+    "presentation": "terminal",
+    "requests": 16,
+    "started_unix_ms": "1788904836942",
+    "token_use": null
+  },
+  "policy_construction": {
+    "actor_reasoning_time": null,
+    "applied": 48,
+    "elapsed_process_ms": "238",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 1220,
+    "output_bytes": 37891,
+    "presentation": "terminal",
+    "requests": 49,
+    "started_unix_ms": "1788904836108",
+    "token_use": null
+  },
+  "reuse_scope": "Complete catalog definition and checkpoint, extended into a second task; no general component resolver.",
+  "source_asset_construction": {
+    "actor_reasoning_time": null,
+    "applied": 113,
+    "elapsed_process_ms": "595",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 3157,
+    "output_bytes": 83055,
+    "presentation": "terminal",
+    "requests": 114,
+    "started_unix_ms": "1788904836346",
+    "token_use": null
+  },
+  "status": "prepared",
+  "targeted_edit_comparison": "not-run",
+  "token_use": null
+}
+{
+  "actor": "scripted; not a fresh actor",
+  "status": "rehearsed"
+}
+{
+  "definition_bytes": 2490,
+  "fresh_actor_attestation": null,
+  "interaction": {
+    "actor_elapsed_ms": null,
+    "elapsed_process_ms": "748",
+    "errors": {
+      "DEFINITION_MISMATCH": 1,
+      "REVISION_CONFLICT": 1,
+      "SCHEMA_VIOLATION": 1
+    },
+    "human_interventions": null,
+    "input_bytes": 2129,
+    "input_lines": 77,
+    "operation_responses": 78,
+    "operations": {
+      "activate": 1,
+      "append": 6,
+      "commit": 2,
+      "delete": 1,
+      "diff": 1,
+      "discover": 1,
+      "edit": 12,
+      "enter": 2,
+      "export-interface": 1,
+      "guide": 1,
+      "help": 1,
+      "invoke": 2,
+      "save": 1,
+      "schema": 1,
+      "set": 39,
+      "show": 2,
+      "status": 1,
+      "tree": 2
+    },
+    "output_bytes": 121806,
+    "recorded_processes": 3,
+    "tokens": null
+  },
+  "interface_export_bytes": 7795,
+  "scope": "Task fidelity and real CLI behavior; actor independence is attested separately.",
+  "status": "pass",
+  "submitted_checkpoint_sha256": "9f7a35bf65333c8ded33cf91ba7980839cca30902e5d27b60cfd9b080b45e7cc"
+}
+{
+  "actor": "scripted producer",
+  "artifact_bytes": {
+    "CATALOG-TASK.md": 2291,
+    "START.md": 3748,
+    "TASK.md": 4589,
+    "abandoned-request.json": 239,
+    "cli": 100183384,
+    "handover.session.json": 12557,
+    "incompatible-operations.json": 8722,
+    "operations.json": 8721,
+    "queue-policy.json": 538,
+    "receiver": 98866096,
+    "source.session.json": 12493
+  },
+  "fresh_actor_trial": "not-run",
+  "manifest_bytes": 4079,
+  "partial_extension": {
+    "actor_reasoning_time": null,
+    "applied": 16,
+    "elapsed_process_ms": "182",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 538,
+    "output_bytes": 20923,
+    "presentation": "terminal",
+    "requests": 16,
+    "started_unix_ms": "1788904884092",
+    "token_use": null
+  },
+  "policy_construction": {
+    "actor_reasoning_time": null,
+    "applied": 48,
+    "elapsed_process_ms": "194",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 1220,
+    "output_bytes": 37891,
+    "presentation": "terminal",
+    "requests": 49,
+    "started_unix_ms": "1788904883428",
+    "token_use": null
+  },
+  "reuse_scope": "Complete catalog definition and checkpoint, extended into a second task; no general component resolver.",
+  "source_asset_construction": {
+    "actor_reasoning_time": null,
+    "applied": 113,
+    "elapsed_process_ms": "469",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 3157,
+    "output_bytes": 83055,
+    "presentation": "terminal",
+    "requests": 114,
+    "started_unix_ms": "1788904883623",
+    "token_use": null
+  },
+  "status": "prepared",
+  "targeted_edit_comparison": "not-run",
+  "token_use": null
+}

@@ -1,0 +1,55 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 37.97s
+     Running tests/cli_run.rs (target/release/deps/cli_run-f94e0ffa3a2f3b64)
+
+running 10 tests
+RUN_REJECTION_LANDED collision
+RUN_REJECTION_LANDED invalid-parent
+test exported_cli_runs_direct_verbs_without_authoring_setup ... ok
+RUN_REJECTION_LANDED invalid-parameter
+test ambiguous_routes_and_invalid_sources_reject_before_checkpoint_creation ... ok
+
+thread 'direct_connected_read_labels_history_and_requires_fresh_grants' (175809) panicked at tests/cli_run.rs:62:5:
+assertion `left == right` failed: stdout= stderr={"request_id":"520bbd23-ce5e-456f-a9b2-848920dd6602","event":"response","operation":"discover","status":"error","mutation":"none","session":{"session_id":"61ab24a4-217a-41c8-9a5e-125d029371f2","revision":"1","accepted_revision":"0","context":[],"node_kind":"object","dirty":false,"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"2d95a4f19beec9a2454b15de8c4d95956c6f04ccc52bcf15b2a4162ab4b72751","constraint_mode":"unconstrained","durability":"durable","active_interface":{"definition_id":"service-catalog-connected","definition_sha256":"813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc","context":"root","binding_scope":"includes_connected_read"}},"result":null,"error":{"code":"INVALID_REQUEST","message":"Expected revision must be present for state changes and exports, and absent for reads.","recovery":"Supply the request shape declared for this operation."},"replayed":false}
+
+  left: Some(2)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test direct_connected_read_labels_history_and_requires_fresh_grants ... FAILED
+test generated_help_tree_and_completion_describe_callable_routes ... ok
+FAULT_LANDED {"action":"error","pid":175847,"point":"before_checkpoint_write"}
+
+thread 'run_publication_faults_preserve_recovery_and_never_acknowledge_uncertain_success' (175843) panicked at tests/cli_run.rs:62:5:
+assertion `left == right` failed: stdout= stderr={"request_id":"8bcdf1f3-342b-4151-aa7a-9dad4d5a43e0","event":"response","operation":"discover","status":"error","mutation":"none","session":{"session_id":"94a1e9bd-d2f6-45e1-ad3e-f285dee3713d","revision":"0","accepted_revision":"0","context":[],"node_kind":"object","dirty":false,"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"2d95a4f19beec9a2454b15de8c4d95956c6f04ccc52bcf15b2a4162ab4b72751","constraint_mode":"unconstrained","durability":"durable","active_interface":{"definition_id":"service-catalog-connected","definition_sha256":"813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc","context":"root","binding_scope":"includes_connected_read"}},"result":null,"error":{"code":"INVALID_REQUEST","message":"Expected revision must be present for state changes and exports, and absent for reads.","recovery":"Supply the request shape declared for this operation."},"replayed":false}
+
+  left: Some(2)
+ right: Some(0)
+test run_publication_faults_preserve_recovery_and_never_acknowledge_uncertain_success ... FAILED
+test command_authored_export_runs_and_agrees_with_canonical_invocation ... ok
+test assembled_nested_routes_use_local_words_and_keep_component_state_separate ... ok
+
+thread 'persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes' (175826) panicked at tests/cli_run.rs:62:5:
+assertion `left == right` failed: stdout= stderr={"request_id":"d2396292-2070-4e9b-b92c-6ea34405bfcc","event":"response","operation":"discover","status":"error","mutation":"none","session":{"session_id":"bf00c780-4be9-4897-9f60-59c82bb78a72","revision":"3","accepted_revision":"0","context":[],"node_kind":"object","dirty":false,"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"2d95a4f19beec9a2454b15de8c4d95956c6f04ccc52bcf15b2a4162ab4b72751","constraint_mode":"unconstrained","durability":"durable","active_interface":{"definition_id":"service-catalog-connected","definition_sha256":"813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc","context":"services","binding_scope":"includes_connected_read"}},"result":null,"error":{"code":"INVALID_REQUEST","message":"Expected revision must be present for state changes and exports, and absent for reads.","recovery":"Supply the request shape declared for this operation."},"replayed":false}
+
+  left: Some(2)
+ right: Some(0)
+test persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes ... FAILED
+test argv_and_interactive_strings_are_literal_and_control_like_domain_words_remain_callable ... ok
+
+thread 'actual_terminal_completes_context_and_executes_direct_commands' (175804) panicked at tests/cli_run.rs:732:5:
+assertion `left == right` failed: Terminal transcript: [6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h
+  left: 1
+ right: 4
+test actual_terminal_completes_context_and_executes_direct_commands ... FAILED
+
+failures:
+
+failures:
+    actual_terminal_completes_context_and_executes_direct_commands
+    direct_connected_read_labels_history_and_requires_fresh_grants
+    persistent_qualified_invocation_preserves_cursor_and_failures_preserve_all_bytes
+    run_publication_faults_preserve_recovery_and_never_acknowledge_uncertain_success
+
+test result: FAILED. 6 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.04s
+
+error: test failed, to rerun pass `--test cli_run`

@@ -1,0 +1,70 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.14s
+     Running tests/cli_composition.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/cli_composition-39d77a22ea4af991)
+
+running 9 tests
+PASS cli-003-live-registry-drift
+test composition_registry_checks_actual_handler_and_argument_drift ... ok
+
+thread 'configured_names_drive_discovery_completion_and_invocation' (70251) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"903e2bf6-8ca1-46fe-88dd-e8887d63da40","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":true,"durability":"durable","node_kind":"object","revision":"111","session_id":"c92c00cd-63a3-4e9f-b740-dd1e4f2031b3"},"status":"error"}
+  left: String("error")
+ right: "ok"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test configured_names_drive_discovery_completion_and_invocation ... FAILED
+
+thread 'lost_mock_response_replays_after_process_death_without_another_transition' (70255) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"03f68558-bb59-49d5-811c-2290e60fba6d","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":false,"durability":"durable","node_kind":"object","revision":"109","session_id":"8623a83f-3e06-41e3-ae39-3ede7571cf71"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test lost_mock_response_replays_after_process_death_without_another_transition ... FAILED
+
+thread 'composition_checkpoint_corruption_and_wrong_profile_are_rejected' (70249) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"522c793d-87d7-408c-a658-be6d48cf687d","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":false,"durability":"durable","node_kind":"object","revision":"109","session_id":"4458c9e5-23e8-41f4-8ae9-a09bde9472c8"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... FAILED
+
+thread 'constructed_cli_activates_and_runs_through_both_presentations_and_transfers' (70252) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"dcfada3f-0750-4456-94c3-2b14715a6ad6","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":false,"durability":"durable","node_kind":"object","revision":"109","session_id":"8da3039d-172f-451f-a720-e8592535bb41"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... FAILED
+
+thread 'invalid_definitions_and_mock_failures_never_publish_partial_state' (70254) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"0dd1cbb8-976e-426b-8da7-c1c6462f7a47","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":false,"durability":"durable","node_kind":"object","revision":"109","session_id":"0230335c-710f-48a7-a0a0-cf61587dcb1b"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test invalid_definitions_and_mock_failures_never_publish_partial_state ... FAILED
+
+thread 'definition_edits_and_failed_activation_preserve_the_prior_active_interface' (70253) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"7556f9cf-8eea-4886-b3de-2e9943b948f7","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":false,"durability":"durable","node_kind":"object","revision":"109","session_id":"58ffda91-3f86-441d-8c69-b4e7bc1eea7e"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... FAILED
+
+thread 'runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected' (70270) panicked at tests/cli_composition.rs:51:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: invalid type: newtype struct, expected any valid JSON value at line 1 column 148","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"c873ca20-7ce8-42d8-8edb-3e68fad9a25b","result":null,"session":{"accepted_revision":"109","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"a57aa02dc41033edf0ff218be19d175041a5889ea4fe07ee936a955329aab5d2","dirty":true,"durability":"durable","node_kind":"object","revision":"111","session_id":"cd35117f-a7e3-4059-8574-87c614af0b25"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... FAILED
+
+thread 'activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary' (70248) panicked at tests/authoring_fixture/mod.rs:292:9:
+INVALID: fault injection did not land at before_checkpoint_write
+test activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary ... FAILED
+
+failures:
+
+failures:
+    activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary
+    composition_checkpoint_corruption_and_wrong_profile_are_rejected
+    configured_names_drive_discovery_completion_and_invocation
+    constructed_cli_activates_and_runs_through_both_presentations_and_transfers
+    definition_edits_and_failed_activation_preserve_the_prior_active_interface
+    invalid_definitions_and_mock_failures_never_publish_partial_state
+    lost_mock_response_replays_after_process_death_without_another_transition
+    runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected
+
+test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.41s
+
+error: test failed, to rerun pass `--test cli_composition`

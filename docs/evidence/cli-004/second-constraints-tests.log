@@ -1,0 +1,39 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.34s
+     Running tests/schema_constraints.rs (target/debug/deps/schema_constraints-34e4a9ccaa260257)
+
+running 9 tests
+FAULT_LANDED {"action":"error","pid":116074,"point":"before_checkpoint_write"}
+test failed_attachments_preserve_drafts_and_reference_policy_is_explicit ... ok
+test schema_guidance_and_completion_share_missing_fields_types_literals_and_limits ... ok
+FAULT_LANDED {"action":"error","pid":116083,"point":"after_checkpoint_rename"}
+test attachment_replay_detachment_discard_and_checkpoint_profiles_remain_distinct ... ok
+UPSTREAM_CASES positive=141 negative=168
+test retained_upstream_positive_and_negative_instances_match_the_selected_dialect ... ok
+FAULT_LANDED {"action":"pause","pid":116101,"point":"before_response_delivery"}
+
+thread 'openapi_description_is_constructed_without_serialized_containers_or_activation' (116057) panicked at tests/schema_constraints.rs:52:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_REQUEST","message":"Terminal quotes must enclose the complete token.","recovery":"Use whitespace-separated tokens and JSON string quoting for whitespace or control characters."},"event":"response","mutation":"none","operation":null,"replayed":false,"request_id":null,"result":null,"session":{"accepted_revision":"39","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-json-constraints-v1","definition_sha256":"0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7","dirty":false,"durability":"durable","node_kind":"object","revision":"39","session_id":"dfcd0a1c-557f-43b2-afcc-4f9697860284"},"status":"error"}
+  left: String("error")
+ right: "ok"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test openapi_description_is_constructed_without_serialized_containers_or_activation ... FAILED
+test schema_attachment_publication_faults_and_lost_response_recover_through_saved_receipts ... ok
+test constraint_numbers_are_exact_and_resource_failures_do_not_certify_instances ... ok
+
+thread 'authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen' (116053) panicked at tests/schema_constraints.rs:52:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_REQUEST","message":"Terminal quotes must enclose the complete token.","recovery":"Use whitespace-separated tokens and JSON string quoting for whitespace or control characters."},"event":"response","mutation":"none","operation":null,"replayed":false,"request_id":null,"result":null,"session":{"accepted_revision":"38","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-json-constraints-v1","definition_sha256":"0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7","dirty":false,"durability":"durable","node_kind":"object","revision":"38","session_id":"af647eb3-7de0-4c75-9d01-5668c3582fa5"},"status":"error"}
+  left: String("error")
+ right: "ok"
+test authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen ... FAILED
+test constraints_compose_with_mock_interfaces_without_sharing_document_roles ... ok
+
+failures:
+
+failures:
+    authored_schema_guides_an_independent_instance_with_repair_and_source_free_reopen
+    openapi_description_is_constructed_without_serialized_containers_or_activation
+
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.58s
+
+error: test failed, to rerun pass `--test schema_constraints`

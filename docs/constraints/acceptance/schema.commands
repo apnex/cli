@@ -1,0 +1,38 @@
+set /$schema string https://json-schema.org/draft/2020-12/schema
+set /type string object
+set /additionalProperties boolean false
+set /required array
+edit /required
+append . string name
+append . string port
+append . string mode
+top
+set /$defs object
+set /$defs/port object
+edit /$defs/port
+set ./type string integer
+set ./minimum number 1
+set ./maximum number 65535
+top
+set /properties object
+edit /properties
+set ./name object
+set ./name/type string string
+set ./name/minLength number 1
+set ./port object
+set ./port/$ref string #/$defs/port
+set ./mode object
+edit ./mode
+set ./type string string
+set ./enum array
+append ./enum string development
+append ./enum string production
+up
+set ./tags object
+edit ./tags
+set ./type string array
+set ./items object
+set ./items/type string string
+set ./uniqueItems boolean true
+top
+commit

@@ -1,0 +1,21 @@
+{
+  "record": "CLI-005-fresh-actor-authorization",
+  "observed_at_utc": "2026-09-08 22:31:19 UTC",
+  "user_message_verbatim": "Approved.",
+  "preceding_request_as_retained_in_summary": "The reuse handover and scripted rehearsal are ready. **55 tests and 13 documentation checks passed.** CLI-005 remains active on the [BOARD].\n\nMay I launch a new agent using only the [prepared handover](/home/apnex/taceng/cli/target/continuation-tTfDo9/recipient/package/START.md) to test independent continuation?\n\nThe current session configuration requires explicit authorization before I launch another agent.",
+  "preceding_request_provenance": "Preserved conversation summary; link label BOARD has no target in that summary.",
+  "correction": "The preceding-request field was initially labeled verbatim. Its source is the retained summary rather than a reread of the original message, so exact original rendering is not claimed. The latest user authorization is available verbatim.",
+  "scope": "Launch one fresh actor using the prepared package, evaluate the result, and retain trial evidence.",
+  "package": "/home/apnex/taceng/cli/target/continuation-tTfDo9/recipient/package",
+  "fork_turns": "none",
+  "isolation": "Instruction-based context restriction; shared filesystem is not a security sandbox.",
+  "preflight": {
+    "hash_file": "../handover-files.sha256",
+    "hashes_verified": 12,
+    "immutable_inputs": 11,
+    "work_checkpoint_absent": true
+  },
+  "mechanics": "Carry the exact task package to a new actor and evaluate its submitted state with the pre-existing task oracle.",
+  "rationale": "Measure continuation without originating conversation rather than replay a known completion recipe.",
+  "consequence": "Do not infer actor independence from a scripted rehearsal or claim unobserved context isolation."
+}

@@ -1,0 +1,443 @@
+mod authoring_fixture;
+use authoring_fixture::*;
+use serde_json::{Value, json};
+use sha2::{Digest, Sha256};
+use std::fs;
+use std::os::unix::fs::MetadataExt;
+
+fn append_null() -> Value {
+    json!({"operation":"append","arguments":{"path":{"base":"root","segments":[]},"value":{"kind":"null"}}})
+}
+
+#[test]
+fn corrupt_checkpoints_are_rejected_and_never_rewritten() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({}));
+    let original = String::from_utf8(fixture.checkpoint_bytes()).unwrap();
+    for (replacement, id) in [
+        (
+            r#"{"nested":{"name":0,"n\u0061me":1}}"#,
+            "duplicate-decoded-checkpoint-key",
+        ),
+        (r#"{"nested":"\uD800"}"#, "unpaired-surrogate-checkpoint"),
+    ] {
+        assert!(original.contains("\"candidate\":{}"));
+        fs::write(
+            &fixture.checkpoint,
+            original.replace("\"candidate\":{}", &format!("\"candidate\":{replacement}")),
+        )
+        .unwrap();
+        fixture.reject_open("INVALID_SESSION");
+        report_pass(id);
+    }
+    fs::write(
+        &fixture.checkpoint,
+        original.replace("\"format_version\":1", "\"format_version\":99"),
+    )
+    .unwrap();
+    fixture.reject_open("UNSUPPORTED_FORMAT");
+    report_pass("unsupported-checkpoint-version");
+    fs::write(&fixture.checkpoint, &original).unwrap();
+    let mut process = fixture.start(false, false);
+    assert_eq!(
+        process.request(&json!({"operation":"top","arguments":{}}))["status"],
+        "ok"
+    );
+    assert!(process.close().success());
+    let state: Value = serde_json::from_slice(&fixture.checkpoint_bytes()).unwrap();
+    for (pointer, value) in [
+        ("/accepted_revision", json!("2")),
+        ("/context", json!([{"key":"missing"}])),
+        ("/last_receipt/response/session/revision", json!("0")),
+        (
+            "/last_receipt/request/session_id",
+            json!("different-session"),
+        ),
+        (
+            "/last_receipt/response/result/path",
+            json!([{"key":"wrong"}]),
+        ),
+        ("/last_receipt/request/expected_revision", json!("1")),
+        ("/last_receipt/response/replayed", json!(true)),
+    ] {
+        let mut corrupted = state.clone();
+        *corrupted.pointer_mut(pointer).unwrap() = value;
+        fs::write(&fixture.checkpoint, serde_json::to_vec(&corrupted).unwrap()).unwrap();
+        fixture.reject_open("INVALID_SESSION");
+    }
+    report_pass("checkpoint-cross-field-corruption");
+}
+
+#[test]
+fn last_receipt_replays_but_different_and_older_requests_do_not() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({"candidate_json":"[]","accepted_json":"[]"}));
+    let mut process = fixture.start(false, false);
+    let first = process.canonical_request(&append_null());
+    let first_response = process.submit(&first);
+    assert_eq!(first_response["status"], "ok");
+    let after_first = fixture.checkpoint_bytes();
+    let replay = process.submit(&first);
+    let mut expected_replay = first_response.clone();
+    expected_replay["replayed"] = json!(true);
+    assert_eq!(replay, expected_replay);
+    assert_eq!(fixture.checkpoint_bytes(), after_first);
+    let mut reused = first.clone();
+    reused["arguments"]["value"] = json!({"kind":"boolean","value":true});
+    check_rejection(
+        &fixture,
+        &after_first,
+        &process.submit(&reused),
+        "REQUEST_ID_REUSE",
+    );
+    report_pass("receipt-identifier-reuse");
+    assert_eq!(process.request(&append_null())["status"], "ok");
+    let after_second = fixture.checkpoint_bytes();
+    check_rejection(
+        &fixture,
+        &after_second,
+        &process.submit(&first),
+        "REVISION_CONFLICT",
+    );
+    assert_eq!(
+        fixture.checkpoint_state().candidate.compact_document_json(),
+        "[null,null]"
+    );
+    report_pass("old-retry-is-not-rebased");
+    assert!(process.close().success());
+}
+
+#[test]
+fn stable_lock_survives_checkpoint_replacement_and_owner_exit() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({}));
+    let mut owner = fixture.start(false, false);
+    let lock_path = fixture.directory.join(".session.json.lock");
+    let lock_inode = fs::metadata(&lock_path).unwrap().ino();
+    let checkpoint_inode = fs::metadata(&fixture.checkpoint).unwrap().ino();
+    assert_eq!(
+        owner.request(&json!({"operation":"top","arguments":{}}))["status"],
+        "ok"
+    );
+    assert_ne!(
+        checkpoint_inode,
+        fs::metadata(&fixture.checkpoint).unwrap().ino()
+    );
+    assert_eq!(lock_inode, fs::metadata(&lock_path).unwrap().ino());
+    fixture.reject_open("SESSION_LOCKED");
+    owner.kill();
+    let mut reopened = fixture.start(false, false);
+    assert_eq!(reopened.header["event"], "session_open");
+    assert_eq!(lock_inode, fs::metadata(&lock_path).unwrap().ino());
+    assert!(reopened.close().success());
+    assert!(lock_path.exists());
+    report_pass("second-writer-lock");
+}
+
+#[test]
+fn prior_outside_edits_and_changed_definition_bytes_are_preserved() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({}));
+    let mut process = fixture.start(false, false);
+    let mut outside = fixture.checkpoint_bytes();
+    outside.push(b' ');
+    fs::write(&fixture.checkpoint, &outside).unwrap();
+    let response = process.request(&json!({"operation":"top","arguments":{}}));
+    check_rejection(&fixture, &outside, &response, "SESSION_CHANGED");
+    assert!(process.close().success());
+    report_pass("outside-checkpoint-edit");
+    let mut declaration = fs::read(&fixture.declaration).unwrap();
+    declaration.push(b' ');
+    fs::write(&fixture.declaration, declaration).unwrap();
+    fixture.reject_open("DEFINITION_MISMATCH");
+    report_pass("definition-change-on-reopen");
+}
+
+#[test]
+fn export_is_create_only_repeatable_and_reports_observed_bytes() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({"candidate_json":"{\"quota\":1.2300}"}));
+    let mut process = fixture.start(false, false);
+    let before = fixture.checkpoint_bytes();
+    let destination = fixture.directory.join("catalog.json");
+    fs::write(&destination, b"unrelated original bytes\n").unwrap();
+    let request = json!({"operation":"save","arguments":{"destination":"catalog.json"}});
+    check_rejection(
+        &fixture,
+        &before,
+        &process.request(&request),
+        "EXPORT_EXISTS",
+    );
+    assert_eq!(
+        fs::read(&destination).unwrap(),
+        b"unrelated original bytes\n"
+    );
+    report_pass("create-only-export");
+    let request = json!({"operation":"save","arguments":{"destination":"fresh.json"}});
+    let first = process.request(&request);
+    assert_eq!(first["status"], "ok");
+    assert_eq!(first["result"]["publication"], "created");
+    let bytes = fs::read(fixture.directory.join("fresh.json")).unwrap();
+    assert_eq!(bytes, b"{\"quota\":1.2300}\n");
+    assert_eq!(
+        first["result"]["sha256"],
+        format!("{:x}", Sha256::digest(&bytes))
+    );
+    let second = process.request(&request);
+    assert_eq!(second["status"], "ok");
+    assert_eq!(second["result"]["publication"], "already_present");
+    assert_eq!(first["result"]["sha256"], second["result"]["sha256"]);
+    assert_eq!(first["session"], second["session"]);
+    assert_eq!(fixture.checkpoint_bytes(), before);
+    report_pass("repeat-identical-export");
+    assert!(process.close().success());
+}
+
+#[test]
+fn terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint() {
+    for action in ["cancel", "eof", "invalid"] {
+        let fixture = AuthoringFixture::new();
+        fixture.seed(&json!({"candidate_json":"{\"a\":[1]}","accepted_json":"{\"a\":[1]}"}));
+        let before = fixture.checkpoint_bytes();
+        let mut process = fixture.start(true, false);
+        assert_eq!(process.terminal("batch")["state"], "unsent");
+        let first = process.terminal("set /name string new");
+        assert_eq!(first["count"], 1);
+        assert_eq!(first["state"], "unsent");
+        assert_eq!(fixture.checkpoint_bytes(), before);
+        match action {
+            "cancel" => {
+                assert_eq!(process.terminal("cancel")["state"], "cancelled");
+            }
+            "invalid" => {
+                let unsent = process.terminal("set /a/9 number 2");
+                assert_eq!(unsent["state"], "unsent");
+                let response = process.terminal("end");
+                check_rejection(&fixture, &before, &response, "INDEX_OUT_OF_BOUNDS");
+                assert_eq!(response["error"]["failed_operation_index"], 1);
+            }
+            _ => {}
+        }
+        assert!(process.close().success());
+        assert_eq!(fixture.checkpoint_bytes(), before);
+    }
+    report_pass("terminal-batch-buffer");
+}
+
+#[test]
+fn bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({}));
+    let mut process = fixture.start(false, false);
+    let response = process.request(&json!({"operation":"help","arguments":{}}));
+    assert_eq!(response["result"]["origin"], "hand-authored-bootstrap");
+    assert_eq!(response["result"]["real_hooks_available"], false);
+    assert_eq!(
+        response["result"]["operations"].as_array().unwrap().len(),
+        16
+    );
+    let before = fixture.checkpoint_bytes();
+    for operation in ["activate", "invoke", "deploy", "mock"] {
+        check_rejection(
+            &fixture,
+            &before,
+            &process.request(&json!({"operation":operation,"arguments":{}})),
+            "UNKNOWN_OPERATION",
+        );
+    }
+    assert!(process.close().success());
+    report_pass("bootstrap-reuse-boundary");
+}
+
+#[test]
+fn checkpoint_creation_and_exports_reject_final_symlinks() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({}));
+    let before = fixture.checkpoint_bytes();
+    let mut recreate = fixture.start(false, true);
+    assert_eq!(recreate.header["error"]["code"], "PERSISTENCE_FAILED");
+    assert!(!recreate.close().success());
+    assert_eq!(fixture.checkpoint_bytes(), before);
+    let mut process = fixture.start(false, false);
+    let target = fixture.directory.join("keep.json");
+    fs::write(&target, b"keep\n").unwrap();
+    std::os::unix::fs::symlink(&target, fixture.directory.join("link.json")).unwrap();
+    check_rejection(
+        &fixture,
+        &before,
+        &process.request(&json!({"operation":"save","arguments":{"destination":"link.json"}})),
+        "EXPORT_FAILED",
+    );
+    assert_eq!(fs::read(&target).unwrap(), b"keep\n");
+    assert!(process.close().success());
+    fs::rename(&fixture.checkpoint, fixture.directory.join("original.json")).unwrap();
+    std::os::unix::fs::symlink(fixture.directory.join("original.json"), &fixture.checkpoint)
+        .unwrap();
+    fixture.reject_open("INVALID_SESSION");
+}
+
+#[cfg(not(feature = "fault-injection"))]
+#[test]
+fn normal_binary_ignores_test_fault_environment() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({}));
+    let marker = fixture.directory.join("should-not-exist.json");
+    let mut command = fixture.command(false, false);
+    command
+        .env("CLI_TEST_FAULT_POINT", "not-a-supported-point")
+        .env("CLI_TEST_FAULT_ACTION", "exit")
+        .env("CLI_TEST_FAULT_MARKER", &marker);
+    let mut process = AuthoringProcess::spawn(command);
+    assert_eq!(process.header["event"], "session_open");
+    assert_eq!(
+        process.request(&json!({"operation":"top","arguments":{}}))["status"],
+        "ok"
+    );
+    assert!(process.close().success());
+    assert!(!marker.exists());
+}
+
+#[cfg(feature = "fault-injection")]
+#[test]
+fn measured_publication_failures_preserve_or_explicitly_uncertain_state() {
+    for point in ["after_checkpoint_write", "after_checkpoint_rename"] {
+        let fixture = AuthoringFixture::new();
+        fixture.seed(&json!({"candidate_json":"[]","accepted_json":"[]"}));
+        let before = fixture.checkpoint_bytes();
+        let (mut process, marker) = fixture.start_fault(false, point, "error");
+        let request = process.canonical_request(&append_null());
+        let response = process.submit(&request);
+        wait_for_fault(&marker, point, &process);
+        if point == "after_checkpoint_write" {
+            check_rejection(&fixture, &before, &response, "PERSISTENCE_FAILED");
+            assert!(process.close().success());
+            report_pass("failure-before-rename");
+        } else {
+            assert_eq!(response["status"], "uncertain");
+            assert_eq!(response["mutation"], "unknown");
+            assert_eq!(response["session"]["durability"], "uncertain");
+            let published = fixture.checkpoint_bytes();
+            let stopped = process.request(&append_null());
+            assert_eq!(stopped["error"]["code"], "PERSISTENCE_UNCERTAIN");
+            assert_eq!(fixture.checkpoint_bytes(), published);
+            assert_eq!(
+                process.request(&json!({"operation":"status","arguments":{}}))["session"]["durability"],
+                "uncertain"
+            );
+            assert!(!process.close().success());
+            report_pass("failure-after-rename");
+        }
+        let mut reopened = fixture.start(false, false);
+        assert_eq!(reopened.header["event"], "session_open");
+        let state = fixture.checkpoint_state();
+        fixture_definition()
+            .validate_checkpoint_receipt(&state)
+            .unwrap();
+        if point == "after_checkpoint_write" {
+            assert_eq!(fixture.checkpoint_bytes(), before);
+            assert_eq!(state.candidate.compact_document_json(), "[]");
+        } else {
+            assert_eq!(state.candidate.compact_document_json(), "[null]");
+            assert_eq!(json!(state.last_receipt.unwrap().request), request);
+        }
+        assert!(reopened.close().success());
+    }
+}
+
+#[cfg(feature = "fault-injection")]
+#[test]
+fn killed_process_at_each_publication_boundary_recovers_a_complete_checkpoint() {
+    for point in [
+        "before_checkpoint_write",
+        "after_checkpoint_file_sync",
+        "after_checkpoint_rename",
+        "after_checkpoint_directory_sync",
+        "before_response_delivery",
+    ] {
+        let fixture = AuthoringFixture::new();
+        fixture.seed(&json!({"candidate_json":"[]","accepted_json":"[]"}));
+        let before = fixture.checkpoint_bytes();
+        let (mut process, marker) = fixture.start_fault(false, point, "pause");
+        let request = process.canonical_request(&append_null());
+        let mut input = serde_json::to_vec(&request).unwrap();
+        input.push(b'\n');
+        process.send_bytes(&input);
+        wait_for_fault(&marker, point, &process);
+        process.kill();
+        let mut reopened = fixture.start(false, false);
+        assert_eq!(
+            reopened.header["event"], "session_open",
+            "{}",
+            reopened.header
+        );
+        let state = fixture.checkpoint_state();
+        fixture_definition()
+            .validate_checkpoint_receipt(&state)
+            .unwrap();
+        let published = fixture.checkpoint_bytes();
+        if ["before_checkpoint_write", "after_checkpoint_file_sync"].contains(&point) {
+            assert_eq!(published, before);
+            assert!(state.last_receipt.is_none());
+            assert_eq!(state.revision.0, 0);
+        } else {
+            assert_eq!(state.candidate.compact_document_json(), "[null]");
+            assert_eq!(state.accepted.compact_document_json(), "[]");
+            assert_eq!(state.revision.0, 1);
+            assert_eq!(state.accepted_revision.0, 0);
+            assert!(state.context.is_empty());
+            assert_eq!(json!(state.last_receipt.unwrap().request), request);
+            let replay = reopened.submit(&request);
+            assert_eq!(replay["status"], "ok");
+            assert_eq!(replay["replayed"], true);
+            assert_eq!(replay["session"]["revision"], "1");
+            assert_eq!(fixture.checkpoint_bytes(), published);
+        }
+        assert!(reopened.close().success());
+        report_pass(&format!("crash-boundary:{point}"));
+    }
+    report_pass("crash-publication-boundaries");
+    report_pass("receipt-replay-after-lost-response");
+}
+
+#[cfg(feature = "fault-injection")]
+#[test]
+fn uncertain_export_can_be_retried_without_changing_authoring_state() {
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&json!({"candidate_json":"[1e400,-0]"}));
+    let before = fixture.checkpoint_bytes();
+    let (mut process, marker) = fixture.start_fault(false, "after_export_publish", "error");
+    let request = json!({"operation":"save","arguments":{"destination":"catalog.json"}});
+    let response = process.request(&request);
+    wait_for_fault(&marker, "after_export_publish", &process);
+    assert_eq!(response["status"], "uncertain");
+    assert_eq!(response["error"]["code"], "EXPORT_UNCERTAIN");
+    assert_eq!(response["mutation"], "none");
+    assert_eq!(response["session"]["durability"], "durable");
+    assert_eq!(fixture.checkpoint_bytes(), before);
+    let retry = process.request(&request);
+    assert_eq!(retry["status"], "ok");
+    assert_eq!(retry["result"]["publication"], "already_present");
+    assert_eq!(
+        fs::read(fixture.directory.join("catalog.json")).unwrap(),
+        b"[1e400,-0]\n"
+    );
+    assert_eq!(fixture.checkpoint_bytes(), before);
+    assert!(process.close().success());
+    report_pass("uncertain-export");
+}
+
+#[cfg(feature = "fault-injection")]
+#[test]
+fn reopening_cannot_report_durable_before_file_and_directory_sync_succeed() {
+    for point in ["reopen_file_sync", "reopen_directory_sync"] {
+        let fixture = AuthoringFixture::new();
+        fixture.seed(&json!({}));
+        let before = fixture.checkpoint_bytes();
+        let (mut process, marker) = fixture.start_fault(false, point, "error");
+        wait_for_fault(&marker, point, &process);
+        assert_eq!(process.header["error"]["code"], "PERSISTENCE_FAILED");
+        assert!(process.header["session"].is_null());
+        assert!(!process.close().success());
+        assert_eq!(fixture.checkpoint_bytes(), before);
+    }
+}

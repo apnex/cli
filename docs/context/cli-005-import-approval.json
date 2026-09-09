@@ -1,0 +1,10 @@
+{
+  "record": "CLI-005",
+  "kind": "owner-selection",
+  "user_message": "Agreed. Does that mean we can author a CLI spec - then separately export and import that spec and use it in \"run\" mode?",
+  "selected_recommendation": "Add explicit document import into the authoring candidate: replace a complete document, preserve exact values, enforce attached constraints on commit, support diff/edit/checkpoint/resumption, and reject malformed input without changing the session.",
+  "acceptance_journey": "Author a CLI definition through contextual commands, export it, import it into a separate session, accept and activate it, and use the configured commands. Also complete the external-edit/import/commit/resume comparison.",
+  "interpretation": "The owner's agreement selects the proposed import increment. The question establishes a separate consuming session as the concrete consumer. Existing compose/activate/invoke controls supply use of an interface; this does not select a new run verb or connected execution.",
+  "survey_bypass": "Intent is fixed by the agreed recommendation and the explicit round-trip question. Remaining choices concern implementation within the existing authoring, constraint, and activation contracts.",
+  "observed_at_utc": "2026-09-09 00:03:00 UTC"
+}

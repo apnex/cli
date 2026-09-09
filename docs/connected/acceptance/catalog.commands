@@ -1,0 +1,57 @@
+set "" object
+set /format string "cli-definition-v1"
+set /id string "service-catalog-connected"
+set /description string "Read an external catalog and explore explicit mocks."
+set /contexts object
+set /contexts/root object
+set /contexts/root/parent null
+set /contexts/root/help string "Explore the service catalog."
+set /contexts/root/related array
+set /contexts/root/commands object
+set /contexts/services object
+edit /contexts/services
+set ./parent string "root"
+set ./help string "Read the granted catalog or change simulated quota."
+set ./related array
+set ./commands object
+set ./commands/inspect object
+set ./commands/inspect/id string "catalog.inspect"
+set ./commands/inspect/help string "Read the external JSON catalog; this does not probe service health."
+set ./commands/inspect/parameters array
+set ./commands/inspect/binding object
+set ./commands/inspect/binding/kind string "connected"
+set ./commands/inspect/binding/provider string "json-file-read-v1"
+set ./commands/inspect/binding/capability string "services.catalog"
+set ./commands/quota object
+set ./commands/quota/id string "catalog.quota"
+set ./commands/quota/help string "Change only simulated quota."
+set ./commands/quota/parameters array
+append ./commands/quota/parameters object
+set ./commands/quota/parameters/0/name string "value"
+set ./commands/quota/parameters/0/type string "number"
+set ./commands/quota/parameters/0/help string "New simulated quota."
+set ./commands/quota/binding object
+set ./commands/quota/binding/kind string "simulated"
+set ./commands/quota/binding/steps array
+append ./commands/quota/binding/steps object
+set ./commands/quota/binding/steps/0/path array
+append ./commands/quota/binding/steps/0/path object
+set ./commands/quota/binding/steps/0/path/0/key string "quota"
+set ./commands/quota/binding/steps/0/value object
+set ./commands/quota/binding/steps/0/value/source string "argument"
+set ./commands/quota/binding/steps/0/value/name string "value"
+set ./commands/quota/binding/output object
+set ./commands/quota/binding/output/source string "state"
+set ./commands/quota/binding/output/path array
+set ./commands/restart object
+set ./commands/restart/id string "catalog.restart"
+set ./commands/restart/help string "Restart when an implementation is attached."
+set ./commands/restart/parameters array
+set ./commands/restart/binding object
+set ./commands/restart/binding/kind string "unbound"
+set ./commands/restart/binding/reason string "No restart capability is attached."
+top
+set /mock_state object
+set /mock_state/quota number 7
+commit
+save connected-cli.json

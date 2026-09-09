@@ -1,0 +1,16 @@
+set /id string worker-platform
+set /description string "Worker platform prototype; all behavior is simulated or unbound."
+set /contexts/root/help string "Explore the worker platform prototype."
+set /mock_state/queue object
+edit /mock_state/queue
+set ./name string ingest
+set ./depth number 0
+set ./paused string false
+set /contexts/queues object
+edit /contexts/queues
+set ./parent string root
+set ./help string "Inspect and simulate a job queue."
+set ./related array
+append ./related string services
+set ./commands object
+edit ./commands

@@ -1,0 +1,12 @@
+worker-platform
+|-- invoke about [simulated]
+|-- deployments/
+|   `-- invoke plan [simulated]
+|-- queues/
+|   |-- invoke drain [unbound]
+|   |-- invoke inspect [simulated]
+|   `-- invoke pause <paused:boolean> [simulated]
+`-- services/
+    |-- invoke inspect [simulated]
+    |-- invoke quota <value:number> [simulated]
+    `-- invoke restart [unbound]

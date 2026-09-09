@@ -1,0 +1,39 @@
+set ./pause object
+edit ./pause
+set ./id string queue.pause
+set ./help string "Set the simulated queue pause state."
+set ./parameters array
+append ./parameters object
+set ./parameters/0/name string paused
+set ./parameters/0/type string boolean
+set ./parameters/0/help string "New simulated pause state."
+set ./binding object
+set ./binding/kind string simulated
+set ./binding/steps array
+append ./binding/steps object
+set ./binding/steps/0/path array
+append ./binding/steps/0/path object
+set ./binding/steps/0/path/0/key string queue
+append ./binding/steps/0/path object
+set ./binding/steps/0/path/1/key string paused
+set ./binding/steps/0/value object
+set ./binding/steps/0/value/source string argument
+set ./binding/steps/0/value/name string paused
+set ./binding/output object
+set ./binding/output/source string state
+set ./binding/output/path array
+append ./binding/output/path object
+set ./binding/output/path/0/key string queue
+up
+set ./drain object
+edit ./drain
+set ./id string queue.drain
+set ./help string "Drain the real queue when an implementation is attached."
+set ./parameters array
+set ./binding object
+set ./binding/kind string unbound
+set ./binding/reason string "No queue-drain capability has been attached."
+up
+show /contexts/queues
+validate
+diff

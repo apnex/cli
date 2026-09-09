@@ -1,0 +1,47 @@
+name: Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CARGO_TERM_COLOR: always
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install terminal test prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes build-essential util-linux jq ripgrep
+      - name: Resolve the repository toolchain
+        run: |
+          rustup show active-toolchain
+          rustc --version
+          cargo --version
+      - name: Verify normal application
+        run: cargo test --locked --all-targets
+      - name: Verify instrumented application
+        run: cargo test --locked --all-features --all-targets
+      - name: Verify formatting and documentation
+        run: |
+          cargo fmt --all -- --check
+          CARGO_TARGET_DIR="$PWD/target" cargo test --locked --manifest-path tools/scaffold/Cargo.toml
+          CARGO_TARGET_DIR="$PWD/target" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check
+          cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check
+      - name: Build the normal release executable
+        run: cargo build --locked --release --bin cli
+      - name: Exercise direct configured verbs
+        run: |
+          target/release/cli run docs/connected/acceptance/expected-definition.json :tree
+          target/release/cli run docs/connected/acceptance/expected-definition.json services quota 12 > target/quota.json 2> target/quota.stderr
+          test "$(cat target/quota.json)" = '{"quota":12}'
+          rg -q '^\[simulated\]' target/quota.stderr

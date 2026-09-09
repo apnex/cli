@@ -1,0 +1,1905 @@
+[
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a4035f1d-bd6d-40c1-a352-08a6095cb9af",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "openapi"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "048e99b0-caac-4c04-9874-3126ad39cb09",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "info"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "2",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "5edb0eeb-1090-4b72-b29f-57f3e6e499e4",
+    "result": {
+      "path": [
+        {
+          "key": "info"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "info"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "3",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0cb2c6cc-cd1f-45e2-984e-e780e4017fd4",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "info"
+            },
+            {
+              "key": "title"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "info"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e07bd475-c232-4756-878f-12017902915f",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "info"
+            },
+            {
+              "key": "version"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "info"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "e7d1a5b9-fd23-442a-9549-21db86c48683",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "6",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "c2316d77-ed4a-4c80-8b5b-c9b7d2a8b58d",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a203ac12-dcc0-4612-8ec6-15e6800dc750",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "8",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "7faa471e-660b-4267-b01b-7c355f8dee0e",
+    "result": {
+      "path": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a37de523-8911-4b52-960f-496c8a7706f0",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "10",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "1799d0f4-a2c0-49b9-bdcb-7dd6d4c122d8",
+    "result": {
+      "path": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "11",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e994856f-36cd-47aa-b929-df7cedcf0356",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "operationId"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "12",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a73dfac7-bda8-4d7f-93d6-b590445f0fc3",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "13",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "1b646f83-2e32-4ef2-a83a-f772f60b6289",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "14",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "7faa91f3-e259-4f63-a6be-46993923cf9a",
+    "result": {
+      "path": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "15",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "7dbc9174-efcd-4d9a-8315-bcd2d00329b0",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "description"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "16",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "6ac7c6d9-f5a8-45e6-81f0-ef6ba8823e23",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "content"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "17",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "bc8b15a3-743f-4049-9203-145d2eb14306",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "content"
+            },
+            {
+              "key": "application/json"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "18",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "d23b1fbb-dd2a-4fc4-8b38-8f140273be17",
+    "result": {
+      "path": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        },
+        {
+          "key": "content"
+        },
+        {
+          "key": "application/json"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        },
+        {
+          "key": "content"
+        },
+        {
+          "key": "application/json"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "19",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "3c7be5c4-4dc6-4822-a169-1c7565c16da7",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "content"
+            },
+            {
+              "key": "application/json"
+            },
+            {
+              "key": "schema"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        },
+        {
+          "key": "content"
+        },
+        {
+          "key": "application/json"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "20",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f178d613-ee2c-46c4-95bb-b07bba408124",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "content"
+            },
+            {
+              "key": "application/json"
+            },
+            {
+              "key": "schema"
+            },
+            {
+              "key": "type"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        },
+        {
+          "key": "content"
+        },
+        {
+          "key": "application/json"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "21",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "93f615f4-ba56-4dad-b26d-b0e1db04053d",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "content"
+            },
+            {
+              "key": "application/json"
+            },
+            {
+              "key": "schema"
+            },
+            {
+              "key": "items"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        },
+        {
+          "key": "content"
+        },
+        {
+          "key": "application/json"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "22",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "4e13fc89-90c7-4ab0-913f-24c21980b58e",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "paths"
+            },
+            {
+              "key": "/services"
+            },
+            {
+              "key": "get"
+            },
+            {
+              "key": "responses"
+            },
+            {
+              "key": "200"
+            },
+            {
+              "key": "content"
+            },
+            {
+              "key": "application/json"
+            },
+            {
+              "key": "schema"
+            },
+            {
+              "key": "items"
+            },
+            {
+              "key": "$ref"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "paths"
+        },
+        {
+          "key": "/services"
+        },
+        {
+          "key": "get"
+        },
+        {
+          "key": "responses"
+        },
+        {
+          "key": "200"
+        },
+        {
+          "key": "content"
+        },
+        {
+          "key": "application/json"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "23",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "b6526334-2cbd-4043-898e-52ccaaefd8d2",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "24",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "aebbfd9b-2b23-4701-b927-d68aa4f878c6",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "25",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "e5a20184-5fc3-476e-9e75-86bdc98f1b4a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "26",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "b81be0a3-4ce7-4875-91e0-fd984fb22191",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "27",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "3b8655a5-5a5b-4ecf-987d-fd0462201f71",
+    "result": {
+      "path": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "28",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "0a773f49-e138-4824-a049-302060e3d38b",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "type"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "29",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "321a23a5-c2eb-4814-ba8b-706c45ed4a22",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "required"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "30",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "5a9b494c-fc3e-4669-a819-55ef186e3f17",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "required"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "31",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "74fbc435-8c05-4ca6-b157-38999dec011a",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "required"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "32",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "198180af-26b1-48ea-b8d1-022ff98a9aee",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "properties"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "33",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "8060321e-d2e6-4cfe-a56d-4326e241dacc",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "properties"
+            },
+            {
+              "key": "name"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "34",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "f48b33f7-6041-4bcf-8e18-2f02a017c173",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "properties"
+            },
+            {
+              "key": "name"
+            },
+            {
+              "key": "type"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "35",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "a40bff15-855d-4d73-a1cf-c8da5feb0cdd",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "properties"
+            },
+            {
+              "key": "port"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "36",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "af0be780-9718-47f2-b49f-db7431a18b9d",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "components"
+            },
+            {
+              "key": "schemas"
+            },
+            {
+              "key": "Service"
+            },
+            {
+              "key": "properties"
+            },
+            {
+              "key": "port"
+            },
+            {
+              "key": "type"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [
+        {
+          "key": "components"
+        },
+        {
+          "key": "schemas"
+        },
+        {
+          "key": "Service"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "37",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "e46ae2ab-6012-4e87-828d-6c0218768e29",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "38",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "7a3819a7-8db4-42b5-b56d-0146e79a76ac",
+    "result": {
+      "accepted_revision": "39"
+    },
+    "session": {
+      "accepted_revision": "39",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "39",
+      "session_id": "a7f062a7-c311-4c52-9a8f-0945f1f6fc24"
+    },
+    "status": "ok"
+  }
+]

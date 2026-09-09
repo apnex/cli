@@ -1,0 +1,370 @@
+//! Configured contexts and commands are validated as data before an interface can become active.
+
+use crate::authoring_error::{AuthoringError, authoring_limit_error};
+use crate::document_path::DocumentSegment;
+use crate::document_value::{DocumentValue, MAX_DOCUMENT_BYTES, decode_authoring_json};
+use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
+use std::collections::{BTreeMap, BTreeSet};
+
+/// A context parent is explicitly null for root or an existing stable context identity.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CliContextParent {
+    Root(()),
+    Context(String),
+}
+
+/// A configured scalar parameter is required and never coerces between JSON types.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliParameter {
+    pub name: String,
+    #[serde(rename = "type")]
+    pub value_type: String,
+    pub help: String,
+}
+
+/// A mock expression can read declared arguments or simulated state, but cannot execute code.
+#[derive(Clone, Debug, PartialEq, Serialize)]
+#[serde(tag = "source", rename_all = "lowercase", deny_unknown_fields)]
+pub enum CliMockExpression {
+    Literal { value: DocumentValue },
+    Argument { name: String },
+    State { path: Vec<DocumentSegment> },
+}
+
+/// A mock assignment addresses the private simulated document using existing typed path semantics.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliMockAssignment {
+    pub path: Vec<DocumentSegment>,
+    pub value: CliMockExpression,
+}
+
+/// A binding states whether behavior is absent or explicitly simulated; connected execution is unsupported.
+#[derive(Clone, Debug, PartialEq, Serialize)]
+#[serde(tag = "kind", rename_all = "lowercase", deny_unknown_fields)]
+pub enum CliBehaviorBinding {
+    Unbound {
+        reason: String,
+    },
+    Simulated {
+        steps: Vec<CliMockAssignment>,
+        output: CliMockExpression,
+    },
+}
+
+// Serde's buffered tagged-enum decoder cannot retain RawValue payloads. Inspect the tag from
+// original bytes, then deserialize the selected exact shape directly from those same bytes.
+impl<'de> Deserialize<'de> for CliMockExpression {
+    fn deserialize<D: serde::Deserializer<'de>>(input: D) -> Result<Self, D::Error> {
+        let raw = Box::<serde_json::value::RawValue>::deserialize(input)?;
+        #[derive(Deserialize)]
+        struct Tag {
+            source: String,
+        }
+        let tag: Tag = serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+        match tag.source.as_str() {
+            "literal" => {
+                #[derive(Deserialize)]
+                #[serde(deny_unknown_fields)]
+                struct Literal {
+                    #[serde(rename = "source")]
+                    _source: String,
+                    value: DocumentValue,
+                }
+                let literal: Literal =
+                    serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+                Ok(Self::Literal {
+                    value: literal.value,
+                })
+            }
+            "argument" => {
+                #[derive(Deserialize)]
+                #[serde(deny_unknown_fields)]
+                struct Argument {
+                    #[serde(rename = "source")]
+                    _source: String,
+                    name: String,
+                }
+                let argument: Argument =
+                    serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+                Ok(Self::Argument {
+                    name: argument.name,
+                })
+            }
+            "state" => {
+                #[derive(Deserialize)]
+                #[serde(deny_unknown_fields)]
+                struct State {
+                    #[serde(rename = "source")]
+                    _source: String,
+                    path: Vec<DocumentSegment>,
+                }
+                let state: State =
+                    serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+                Ok(Self::State { path: state.path })
+            }
+            _ => Err(serde::de::Error::custom(
+                "CLI mock expression source is unsupported",
+            )),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for CliBehaviorBinding {
+    fn deserialize<D: serde::Deserializer<'de>>(input: D) -> Result<Self, D::Error> {
+        let raw = Box::<serde_json::value::RawValue>::deserialize(input)?;
+        #[derive(Deserialize)]
+        struct Tag {
+            kind: String,
+        }
+        let tag: Tag = serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+        match tag.kind.as_str() {
+            "unbound" => {
+                #[derive(Deserialize)]
+                #[serde(deny_unknown_fields)]
+                struct Unbound {
+                    #[serde(rename = "kind")]
+                    _kind: String,
+                    reason: String,
+                }
+                let binding: Unbound =
+                    serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+                Ok(Self::Unbound {
+                    reason: binding.reason,
+                })
+            }
+            "simulated" => {
+                #[derive(Deserialize)]
+                #[serde(deny_unknown_fields)]
+                struct Simulated {
+                    #[serde(rename = "kind")]
+                    _kind: String,
+                    steps: Vec<CliMockAssignment>,
+                    output: CliMockExpression,
+                }
+                let binding: Simulated =
+                    serde_json::from_str(raw.get()).map_err(serde::de::Error::custom)?;
+                Ok(Self::Simulated {
+                    steps: binding.steps,
+                    output: binding.output,
+                })
+            }
+            _ => Err(serde::de::Error::custom(
+                "CLI behavior binding kind is unsupported",
+            )),
+        }
+    }
+}
+
+/// One configured command supplies the same signature to discovery, terminal input, and invocation.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliCommand {
+    pub id: String,
+    pub help: String,
+    pub parameters: Vec<CliParameter>,
+    pub binding: CliBehaviorBinding,
+}
+
+/// A stable context owns local command words and explicit non-parent relationships.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliContext {
+    pub parent: CliContextParent,
+    pub help: String,
+    pub related: Vec<String>,
+    pub commands: BTreeMap<String, CliCommand>,
+}
+
+/// A CLI definition is a bounded interpretation of authored data, independent of JSON Schema.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CliDefinition {
+    pub format: String,
+    pub id: String,
+    pub description: String,
+    pub contexts: BTreeMap<String, CliContext>,
+    pub mock_state: DocumentValue,
+}
+
+/// Activation diagnostics identify invalid definition content without changing the active interface.
+pub fn cli_definition_error(message: impl Into<String>) -> AuthoringError {
+    AuthoringError::new(
+        "INVALID_CLI_DEFINITION",
+        message,
+        "Repair the definition draft and activate it explicitly; the prior interface remains active.",
+    )
+}
+
+fn validate_cli_name(name: &str) -> Result<(), AuthoringError> {
+    if name.is_empty()
+        || name.len() > 64
+        || !name
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b"_.-".contains(&b))
+    {
+        return Err(cli_definition_error(format!(
+            "CLI identifier is invalid: {name:?}"
+        )));
+    }
+    Ok(())
+}
+
+fn validate_cli_help(help: &str) -> Result<(), AuthoringError> {
+    if help.trim().is_empty() {
+        return Err(cli_definition_error(
+            "CLI explanatory text must not be empty.",
+        ));
+    }
+    Ok(())
+}
+
+fn validate_mock_path(path: &[DocumentSegment]) -> Result<(), AuthoringError> {
+    if path.len() > crate::document_value::MAX_DOCUMENT_DEPTH {
+        return Err(authoring_limit_error(
+            "CLI mock path exceeds document depth.",
+        ));
+    }
+    Ok(())
+}
+
+fn validate_mock_expression(
+    expression: &CliMockExpression,
+    parameters: &BTreeSet<&str>,
+) -> Result<(), AuthoringError> {
+    match expression {
+        CliMockExpression::Literal { value } => value.validate_document_limits(),
+        CliMockExpression::Argument { name } if !parameters.contains(name.as_str()) => {
+            Err(cli_definition_error(format!(
+                "CLI mock references an undeclared argument: {name}"
+            )))
+        }
+        CliMockExpression::State { path } => validate_mock_path(path),
+        _ => Ok(()),
+    }
+}
+
+impl CliDefinition {
+    /// Decode an entire authored definition before allowing any activation state to be staged.
+    pub fn parse_cli_definition(bytes: &[u8]) -> Result<Self, AuthoringError> {
+        let definition: Self =
+            decode_authoring_json(bytes, MAX_DOCUMENT_BYTES, "INVALID_CLI_DEFINITION")?;
+        definition.validate_cli_definition()?;
+        Ok(definition)
+    }
+
+    /// Validate names, references, parent cycles, signatures, and the bounded mock instruction set.
+    pub fn validate_cli_definition(&self) -> Result<(), AuthoringError> {
+        // Reparse the whole definition as a document to enforce aggregate depth and scalar limits.
+        DocumentValue::parse_document(&serde_json::to_string(self).unwrap())?;
+        if self.format != "cli-definition-v1" {
+            return Err(cli_definition_error(
+                "CLI definition format is unsupported.",
+            ));
+        }
+        validate_cli_name(&self.id)?;
+        validate_cli_help(&self.description)?;
+        if self.contexts.is_empty() || self.contexts.len() > 128 {
+            return Err(authoring_limit_error(
+                "CLI definition requires 1 through 128 contexts.",
+            ));
+        }
+        if !matches!(
+            self.contexts.get("root").map(|c| &c.parent),
+            Some(CliContextParent::Root(()))
+        ) {
+            return Err(cli_definition_error(
+                "CLI root context requires an explicit null parent.",
+            ));
+        }
+        let mut operation_ids = BTreeSet::new();
+        for (id, context) in &self.contexts {
+            validate_cli_name(id)?;
+            if id == ".." {
+                return Err(cli_definition_error(
+                    "CLI context identity collides with parent navigation.",
+                ));
+            }
+            validate_cli_help(&context.help)?;
+            let mut chain = BTreeSet::new();
+            let mut current = id.as_str();
+            loop {
+                if !chain.insert(current) {
+                    return Err(cli_definition_error(
+                        "CLI context parent references form a cycle.",
+                    ));
+                }
+                let node = self.contexts.get(current).ok_or_else(|| {
+                    cli_definition_error(format!("CLI context reference is missing: {current}"))
+                })?;
+                match &node.parent {
+                    CliContextParent::Root(()) if current == "root" => break,
+                    CliContextParent::Root(()) => {
+                        return Err(cli_definition_error("CLI non-root context has no parent."));
+                    }
+                    CliContextParent::Context(parent) => current = parent,
+                }
+            }
+            let mut related_ids = BTreeSet::new();
+            for related in &context.related {
+                if !self.contexts.contains_key(related) || !related_ids.insert(related) {
+                    return Err(cli_definition_error(
+                        "CLI related context is missing or duplicated.",
+                    ));
+                }
+            }
+            for (word, command) in &context.commands {
+                validate_cli_name(word)?;
+                validate_cli_name(&command.id)?;
+                validate_cli_help(&command.help)?;
+                if !operation_ids.insert(command.id.as_str()) {
+                    return Err(cli_definition_error(
+                        "CLI stable operation identity is duplicated.",
+                    ));
+                }
+                if operation_ids.len() > 1024 || command.parameters.len() > 64 {
+                    return Err(authoring_limit_error(
+                        "CLI command or parameter count exceeds its limit.",
+                    ));
+                }
+                let mut parameters = BTreeSet::new();
+                for parameter in &command.parameters {
+                    validate_cli_name(&parameter.name)?;
+                    validate_cli_help(&parameter.help)?;
+                    if !parameters.insert(parameter.name.as_str())
+                        || !["string", "number", "boolean"].contains(&parameter.value_type.as_str())
+                    {
+                        return Err(cli_definition_error(
+                            "CLI parameter name is duplicated or its type is unsupported.",
+                        ));
+                    }
+                }
+                match &command.binding {
+                    CliBehaviorBinding::Unbound { reason } => validate_cli_help(reason)?,
+                    CliBehaviorBinding::Simulated { steps, output } => {
+                        if steps.len() > 256 {
+                            return Err(authoring_limit_error("CLI mock exceeds 256 steps."));
+                        }
+                        for step in steps {
+                            validate_mock_path(&step.path)?;
+                            validate_mock_expression(&step.value, &parameters)?;
+                        }
+                        validate_mock_expression(output, &parameters)?;
+                    }
+                }
+            }
+        }
+        self.mock_state.validate_document_limits()
+    }
+
+    /// Identify canonical definition content while retaining exact authored number spelling.
+    pub fn cli_definition_digest(&self) -> String {
+        let canonical = DocumentValue::parse_document(&serde_json::to_string(self).unwrap())
+            .expect("Validated CLI definition")
+            .compact_document_json();
+        format!("{:x}", Sha256::digest(canonical.as_bytes()))
+    }
+}

@@ -1,0 +1,30 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+warning: function `assembly_inputs` is never used
+  --> tests/cli_assembly.rs:54:4
+   |
+54 | fn assembly_inputs(fixture: &AuthoringFixture) {
+   |    ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `programmable-cli` (test "cli_assembly") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 4.16s
+     Running tests/cli_assembly.rs (target/release/deps/cli_assembly-bf80903d1dce9ad4)
+
+running 1 test
+
+thread 'authored_components_assemble_transfer_and_preserve_independent_behavior' (86979) panicked at tests/cli_assembly.rs:46:5:
+assertion `left == right` failed
+  left: Object({"": Object({}), "definition": Object({"contexts": Object({"root": Object({"commands": Object({"inspect": Object({"binding": Object({"kind": String("simulated"), "output": Object({"path": Array([]), "source": String("state")}), "steps": Array([])}), "help": String("Read only this component's simulated state."), "id": String("inspect"), "parameters": Array([])}), "quota": Object({"binding": Object({"kind": String("simulated"), "output": Object({"path": Array([Object({"key": String("quota")})]), "source": String("state")}), "steps": Array([Object({"path": Array([Object({"key": String("quota")})]), "value": Object({"name": String("value"), "source": String("argument")})})])}), "help": String("Change simulated quota."), "id": String("quota"), "parameters": Array([Object({"help": String("New quota."), "name": String("value"), "type": String("number")})])}), "restart": Object({"binding": Object({"kind": String("unbound"), "reason": String("No restart capability is attached.")}), "help": String("Restart a real service."), "id": String("restart"), "parameters": Array([])})}), "help": String("Inspect and configure services."), "parent": Null, "related": Array([])})}), "description": String("Independent service component."), "format": String("cli-definition-v1"), "id": String("services"), "mock_state": Object({"name": String("api"), "quota": Number(RawValue(1.2300))})}), "format": String("cli-component-v1"), "requires": Array([])})
+ right: Object({"definition": Object({"contexts": Object({"root": Object({"commands": Object({"inspect": Object({"binding": Object({"kind": String("simulated"), "output": Object({"path": Array([]), "source": String("state")}), "steps": Array([])}), "help": String("Read only this component's simulated state."), "id": String("inspect"), "parameters": Array([])}), "quota": Object({"binding": Object({"kind": String("simulated"), "output": Object({"path": Array([Object({"key": String("quota")})]), "source": String("state")}), "steps": Array([Object({"path": Array([Object({"key": String("quota")})]), "value": Object({"name": String("value"), "source": String("argument")})})])}), "help": String("Change simulated quota."), "id": String("quota"), "parameters": Array([Object({"help": String("New quota."), "name": String("value"), "type": String("number")})])}), "restart": Object({"binding": Object({"kind": String("unbound"), "reason": String("No restart capability is attached.")}), "help": String("Restart a real service."), "id": String("restart"), "parameters": Array([])})}), "help": String("Inspect and configure services."), "parent": Null, "related": Array([])})}), "description": String("Independent service component."), "format": String("cli-definition-v1"), "id": String("services"), "mock_state": Object({"name": String("api"), "quota": Number(RawValue(1.2300))})}), "format": String("cli-component-v1"), "requires": Array([])})
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test authored_components_assemble_transfer_and_preserve_independent_behavior ... FAILED
+
+failures:
+
+failures:
+    authored_components_assemble_transfer_and_preserve_independent_behavior
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--test cli_assembly`

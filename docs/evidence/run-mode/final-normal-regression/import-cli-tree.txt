@@ -1,0 +1,8 @@
+service-catalog
+|-- invoke about [simulated]
+|-- deployments/
+|   `-- invoke plan [simulated]
+`-- services/
+    |-- invoke inspect [simulated]
+    |-- invoke quota <value:number> [simulated]
+    `-- invoke restart [unbound]

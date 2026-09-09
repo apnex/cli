@@ -1,0 +1,62 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.07s
+     Running unittests src/lib.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/programmable_cli-524f432b81de501e)
+
+running 2 tests
+test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/cli-c86e235ee8205a20)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_acceptance.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/authoring_acceptance-f7b1ef48afb3be9b)
+
+running 4 tests
+test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+test recorded_operation_cases_execute_against_application ... ok
+test service_catalog_journey_through_both_process_presentations ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+     Running tests/authoring_discovery.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/authoring_discovery-16c007a2afd32fcd)
+
+running 4 tests
+test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring_limits.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/authoring_limits-264932ea8f80474d)
+
+running 5 tests
+test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+test receipt_overhead_and_response_bound_reject_before_publication ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.23s
+
+     Running tests/authoring_recovery.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/authoring_recovery-abc2dec8b3aedeeb)
+
+running 9 tests
+test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+test normal_binary_ignores_test_fault_environment ... ok
+test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+

@@ -1,0 +1,50 @@
+//! Verb trees project validated context ownership and signatures without interpreting mock output.
+
+use crate::cli_definition::{CliBehaviorBinding, CliContextParent, CliDefinition};
+use std::fmt::Write;
+
+/// Render the full CLI verb tree from a validated definition, with sorted commands before child contexts.
+pub(crate) fn render_cli_verb_tree(definition: &CliDefinition) -> String {
+    let mut output = format!("{}\n", definition.id);
+    append_cli_context_tree(definition, "root", "", &mut output);
+    output
+}
+
+fn append_cli_context_tree(
+    definition: &CliDefinition,
+    context_id: &str,
+    prefix: &str,
+    output: &mut String,
+) {
+    let context = &definition.contexts[context_id];
+    let children: Vec<_> = definition
+        .contexts
+        .iter()
+        .filter(|(_, child)| {
+            matches!(&child.parent, CliContextParent::Context(parent) if parent == context_id)
+        })
+        .collect();
+    let count = context.commands.len() + children.len();
+    for (index, (word, command)) in context.commands.iter().enumerate() {
+        output.push_str(prefix);
+        output.push_str(if index + 1 == count { "`-- " } else { "|-- " });
+        write!(output, "invoke {word}").unwrap();
+        for parameter in &command.parameters {
+            write!(output, " <{}:{}>", parameter.name, parameter.value_type).unwrap();
+        }
+        let binding = match &command.binding {
+            CliBehaviorBinding::Simulated { .. } => "simulated",
+            CliBehaviorBinding::Unbound { .. } => "unbound",
+            CliBehaviorBinding::Connected { .. } => "connected:json-file-read-v1",
+        };
+        writeln!(output, " [{binding}]").unwrap();
+    }
+    for (index, (id, _)) in children.iter().enumerate() {
+        let last = context.commands.len() + index + 1 == count;
+        output.push_str(prefix);
+        output.push_str(if last { "`-- " } else { "|-- " });
+        writeln!(output, "{id}/").unwrap();
+        let continuation = if last { "    " } else { "|   " };
+        append_cli_context_tree(definition, id, &format!("{prefix}{continuation}"), output);
+    }
+}

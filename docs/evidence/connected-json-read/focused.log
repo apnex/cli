@@ -1,0 +1,54 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 59.88s
+     Running tests/connected_json_read.rs (target/release/deps/connected_json_read-41f881588b475080)
+
+running 8 tests
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/provider
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/kind
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/capability
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/capability
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/parameters
+CONNECTED_MUTANT_LANDED observation binding
+CONNECTED_MUTANT_LANDED observation effect
+CONNECTED_MUTANT_LANDED observation simulated_steps
+CONNECTED_MUTANT_LANDED observation output_json_text
+CONNECTED_MUTANT_LANDED observation observation
+test connected_definition_is_authored_with_typed_commands_and_activates_without_authority ... ok
+CONNECTED_MUTANT_LANDED observation observation/capability
+CONNECTED_MUTANT_LANDED observation observation/source_bytes
+test connected_grants_pin_parent_directories_and_launcher_rejects_invalid_authority ... ok
+CONNECTED_MUTANT_LANDED observation observation/source_bytes
+CONNECTED_MUTANT_LANDED observation observation/source_sha256
+CONNECTED_MUTANT_LANDED observation observation/output_sha256
+FAULT_LANDED {"action":"error","pid":129941,"point":"after_checkpoint_write"}
+CONNECTED_MUTANT_LANDED checkpoint and receipt
+test connected_reads_observe_real_files_in_both_presentations_without_mutating_authored_or_mock_state ... ok
+test connected_read_rejects_bad_targets_documents_signatures_and_stale_requests_atomically ... ok
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/provider
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/kind
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/capability
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding/capability
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/binding
+CONNECTED_MUTANT_LANDED definition /contexts/services/commands/inspect/parameters
+CONNECTED_MUTANT_LANDED observation binding
+CONNECTED_MUTANT_LANDED observation effect
+CONNECTED_MUTANT_LANDED observation simulated_steps
+CONNECTED_MUTANT_LANDED observation output_json_text
+CONNECTED_MUTANT_LANDED observation observation
+CONNECTED_MUTANT_LANDED observation observation/capability
+CONNECTED_MUTANT_LANDED observation observation/source_bytes
+CONNECTED_MUTANT_LANDED observation observation/source_bytes
+CONNECTED_MUTANT_LANDED observation observation/source_sha256
+CONNECTED_MUTANT_LANDED observation observation/output_sha256
+CONNECTED_MUTANT_LANDED checkpoint and receipt
+FAULT_LANDED {"action":"error","pid":130001,"point":"after_checkpoint_rename"}
+test connected_definitions_and_saved_observations_reject_applied_inconsistencies ... ok
+test connected_read_replay_and_handover_preserve_history_without_transferring_grants ... ok
+FAULT_LANDED {"action":"error","pid":130012,"point":"after_checkpoint_write"}
+test assembled_connected_components_preserve_requirements_and_share_only_explicit_read_authority ... ok
+FAULT_LANDED {"action":"error","pid":130032,"point":"after_checkpoint_rename"}
+test connected_read_publication_failures_preserve_recoverable_observations_without_claiming_no_read ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+

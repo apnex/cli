@@ -1,0 +1,2263 @@
+{
+  "format_version": 1,
+  "execution_status": "not-run-against-application",
+  "contract": "../SESSION-CONTRACT.md",
+  "operation_declaration": "../operations.json",
+  "harness_contract": {
+    "initialization": "Create a complete valid checkpoint from the case's initial fields and the contract defaults; bind its session identity and definition digest from the actual runtime inputs.",
+    "requests": "Unless overridden, supply a fresh request_id, the bound session_id, and expected_revision from the most recently observed session header on state or export operations. Request fragments are not complete wire messages.",
+    "success_defaults": "Unless overridden, require status ok and durable session state; state operations apply, reads and exports do not mutate the checkpoint.",
+    "failure_defaults": "Compare the complete candidate, accepted baseline, context, revision, receipt, and checkpoint bytes, not merely the error code.",
+    "comparison": "Parse expected JSON without converting number tokens to floats; ignore object order and string escape spelling but preserve exact number tokens.",
+    "terminal_pairs": "A terminal field is an independent input that must lower to the same canonical operation as the paired request; a null request denotes a terminal parse failure.",
+    "input_paths": "Resolve fixture document references relative to this file; export destinations live inside a fresh per-case temporary directory.",
+    "runtime_status": "Static fixture validation is not execution of these application assertions. A future runner must distinguish PASS, FAIL, UNRUNNABLE, and INVALID fault injection."
+  },
+  "journey": {
+    "id": "service-catalog",
+    "task": "SERVICE-CATALOG.md",
+    "initial": {
+      "candidate_json": "{}",
+      "accepted_json": "{}",
+      "context": [],
+      "revision": "0",
+      "accepted_revision": "0"
+    },
+    "steps": [
+      {
+        "terminal": "set /project string atlas",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "project"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "atlas"
+            }
+          }
+        },
+        "expect": {
+          "revision": "1"
+        }
+      },
+      {
+        "terminal": "set /version number 9007199254740993",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "version"
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "9007199254740993"
+            }
+          }
+        },
+        "expect": {
+          "revision": "2"
+        }
+      },
+      {
+        "terminal": "set /services array",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "services"
+                }
+              ]
+            },
+            "value": {
+              "kind": "array"
+            }
+          }
+        },
+        "expect": {
+          "revision": "3"
+        }
+      },
+      {
+        "terminal": "append /services object",
+        "request": {
+          "operation": "append",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "services"
+                }
+              ]
+            },
+            "value": {
+              "kind": "object"
+            }
+          }
+        },
+        "expect": {
+          "revision": "4"
+        }
+      },
+      {
+        "terminal": "edit /services/0",
+        "request": {
+          "operation": "edit",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "services"
+                },
+                {
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        "expect": {
+          "revision": "5",
+          "context": [
+            {
+              "key": "services"
+            },
+            {
+              "index": 0
+            }
+          ]
+        }
+      },
+      {
+        "terminal": "set ./name string api",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "name"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "api"
+            }
+          }
+        },
+        "expect": {
+          "revision": "6"
+        }
+      },
+      {
+        "terminal": "set ./enabled boolean true",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "enabled"
+                }
+              ]
+            },
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        },
+        "expect": {
+          "revision": "7"
+        }
+      },
+      {
+        "terminal": "set ./replicas number 2",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "replicas"
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "2"
+            }
+          }
+        },
+        "expect": {
+          "revision": "8"
+        }
+      },
+      {
+        "terminal": "set ./ports array",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "ports"
+                }
+              ]
+            },
+            "value": {
+              "kind": "array"
+            }
+          }
+        },
+        "expect": {
+          "revision": "9"
+        }
+      },
+      {
+        "terminal": "append ./ports number 8080",
+        "request": {
+          "operation": "append",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "ports"
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "8080"
+            }
+          }
+        },
+        "expect": {
+          "revision": "10"
+        }
+      },
+      {
+        "terminal": "append ./ports number 8443",
+        "request": {
+          "operation": "append",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "ports"
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "8443"
+            }
+          }
+        },
+        "expect": {
+          "revision": "11"
+        }
+      },
+      {
+        "terminal": "set ./metadata object",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "metadata"
+                }
+              ]
+            },
+            "value": {
+              "kind": "object"
+            }
+          }
+        },
+        "expect": {
+          "revision": "12"
+        }
+      },
+      {
+        "terminal": "edit ./metadata",
+        "request": {
+          "operation": "edit",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "metadata"
+                }
+              ]
+            }
+          }
+        },
+        "expect": {
+          "revision": "13",
+          "context": [
+            {
+              "key": "services"
+            },
+            {
+              "index": 0
+            },
+            {
+              "key": "metadata"
+            }
+          ]
+        }
+      },
+      {
+        "terminal": "set ./0 string zero",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "0"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "zero"
+            }
+          }
+        },
+        "expect": {
+          "revision": "14"
+        }
+      },
+      {
+        "terminal": "set ./ string \"empty key\"",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": ""
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "empty key"
+            }
+          }
+        },
+        "expect": {
+          "revision": "15"
+        }
+      },
+      {
+        "terminal": "set ./a~1b string \"literal slash\"",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "a/b"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "literal slash"
+            }
+          }
+        },
+        "expect": {
+          "revision": "16"
+        }
+      },
+      {
+        "terminal": "set ./~0label string tilde",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "~label"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "tilde"
+            }
+          }
+        },
+        "expect": {
+          "revision": "17"
+        }
+      },
+      {
+        "terminal": "set \"./release note\" string \"first line\\nsecond line\"",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "release note"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "first line\nsecond line"
+            }
+          }
+        },
+        "expect": {
+          "revision": "18"
+        }
+      },
+      {
+        "terminal": "up",
+        "request": {
+          "operation": "up",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "19",
+          "context": [
+            {
+              "key": "services"
+            },
+            {
+              "index": 0
+            }
+          ]
+        }
+      },
+      {
+        "terminal": "set ./quota number 1.2300",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "quota"
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "1.2300"
+            }
+          }
+        },
+        "expect": {
+          "revision": "20"
+        }
+      },
+      {
+        "terminal": "set ./owner null",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "owner"
+                }
+              ]
+            },
+            "value": {
+              "kind": "null"
+            }
+          }
+        },
+        "expect": {
+          "revision": "21"
+        }
+      },
+      {
+        "terminal": "set ./ports/9 number 80",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "ports"
+                },
+                {
+                  "index": 9
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "80"
+            }
+          }
+        },
+        "expect": {
+          "status": "error",
+          "mutation": "none",
+          "code": "INDEX_OUT_OF_BOUNDS",
+          "revision": "21",
+          "checkpoint_bytes": "unchanged"
+        }
+      },
+      {
+        "terminal": "status",
+        "request": {
+          "operation": "status",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "21",
+          "dirty": true,
+          "accepted_json": "{}",
+          "context": [
+            {
+              "key": "services"
+            },
+            {
+              "index": 0
+            }
+          ]
+        }
+      },
+      {
+        "terminal": "save draft.json",
+        "request": {
+          "operation": "save",
+          "arguments": {
+            "destination": "draft.json"
+          }
+        },
+        "expect": {
+          "revision": "21",
+          "export_document": "service-catalog.draft.json",
+          "dirty": true
+        }
+      },
+      {
+        "harness_action": "close_and_reopen",
+        "expect": {
+          "revision": "21",
+          "context": [
+            {
+              "key": "services"
+            },
+            {
+              "index": 0
+            }
+          ],
+          "accepted_json": "{}",
+          "candidate_document": "service-catalog.draft.json",
+          "same_session_id": true,
+          "same_intent_text": true,
+          "startup_event": "session_open"
+        }
+      },
+      {
+        "terminal": "top",
+        "request": {
+          "operation": "top",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "22",
+          "context": []
+        }
+      },
+      {
+        "terminal": "set /labels object",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "labels"
+                }
+              ]
+            },
+            "value": {
+              "kind": "object"
+            }
+          }
+        },
+        "expect": {
+          "revision": "23"
+        }
+      },
+      {
+        "terminal": "edit /labels",
+        "request": {
+          "operation": "edit",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "labels"
+                }
+              ]
+            }
+          }
+        },
+        "expect": {
+          "revision": "24",
+          "context": [
+            {
+              "key": "labels"
+            }
+          ]
+        }
+      },
+      {
+        "terminal": "set ./environment string dev",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "environment"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "dev"
+            }
+          }
+        },
+        "expect": {
+          "revision": "25"
+        }
+      },
+      {
+        "terminal": "set ./looks-boolean string true",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "looks-boolean"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "true"
+            }
+          }
+        },
+        "expect": {
+          "revision": "26"
+        }
+      },
+      {
+        "terminal": "set ./looks-number string \"00123\"",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "context",
+              "segments": [
+                {
+                  "key": "looks-number"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "00123"
+            }
+          }
+        },
+        "expect": {
+          "revision": "27"
+        }
+      },
+      {
+        "terminal": "top",
+        "request": {
+          "operation": "top",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "28",
+          "context": []
+        }
+      },
+      {
+        "terminal": "set /budget number 1e400",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "budget"
+                }
+              ]
+            },
+            "value": {
+              "kind": "number",
+              "value": "1e400"
+            }
+          }
+        },
+        "expect": {
+          "revision": "29"
+        }
+      },
+      {
+        "terminal": "diff",
+        "request": {
+          "operation": "diff",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "29",
+          "changed_root_keys": [
+            "budget",
+            "labels",
+            "project",
+            "services",
+            "version"
+          ]
+        }
+      },
+      {
+        "terminal": "commit",
+        "request": {
+          "operation": "commit",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "30",
+          "accepted_revision": "30",
+          "dirty": false,
+          "candidate_document": "service-catalog.expected.json",
+          "accepted_document": "service-catalog.expected.json"
+        }
+      },
+      {
+        "terminal": "set /project string scratch",
+        "request": {
+          "operation": "set",
+          "arguments": {
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "project"
+                }
+              ]
+            },
+            "value": {
+              "kind": "string",
+              "value": "scratch"
+            }
+          }
+        },
+        "expect": {
+          "revision": "31",
+          "dirty": true
+        }
+      },
+      {
+        "terminal": "discard",
+        "request": {
+          "operation": "discard",
+          "arguments": {}
+        },
+        "expect": {
+          "revision": "32",
+          "context": [],
+          "dirty": false,
+          "candidate_document": "service-catalog.expected.json"
+        }
+      },
+      {
+        "terminal": "save catalog.json",
+        "request": {
+          "operation": "save",
+          "arguments": {
+            "destination": "catalog.json"
+          }
+        },
+        "expect": {
+          "revision": "32",
+          "export_document": "service-catalog.expected.json",
+          "dirty": false
+        }
+      }
+    ],
+    "final_document": "service-catalog.expected.json"
+  },
+  "operation_cases": [
+    {
+      "id": "numeric-object-key",
+      "initial": {
+        "candidate_json": "{\"0\":\"old\"}",
+        "accepted_json": "{\"0\":\"old\"}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "0"
+              }
+            ]
+          },
+          "value": {
+            "kind": "string",
+            "value": "new"
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"0\":\"new\"}"
+      }
+    },
+    {
+      "id": "wrong-segment-kind",
+      "initial": {
+        "candidate_json": "{\"0\":\"old\"}",
+        "accepted_json": "{\"0\":\"old\"}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "index": 0
+              }
+            ]
+          },
+          "value": {
+            "kind": "string",
+            "value": "new"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "TYPE_MISMATCH",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "missing-intermediate",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "missing"
+              },
+              {
+                "key": "leaf"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "1"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "MISSING_PATH",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "root-replacement",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": []
+          },
+          "value": {
+            "kind": "array"
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "[]",
+        "context": []
+      }
+    },
+    {
+      "id": "root-delete",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "delete",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": []
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "ROOT_DELETE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "set-is-not-append",
+      "initial": {
+        "candidate_json": "[1]",
+        "accepted_json": "[1]",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "index": 1
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "2"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INDEX_OUT_OF_BOUNDS",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "insert-shifts-context",
+      "initial": {
+        "candidate_json": "{\"a\":[{\"name\":\"one\"},{\"name\":\"two\"}]}",
+        "accepted_json": "{\"a\":[{\"name\":\"one\"},{\"name\":\"two\"}]}",
+        "context": [
+          {
+            "key": "a"
+          },
+          {
+            "index": 1
+          },
+          {
+            "key": "name"
+          }
+        ],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "insert",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              }
+            ]
+          },
+          "index": 0,
+          "value": {
+            "kind": "null"
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"a\":[null,{\"name\":\"one\"},{\"name\":\"two\"}]}",
+        "context": [
+          {
+            "key": "a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "delete-shifts-context",
+      "initial": {
+        "candidate_json": "{\"a\":[{\"name\":\"one\"},{\"name\":\"two\"}]}",
+        "accepted_json": "{\"a\":[{\"name\":\"one\"},{\"name\":\"two\"}]}",
+        "context": [
+          {
+            "key": "a"
+          },
+          {
+            "index": 1
+          },
+          {
+            "key": "name"
+          }
+        ],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "delete",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              },
+              {
+                "index": 0
+              }
+            ]
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"a\":[{\"name\":\"two\"}]}",
+        "context": [
+          {
+            "key": "a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "replace-ancestor-context",
+      "initial": {
+        "candidate_json": "{\"a\":{\"b\":{\"x\":1}}}",
+        "accepted_json": "{\"a\":{\"b\":{\"x\":1}}}",
+        "context": [
+          {
+            "key": "a"
+          },
+          {
+            "key": "b"
+          },
+          {
+            "key": "x"
+          }
+        ],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              }
+            ]
+          },
+          "value": {
+            "kind": "object"
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"a\":{}}",
+        "context": [
+          {
+            "key": "a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "delete-current-context",
+      "initial": {
+        "candidate_json": "{\"a\":{\"b\":1}}",
+        "accepted_json": "{\"a\":{\"b\":1}}",
+        "context": [
+          {
+            "key": "a"
+          },
+          {
+            "key": "b"
+          }
+        ],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "delete",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              },
+              {
+                "key": "b"
+              }
+            ]
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"a\":{}}",
+        "context": [
+          {
+            "key": "a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "batch-rollback",
+      "initial": {
+        "candidate_json": "{\"name\":\"old\",\"a\":[1]}",
+        "accepted_json": "{\"name\":\"old\",\"a\":[1]}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "batch",
+        "arguments": {
+          "operations": [
+            {
+              "operation": "set",
+              "arguments": {
+                "path": {
+                  "base": "root",
+                  "segments": [
+                    {
+                      "key": "name"
+                    }
+                  ]
+                },
+                "value": {
+                  "kind": "string",
+                  "value": "new"
+                }
+              }
+            },
+            {
+              "operation": "set",
+              "arguments": {
+                "path": {
+                  "base": "root",
+                  "segments": [
+                    {
+                      "key": "a"
+                    },
+                    {
+                      "index": 9
+                    }
+                  ]
+                },
+                "value": {
+                  "kind": "number",
+                  "value": "2"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INDEX_OUT_OF_BOUNDS",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged",
+        "failed_operation_index": 1
+      }
+    },
+    {
+      "id": "batch-one-revision",
+      "initial": {
+        "candidate_json": "{\"name\":\"old\",\"a\":[1]}",
+        "accepted_json": "{\"name\":\"old\",\"a\":[1]}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "batch",
+        "arguments": {
+          "operations": [
+            {
+              "operation": "set",
+              "arguments": {
+                "path": {
+                  "base": "root",
+                  "segments": [
+                    {
+                      "key": "name"
+                    }
+                  ]
+                },
+                "value": {
+                  "kind": "string",
+                  "value": "new"
+                }
+              }
+            },
+            {
+              "operation": "append",
+              "arguments": {
+                "path": {
+                  "base": "root",
+                  "segments": [
+                    {
+                      "key": "a"
+                    }
+                  ]
+                },
+                "value": {
+                  "kind": "number",
+                  "value": "2"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"name\":\"new\",\"a\":[1,2]}"
+      }
+    },
+    {
+      "id": "batch-context-path-rejected",
+      "initial": {
+        "candidate_json": "{\"name\":\"old\"}",
+        "accepted_json": "{\"name\":\"old\"}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "batch",
+        "arguments": {
+          "operations": [
+            {
+              "operation": "set",
+              "arguments": {
+                "path": {
+                  "base": "context",
+                  "segments": [
+                    {
+                      "key": "name"
+                    }
+                  ]
+                },
+                "value": {
+                  "kind": "string",
+                  "value": "new"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_PATH",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "stale-revision",
+      "initial": {
+        "candidate_json": "{\"a\":[]}",
+        "accepted_json": "{\"a\":[]}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "append",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              }
+            ]
+          },
+          "value": {
+            "kind": "null"
+          }
+        },
+        "expected_revision": "99"
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "REVISION_CONFLICT",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "wrong-session",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              }
+            ]
+          },
+          "value": {
+            "kind": "null"
+          }
+        },
+        "session_id": "another-session"
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "SESSION_MISMATCH",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "wrong-value-type",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "flag"
+              }
+            ]
+          },
+          "value": {
+            "kind": "boolean",
+            "value": "true"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "unknown-argument",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "status",
+        "arguments": {
+          "unexpected": true
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_REQUEST",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "unknown-operation",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "deploy",
+        "arguments": {}
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "UNKNOWN_OPERATION",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "no-op-consumes-revision",
+      "initial": {
+        "candidate_json": "{\"a\":1}",
+        "accepted_json": "{\"a\":1}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "1"
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"a\":1}",
+        "dirty": false,
+        "changed_paths": []
+      }
+    },
+    {
+      "id": "number-spelling-is-authored",
+      "initial": {
+        "candidate_json": "{\"a\":1}",
+        "accepted_json": "{\"a\":1}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "a"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "1.0"
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "1",
+        "candidate_json": "{\"a\":1.0}",
+        "dirty": true
+      }
+    },
+    {
+      "id": "complete-is-paginated",
+      "initial": {
+        "candidate_json": "{\"\":\"empty\",\"a/b\":1,\"~name\":null}",
+        "accepted_json": "{\"\":\"empty\",\"a/b\":1,\"~name\":null}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "complete",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": []
+          },
+          "offset": 0,
+          "limit": 2
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "0",
+        "keys": [
+          "",
+          "a/b"
+        ],
+        "next_offset": 2
+      }
+    },
+    {
+      "id": "accepted-needs-root-path",
+      "initial": {
+        "candidate_json": "{\"a\":1}",
+        "accepted_json": "{\"a\":1}",
+        "context": [
+          {
+            "key": "a"
+          }
+        ],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "show",
+        "arguments": {
+          "path": {
+            "base": "context",
+            "segments": []
+          },
+          "view": "accepted"
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_PATH",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "empty-key-terminal",
+      "initial": {
+        "candidate_json": "{\"\":\"root-empty\"}",
+        "accepted_json": "{\"\":\"root-empty\"}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "show",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": ""
+              }
+            ]
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "json_text": "\"root-empty\""
+      },
+      "terminal": "show /"
+    },
+    {
+      "id": "one-pass-pointer-escape",
+      "initial": {
+        "candidate_json": "{\"~1\":\"literal\"}",
+        "accepted_json": "{\"~1\":\"literal\"}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "show",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "~1"
+              }
+            ]
+          }
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "json_text": "\"literal\""
+      },
+      "terminal": "show /~01"
+    },
+    {
+      "id": "array-leading-zero-terminal",
+      "initial": {
+        "candidate_json": "{\"a\":[1]}",
+        "accepted_json": "{\"a\":[1]}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": null,
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_PATH",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      },
+      "terminal": "show /a/00"
+    },
+    {
+      "id": "invalid-number-25",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "NaN"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "invalid-number-26",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "Infinity"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "invalid-number-27",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "01"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "invalid-number-28",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "+1"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "invalid-number-29",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "1e"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "invalid-number-30",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": "1."
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "invalid-number-31",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "set",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "number"
+              }
+            ]
+          },
+          "value": {
+            "kind": "number",
+            "value": " 1"
+          }
+        }
+      },
+      "expect": {
+        "status": "error",
+        "mutation": "none",
+        "code": "INVALID_VALUE",
+        "revision": "0",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "help-exposes-value-contract",
+      "initial": {
+        "candidate_json": "{}",
+        "accepted_json": "{}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "help",
+        "arguments": {
+          "operation": "set"
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "0",
+        "operation": "set",
+        "argument_names": [
+          "path",
+          "value"
+        ],
+        "value_kinds": [
+          "object",
+          "array",
+          "string",
+          "number",
+          "boolean",
+          "null"
+        ],
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "second-completion-page",
+      "initial": {
+        "candidate_json": "{\"\":\"empty\",\"a/b\":1,\"~name\":null}",
+        "accepted_json": "{\"\":\"empty\",\"a/b\":1,\"~name\":null}",
+        "context": [],
+        "revision": "0",
+        "accepted_revision": "0"
+      },
+      "request": {
+        "operation": "complete",
+        "arguments": {
+          "path": {
+            "base": "root",
+            "segments": []
+          },
+          "offset": 2,
+          "limit": 2
+        }
+      },
+      "expect": {
+        "status": "ok",
+        "revision": "0",
+        "keys": [
+          "~name"
+        ],
+        "next_offset": null
+      }
+    }
+  ],
+  "system_scenarios": [
+    {
+      "id": "duplicate-decoded-checkpoint-key",
+      "setup": "A valid checkpoint is altered so a nested object contains keys \"name\" and \"n\\u0061me\".",
+      "action": "open",
+      "expect": {
+        "code": "INVALID_SESSION",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "unpaired-surrogate-checkpoint",
+      "setup": "A valid checkpoint is altered to contain a string token \"\\uD800\".",
+      "action": "open",
+      "expect": {
+        "code": "INVALID_SESSION",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "malformed-machine-line",
+      "setup": "Open a valid session and record its exact checkpoint bytes.",
+      "action": "Send malformed JSON, then a valid status request.",
+      "expect": {
+        "first_code": "INVALID_REQUEST",
+        "next_status": "ok",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "missing-revision",
+      "setup": "Open a valid session.",
+      "action": "Submit a state-changing request without expected_revision.",
+      "expect": {
+        "code": "INVALID_REQUEST",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "receipt-replay-after-lost-response",
+      "setup": "Append null to an array, persist the checkpoint, and suppress response delivery.",
+      "action": "Kill and reopen, then resend the exact request with its original identifier and revision.",
+      "expect": {
+        "status": "ok",
+        "replayed": true,
+        "additional_array_elements": 0,
+        "additional_revisions": 0
+      }
+    },
+    {
+      "id": "receipt-identifier-reuse",
+      "setup": "Complete one state change.",
+      "action": "Reuse its identifier with different arguments.",
+      "expect": {
+        "code": "REQUEST_ID_REUSE",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "old-retry-is-not-rebased",
+      "setup": "Complete two state changes.",
+      "action": "Resend the first request with its original revision.",
+      "expect": {
+        "code": "REVISION_CONFLICT",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "failure-before-rename",
+      "setup": "Record a valid checkpoint, then inject failure after temporary-file write and before rename.",
+      "action": "Submit a state change, close, and reopen.",
+      "expect": {
+        "code": "PERSISTENCE_FAILED",
+        "mutation": "none",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "failure-after-rename",
+      "setup": "Record a valid checkpoint, then inject failure in directory synchronization after rename.",
+      "action": "Submit a state change and attempt another write before reopening.",
+      "expect": {
+        "status": "uncertain",
+        "mutation": "unknown",
+        "writes_stopped": true,
+        "reopen_accepts": "one complete old or new checkpoint with matching receipt"
+      }
+    },
+    {
+      "id": "crash-publication-boundaries",
+      "setup": "Instrument checkpoint publication before write, after file synchronization, after rename, and after directory synchronization.",
+      "action": "Kill the process at each boundary, reopen, and inspect the full state and receipt.",
+      "expect": {
+        "before_rename": "old complete checkpoint",
+        "after_rename": "one complete old or new checkpoint",
+        "after_successful_sync": "new checkpoint and receipt",
+        "partial_state_never_accepted": true
+      }
+    },
+    {
+      "id": "second-writer-lock",
+      "setup": "Hold a session open in one process.",
+      "action": "Open its same canonical path in another process, then kill the owner and retry.",
+      "expect": {
+        "first_code": "SESSION_LOCKED",
+        "after_owner_exit": "open succeeds",
+        "lock_file_not_unlinked": true
+      }
+    },
+    {
+      "id": "outside-checkpoint-edit",
+      "setup": "Open a checkpoint, then modify its bytes outside the owning process before its next write.",
+      "action": "Submit a state change.",
+      "expect": {
+        "code": "SESSION_CHANGED",
+        "external_bytes_preserved": true
+      }
+    },
+    {
+      "id": "create-only-export",
+      "setup": "Place different known bytes at the requested export destination.",
+      "action": "Save candidate to that path.",
+      "expect": {
+        "code": "EXPORT_EXISTS",
+        "destination_bytes": "unchanged",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "repeat-identical-export",
+      "setup": "Save a candidate at a fixed revision.",
+      "action": "Save the same revision to the same destination again.",
+      "expect": {
+        "status": "ok",
+        "publication": "already_present",
+        "revision": "unchanged",
+        "same_export_sha256": true
+      }
+    },
+    {
+      "id": "uncertain-export",
+      "setup": "Inject parent synchronization failure after create-only export publication.",
+      "action": "Save, then inspect or repeat the save at the same revision.",
+      "expect": {
+        "first_code": "EXPORT_UNCERTAIN",
+        "session_mutation": "none",
+        "retry": "reports identical existing bytes or creates missing output"
+      }
+    },
+    {
+      "id": "unsupported-checkpoint-version",
+      "setup": "Give a checkpoint an unsupported format_version.",
+      "action": "open",
+      "expect": {
+        "code": "UNSUPPORTED_FORMAT",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "declared-limits",
+      "setup": "Construct inputs immediately below, at, and above each documented request, document, scalar, depth, checkpoint, and batch limit.",
+      "action": "Evaluate boundary cases, including a checkpoint that exceeds its limit because of receipt overhead.",
+      "expect": {
+        "over_limit_code": "LIMIT_EXCEEDED",
+        "rejected_checkpoint_bytes": "unchanged",
+        "at_limit_not_rejected_for_that_limit": true
+      }
+    },
+    {
+      "id": "declaration-handler-drift",
+      "setup": "Remove an actual handler, add an unadvertised handler, and alter a declared argument name in separate builds.",
+      "action": "Start the runtime and exercise discovery and dispatch.",
+      "expect": {
+        "code": "DEFINITION_MISMATCH",
+        "no_session_mutation": true,
+        "source_grep_not_accepted_as_evidence": true
+      }
+    },
+    {
+      "id": "definition-change-on-reopen",
+      "setup": "Save a session, then change the loaded operation declaration bytes without changing its identifier.",
+      "action": "Reopen against the changed declaration.",
+      "expect": {
+        "code": "DEFINITION_MISMATCH",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "terminal-machine-parity",
+      "setup": "Create independent sessions from the same task and run the full service-catalog journey through both presentations.",
+      "action": "Compare semantic results, startup headers, every resulting context, revisions, failures, and final exports.",
+      "expect": {
+        "semantic_differences": 0,
+        "exact_number_tokens": true,
+        "export_bytes_identical": true
+      }
+    },
+    {
+      "id": "terminal-batch-buffer",
+      "setup": "Start terminal batch entry at a known revision and enter one valid edit.",
+      "action": "Cancel once, close once, and on a third run add an invalid edit and submit.",
+      "expect": {
+        "all_three_checkpoint_bytes": "unchanged",
+        "submitted_failure_index": 1,
+        "unsent_state_visible": true
+      }
+    },
+    {
+      "id": "bootstrap-reuse-boundary",
+      "setup": "Observe the operation declaration supplied to the first slice.",
+      "action": "Classify the declaration's origin and available behavior.",
+      "expect": {
+        "origin": "hand-authored-bootstrap",
+        "self_authoring_claim": false,
+        "real_hooks_available": false
+      }
+    },
+    {
+      "id": "checkpoint-cross-field-corruption",
+      "setup": "In separate valid checkpoint copies, make accepted_revision exceed revision, make context address a missing value, and make the last receipt name a different revision or session.",
+      "action": "Open each checkpoint.",
+      "expect": {
+        "code": "INVALID_SESSION",
+        "checkpoint_bytes": "unchanged"
+      }
+    },
+    {
+      "id": "bounded-result-delivery",
+      "setup": "Exercise maximal supported paths, original task text, receipt, and explicit show output.",
+      "action": "Observe startup and request responses.",
+      "expect": {
+        "response_bytes_at_most": 8388608,
+        "silent_truncations": 0,
+        "state_changes_with_unserializable_receipt": 0
+      }
+    }
+  ]
+}

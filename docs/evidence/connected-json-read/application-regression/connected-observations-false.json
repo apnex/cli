@@ -1,0 +1,173 @@
+[
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "7c238a3e-d2c0-4314-aa20-5e71647b808f",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "services",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "0c8eaee908f26b53b8a192fcb3b3fe76a097dada9d705a32332cc4a2a148a727",
+          "provider": "json-file-read-v1",
+          "source_bytes": 45,
+          "source_sha256": "e66a51d565b686bb5d2dba57de19caabaf67dae04816cb5577771f82202240a2"
+        },
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1.2300}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0"
+      },
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "f2b8b8247697567ae3762877ac597eb44fac63279fda9f711d5467dde2f70c63",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "3fcfb01c-86e2-4131-b14d-8e83c772ab94"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "756e7684-e87b-43ad-a58b-55020fa29b42",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "services",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "d3a74f50f026aa20fea1a5c4e525ff7940bb6cd94615af0b0e0049d685bbb249",
+          "provider": "json-file-read-v1",
+          "source_bytes": 48,
+          "source_sha256": "a71255fec1a6d736f963680c19340fbba456daa1bed4c16bfe4938a9cc771eb2"
+        },
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"enabled\":false,\"name\":\"worker\",\"quota\":1e400}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0"
+      },
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "f2b8b8247697567ae3762877ac597eb44fac63279fda9f711d5467dde2f70c63",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "8",
+      "session_id": "3fcfb01c-86e2-4131-b14d-8e83c772ab94"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "87657c97-70bd-4280-8254-f539da9825a8",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "services",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "44eada2823463e2dbc73a02a33330911ebd79e6472c2d80e99cdffc00dbcb3aa",
+          "provider": "json-file-read-v1",
+          "source_bytes": 61,
+          "source_sha256": "44eada2823463e2dbc73a02a33330911ebd79e6472c2d80e99cdffc00dbcb3aa"
+        },
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"binding\":\"simulated\",\"effect\":\"success\",\"observation\":null}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0"
+      },
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "f2b8b8247697567ae3762877ac597eb44fac63279fda9f711d5467dde2f70c63",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "3fcfb01c-86e2-4131-b14d-8e83c772ab94"
+    },
+    "status": "ok"
+  }
+]

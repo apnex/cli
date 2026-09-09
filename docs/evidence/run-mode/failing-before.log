@@ -1,0 +1,20 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 0.59s
+     Running tests/cli_run.rs (target/release/deps/cli_run-fe4b4006bf24c667)
+
+running 1 test
+
+thread 'exported_cli_runs_direct_verbs_without_authoring_setup' (170846) panicked at tests/cli_run.rs:14:5:
+stdout={"request_id":null,"event":"response","operation":null,"status":"error","mutation":"none","session":null,"result":null,"error":{"code":"INVALID_REQUEST","message":"Invalid launcher arguments.","recovery":"cli --definition <operations.json> --session <checkpoint> [--create --intent-file <task>] [--compose] [--constraints] [--grant-json-read <capability> <file>] [--machine | --commands]\n\nOmit --create to reopen a saved draft. --create requires original task text in --intent-file.\n--compose enables CLI definition activation, contextual discovery, simulated commands, and declared connected reads.\n--grant-json-read grants one logical capability access to one local JSON file for this process only; repeat for distinct capabilities (at most 32). Requires --compose.\n--constraints enables explicit schema attachment, contextual guidance, validation, and constrained commits.\nUse the same profile when reopening a checkpoint; read grants must be supplied again for fresh connected invocations.\n--machine reads JSON request lines; --commands reads terminal command lines and emits JSON events.\nWithout either flag, a terminal gets interactive editing and other input gets plain command output.\nInside the session, use help to discover operations from the loaded definition.\nCtrl-D closes the session; every acknowledged edit is already checkpointed.\n"},"replayed":false}
+ stderr=
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test exported_cli_runs_direct_verbs_without_authoring_setup ... FAILED
+
+failures:
+
+failures:
+    exported_cli_runs_direct_verbs_without_authoring_setup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test cli_run`

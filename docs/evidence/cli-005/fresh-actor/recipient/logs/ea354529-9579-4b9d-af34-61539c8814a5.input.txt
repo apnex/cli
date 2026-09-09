@@ -1,0 +1,13 @@
+invoke pause "\"true\""
+invoke pause
+enter services
+invoke quota "\"1e400\""
+enter queues
+activate
+discover
+save completed.definition.json
+export-interface completed.interface.json
+show "" candidate
+schema
+diff
+status

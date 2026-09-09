@@ -1,0 +1,506 @@
+[
+  {
+    "event": "session_open",
+    "intent_text": "Use the exported service catalog in a separate session.\n",
+    "last_receipt": null,
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "0",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    }
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "import",
+    "replayed": false,
+    "request_id": "2d62f44c-7584-46cb-9937-11708c7d9f22",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "contexts"
+            }
+          ]
+        },
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "description"
+            }
+          ]
+        },
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "format"
+            }
+          ]
+        },
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "id"
+            }
+          ]
+        },
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "mock_state"
+            }
+          ]
+        }
+      ],
+      "source": "spec.json",
+      "source_bytes": 1611,
+      "source_sha256": "67d2d9cf86ec3c8061ed7ad4565417533da26296d6f6d6094cb9be3b6cfb4110"
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "diff",
+    "replayed": false,
+    "request_id": "9ff34c9a-5293-4f92-921e-c77b952ab47f",
+    "result": {
+      "changes": [
+        {
+          "after": {
+            "exists": true,
+            "json_text": "{\"deployments\":{\"commands\":{\"plan\":{\"binding\":{\"kind\":\"simulated\",\"output\":{\"source\":\"literal\",\"value\":{\"status\":\"planned\"}},\"steps\":[]},\"help\":\"Return a simulated deployment example.\",\"id\":\"deployment.plan\",\"parameters\":[]}},\"help\":\"Explore a deployment example.\",\"parent\":\"root\",\"related\":[]},\"root\":{\"commands\":{\"about\":{\"binding\":{\"kind\":\"simulated\",\"output\":{\"source\":\"literal\",\"value\":\"Service catalog prototype\"},\"steps\":[]},\"help\":\"Describe this prototype.\",\"id\":\"catalog.about\",\"parameters\":[]}},\"help\":\"Explore the service catalog prototype.\",\"parent\":null,\"related\":[]},\"services\":{\"commands\":{\"inspect\":{\"binding\":{\"kind\":\"simulated\",\"output\":{\"path\":[],\"source\":\"state\"},\"steps\":[]},\"help\":\"Read simulated service state.\",\"id\":\"catalog.inspect\",\"parameters\":[]},\"quota\":{\"binding\":{\"kind\":\"simulated\",\"output\":{\"path\":[{\"key\":\"quota\"}],\"source\":\"state\"},\"steps\":[{\"path\":[{\"key\":\"quota\"}],\"value\":{\"name\":\"value\",\"source\":\"argument\"}}]},\"help\":\"Set the simulated quota to an exact JSON number.\",\"id\":\"catalog.quota\",\"parameters\":[{\"help\":\"New simulated quota.\",\"name\":\"value\",\"type\":\"number\"}]},\"restart\":{\"binding\":{\"kind\":\"unbound\",\"reason\":\"No restart capability has been attached.\"},\"help\":\"Restart the real service when an implementation is attached.\",\"id\":\"catalog.restart\",\"parameters\":[]}},\"help\":\"Inspect and simulate changes to a service.\",\"parent\":\"root\",\"related\":[\"deployments\"]}}"
+          },
+          "before": {
+            "exists": false
+          },
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "contexts"
+              }
+            ]
+          }
+        },
+        {
+          "after": {
+            "exists": true,
+            "json_text": "\"Service catalog prototype; all behavior is simulated or unbound.\""
+          },
+          "before": {
+            "exists": false
+          },
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "description"
+              }
+            ]
+          }
+        },
+        {
+          "after": {
+            "exists": true,
+            "json_text": "\"cli-definition-v1\""
+          },
+          "before": {
+            "exists": false
+          },
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "format"
+              }
+            ]
+          }
+        },
+        {
+          "after": {
+            "exists": true,
+            "json_text": "\"service-catalog\""
+          },
+          "before": {
+            "exists": false
+          },
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "id"
+              }
+            ]
+          }
+        },
+        {
+          "after": {
+            "exists": true,
+            "json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1.2300}"
+          },
+          "before": {
+            "exists": false
+          },
+          "path": {
+            "base": "root",
+            "segments": [
+              {
+                "key": "mock_state"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "f96e55ce-3d5f-45cf-852c-b247e08e1209",
+    "result": {
+      "accepted_revision": "2"
+    },
+    "session": {
+      "accepted_revision": "2",
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "2",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "activate",
+    "replayed": false,
+    "request_id": "d1522436-69f0-43fe-a01a-ed76db773410",
+    "result": {
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "root",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "root",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "3",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "tree",
+    "replayed": false,
+    "request_id": "daafbbe3-1a61-4a23-a2cc-29b7d10b6fe8",
+    "result": {
+      "interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "root",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "verb_tree_text": "service-catalog\n|-- invoke about [simulated]\n|-- deployments/\n|   `-- invoke plan [simulated]\n`-- services/\n    |-- invoke inspect [simulated]\n    |-- invoke quota <value:number> [simulated]\n    `-- invoke restart [unbound]\n"
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "root",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "3",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "enter",
+    "replayed": false,
+    "request_id": "214f96ca-5dad-4d2a-b862-4275f9ef1c76",
+    "result": {
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "1102575e-3538-4cb6-bc83-e18eb7cec195",
+    "result": {
+      "invocation": {
+        "binding": "simulated",
+        "context": "services",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552",
+        "effect": "simulation_only",
+        "operation_id": "catalog.quota",
+        "output_json_text": "1e400",
+        "simulated_steps": 1
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "03e441bb-1190-4d1b-86df-2ff0612fc419",
+    "result": {
+      "invocation": {
+        "binding": "simulated",
+        "context": "services",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552",
+        "effect": "simulation_only",
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1e400}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "6",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "export-interface",
+    "replayed": false,
+    "request_id": "4564c10a-3140-4de4-9d09-1e6f6239c7b0",
+    "result": {
+      "destination": "/tmp/cli-acceptance-47b5d6c5-03ad-4faf-9953-6cc43312bca9/interface.json",
+      "publication": "created",
+      "revision": "6",
+      "sha256": "8afce3755b3c4a353cc51f67c58748bb6206da6ea88f9d4f9cf37b005abe57c0"
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "6",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "bb4f6e85-d658-4166-8d40-1061569a7503",
+    "result": {
+      "invocation": {
+        "binding": "simulated",
+        "context": "services",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552",
+        "effect": "simulation_only",
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1e400}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "ok"
+  },
+  {
+    "error": {
+      "code": "UNBOUND_OPERATION",
+      "message": "CLI operation is unbound: No restart capability has been attached.",
+      "recovery": "Inspect the declared expectation; no implementation or simulated success was supplied."
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "fc55b01a-0623-442a-88ab-db6b68f4c487",
+    "result": null,
+    "session": {
+      "accepted_revision": "2",
+      "active_interface": {
+        "binding_scope": "simulation_or_unbound",
+        "context": "services",
+        "definition_id": "service-catalog",
+        "definition_sha256": "590b89b50b4c2f9b289bd33ba1216fe3bd893287b048e114d19fc7da10f2c552"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "c2a9b36d-885d-4a44-821c-6f74f9dbf073"
+    },
+    "status": "error"
+  }
+]

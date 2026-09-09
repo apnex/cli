@@ -1,0 +1,139 @@
+# Programmable CLI board
+
+**Status: CLI-005 reuse and continuation is active. CLI-004 remains complete.**
+The [resumption](context/cli-005-approval.json) selects the [worker-platform experiment](reuse/CONTRACT.md); its task and acceptance boundary are fixed before the trial.
+The [constraint implementation record](constraints/CLI-004.md) and [verification evidence](evidence/cli-004/verification.json) retain the completed scope.
+The [CLI-005 progress record](reuse/CLI-005.md) and [walkthrough](reuse/USE.md) describe the prepared handover and scripted evaluation; independent continuation and comparative evidence remain open.
+The [composition implementation record](composition/CLI-003.md) retains the selected scope and [measured application evidence](evidence/cli-003/verification.json).
+The [vision](../VISION.md) states value, the [target architecture](ARCHITECTURE.md) states proposed structure, and the [backlog](BACKLOG.md) retains the work record.
+
+## The contract between board and record
+
+Every item on this board cites its durable backlog record.
+The board owns proposed ordering, dependencies, and readiness; the record owns findings, evidence, and disposition history.
+An open record can be ready or waiting, a parked record is held, and a closed record is done.
+
+The project owner selects direction.
+The [first selection exchange](context/cli-001-approval.json), [CLI-002 approval](context/cli-002-approval.json), [CLI-003 approval](context/cli-003-approval.json), and [CLI-004 approval](context/cli-004-approval.json) retain the completed selections; later milestones keep their own readiness and selection boundaries.
+Continue work already authorized by the owner without asking for that authorization again.
+
+Update board and record together when a finding changes state.
+Before reporting consistency, check that identifiers resolve in both directions, states agree, dependencies exist without cycles, and a ready item has no unmet prerequisite.
+Held work keeps its reason and observable trigger in the record.
+
+---
+
+## Triage scale
+
+Score current impact and demonstrated principle breach separately.
+These are author judgments against the cited repository evidence, not measurements of deployed users or product benefits.
+
+| Level | Current impact | Principle breach |
+|---|---|---|
+| 4 | Observed data loss or uncontrolled external effects. | Demonstrated breach causing irreversible loss of a standing guarantee. |
+| 3 | Observed wrong results in an implemented user workflow. | Demonstrated breach of a standing mandate. |
+| 2 | A stated authoring, reuse, or continuation workflow is unavailable in the current scaffold. | A required enforcement signal is demonstrably missing from behavior that claims the guarantee. |
+| 1 | Internal planning or a capability with no selected concrete consumer. | An unresolved alignment concern, with no breach established. |
+| 0 | No remaining impact within the recorded scope. | No demonstrated breach. |
+
+Order by the higher of the two signals while retaining both columns; do not average or combine them into a weighted score.
+Dependencies determine which moves are eligible, so a lower-impact prerequisite can be the next move needed to unlock higher-impact work.
+Break remaining ties by how directly the move tests the construction loop, then reuse and continuation, then by dependency order.
+
+The initial ledger assigns no demonstrated principle breach: an explicitly provisional scaffold is not an implementation claiming guarantees it fails to provide.
+Priority follows the unavailable workflows and the work needed to test them.
+
+---
+
+## Triage ledger
+
+| Record | Candidate | Impact | Principle breach | Board state | Evidence and priority reason |
+|---|---|---|---|---|---|
+| [CLI-005](BACKLOG.md#cli-005) | Reuse, agent continuation, and workflow evaluation | 2 | 0 | Active | [Selected experiment](reuse/CONTRACT.md) reuses the service catalog for a worker platform; fresh-actor continuation and comparative workflow evidence remain required. |
+| [CLI-004](BACKLOG.md#cli-004) | Schema construction and constrained authoring | 0 | 0 | Done | [Implementation and acceptance](constraints/CLI-004.md) demonstrate schema construction, explicit snapshots, guidance, constrained commits, recovery, and OpenAPI authoring as data. |
+| [CLI-003](BACKLOG.md#cli-003) | Self-authored CLI and explicit mocks | 0 | 0 | Done | [Implementation and acceptance](composition/CLI-003.md) demonstrate command-based construction, explicit activation, labeled mocks, transfer, and recovery. |
+| [CLI-002](BACKLOG.md#cli-002) | Contextual JSON authoring | 0 | 0 | Done | [Implementation and acceptance](authoring/CLI-002.md) demonstrate the paired journey, precise editing, checkpoint recovery, and bounded results. |
+| [CLI-001](BACKLOG.md#cli-001) | First journey and concrete contracts | 0 | 0 | Done | [Design closeout](authoring/CLI-001.md#completion-predicate) establishes the bounded contract; runtime acceptance belongs to CLI-002. |
+| [CLI-006](BACKLOG.md#cli-006) | Connected behavior and hook mechanism | 1 | 0 | Held | [Hook questions](ARCHITECTURE.md#owed-and-open-register) need a real capability before choosing transport and execution guarantees. |
+| [CLI-007](BACKLOG.md#cli-007) | OpenAPI-derived invocation | 1 | 0 | Held | [OpenAPI distinction](approach.md#give-a-document-an-explicit-role) preserves description authoring while invocation awaits a concrete API task. |
+| [CLI-000](BACKLOG.md#cli-000) | Initial documentation and layer scaffold | 0 | 0 | Done | [Initial scope](project-intent.md#interpretation-of-the-initial-scaffold) is present as local documents and responsibility views. |
+
+---
+
+## Ordered milestones
+
+The proposed implementation sequence serves the impact-2 workflows above.
+Its design prerequisite is complete; the table is dependency order, not a second severity scale.
+Ready means available for selection, not that implementation is already authorized by this board.
+
+| Milestone | Record | Status | Depends on | Reviewable completion |
+|---|---|---|---|---|
+| M1: Establish the first journey | [CLI-001](BACKLOG.md#cli-001) | Done | None | [Task, corpus, contracts, build evidence, and design audit](authoring/CLI-001.md) are retained; runtime execution is recorded separately in CLI-002. |
+| M2: Make contextual authoring usable | [CLI-002](BACKLOG.md#cli-002) | Done | CLI-001 | The selected document is authored without raw serialized edits, with precise values, visible drafts, rejected changes, and verified local save and recovery outcomes. |
+| M3: Close the CLI construction loop | [CLI-003](BACKLOG.md#cli-003) | Done | CLI-002 | [Paired application journeys](composition/CLI-003.md#acceptance-observations) construct and activate the intended interface, reject failed replacements, and retain mock labels across export and reopen. |
+| M4: Apply authored constraints | [CLI-004](BACKLOG.md#cli-004) | Done | CLI-002 | [Paired journeys and upstream cases](constraints/CLI-004.md#acceptance-observations) verify an authored schema governing an instance; a representative OpenAPI description is constructed through commands. |
+| M5: Demonstrate reuse and continuation | [CLI-005](BACKLOG.md#cli-005) | Active | CLI-003, CLI-004 | A fresh actor extends composed work from portable artifacts; results are checked against original intent and full workflow costs are reported separately. |
+
+Arrows below mean prerequisite to dependent move.
+M3 and M4 are independent after M2; their ordering expresses the proposed emphasis on the self-authoring loop, not a mandatory product lifecycle.
+
+```mermaid
+flowchart LR
+    first["CLI-001: journey and contracts"] --> authoring["CLI-002: JSON authoring"]
+    authoring --> loop["CLI-003: self-authoring and mocks"]
+    authoring --> constraints["CLI-004: schema constraints"]
+    loop --> reuse["CLI-005: reuse and continuation"]
+    constraints --> reuse
+```
+
+Collect acceptance examples and comparison costs from M1 onward.
+M5 evaluates accumulated evidence; it does not postpone error recovery, portability, or human and agent semantic parity until the last milestone.
+
+---
+
+## Held
+
+These candidates use the same triage scale as the proposed milestones.
+Their triggers cause reconsideration, not automatic implementation.
+
+| Record | Impact | Principle breach | Why held | Revival trigger |
+|---|---|---|---|---|
+| [CLI-006](BACKLOG.md#cli-006) | 1 | 0 | A hook mechanism needs an actual capability and known effect guarantees. | A named operation has a concrete capability, failure examples, and granted authority. |
+| [CLI-007](BACKLOG.md#cli-007) | 1 | 0 | API invocation needs a representative interaction and protocol requirements. | An API description and requested CLI task establish mapping, authentication, and response expectations. |
+
+OpenAPI document authoring remains in [CLI-004](BACKLOG.md#cli-004).
+Bounded mock exploration is implemented in [CLI-003](BACKLOG.md#cli-003).
+
+---
+
+## Decisions required
+
+The [first authoring decision](authoring/CLI-001.md#decision-0001-establish-the-bounded-authoring-contract) settles the bounded service-catalog journey, addressing and persistence semantics, and minimum Rust build choices.
+The following entries retain later design work.
+The owner settles product direction; implementation choices follow the selected scope and evidence.
+
+| Decision | Proposed starting point | Exactly what it blocks |
+|---|---|---|
+| Reuse and continuation evidence | The [task](reuse/acceptance/TASK.md) and [experiment contract](reuse/CONTRACT.md) fix the second consumer, withheld context, acceptance checks, and separate measurements. | Fresh-actor execution and credible comparison still govern CLI-005 closure and any workflow advantage claim. |
+
+The first schema decision is settled by the [CLI-004 contract](constraints/CONTRACT.md#interpretation): local-2020-12-v1, explicit schema snapshots, local acyclic references, and whole-document validation on commit.
+
+The [architecture's open register](ARCHITECTURE.md#owed-and-open-register) retains the fuller design questions and their consumers.
+The [CLI-003 contract](composition/CONTRACT.md) and [acceptance record](composition/CLI-003.md) settle the first definition vocabulary, activation, and mock semantics within their stated bounds.
+The [working approach](approach.md#evaluate-workflow-value) keeps specification volume separate from workflow value.
+
+---
+
+## Mechanics, rationale, and consequence
+
+### Mechanics
+
+Score evidence-backed candidates, expose dependencies, preserve held work, and attach selection and completion evidence to the corresponding record.
+
+### Rationale
+
+The next actor can identify a useful legal move without reconstructing the discussion or mistaking a scaffold for an implemented capability.
+
+### Consequence of violation
+
+Local convenience can choose the roadmap while the construction workflow, reuse, and continuation claims remain untested.

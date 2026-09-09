@@ -1,0 +1,21 @@
+{
+  "project": "atlas",
+  "version": 9007199254740993,
+  "services": [
+    {
+      "name": "api",
+      "enabled": true,
+      "replicas": 2,
+      "ports": [8080, 8443],
+      "metadata": {
+        "0": "zero",
+        "": "empty key",
+        "a/b": "literal slash",
+        "~label": "tilde",
+        "release note": "first line\nsecond line"
+      },
+      "quota": 1.2300,
+      "owner": null
+    }
+  ]
+}

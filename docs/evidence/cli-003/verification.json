@@ -1,0 +1,247 @@
+{
+  "format_version": 1,
+  "work_item": "CLI-003",
+  "recorded_at_utc": "2026-09-08 09:45:22 UTC",
+  "scope": "Local Rust CLI construction, explicit activation, mock execution, and process continuation",
+  "final_documentation_validation": {
+    "application_acceptance_in_this_check": "not-executed",
+    "board_records": 8,
+    "board_state_mismatches": 0,
+    "declared_operations": 16,
+    "dependency_cycles": 0,
+    "design_corpus_status_at_creation": "not-run-against-application",
+    "documentation_layout_violations": 0,
+    "journey_steps": 38,
+    "local_inline_links": 356,
+    "markdown_documents": 37,
+    "milestones": 5,
+    "operation_cases": 34,
+    "scope": "Static project-record checks; no application requests executed",
+    "status": "pass",
+    "system_scenarios": 24,
+    "uncovered_operations": [],
+    "unmet_ready_prerequisites": 0,
+    "unresolved_local_inline_links": 0,
+    "declared_operations_scope": "Original authoring bootstrap; composition adds five operations checked against the live registration map.",
+    "scaffold_guard_tests": 12,
+    "total_static_tests": 13,
+    "execution": "Retained compiled executables; source hashes match the prior successful Cargo run.",
+    "source_hash_record": "scaffold-compiled-source.sha256",
+    "source_hash_check": "scaffold-compiled-source-check.log",
+    "binary_hash_record": "scaffold-binaries.sha256",
+    "commands": [
+      {
+        "command": "target/debug/deps/project_records-7f9f9aa28f0559bd --nocapture",
+        "exit_code": 0,
+        "log": "project-records-final.log"
+      },
+      {
+        "command": "target/debug/deps/scaffold_guards-8619ff8d6674b836 --nocapture",
+        "exit_code": 0,
+        "log": "scaffold-guards-final.log"
+      },
+      {
+        "command": "target/debug/cli-layer-scaffold --check",
+        "exit_code": 0,
+        "log": "scaffold-views-final.log"
+      }
+    ],
+    "rebuild_attempt": {
+      "command": "cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+      "exit_code": 127,
+      "log": "scaffold-final-tests.log",
+      "reason": "The temporary Rust toolchain used in the earlier session was absent after resumption; no Rust source changes were made after the recorded successful build."
+    }
+  },
+  "application_acceptance": {
+    "status": "pass",
+    "all_features_tests": 40,
+    "normal_build_tests": 34,
+    "composition_tests_with_faults": 12,
+    "composition_tests_normal": 10,
+    "all_features_log": "application-tests.log",
+    "normal_build_log": "normal-build-tests.log",
+    "focused_post_formatting_logs": [
+      "composition-final-tests.log",
+      "composition-normal-final-tests.log"
+    ],
+    "assertions_source": "../../../tests/cli_composition.rs",
+    "independent_task": "../../composition/acceptance/TASK.md"
+  },
+  "acceptance_sources_sha256": {
+    "docs/composition/acceptance/TASK.md": "3db2e7e5ee87216abe604694ec846b4be5fb2d3d6183b55f2e4509e891541116",
+    "docs/composition/acceptance/catalog.commands": "fec2288faf99b87eb505bb80b84fcb5f548d4543c12e186640ac3fc3dc5dd58c",
+    "docs/composition/acceptance/expected-definition.json": "ae566562888afb7c602190f30a4ae0885caa5bad7119a191390add7e1722df4f"
+  },
+  "paired_journey": {
+    "events_per_presentation": 125,
+    "final_revision": "118",
+    "semantic_difference_count": 0,
+    "export_byte_difference_count": 0,
+    "machine": "composition-machine-journey.json",
+    "terminal": "composition-terminal-journey.json",
+    "authored_definition": "authored-catalog-definition.json",
+    "portable_machine": "composition-machine-interface.json",
+    "portable_terminal": "composition-terminal-interface.json"
+  },
+  "fault_observations": [
+    {
+      "action": "error",
+      "pid": 80080,
+      "point": "after_checkpoint_write"
+    },
+    {
+      "action": "pause",
+      "pid": 80075,
+      "point": "before_checkpoint_write"
+    },
+    {
+      "action": "error",
+      "pid": 80102,
+      "point": "reopen_file_sync"
+    },
+    {
+      "action": "error",
+      "pid": 80108,
+      "point": "after_export_publish"
+    },
+    {
+      "action": "error",
+      "pid": 80112,
+      "point": "after_checkpoint_rename"
+    },
+    {
+      "action": "pause",
+      "pid": 80116,
+      "point": "after_checkpoint_file_sync"
+    },
+    {
+      "action": "error",
+      "pid": 80124,
+      "point": "reopen_directory_sync"
+    },
+    {
+      "action": "pause",
+      "pid": 80138,
+      "point": "after_checkpoint_rename"
+    },
+    {
+      "action": "pause",
+      "pid": 80148,
+      "point": "after_checkpoint_directory_sync"
+    },
+    {
+      "action": "pause",
+      "pid": 80152,
+      "point": "before_response_delivery"
+    },
+    {
+      "action": "error",
+      "pid": 80191,
+      "point": "before_checkpoint_write"
+    },
+    {
+      "action": "pause",
+      "pid": 80221,
+      "point": "before_response_delivery"
+    },
+    {
+      "action": "error",
+      "pid": 80225,
+      "point": "after_checkpoint_rename"
+    }
+  ],
+  "interactive_smoke": {
+    "binary": "../../../target/debug/cli",
+    "binary_sha256_record": "normal-binary.sha256",
+    "profile": "--compose",
+    "construction_events": 111,
+    "construction_errors": 0,
+    "construction_final_revision": "109",
+    "observed_context_completion": "services",
+    "observed_command_completion": "quota",
+    "number_output_json_text": "1e400",
+    "unbound_operation_code": "UNBOUND_OPERATION",
+    "final_revision": "112",
+    "terminal_exit_code": 0,
+    "reopen_exit_code": 0,
+    "outputs": "interactive-output.json",
+    "checkpoint": "interactive-checkpoint.json",
+    "portable_interface": "interactive-interface.json",
+    "reopen": "interactive-reopen.jsonl"
+  },
+  "commands": [
+    {
+      "command": "cargo test --locked --all-features --all-targets -- --nocapture",
+      "exit_code": 0,
+      "log": "application-tests.log"
+    },
+    {
+      "command": "cargo test --locked --all-targets -- --nocapture",
+      "exit_code": 0,
+      "log": "normal-build-tests.log"
+    },
+    {
+      "command": "cargo build --locked --bin cli",
+      "exit_code": 0,
+      "log": "local-build.log"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "application-format-final.log"
+    },
+    {
+      "command": "cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "log": "scaffold-format-final.log"
+    },
+    {
+      "command": "cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "log": "scaffold-check.log"
+    },
+    {
+      "command": "cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+      "exit_code": 0,
+      "log": "scaffold-tests.log",
+      "scope": "Documentation state before final board closeout"
+    }
+  ],
+  "evidence_scope": {
+    "application_source_hashes": "application-source.sha256",
+    "source_hash_check": "application-source-check.log",
+    "source_snapshot_note": "Hashes were measured at closeout. Test-source formatting followed the full-suite runs; both focused composition suites were then rerun successfully.",
+    "authority": "Executor observations; no independent implementation certification",
+    "bootstrap_origin": "Hand-authored authoring declaration and embedded composition extension",
+    "constructed_definition_origin": "Built from an empty candidate by the retained authoring command trace",
+    "oracle_origin": "Separate task and expected document authored before runtime acceptance; no independent agent evaluation claimed"
+  },
+  "corrections": [
+    {
+      "evidence": "composition-first-tests.log",
+      "finding": "Completion test helper used an unsupported accessor",
+      "disposition": "Corrected using the installed library's actual API"
+    },
+    {
+      "evidence": "composition-second-tests.log",
+      "finding": "Buffered tagged-enum decoding could not retain raw JSON values; the fault probe was INVALID because it never landed",
+      "disposition": "Decode exact binding and expression shapes directly from original bytes"
+    },
+    {
+      "evidence": "composition-third-tests.log",
+      "finding": "Native numeric request value normalized 1e400 to 1e+400",
+      "disposition": "Retain exact-value requirement and reuse typed constructors; expose exact binding program text in discovery"
+    }
+  ],
+  "not_claimed": [
+    "Universal CLI coverage",
+    "Connected external effects",
+    "JSON Schema interpretation",
+    "Cross-project dependency composition",
+    "Fresh-agent continuation experiment",
+    "Workflow or token savings",
+    "Merged changes or remote CI",
+    "Deployment or hardware power-loss certification"
+  ]
+}

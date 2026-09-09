@@ -1,0 +1,931 @@
+//! Loaded operation data binds actual handlers and codecs before any session is opened.
+
+use crate::authoring_error::{AuthoringError, authoring_limit_error};
+use crate::authoring_operations::{HandlerOutcome, registered_authoring_handlers};
+use crate::authoring_protocol::SessionCheckpoint;
+use crate::document_path::DocumentPath;
+use crate::document_value::{
+    DocumentValue, MAX_BATCH_EDITS, MAX_REQUEST_BYTES, decode_authoring_json,
+};
+use serde::{Deserialize, Serialize};
+use serde_json::{Value, json};
+use sha2::{Digest, Sha256};
+use std::collections::{BTreeMap, BTreeSet};
+use std::path::Path;
+
+/// A registered argument kind states the actual handler's supported input domain.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum HandlerArgumentKind {
+    Text,
+    Unsigned {
+        minimum: usize,
+        maximum: Option<usize>,
+    },
+    DocumentPath,
+    ValueConstructor,
+    PrimitiveEdits,
+    DocumentView,
+    CliArguments,
+}
+
+/// A handler parameter names its type and whether the implementation can omit it.
+#[derive(Clone, Debug)]
+pub struct HandlerParameter {
+    pub name: &'static str,
+    pub kind: HandlerArgumentKind,
+    pub optional: bool,
+}
+
+/// A native operation registration is the actual function and signature used for dispatch.
+#[derive(Clone)]
+pub struct RegisteredAuthoringHandler {
+    pub effect: &'static str,
+    pub batchable: bool,
+    pub parameters: Vec<HandlerParameter>,
+    pub invoke: fn(
+        &mut SessionCheckpoint,
+        &ValidatedArguments,
+        &OperationDefinition,
+    ) -> Result<HandlerOutcome, AuthoringError>,
+}
+
+fn deserialize_present_default<'de, D: serde::Deserializer<'de>>(
+    input: D,
+) -> Result<Option<Value>, D::Error> {
+    Value::deserialize(input).map(Some)
+}
+
+/// Argument metadata is loaded from the definition; unknown validation keywords are rejected.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct DeclaredArgument {
+    pub name: String,
+    #[serde(rename = "type")]
+    pub argument_type: String,
+    #[serde(default)]
+    pub optional: bool,
+    #[serde(
+        default,
+        deserialize_with = "deserialize_present_default",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub default: Option<Value>,
+    pub minimum: Option<usize>,
+    pub maximum: Option<usize>,
+    pub minimum_items: Option<usize>,
+    pub maximum_items: Option<usize>,
+    pub values: Option<Vec<String>>,
+}
+
+/// Terminal forms describe token binding and batch framing without owning operation semantics.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(tag = "form", rename_all = "lowercase", deny_unknown_fields)]
+pub enum DeclaredTerminalForm {
+    Tokens {
+        command: String,
+        positional: Vec<String>,
+    },
+    Block {
+        start: String,
+        submit: String,
+        cancel: String,
+    },
+}
+
+/// One declared operation carries discoverable input, help, effects, and its native binding.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct DeclaredOperation {
+    pub name: String,
+    pub handler: String,
+    pub effect: String,
+    pub help: String,
+    pub arguments: Vec<DeclaredArgument>,
+    pub unknown_arguments: String,
+    pub terminal: DeclaredTerminalForm,
+    pub batchable: bool,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct DeclaredArgumentCodec {
+    codec: String,
+    contract: String,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct OperationManifest {
+    format_version: u32,
+    definition_id: String,
+    status: String,
+    contract: String,
+    types: BTreeMap<String, DeclaredArgumentCodec>,
+    operations: Vec<DeclaredOperation>,
+}
+
+/// The activated bootstrap definition owns discovery and dispatch for one identified session.
+#[derive(Clone)]
+pub struct OperationDefinition {
+    pub definition_id: String,
+    pub sha256: String,
+    pub operations: BTreeMap<String, DeclaredOperation>,
+    handlers: BTreeMap<String, RegisteredAuthoringHandler>,
+    codecs: BTreeMap<String, HandlerArgumentKind>,
+    json_read_grants: crate::cli_file_read::JsonFileReadGrants,
+}
+
+/// A validated argument keeps typed paths and constructors separate from textual metadata.
+#[derive(Clone, Debug)]
+pub enum ValidatedArgument {
+    Text(String),
+    Unsigned(usize),
+    Path(DocumentPath),
+    Constructor(DocumentValue),
+    PrimitiveEdits(Vec<Value>),
+    CliArguments(BTreeMap<String, Value>),
+}
+
+/// The dispatcher binds every required parameter before invoking a native handler.
+pub type ValidatedArguments = BTreeMap<String, ValidatedArgument>;
+
+fn definition_mismatch(message: impl Into<String>) -> AuthoringError {
+    AuthoringError::new(
+        "DEFINITION_MISMATCH",
+        message,
+        "Use a declaration compatible with the actual registered handlers and codecs.",
+    )
+}
+
+fn invalid_argument(message: impl Into<String>) -> AuthoringError {
+    AuthoringError::new(
+        "INVALID_REQUEST",
+        message,
+        "Inspect help and supply the declared argument names and types.",
+    )
+}
+
+fn declared_word_valid(word: &str) -> bool {
+    !word.is_empty()
+        && word.len() <= 128
+        && !word
+            .chars()
+            .any(|c| c.is_whitespace() || c.is_control() || c == '"')
+}
+
+impl OperationDefinition {
+    /// Attach launcher-owned authority independently of declaration identity and serialized state.
+    pub fn with_json_read_grants(
+        mut self,
+        grants: crate::cli_file_read::JsonFileReadGrants,
+    ) -> Self {
+        self.json_read_grants = grants;
+        self
+    }
+
+    /// Share transient read grants with registered connected handlers; definitions cannot supply them.
+    pub fn json_read_grants(&self) -> &crate::cli_file_read::JsonFileReadGrants {
+        &self.json_read_grants
+    }
+
+    /// Identify the validated optional layers used by this operation declaration.
+    pub fn kernel_profile(&self) -> crate::kernel_profile::KernelProfile {
+        crate::kernel_profile::KernelProfile::from_definition_id(&self.definition_id)
+            .expect("Validated kernel identity")
+    }
+
+    /// Assemble constraints on either existing profile while preserving old declarations and digests.
+    pub fn load_kernel_profile(
+        path: &Path,
+        profile: crate::kernel_profile::KernelProfile,
+    ) -> Result<Self, AuthoringError> {
+        if !profile.has_constraints() {
+            return if profile.has_composition() {
+                Self::load_composition_definition(path)
+            } else {
+                Self::load_operation_definition(path)
+            };
+        }
+        let bytes = crate::session_storage::read_regular_file_bounded(
+            path,
+            MAX_REQUEST_BYTES,
+            "DEFINITION_MISMATCH",
+        )?;
+        let base = if profile.has_composition() {
+            Self::from_composition_bytes(&bytes)?
+        } else {
+            Self::from_definition_bytes(&bytes, registered_authoring_handlers())?
+        };
+        let mut manifest: OperationManifest =
+            decode_authoring_json(&bytes, MAX_REQUEST_BYTES, "DEFINITION_MISMATCH")?;
+        if profile.has_composition() {
+            #[derive(Deserialize)]
+            struct Extension {
+                types: BTreeMap<String, DeclaredArgumentCodec>,
+            }
+            let extension: Extension =
+                serde_json::from_slice(include_bytes!("../docs/composition/operations.json"))
+                    .unwrap();
+            manifest.types.extend(extension.types);
+        }
+        manifest.operations = base.operations.values().cloned().collect();
+        let extension_bytes = include_bytes!("../docs/constraints/operations.json");
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct ConstraintExtension {
+            operations: Vec<DeclaredOperation>,
+        }
+        let extension: ConstraintExtension =
+            decode_authoring_json(extension_bytes, MAX_REQUEST_BYTES, "DEFINITION_MISMATCH")?;
+        manifest.definition_id = profile.definition_id().into();
+        manifest.operations.extend(extension.operations);
+        let mut definition = Self::from_definition_bytes(
+            &serde_json::to_vec(&manifest).unwrap(),
+            crate::constraint_operations::registered_constraint_handlers(profile.has_composition()),
+        )?;
+        let mut digest = Sha256::new();
+        digest.update(base.sha256.as_bytes());
+        digest.update(b"\n");
+        digest.update(extension_bytes);
+        definition.sha256 = format!("{:x}", digest.finalize());
+        Ok(definition)
+    }
+
+    /// Assemble the selected composition profile from validated bootstrap bytes and embedded extension data.
+    pub fn load_composition_definition(path: &Path) -> Result<Self, AuthoringError> {
+        let bytes = crate::session_storage::read_regular_file_bounded(
+            path,
+            MAX_REQUEST_BYTES,
+            "DEFINITION_MISMATCH",
+        )?;
+        Self::from_composition_bytes(&bytes)
+    }
+
+    fn from_composition_bytes(bytes: &[u8]) -> Result<Self, AuthoringError> {
+        Self::from_definition_bytes(bytes, registered_authoring_handlers())?;
+        let mut manifest: OperationManifest =
+            decode_authoring_json(bytes, MAX_REQUEST_BYTES, "DEFINITION_MISMATCH")?;
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct CompositionExtension {
+            types: BTreeMap<String, DeclaredArgumentCodec>,
+            operations: Vec<DeclaredOperation>,
+        }
+        let extension_bytes = include_bytes!("../docs/composition/operations.json");
+        let extension: CompositionExtension =
+            decode_authoring_json(extension_bytes, MAX_REQUEST_BYTES, "DEFINITION_MISMATCH")?;
+        for (name, codec) in extension.types {
+            if manifest.types.insert(name, codec).is_some() {
+                return Err(definition_mismatch(
+                    "Composition argument codec collides with the bootstrap.",
+                ));
+            }
+        }
+        manifest.definition_id = "bootstrap-cli-composition-v1".into();
+        manifest.operations.extend(extension.operations);
+        let mut definition = Self::from_definition_bytes(
+            &serde_json::to_vec(&manifest).unwrap(),
+            crate::cli_composition::registered_composition_handlers(),
+        )?;
+        let mut digest = Sha256::new();
+        digest.update((bytes.len() as u64).to_be_bytes());
+        digest.update(bytes);
+        digest.update(extension_bytes);
+        definition.sha256 = format!("{:x}", digest.finalize());
+        Ok(definition)
+    }
+
+    /// Load declaration bytes and validate their correspondence with the actual dispatch map.
+    pub fn load_operation_definition(path: &Path) -> Result<Self, AuthoringError> {
+        let bytes = crate::session_storage::read_regular_file_bounded(
+            path,
+            MAX_REQUEST_BYTES,
+            "DEFINITION_MISMATCH",
+        )?;
+        Self::from_definition_bytes(&bytes, registered_authoring_handlers())
+    }
+
+    /// Bind an explicit native registration map, permitting tests to expose real registration drift.
+    pub fn from_definition_bytes(
+        bytes: &[u8],
+        handlers: BTreeMap<String, RegisteredAuthoringHandler>,
+    ) -> Result<Self, AuthoringError> {
+        let manifest: OperationManifest =
+            decode_authoring_json(bytes, MAX_REQUEST_BYTES, "DEFINITION_MISMATCH")?;
+        if manifest.format_version != 1
+            || crate::kernel_profile::KernelProfile::from_definition_id(&manifest.definition_id)
+                .is_none()
+            || manifest.status != "hand-authored-bootstrap"
+            || manifest.contract.is_empty()
+        {
+            return Err(definition_mismatch(
+                "Operation declaration version, identity, or bootstrap status is unsupported.",
+            ));
+        }
+        let profile =
+            crate::kernel_profile::KernelProfile::from_definition_id(&manifest.definition_id)
+                .unwrap();
+        let mut codecs = BTreeMap::new();
+        let mut codec_ids = BTreeSet::new();
+        for (name, entry) in manifest.types {
+            let kind = match entry.codec.as_str() {
+                "authoring.document_path_v1" => HandlerArgumentKind::DocumentPath,
+                "authoring.value_constructor_v1" => HandlerArgumentKind::ValueConstructor,
+                "authoring.primitive_edits_v1" => HandlerArgumentKind::PrimitiveEdits,
+                "composition.cli_arguments_v1" if profile.has_composition() => {
+                    HandlerArgumentKind::CliArguments
+                }
+                _ => {
+                    return Err(definition_mismatch(
+                        "Operation declaration names an unregistered argument codec.",
+                    ));
+                }
+            };
+            if entry.contract.is_empty() || !codec_ids.insert(entry.codec) {
+                return Err(definition_mismatch(
+                    "Operation argument codec contract is missing or duplicated.",
+                ));
+            }
+            codecs.insert(name, kind);
+        }
+        if codec_ids.len() != if profile.has_composition() { 4 } else { 3 } {
+            return Err(definition_mismatch(
+                "Operation declaration omits an implemented argument codec.",
+            ));
+        }
+        let mut definition = Self {
+            definition_id: manifest.definition_id,
+            sha256: format!("{:x}", Sha256::digest(bytes)),
+            operations: BTreeMap::new(),
+            handlers,
+            codecs,
+            json_read_grants: crate::cli_file_read::JsonFileReadGrants::default(),
+        };
+        let mut bound_handlers = BTreeSet::new();
+        let mut terminal_words = BTreeSet::new();
+        for operation in manifest.operations {
+            let registration = definition.handlers.get(&operation.handler).ok_or_else(|| {
+                definition_mismatch("Operation declaration names a missing native handler.")
+            })?;
+            if !declared_word_valid(&operation.name)
+                || operation.help.trim().is_empty()
+                || operation.unknown_arguments != "reject"
+                || operation.effect != registration.effect
+                || operation.batchable != registration.batchable
+                || operation.arguments.len() != registration.parameters.len()
+                || !bound_handlers.insert(operation.handler.clone())
+            {
+                return Err(definition_mismatch(
+                    "Operation declaration conflicts with its native handler contract.",
+                ));
+            }
+            let mut argument_names = BTreeSet::new();
+            for (argument, parameter) in operation.arguments.iter().zip(&registration.parameters) {
+                if argument.name != parameter.name
+                    || !argument_names.insert(argument.name.as_str())
+                    || (!parameter.optional && argument.optional && argument.default.is_none())
+                {
+                    return Err(definition_mismatch(
+                        "Operation parameter names, order, or optionality disagree with the registered signature.",
+                    ));
+                }
+                let kind = definition.argument_kind(argument)?;
+                match (kind, parameter.kind) {
+                    (
+                        HandlerArgumentKind::Unsigned { .. },
+                        HandlerArgumentKind::Unsigned { minimum, maximum },
+                    ) => {
+                        if argument.minimum.unwrap_or(0) < minimum
+                            || maximum.is_some_and(|cap| {
+                                argument.maximum.is_none_or(|maximum| maximum > cap)
+                            })
+                        {
+                            return Err(definition_mismatch(
+                                "Declared integer bounds exceed the native handler's supported range.",
+                            ));
+                        }
+                    }
+                    (left, right) if left == right => {}
+                    _ => {
+                        return Err(definition_mismatch(
+                            "Declared argument codec disagrees with the registered signature.",
+                        ));
+                    }
+                }
+                if argument
+                    .minimum
+                    .zip(argument.maximum)
+                    .is_some_and(|(min, max)| min > max)
+                    || argument
+                        .minimum_items
+                        .zip(argument.maximum_items)
+                        .is_some_and(|(min, max)| min > max)
+                    || (kind != HandlerArgumentKind::PrimitiveEdits
+                        && (argument.minimum_items.is_some() || argument.maximum_items.is_some()))
+                    || (!matches!(kind, HandlerArgumentKind::Unsigned { .. })
+                        && (argument.minimum.is_some() || argument.maximum.is_some()))
+                    || (kind != HandlerArgumentKind::DocumentView && argument.values.is_some())
+                {
+                    return Err(definition_mismatch(
+                        "Declared argument constraints do not match the codec.",
+                    ));
+                }
+                if kind == HandlerArgumentKind::PrimitiveEdits
+                    && (argument.minimum_items.unwrap_or(0) < 1
+                        || argument
+                            .maximum_items
+                            .is_none_or(|max| max > MAX_BATCH_EDITS))
+                {
+                    return Err(definition_mismatch(
+                        "Declared batch bounds exceed the native primitive-edit limit.",
+                    ));
+                }
+                if let Some(default) = &argument.default {
+                    definition
+                        .validate_argument_value(argument, default)
+                        .map_err(|e| {
+                            definition_mismatch(format!(
+                                "Declared argument default is invalid: {}",
+                                e.message
+                            ))
+                        })?;
+                }
+            }
+            match &operation.terminal {
+                DeclaredTerminalForm::Tokens {
+                    command,
+                    positional,
+                } => {
+                    let positions: BTreeSet<_> = positional.iter().map(String::as_str).collect();
+                    if operation.handler == "authoring.batch"
+                        || (operation.handler == "composition.invoke"
+                            && positional != &["command", "values"])
+                        || positions != argument_names
+                        || positions.len() != positional.len()
+                        || !declared_word_valid(command)
+                        || !terminal_words.insert(command.clone())
+                    {
+                        return Err(definition_mismatch(
+                            "Terminal positional binding is incomplete, duplicated, or ambiguous.",
+                        ));
+                    }
+                }
+                DeclaredTerminalForm::Block {
+                    start,
+                    submit,
+                    cancel,
+                } => {
+                    if operation.handler != "authoring.batch"
+                        || [start, submit, cancel].iter().any(|word| {
+                            !declared_word_valid(word) || !terminal_words.insert((*word).clone())
+                        })
+                    {
+                        return Err(definition_mismatch(
+                            "Terminal batch framing is invalid or collides with another operation.",
+                        ));
+                    }
+                }
+            }
+            if definition
+                .operations
+                .insert(operation.name.clone(), operation)
+                .is_some()
+            {
+                return Err(definition_mismatch(
+                    "Operation name is duplicated in the declaration.",
+                ));
+            }
+        }
+        let actual_handlers: BTreeSet<_> = definition.handlers.keys().cloned().collect();
+        if bound_handlers != actual_handlers {
+            return Err(definition_mismatch(
+                "Actual native handlers and declared bindings are not the same set.",
+            ));
+        }
+        Ok(definition)
+    }
+
+    /// Resolve metadata to the registered argument codec rather than inferring input types.
+    pub fn argument_kind(
+        &self,
+        argument: &DeclaredArgument,
+    ) -> Result<HandlerArgumentKind, AuthoringError> {
+        match argument.argument_type.as_str() {
+            "string" => Ok(HandlerArgumentKind::Text),
+            "integer" => Ok(HandlerArgumentKind::Unsigned {
+                minimum: argument.minimum.unwrap_or(0),
+                maximum: argument.maximum,
+            }),
+            "enum" => {
+                let values = argument.values.as_ref().ok_or_else(|| {
+                    definition_mismatch("Declared enumeration has no supported values.")
+                })?;
+                let unique: BTreeSet<_> = values.iter().collect();
+                if values.is_empty()
+                    || unique.len() != values.len()
+                    || values
+                        .iter()
+                        .any(|v| !["candidate", "accepted"].contains(&v.as_str()))
+                {
+                    return Err(definition_mismatch(
+                        "Declared document view has unsupported enumeration values.",
+                    ));
+                }
+                Ok(HandlerArgumentKind::DocumentView)
+            }
+            name => self
+                .codecs
+                .get(name)
+                .copied()
+                .ok_or_else(|| definition_mismatch("Declared argument type has no codec.")),
+        }
+    }
+
+    /// Validate and default an operation's arguments without changing session state.
+    pub fn validate_operation_arguments(
+        &self,
+        operation: &DeclaredOperation,
+        supplied: &BTreeMap<String, Value>,
+    ) -> Result<ValidatedArguments, AuthoringError> {
+        if supplied.keys().any(|name| {
+            !operation
+                .arguments
+                .iter()
+                .any(|argument| &argument.name == name)
+        }) {
+            return Err(invalid_argument(
+                "Operation received an undeclared argument.",
+            ));
+        }
+        let mut result = BTreeMap::new();
+        for argument in &operation.arguments {
+            match supplied.get(&argument.name).or(argument.default.as_ref()) {
+                Some(value) => {
+                    result.insert(
+                        argument.name.clone(),
+                        self.validate_argument_value(argument, value)?,
+                    );
+                }
+                None if argument.optional => {}
+                None => {
+                    return Err(invalid_argument(format!(
+                        "Required operation argument missing: {}",
+                        argument.name
+                    )));
+                }
+            }
+        }
+        Ok(result)
+    }
+
+    fn validate_argument_value(
+        &self,
+        argument: &DeclaredArgument,
+        value: &Value,
+    ) -> Result<ValidatedArgument, AuthoringError> {
+        match self.argument_kind(argument)? {
+            HandlerArgumentKind::Text => value
+                .as_str()
+                .map(|v| ValidatedArgument::Text(v.into()))
+                .ok_or_else(|| invalid_argument("Text argument requires a JSON string.")),
+            HandlerArgumentKind::DocumentView => {
+                let text = value.as_str().ok_or_else(|| {
+                    invalid_argument("Document view requires an enumerated string.")
+                })?;
+                if !argument
+                    .values
+                    .as_ref()
+                    .unwrap()
+                    .iter()
+                    .any(|item| item == text)
+                {
+                    return Err(invalid_argument(
+                        "Document view is not among the declared choices.",
+                    ));
+                }
+                Ok(ValidatedArgument::Text(text.into()))
+            }
+            HandlerArgumentKind::Unsigned { minimum, maximum } => {
+                let number = value
+                    .as_u64()
+                    .and_then(|v| usize::try_from(v).ok())
+                    .ok_or_else(|| {
+                        invalid_argument("Integer argument requires a nonnegative machine integer.")
+                    })?;
+                if number < minimum || maximum.is_some_and(|max| number > max) {
+                    return Err(invalid_argument(
+                        "Integer argument is outside the declared range.",
+                    ));
+                }
+                Ok(ValidatedArgument::Unsigned(number))
+            }
+            HandlerArgumentKind::DocumentPath => serde_json::from_value(value.clone())
+                .map(ValidatedArgument::Path)
+                .map_err(|_| {
+                    AuthoringError::new(
+                        "INVALID_PATH",
+                        "Typed path requires a valid base and exact key or index segments.",
+                        "Use root or context with typed key/index segments.",
+                    )
+                }),
+            HandlerArgumentKind::ValueConstructor => {
+                parse_value_constructor(value).map(ValidatedArgument::Constructor)
+            }
+            HandlerArgumentKind::PrimitiveEdits => {
+                let edits = value.as_array().ok_or_else(|| {
+                    invalid_argument("Batch operations must be an array of primitive requests.")
+                })?;
+                if edits.len() < argument.minimum_items.unwrap_or(1)
+                    || edits.len() > argument.maximum_items.unwrap_or(MAX_BATCH_EDITS)
+                {
+                    return Err(authoring_limit_error(
+                        "Batch edit count is outside the declared bounds.",
+                    ));
+                }
+                Ok(ValidatedArgument::PrimitiveEdits(edits.clone()))
+            }
+            HandlerArgumentKind::CliArguments => {
+                let values = value.as_object().ok_or_else(|| {
+                    invalid_argument("CLI invocation values must be a named argument object.")
+                })?;
+                Ok(ValidatedArgument::CliArguments(
+                    values
+                        .iter()
+                        .map(|(key, value)| (key.clone(), value.clone()))
+                        .collect(),
+                ))
+            }
+        }
+    }
+
+    /// Invoke the function actually registered for a declared operation after argument validation.
+    pub fn invoke_authoring_handler(
+        &self,
+        operation: &DeclaredOperation,
+        state: &mut SessionCheckpoint,
+        arguments: &ValidatedArguments,
+    ) -> Result<HandlerOutcome, AuthoringError> {
+        (self.handlers[&operation.handler].invoke)(state, arguments, self)
+    }
+
+    /// Expose loaded operation contracts and constructor choices for human and machine discovery.
+    pub fn operation_help(&self, name: Option<&str>) -> Result<Value, AuthoringError> {
+        let operations: Vec<_> = match name {
+            Some(name) => vec![self.operations.get(name).ok_or_else(|| {
+                AuthoringError::new(
+                    "UNKNOWN_OPERATION",
+                    "Help operation name is not declared.",
+                    "Inspect help without an operation name.",
+                )
+            })?],
+            None => self.operations.values().collect(),
+        };
+        Ok(
+            json!({"operations":operations,"value_kinds":["object","array","string","number","boolean","null"],"origin":"hand-authored-bootstrap","real_hooks_available":false}),
+        )
+    }
+
+    /// Check the persisted receipt against the loaded state-operation binding and its result shape.
+    pub fn validate_checkpoint_receipt(
+        &self,
+        state: &SessionCheckpoint,
+    ) -> Result<(), AuthoringError> {
+        state.validate_checkpoint_state()?;
+        if state.definition_id != self.definition_id || state.definition_sha256 != self.sha256 {
+            return Err(definition_mismatch(
+                "Checkpoint is bound to different declaration bytes.",
+            ));
+        }
+        if let Some(receipt) = &state.last_receipt {
+            let invalid = || {
+                AuthoringError::new(
+                    "INVALID_SESSION",
+                    "Checkpoint receipt is incompatible with its state-operation contract.",
+                    "Preserve this checkpoint and select a consistent session.",
+                )
+            };
+            let operation = self
+                .operations
+                .get(&receipt.request.operation)
+                .ok_or_else(invalid)?;
+            if operation.effect != "state" {
+                return Err(invalid());
+            }
+            self.validate_operation_arguments(operation, &receipt.request.arguments)
+                .map_err(|_| invalid())?;
+            let result = receipt
+                .response
+                .result
+                .as_ref()
+                .and_then(Value::as_object)
+                .ok_or_else(invalid)?;
+            let imported = operation.handler == "authoring.import";
+            if result.len() != if imported { 4 } else { 1 } {
+                return Err(invalid());
+            }
+            if imported {
+                let digest = result
+                    .get("source_sha256")
+                    .and_then(Value::as_str)
+                    .ok_or_else(invalid)?;
+                let bytes = result
+                    .get("source_bytes")
+                    .and_then(Value::as_u64)
+                    .ok_or_else(invalid)?;
+                if !state.context.is_empty()
+                    || result.get("source") != receipt.request.arguments.get("source")
+                    || digest.len() != 64
+                    || !digest
+                        .bytes()
+                        .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+                    || bytes == 0
+                    || bytes > MAX_REQUEST_BYTES as u64
+                {
+                    return Err(invalid());
+                }
+            }
+            match operation.handler.as_str() {
+                "composition.assemble" => {
+                    if !state.context.is_empty() {
+                        return Err(invalid());
+                    }
+                    let candidate = crate::cli_definition::CliDefinition::parse_cli_definition(
+                        state.candidate.compact_document_json().as_bytes(),
+                    )
+                    .map_err(|_| invalid())?;
+                    if candidate.assembly.is_none() {
+                        return Err(invalid());
+                    }
+                    let paths = result
+                        .get("changed_paths")
+                        .and_then(Value::as_array)
+                        .ok_or_else(invalid)?;
+                    for path in paths {
+                        let path: DocumentPath =
+                            serde_json::from_value(path.clone()).map_err(|_| invalid())?;
+                        if path.base != crate::document_path::DocumentPathBase::Root {
+                            return Err(invalid());
+                        }
+                    }
+                }
+                "constraints.attach" | "constraints.detach" => {
+                    let expected = state
+                        .active_constraint
+                        .as_ref()
+                        .map(|constraint| constraint.constraint_header());
+                    if result.get("active_constraint")
+                        != Some(&serde_json::to_value(&expected).unwrap())
+                        || (operation.handler == "constraints.attach" && expected.is_none())
+                        || (operation.handler == "constraints.detach" && expected.is_some())
+                    {
+                        return Err(invalid());
+                    }
+                }
+                "composition.activate" | "composition.enter" => {
+                    let active = state.active_interface.as_ref().ok_or_else(invalid)?;
+                    if operation.handler == "composition.enter" {
+                        let target = receipt
+                            .request
+                            .arguments
+                            .get("context")
+                            .and_then(Value::as_str)
+                            .ok_or_else(invalid)?;
+                        if (target == "/" && active.context != "root")
+                            || (target != "/" && target != ".." && target != active.context)
+                        {
+                            return Err(invalid());
+                        }
+                    }
+                    if result.get("active_interface")
+                        != Some(&serde_json::to_value(active.cli_interface_header()).unwrap())
+                    {
+                        return Err(invalid());
+                    }
+                }
+                "composition.invoke" => {
+                    let active = state.active_interface.as_ref().ok_or_else(invalid)?;
+                    let outcome = active.last_invocation.as_ref().ok_or_else(invalid)?;
+                    let word = receipt
+                        .request
+                        .arguments
+                        .get("command")
+                        .and_then(Value::as_str)
+                        .ok_or_else(invalid)?;
+                    let command = active.resolve_cli_command(word).map_err(|_| invalid())?;
+                    let values = receipt
+                        .request
+                        .arguments
+                        .get("values")
+                        .cloned()
+                        .unwrap_or_else(|| json!({}));
+                    let values: BTreeMap<String, Value> =
+                        serde_json::from_value(values).map_err(|_| invalid())?;
+                    active
+                        .validate_cli_arguments(word, &values)
+                        .map_err(|_| invalid())?;
+                    if result.get("invocation") != Some(&serde_json::to_value(outcome).unwrap())
+                        || outcome.operation_id != command.id
+                        || outcome.context != active.context
+                    {
+                        return Err(invalid());
+                    }
+                }
+                "authoring.edit" | "authoring.up" | "authoring.top" => {
+                    if result.get("path") != Some(&serde_json::to_value(&state.context).unwrap()) {
+                        return Err(invalid());
+                    }
+                }
+                "authoring.commit" => {
+                    if let Some(constraint) = &state.active_constraint {
+                        constraint
+                            .require_valid_instance(&state.candidate)
+                            .map_err(|_| invalid())?;
+                    }
+                    if state.accepted_revision != state.revision
+                        || state.candidate_is_dirty()
+                        || result.get("accepted_revision") != Some(&json!(state.accepted_revision))
+                    {
+                        return Err(invalid());
+                    }
+                }
+                "authoring.discard" => {
+                    if state.candidate_is_dirty()
+                        || !state.context.is_empty()
+                        || result.get("dirty") != Some(&json!(false))
+                    {
+                        return Err(invalid());
+                    }
+                }
+                _ => {
+                    let paths = result
+                        .get("changed_paths")
+                        .and_then(Value::as_array)
+                        .ok_or_else(invalid)?;
+                    for path in paths {
+                        let path: DocumentPath =
+                            serde_json::from_value(path.clone()).map_err(|_| invalid())?;
+                        if path.base != crate::document_path::DocumentPathBase::Root {
+                            return Err(invalid());
+                        }
+                    }
+                }
+            }
+            if operation.handler != "authoring.commit" && state.accepted_revision == state.revision
+            {
+                return Err(invalid());
+            }
+        }
+        Ok(())
+    }
+}
+
+/// Construct one explicitly typed value; container constructors cannot import serialized trees.
+pub fn parse_value_constructor(value: &Value) -> Result<DocumentValue, AuthoringError> {
+    let invalid = || {
+        AuthoringError::new(
+            "INVALID_VALUE",
+            "Value constructor has an invalid kind, payload type, or extra field.",
+            "Choose object, array, string, number, boolean, or null with the corresponding payload.",
+        )
+    };
+    let object = value.as_object().ok_or_else(invalid)?;
+    let kind = object
+        .get("kind")
+        .and_then(Value::as_str)
+        .ok_or_else(invalid)?;
+    let document = match kind {
+        "object" if object.len() == 1 => DocumentValue::Object(BTreeMap::new()),
+        "array" if object.len() == 1 => DocumentValue::Array(Vec::new()),
+        "null" if object.len() == 1 => DocumentValue::Null,
+        "string" if object.len() == 2 => DocumentValue::String(
+            object
+                .get("value")
+                .and_then(Value::as_str)
+                .ok_or_else(invalid)?
+                .into(),
+        ),
+        "boolean" if object.len() == 2 => DocumentValue::Boolean(
+            object
+                .get("value")
+                .and_then(Value::as_bool)
+                .ok_or_else(invalid)?,
+        ),
+        "number" if object.len() == 2 => {
+            let text = object
+                .get("value")
+                .and_then(Value::as_str)
+                .ok_or_else(invalid)?;
+            if text.trim() != text {
+                return Err(invalid());
+            }
+            let parsed = DocumentValue::parse_document(text)?;
+            if !matches!(parsed, DocumentValue::Number(_)) {
+                return Err(invalid());
+            }
+            parsed
+        }
+        _ => return Err(invalid()),
+    };
+    document.validate_document_limits()?;
+    Ok(document)
+}

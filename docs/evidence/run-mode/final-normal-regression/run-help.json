@@ -1,0 +1,116 @@
+{
+  "error": null,
+  "event": "response",
+  "mutation": "none",
+  "operation": ":help",
+  "replayed": false,
+  "request_id": "11c076ca-360d-4a56-933a-26fbf49326fe",
+  "result": {
+    "commands": [
+      {
+        "binding": "simulated",
+        "help": "Echo declared input.",
+        "id": "catalog.enable",
+        "parameters": [
+          {
+            "help": "Exact input.",
+            "name": "value",
+            "type": "boolean"
+          }
+        ],
+        "requirement": null,
+        "word": "enable"
+      },
+      {
+        "binding": "connected:json-file-read-v1",
+        "help": "Read the external JSON catalog; this does not probe service health.",
+        "id": "catalog.inspect",
+        "parameters": [],
+        "requirement": {
+          "capability": "services.catalog",
+          "granted": false,
+          "provider": "json-file-read-v1"
+        },
+        "word": "inspect"
+      },
+      {
+        "binding": "simulated",
+        "help": "Change only simulated quota.",
+        "id": "catalog.quota",
+        "parameters": [
+          {
+            "help": "New simulated quota.",
+            "name": "value",
+            "type": "number"
+          }
+        ],
+        "requirement": null,
+        "word": "quota"
+      },
+      {
+        "binding": "unbound",
+        "help": "Restart when an implementation is attached.",
+        "id": "catalog.restart",
+        "parameters": [],
+        "requirement": {
+          "reason": "No restart capability is attached."
+        },
+        "word": "restart"
+      }
+    ],
+    "context": "services",
+    "contexts": [],
+    "controls": [
+      [
+        ":help",
+        "Describe this context or a command"
+      ],
+      [
+        ":tree",
+        "Print the complete configured verb tree"
+      ],
+      [
+        ":up",
+        "Enter the parent context"
+      ],
+      [
+        ":top",
+        "Return to root"
+      ],
+      [
+        ":status",
+        "Inspect state, grants, and historical outcome"
+      ],
+      [
+        ":export",
+        "Create a portable interface export"
+      ],
+      [
+        ":exit",
+        "Close this run"
+      ]
+    ],
+    "definition_id": "service-catalog-connected",
+    "help_text": "service-catalog-connected / services\nText\\u{1b}[31m\\nwith controls\n  enable <value:boolean> [simulated]\n    Echo declared input.\n  inspect [connected:json-file-read-v1]\n    Read the external JSON catalog; this does not probe service health.\n    Requires --grant-json-read services.catalog <file>; granted: false\n  quota <value:number> [simulated]\n    Change only simulated quota.\n  restart [unbound]\n    Restart when an implementation is attached.\n    No restart capability is attached.\nControls: :help :tree :up :top :status :export <file> :exit\n",
+    "path": "services"
+  },
+  "session": {
+    "accepted_revision": "0",
+    "active_interface": {
+      "binding_scope": "includes_connected_read",
+      "context": "root",
+      "definition_id": "service-catalog-connected",
+      "definition_sha256": "a8acd2eedc17ed77d414bde6f7cb81600e3af30c617b6db2e3778dd51e45761b"
+    },
+    "constraint_mode": "unconstrained",
+    "context": [],
+    "definition_id": "bootstrap-cli-composition-v1",
+    "definition_sha256": "2d95a4f19beec9a2454b15de8c4d95956c6f04ccc52bcf15b2a4162ab4b72751",
+    "dirty": false,
+    "durability": "durable",
+    "node_kind": "object",
+    "revision": "0",
+    "session_id": "8bebde90-65cc-4fc8-9e56-784b9d723e41"
+  },
+  "status": "ok"
+}

@@ -1,0 +1,29 @@
+warning: function `assembly_inputs` is never used
+  --> tests/cli_assembly.rs:54:4
+   |
+54 | fn assembly_inputs(fixture: &AuthoringFixture) {
+   |    ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `programmable-cli` (test "cli_assembly") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/cli_assembly.rs (target/release/deps/cli_assembly-bf80903d1dce9ad4)
+
+running 1 test
+
+thread 'authored_components_assemble_transfer_and_preserve_independent_behavior' (87075) panicked at tests/cli_assembly.rs:27:5:
+assertion `left == right` failed: assemble: {"error":{"code":"UNKNOWN_OPERATION","message":"Request operation is not present in the loaded declaration.","recovery":"Inspect help for available operation names."},"event":"response","mutation":"none","operation":null,"replayed":false,"request_id":"7815f995-a8d4-4b65-b573-d620bf667a98","result":null,"session":{"accepted_revision":"14","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-constraints-v1","definition_sha256":"a4efd093fa2272af701d0153925ab04060adbd5243eee3e5ca7988ec21708f00","dirty":false,"durability":"durable","node_kind":"object","revision":"14","session_id":"5a55b999-6c09-4b79-8f6d-21e9fd8462f6"},"status":"error"}
+  left: String("error")
+ right: "ok"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test authored_components_assemble_transfer_and_preserve_independent_behavior ... FAILED
+
+failures:
+
+failures:
+    authored_components_assemble_transfer_and_preserve_independent_behavior
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--test cli_assembly`

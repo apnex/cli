@@ -1,0 +1,314 @@
+# Contextual JSON authoring contract
+
+**Status: engineering contract for CLI-002, established by the selected CLI-001 design work.**
+This contract defines the first authoring slice.
+Application conformance remains to be demonstrated by the [acceptance corpus](acceptance/authoring-cases.json).
+The later [document import contract](IMPORT.md) extends the operation surface with explicit whole-candidate replacement; the original corpus remains unchanged as historical acceptance input.
+
+## Scope and authoritative state
+
+One process owns one local session and processes requests serially.
+A session holds a candidate document, an accepted baseline, navigation context, revision, original task text, and the last successful state-changing request receipt.
+The session is authoritative; the terminal prompt is a view of it.
+
+| State field | Contract |
+|---|---|
+| `format_version` | Integer `1`; unsupported versions are rejected before a write. |
+| `session_id` | Opaque nonempty string generated for a new session and retained on reopening or transfer. |
+| `revision` | Canonical unsigned decimal string; starts at `0`, increases by one for each accepted state-changing request, including a no-op. |
+| `accepted_revision` | Revision of the most recent `commit`, initially `0`. |
+| `candidate` | Any supported JSON value, initially an empty object. |
+| `accepted` | A separate JSON value, initially an empty object. |
+| `context` | An absolute typed path into `candidate`, initially empty. |
+| `intent_text` | Original task text supplied when the session is created; document edits cannot change it. |
+| `definition_id` | `bootstrap-json-authoring-v1`; the built-in authoring definition used by this slice. |
+| `definition_sha256` | SHA-256 of the loaded declaration bytes; reopening with a different definition requires explicit future activation support. |
+| `constraint_mode` | `unconstrained`; structural validity does not establish domain completeness. |
+| `last_receipt` | Null initially; otherwise the last successful state-changing request and its response, excluding recursive receipt inclusion. |
+
+`dirty` is derived from candidate-versus-accepted equality, not from the revision counter.
+Navigation changes revision without making the document dirty.
+Every acknowledged state change is persisted before the successful response is emitted.
+An unfinished candidate survives a restart without becoming accepted.
+
+---
+
+## Document fidelity
+
+| Concern | Required behavior |
+|---|---|
+| Object keys | Preserve decoded Unicode strings exactly, including empty, numeric-looking, slash, tilde, whitespace, and control-character keys. |
+| Strings | Preserve Unicode scalar values and embedded controls; do not normalize Unicode or infer another JSON type from the spelling. |
+| Numbers | Preserve the exact valid JSON number token, including large integers, exponent spelling, trailing fractional zeros, and negative zero; perform no arithmetic or float conversion. |
+| Arrays | Preserve order; indices are locations at a revision and are not stable entity identifiers. |
+| Objects | Reject repeated decoded keys at every nesting level; never silently choose a winning duplicate. |
+| Invalid input | Reject malformed numbers, non-JSON constants, invalid UTF-8, unpaired Unicode surrogates, and trailing input. |
+| Formatting | Object member order, whitespace, and equivalent string escape spellings are not document identity. |
+| Equality | Compare keys and string values exactly, array positions recursively, and number tokens byte-for-byte; `1`, `1.0`, and `1e0` are distinct authored representations. |
+
+The JSON syntax and interoperability concerns are grounded in [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259.html).
+Preserving number spelling and rejecting duplicate keys are project choices that avoid silent loss in an authoring workflow.
+This is not a claim of mathematical number equality or general JSON canonicalization.
+
+The initial supported envelope is a local regular file, at most 1 MiB of compact document text, depth at most 64 with the root at depth zero, and at most 256 primitive edits in a batch.
+Each decoded string or number token is at most 64 KiB of UTF-8; the original task text has the same bound.
+A request line is at most 2 MiB and a checkpoint at most 8 MiB, including the last receipt.
+Each response and startup event is at most 8 MiB; oversized output is rejected explicitly, never silently truncated.
+Receipt serialization and its output bound are checked before publishing a state change.
+These are explicit first-slice limits, not limits on the vision; exceeding one returns `LIMIT_EXCEEDED` before mutation.
+
+---
+
+## Addressing and navigation
+
+A machine path has `base`, either `root` or `context`, and an ordered `segments` array.
+Each segment contains exactly one of `key` with a string value or `index` with a nonnegative integer value.
+Object keys and array indices never change type because of their spelling.
+
+Example machine path:
+```json
+{"base":"root","segments":[{"key":"services"},{"index":0},{"key":"metadata"},{"key":"0"}]}
+```
+
+The terminal uses absolute [JSON Pointers](https://www.rfc-editor.org/rfc/rfc6901.html), with `.` for current context and `./` followed by pointer tokens for relative addressing.
+The quoted empty token `""` addresses the root; `/` addresses the root object's empty key.
+`./` addresses the current object's empty key.
+Decode `~0` and `~1` exactly once; malformed escapes fail.
+An array token must be `0` or a nonzero digit followed by digits; `01`, negative indices, and `-` do not address array elements.
+An object token with any of those spellings remains a literal key.
+
+Path resolution observes the actual parent container and never invents missing intermediate objects or arrays.
+Only `set` may create a missing final object member.
+`edit` requires an existing target and may focus a scalar.
+`up` moves one segment toward the root and stays at the root when already there; `top` selects the root.
+
+### Context after mutation
+
+| Mutation relative to current context | Resulting context |
+|---|---|
+| Outside the context, or strictly inside its subtree | Preserve context, unless an array shift below applies. |
+| Replace the current node | Preserve its path and expose the new node type. |
+| Replace a strict ancestor | Move to that replacement path; do not silently remain in a similarly named descendant. |
+| Delete the current node or an ancestor | Move to the deleted node's parent. |
+| Insert or delete at array index `i`, with context beneath index `j >= i` of that array | Move to the array itself; do not silently select a different element after shifting. |
+| Append to an array | Preserve context because existing indices do not shift. |
+| Discard a draft | Move to the root; draft paths must not be rebound silently into the accepted document. |
+
+The response always exposes the resulting absolute typed context.
+
+---
+
+## One operation declaration
+
+The [operation declaration](operations.json) owns operation names, argument contracts, effects, terminal forms, and handler identifiers.
+It is explicitly hand-authored bootstrap data, not evidence of CLI self-authorship.
+Runtime help, argument validation, dispatch lookup, and completion metadata consume that declaration.
+The declaration is loaded as data at startup, and its identifier and byte digest are bound into the session.
+It is not reconstructed from hardcoded help or compiled-in command branches.
+Reopening with a different declaration fails with `DEFINITION_MISMATCH`; changing an authored file does not silently activate it.
+
+Handlers implement document and session behavior.
+Complex argument types name registered, versioned codecs whose contracts are linked from the declaration.
+The declaration contains executable argument metadata and codec references; the codecs own the semantics of paths and typed values.
+Batch eligibility is declared on each operation and is checked against the handler's supported effect.
+Neither terminal nor machine presentation mutates documents directly.
+Startup compares the declaration with the actual handler map and rejects missing, extra, or incompatible implemented handlers with `DEFINITION_MISMATCH`.
+Source-text searches cannot establish that invariant.
+
+| Operation | Semantics |
+|---|---|
+| `status` | Expose identity, revision, context, dirty state, acceptance revision, constraint mode, and the last receipt. |
+| `show` | Return the selected candidate or accepted value as `json_text`; numbers remain exact through transport. |
+| `help` | Describe declared operations and their arguments, or one named operation. |
+| `complete` | Return existing immediate child keys or indices and their types, in deterministic pages. |
+| `diff` | Return deterministic root differences between accepted and candidate documents. |
+| `edit`, `up`, `top` | Change navigation context as specified above. |
+| `set` | Replace the addressed value, or create a missing final object member; an array index must already exist. |
+| `append` | Add one value to the end of an existing array. |
+| `insert` | Insert one value at an index from zero through array length, inclusive; no sparse arrays. |
+| `delete` | Remove an existing member or array element; deleting the root fails with `ROOT_DELETE`. |
+| `batch` | Apply an ordered group of `set`, `append`, `insert`, and `delete` operations as one state change. |
+| `commit` | Copy candidate to accepted and set `accepted_revision` to the resulting revision; perform no domain hook or external validation. |
+| `discard` | Restore candidate from accepted and move context to the root. |
+| `save` | Export candidate JSON to a requested file without accepting the draft or changing session revision. |
+| `import` | Replace the entire candidate from one explicit local JSON file, reset context to root, and retain independent acceptance and activation boundaries under the [import contract](IMPORT.md). |
+
+`show` uses candidate context by default.
+Showing accepted data requires an explicit root-based path, because a draft's context need not identify the same accepted content.
+`complete` uses zero-based `offset` and `limit`, defaulting to 0 and 50; a limit must be between 1 and 100.
+Its `next_offset` is null only when the complete result set has been exposed; scalars return an empty set.
+
+`diff` compares object members in decoded-key order and recurses through objects.
+An added or removed subtree produces one change at that path; any changed array produces one replacement at the array path.
+Each change includes an absolute typed path and `before` and `after` objects with `exists` and, when present, `json_text`.
+The diff is for review, not a separately specified patch language.
+
+---
+
+## Typed values and terminal input
+
+A value constructor has `kind` equal to `object`, `array`, `string`, `number`, `boolean`, or `null`.
+Objects and arrays construct empty containers, and null constructs JSON null; these constructors have no `value` member.
+String and number constructors carry a string `value`; a number's string must be exactly one JSON number token with no surrounding whitespace.
+A boolean constructor carries a JSON boolean `value`.
+No constructor silently coerces another kind.
+
+Terminal tokens are separated by ASCII whitespace.
+A token containing whitespace or controls is double-quoted using JSON string escapes; an empty string is `""`.
+There is no shell expansion, globbing, interpolation, command substitution, or implicit shell execution.
+Container constructors do not require braces or brackets.
+
+Illustrative terminal commands for the contract, not runnable application commands yet:
+```text
+set /services array
+append /services object
+edit /services/0
+set ./name string api
+set ./enabled boolean true
+set ./ports array
+append ./ports number 8080
+set ./quota number 1.2300
+```
+
+The terminal binds the session identity and revision from its current runtime view.
+Machine callers supply them explicitly on state changes.
+Both forms produce the same canonical operation request before validation and dispatch.
+Completion inserts an escaped path token rather than an unquoted key that changes parsing.
+
+Terminal batch entry starts with `batch`, accepts primitive edit lines, and ends with `end` or `cancel`.
+These block delimiters are declared terminal framing for the single `batch` operation, not independent document handlers.
+The buffer is visibly unsent and is lost if input is cancelled or the terminal closes; no candidate mutation occurs before submission.
+All batch paths are root-based, nesting is rejected, and the terminal captures the revision when batch entry starts.
+
+---
+
+## Request and result contracts
+
+Each request contains exactly `request_id`, `session_id`, `operation`, `arguments`, and, for a state change or export, `expected_revision`.
+Identifiers are nonempty strings of at most 128 UTF-8 bytes.
+Unknown fields and arguments fail instead of being ignored.
+Revision strings are canonical unsigned decimal integers within the unsigned 64-bit range; overflow fails before mutation.
+
+Example state-changing request:
+```json
+{"request_id":"catalog-set-name","session_id":"catalog-session","expected_revision":"5","operation":"set","arguments":{"path":{"base":"context","segments":[{"key":"name"}]},"value":{"kind":"string","value":"api"}}}
+```
+
+The identifiers in this example are local illustrative identifiers, not claims about an existing session.
+
+| Response field | Meaning |
+|---|---|
+| `request_id` | Echoed identifier, or null when the malformed input did not supply a valid one. |
+| `event` | `response`, distinguishing a request response from the startup event. |
+| `operation` | Recognized operation name, or null when it could not be recognized. |
+| `status` | Exactly `ok`, `error`, or `uncertain`. |
+| `mutation` | Exactly `applied`, `none`, or `unknown`, referring to authoritative session state. |
+| `session` | Current identity, revision, accepted revision, typed context, dirty state, definition identity, constraint mode, and durability; null before a session can be identified. |
+| `result` | Operation-specific data on success; null otherwise. |
+| `error` | Null on success; otherwise `code`, explanatory `message`, and `recovery`, with optional typed `path` and zero-based `failed_operation_index`. |
+| `replayed` | Boolean indicating return of the persisted last receipt without repeating its mutation. |
+
+Successful state changes have `mutation: applied` and `session.durability: durable`.
+Reads and successful exports have `mutation: none`.
+Rejected operations return `status: error`, `mutation: none`, and an unchanged session.
+An uncertain checkpoint outcome returns `status: uncertain`, `mutation: unknown`, and `session.durability: uncertain`; it never looks like an ordinary rejected edit.
+
+`set`, `append`, `insert`, `delete`, and `batch` return ordered absolute `changed_paths`, including an empty array when accepted values were identical.
+Navigation returns its resulting path, `commit` returns `accepted_revision`, and `discard` returns `dirty: false`.
+Read results follow their operation semantics; `save` returns the exported revision, absolute destination, SHA-256 of the bytes observed there, and `created` or `already_present`.
+
+The machine transport is one UTF-8 JSON request and one JSON response per line on standard input and output.
+Before the first request, emit one `session_open` event carrying the complete session header, original task text, and last receipt; every subsequent response has `event: response`.
+The terminal shows the corresponding task and state before accepting input.
+The shared session header also includes the current node kind and declaration digest, so a changed context is visible without reconstructing it from the prompt.
+Parity requires exact agreement on these shared fields and operation meanings; only presentation formatting and generated identifiers differ between independent test sessions.
+Human diagnostics do not contaminate machine standard output.
+Malformed lines produce an error response and leave the process usable; fatal startup or unrecoverable storage errors terminate with a nonzero exit status.
+The terminal presents the same error code, relevant paths, mutation outcome, and recovery action in readable form.
+
+---
+
+## Ordering, failure, and retry
+
+Validation order is request shape, session identity, last-receipt replay or conflict, expected revision, argument and path validity, resource limits, then persistence.
+State changes and exports reject a stale expected revision before any effect.
+Reads observe the current serial session and need no expected revision.
+
+A successful state-changing request persists its receipt in the same checkpoint as its resulting state.
+Repeating the immediately preceding successful request with the same identifier and identical complete request returns that receipt with `replayed: true`.
+Reusing that receipt's identifier with different input fails with `REQUEST_ID_REUSE`.
+Only the last receipt is retained; older requests with their original revisions fail with `REVISION_CONFLICT` and require inspection, not blind resubmission under a new revision.
+
+Batches validate and apply sequentially on a private candidate copy.
+All primitive paths are absolute and resolve against the evolving copy; the caller intentionally addresses the indices created by earlier steps.
+The first failure returns its index and discards all tentative document and context changes.
+A successful batch persists once and consumes one revision, regardless of its number of edits.
+Navigation, acceptance, export, and nested batches are not allowed inside a batch.
+
+| Error family | Codes | Recovery |
+|---|---|---|
+| Request and declaration | `INVALID_REQUEST`, `UNKNOWN_OPERATION`, `DEFINITION_MISMATCH`, `REQUEST_ID_REUSE` | Correct input or bootstrap registration; inspect declared arguments. |
+| Address and value | `INVALID_PATH`, `MISSING_PATH`, `TYPE_MISMATCH`, `INDEX_OUT_OF_BOUNDS`, `ROOT_DELETE`, `INVALID_VALUE`, `LIMIT_EXCEEDED` | Repair the request; no state changed. |
+| Session identity and concurrency | `SESSION_MISMATCH`, `REVISION_CONFLICT`, `SESSION_LOCKED`, `SESSION_CHANGED` | Refresh the session or reopen after the current owner releases it. |
+| Checkpoint input | `INVALID_SESSION`, `UNSUPPORTED_FORMAT` | Preserve the file and select a compatible valid checkpoint; do not start empty implicitly. |
+| Persistence | `PERSISTENCE_FAILED`, `PERSISTENCE_UNCERTAIN` | Inspect failure scope; uncertain publication requires reopening before another write. |
+| Export | `EXPORT_EXISTS`, `EXPORT_FAILED`, `EXPORT_UNCERTAIN` | Use a new destination or inspect its exact bytes; never overwrite different content implicitly. |
+
+---
+
+## Persistence and export
+
+The initial platform is Linux with a local filesystem that supports file locking, atomic same-directory rename, hard links, and file and directory synchronization.
+The process holds an exclusive nonblocking lock on a stable sibling lock file for the session lifetime.
+It never unlinks that lock file on exit; replacing the checkpoint cannot replace the lock inode.
+A competing compliant writer receives `SESSION_LOCKED`.
+
+Before each state change, compare checkpoint bytes with the bytes last opened or published by this process.
+Unexpected modification returns `SESSION_CHANGED` before any new write.
+This detects prior outside edits; it is not a compare-and-swap guarantee against a simultaneous noncooperating editor.
+Symlink checkpoint and export targets are rejected; normal local files under a single cooperating writer are the supported storage scope.
+
+To publish a state change, serialize the entire proposed checkpoint and receipt, create a unique temporary file beside the target, write all bytes, synchronize the file, atomically rename it over the target, and synchronize the parent directory.
+Only then adopt the new state and return success.
+
+| Interruption point | Required observable behavior |
+|---|---|
+| Before rename, including failed write or file synchronization | Old checkpoint remains authoritative; return `PERSISTENCE_FAILED` and no mutation. |
+| After rename but before directory synchronization completes | Publication may have occurred; return `PERSISTENCE_UNCERTAIN`, stop writes, and require reopening. |
+| After completed synchronization but before response delivery | Reopening finds the new state and receipt; resubmitting the identical request does not repeat the edit. |
+| On restart with leftover temporary files | Read the authoritative checkpoint; never promote an arbitrary temporary file or silently reset the session. |
+| Invalid or unsupported authoritative checkpoint | Fail explicitly while preserving bytes. |
+
+Before exposing a reopened checkpoint as durable, validate its entire shape, document fidelity, context, revision relationships, and last receipt, then synchronize the file and parent directory.
+Require `accepted_revision <= revision`, a context that resolves into candidate, and a null receipt exactly at revision zero.
+At later revisions, require a successful state-operation receipt for this session and revision with the preceding expected revision; its derived header must agree with the checkpoint.
+Unknown checkpoint fields or inconsistent cross-field values produce `INVALID_SESSION`.
+An unresolvable synchronization error keeps it unavailable for mutation.
+Reopening does not increment the saved revision or alter the candidate, accepted baseline, context, or task text.
+
+`save` exports compact candidate JSON with object keys sorted by their decoded UTF-8 ordering, deterministic JSON string escapes, original number tokens, and one final newline.
+Use a fully written and synchronized same-directory temporary file and a create-only publication operation.
+If the destination already contains identical bytes, report `already_present`; different bytes produce `EXPORT_EXISTS` without replacement.
+Publication followed by a synchronization failure produces `EXPORT_UNCERTAIN` with session mutation `none`.
+Rechecking the same revision and destination determines whether the expected export exists; export and checkpoint are not a multi-file transaction.
+
+Copying a session for transfer occurs after its writer has closed, or from one complete checkpoint read under the same lock discipline.
+The checkpoint includes the candidate, baseline, task, context, identity, and receipt; no original chat history is needed to resume this bounded task.
+Cross-project dependencies, general decision graphs, and arbitrary capability availability remain the broader continuation work in CLI-005.
+
+---
+
+## Mechanics, rationale, and consequence
+
+### Mechanics
+
+Interpret one declared operation model, validate typed requests against actual session state, and publish each accepted transition with its receipt before acknowledgment.
+
+### Rationale
+
+The first useful workflow requires exact edits and recoverable context before more elaborate schemas or domain behavior can depend on it.
+The costs are full checkpoint writes and explicit first-slice limits; the benefit is a state transition that a reader can reason about without an external transaction engine.
+
+### Consequence of violation
+
+Silent type coercion, partial batches, rebound array context, or ambiguous persistence can make a valid-looking authored artifact disagree with the task and leave the next actor unable to determine what happened.

@@ -1,0 +1,189 @@
+{
+  "format_version": 1,
+  "record": "CLI-005",
+  "status": "active",
+  "observed_at_utc": "2026-09-08 22:23:57 UTC",
+  "evidence_authority": "executor-produced local observations; no independent certification",
+  "application_acceptance": {
+    "status": "pass",
+    "tests_passed": 55,
+    "new_trial_tests": 4,
+    "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=\"$PWD/docs/evidence/cli-005/regression\" cargo test --locked --all-features --all-targets -- --nocapture",
+    "log": "application-tests.log",
+    "exit_record": "application-tests.exit",
+    "semantic_mutants_landed_and_rejected": 3
+  },
+  "runtime_continuity": {
+    "status": "pass",
+    "scope": "Existing runtime source, Cargo.lock, and the three layer operation declarations match the CLI-004 record.",
+    "checked_hashes": "previous-runtime-contract.sha256",
+    "log": "runtime-continuity.log"
+  },
+  "format_check": {
+    "status": "pass",
+    "command": "cargo fmt --all -- --check",
+    "log": "format-check.log"
+  },
+  "walkthrough": {
+    "status": "pass",
+    "source": "docs/reuse/USE.md",
+    "script": "walkthrough-verified.sh",
+    "log": "walkthrough-verified.log",
+    "exit_record": "walkthrough-verified.exit",
+    "build": "cargo build --locked --release --features continuation-trials --bin cli --bin cli-trial-receiver --example continuation-trial",
+    "preparation": "walkthrough/preparation.json",
+    "scripted_evaluation": "walkthrough/evaluation.json",
+    "timing_note": "Wall times and subprocess times have different scopes and overlap; preparation includes copying and hashing. Compilation is separate."
+  },
+  "scripted_rehearsal": {
+    "status": "pass",
+    "actor": "producer replaying a literal completion recipe",
+    "interaction": {
+      "actor_elapsed_ms": null,
+      "elapsed_process_ms": "777",
+      "elapsed_receiver_ms": "133",
+      "errors": {
+        "DEFINITION_MISMATCH": 1,
+        "REVISION_CONFLICT": 1,
+        "SCHEMA_VIOLATION": 1
+      },
+      "human_interventions": null,
+      "input_bytes": 2129,
+      "input_lines": 77,
+      "operations": {
+        "activate": 1,
+        "append": 6,
+        "commit": 2,
+        "delete": 1,
+        "diff": 1,
+        "discover": 1,
+        "edit": 12,
+        "enter": 2,
+        "export-interface": 1,
+        "guide": 1,
+        "help": 1,
+        "invoke": 2,
+        "save": 1,
+        "schema": 1,
+        "set": 39,
+        "show": 2,
+        "status": 1,
+        "tree": 2
+      },
+      "output_bytes": 121806,
+      "recorded_processes": 3,
+      "response_events": 78,
+      "response_scope": "Includes launcher rejection events without an input command.",
+      "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+      "tokens": null
+    },
+    "definition_bytes": 2490,
+    "interface_export_bytes": 7795,
+    "definition": "walkthrough/completed.definition.json",
+    "interface_export": "walkthrough/completed.interface.json",
+    "verb_tree": "worker-platform-tree.txt"
+  },
+  "prepared_handover": {
+    "status": "prepared",
+    "directory": "/home/apnex/taceng/cli/target/continuation-tTfDo9/recipient/package",
+    "start_document": "START.md",
+    "preparation": "walkthrough/recipient-preparation.json",
+    "manifest": "walkthrough/recipient-manifest.json",
+    "immutable_input_hashes_verified": 11,
+    "hash_measurement": "handover-files.sha256",
+    "working_checkpoint_exists": false,
+    "binding_scope": "simulation_or_unbound",
+    "archive_scope": "Selected text evidence is retained here. The directory above contains the executable handover package; preserve it before cleaning target."
+  },
+  "fresh_actor_trial": {
+    "status": "not-run",
+    "actor_identity": null,
+    "originating_conversation_provided": null,
+    "extra_context_accessed": null,
+    "intervention": null,
+    "token_use": null,
+    "reason": "The session requires an explicit request before starting another agent; the concrete handover is prepared for that step."
+  },
+  "comparisons": {
+    "targeted_document_editing": {
+      "status": "not-run"
+    },
+    "repeated_construction": {
+      "status": "not-run"
+    },
+    "comparative_advantage": "not-claimed"
+  },
+  "component_composition": {
+    "status": "open",
+    "observed_boundary": "The preserved service inspection binding returns whole mock state, including the added queue. This trial reuses a whole prototype, not isolated components."
+  },
+  "documentation_checks": {
+    "status": "pass",
+    "tests_passed": 13,
+    "test_command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+    "test_log": "scaffold-tests.log",
+    "generated_view_command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+    "generated_view_log": "scaffold-check.log",
+    "declared_layers": 7,
+    "synchronized_views": 15,
+    "scope": "Documentation placement, links, board/backlog correspondence, corpus checks, and generated views; application acceptance is recorded separately."
+  },
+  "normal_build": {
+    "status": "pass",
+    "command": "cargo build --locked --bin cli",
+    "log": "normal-build.log",
+    "purpose": "Restore the ordinary debug application after instrumented regression tests."
+  },
+  "source_files_sha256": {
+    "Cargo.toml": "0f3d8f19321a74f27bb353f04cb064981744f63e8c6281eab8a7bbe540d3f0bf",
+    "Cargo.lock": "cc7553954f6ba5ca85a6bcb517b45396b3e63753c698cdb4e5a855c1b1acbccb",
+    "src/authoring_error.rs": "807aa3e50fafaa71614f2a325f161ce395e3dfe61c2c9b4760d4587783b2a580",
+    "src/authoring_frontend.rs": "1d19484c898ab9fbd418d1d0e6ca92e0f01093f14bd0178c7858838555d25d91",
+    "src/authoring_operations.rs": "16f4891bde281a58e16050f52b54c6d9d3d6acbe923c328977b2c56ff6ae7014",
+    "src/authoring_protocol.rs": "cab2a7d74fa4b7af49066c6ba2b486c82224d0f91df29f7663463c670b75b000",
+    "src/authoring_result.rs": "38c51470b5a7b151560354ceecf2efe2d1b56d458240cabe8df2df540310d338",
+    "src/authoring_runtime.rs": "3514a30e25298f5ea6b7ca39eed7c812e493096ae3ef8cac645f76507fea99b8",
+    "src/cli_composition.rs": "c922e99461c20e64e7567fee8f7634b921a6c8e5957b22d3d61d2c39c9a1ece3",
+    "src/cli_definition.rs": "499ea313cc0e1465438623c331014d1e45568a22a78eb4e952db2b9fdab102ac",
+    "src/cli_interface.rs": "2d6f1ac29172762fe1be5217802d808632e74c931e25bbf04e654275c0166d21",
+    "src/cli_terminal.rs": "01cfd6954b298b8fc4bdd5fa725f9997d4b99d43c07d1953d55cfe86915eedb3",
+    "src/cli_verb_tree.rs": "9d521cc34ba110c98fafabc1dc98854ad0005d994e9ffd5a19a3451614b56a8d",
+    "src/constraint_operations.rs": "b607381c82928bf6a89e671569a849240629a81ce01869d371a0e2269fb59dc7",
+    "src/document_path.rs": "c3d5f24c70805d6251987d0ae383829a32dd5b44d9398ac16442c99d6dc58dd0",
+    "src/document_value.rs": "5e30da980a9a546aedfa06a3ff157133d877c07b3b2a46793a0b7551971e75c9",
+    "src/kernel_profile.rs": "e636c31ba3031f3db5aec7a9a9224463f812bb3cd7fb275195db381b35ffbc1c",
+    "src/lib.rs": "3e6be99885af31793634d82fbf60dea4446107188edc0735c5f7d05f48312104",
+    "src/main.rs": "6350525487a9143f064a6a6ddcd52484eed03d067e0fc49ce211c60b29dc8876",
+    "src/operation_definition.rs": "b686633e2edc4afe3e6912f85514978d003b314e6e0657ecb6b53038c7ec2c94",
+    "src/schema_constraint.rs": "44d0cb5589e6988a96afea0a5a5289c80263e8102bc1b373611477469eb6c5be",
+    "src/schema_guidance.rs": "e7d38a6208e5bd9fc14a7102d3c05119a619bfb26966df9d8a14d038791cac7f",
+    "src/session_storage.rs": "7d190cba2fa00d1b0301f85e2bdc2322dfcf6bf93d95cfcabe5e0b4addc04748",
+    "src/storage_faults.rs": "70e14680f4e4b307f38525c4e32538329705593abc384ee640637fcb36dd9e4a",
+    "src/terminal_completion.rs": "418005fb3e1f4209aaf56e8d87bfd8c3ecba7af50e5f24a97e12f0e94d9d8580",
+    "src/terminal_input.rs": "68f5a2d53c8e2570c093862b458933067e7e81e1b02058ad23e5e4818041cdac",
+    "tests/continuation_trials.rs": "f9debcbf1605b3db0809b32afdbd8f46a915e2d9cc7ca766ed76555aeb28d081",
+    "tools/continuation/main.rs": "51b870001fc72c57f2f25a65fa387903e555026de3f642f1cd4adaf6d7ca21ad",
+    "tools/continuation/receiver.rs": "94de12a17bedb7b2169c879a4b6ef195a27414129bf529b834c0e5bd643b94b9",
+    "tools/continuation/trial_manifest.rs": "0da2a3824af01b106bcbe4e755207cbd0bb01af79692a5e7d551e5a743e30aa3",
+    "tools/continuation/trial_oracle.rs": "8db4dca302718f1977241b988dd354796bf9a5b6c37bbb2d2fbe6a206f80f5ef",
+    "tools/continuation/trial_package.rs": "b830e260f1aacb4fd375367e9e5b932e8672111cec42bd8378c492cad9692185",
+    "tools/continuation/trial_process.rs": "61c7c0006b6c881021080974e3cb257336647a084c36a1e58a4e03e9caf5ecf3",
+    "tools/continuation/trial_rehearsal.rs": "3712dea0fe04e78f5ddd7b21a0c48aa70769d5de36e6e85e3ca68c0344f33f0d",
+    "docs/reuse/acceptance/TASK.md": "5ec5aaf716a1900abf68d5dca4f4349143d2d2c63dd86f53dd762a016493c533",
+    "docs/reuse/acceptance/policy.commands": "12eee0cbf172454a9ca193b05a50c0aeef5cf4a3d6ee724c2d963e5f94b9c70a",
+    "docs/reuse/acceptance/queue-context.expected.json": "c25356a7ed85c73bcb3903efe0f35c4be041c5cf47246f74a0fb22e86bd2e9ae",
+    "docs/reuse/acceptance/queue-finish.commands": "6563cd0e214caa14a605687375fd04443f4edba70b72a265d80373a6470508c3",
+    "docs/reuse/acceptance/queue-policy.expected.json": "921aa7a1fb0d536537aea43a7151f70ae32e5ae73c984ad1f1bd15b399fea579",
+    "docs/reuse/acceptance/queue-start.commands": "697825691333962a60429513487a492c82a72e985025ae6bbca8fc3afc7c8faa",
+    "docs/reuse/AXIOM-AUDIT.md": "36203f1a518062050ee84584b354897863611226cdcf864cdf002c5f685951f0",
+    "docs/reuse/CLI-005.md": "0c6e4737a768f2546668d1d77bab40c3d60bdbc1dda75a8b3aeda399524ba675",
+    "docs/reuse/CONTRACT.md": "bc793e5b428ec3f6ef1247b934536b04f95bb914b8618c5fa6d7137ea9881623",
+    "docs/reuse/USE.md": "9a02ee010ddf6a5d13c5006bd06df2a36e60dbf58887ed12069bd4f0056ea021",
+    "docs/reuse/recipient/START.md": "c942c7e4fa417bbbb8dfa12a60bf8e961f82ab6659daf1cbb76ea44ccf0547fc"
+  },
+  "release_binaries_sha256": {
+    "target/release/cli": "6058d0f1a2b8fc638757d550718dcf8a1186245047b52d978e08c63728cfcdfd",
+    "target/release/cli-trial-receiver": "3773c3e4e603311e924d09fa1c0a76863c1a3431217321060be62bf00f946ab9",
+    "target/release/examples/continuation-trial": "34e0dcdde4d90cd4e9078238968852abe031a40920a8f36504c1afd3b06bc626"
+  }
+}

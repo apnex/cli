@@ -1,0 +1,134 @@
+{
+  "record": "CLI-005-fresh-actor-trial",
+  "status": "task-acceptance-pass",
+  "task_name": "/root/fresh_cli_continuation",
+  "authorization": "authorization.json",
+  "launch": "launch.json",
+  "prompt": "prompt.txt",
+  "completion_observed_at_utc": "2026-09-08 22:39:59 UTC",
+  "observer_elapsed_seconds": 520,
+  "observer_timing_scope": "Parent pre-launch clock sample to completion-notification clock sample, at one-second resolution. Includes launch, reasoning, tools, report writing, and notification delay; not exclusive model time.",
+  "originating_conversation_forked": false,
+  "project_package": "/home/apnex/taceng/cli/target/continuation-tTfDo9/recipient/package",
+  "context_boundary": {
+    "supplied_project_context": "Saved prompt and complete prepared package.",
+    "system_context_reported": [
+      "standing AGENTS.md text",
+      "environment information",
+      "general system/developer harness instructions",
+      "tool descriptions",
+      "skill catalog",
+      "plugin recommendation list"
+    ],
+    "additional_guidance_reads_reported": [
+      "https://raw.githubusercontent.com/apnex/mission-kit/main/INDEX.md",
+      "https://raw.githubusercontent.com/apnex/mission-kit/main/skills/write-discoverable-code/SKILL.md",
+      "https://raw.githubusercontent.com/apnex/mission-kit/main/work-types/W4-validate-locally.md",
+      "https://raw.githubusercontent.com/apnex/mission-kit/main/style/README.md",
+      "https://raw.githubusercontent.com/apnex/mission-kit/main/style/S5-no-version-pins-in-prose.md",
+      "https://raw.githubusercontent.com/apnex/mission-kit/main/style/S11-technical-identifiers-use-backticks.md"
+    ],
+    "additional_project_context_reported": [],
+    "complete_tool_access_audit_available": false,
+    "evidence": "Invocation settings are observed directly. Access account is the actor's retained report; no independent filesystem-access audit is available.",
+    "filesystem_isolation_enforced": false,
+    "originating_conversation_or_solution_access_reported": false,
+    "hidden_context_absence_guaranteed": false
+  },
+  "interventions": {
+    "coordinator_status_requests": 1,
+    "coordinator_solution_hints": 0,
+    "coordinator_messages": "coordinator-messages.json",
+    "human_assistance_during_trial_observed": 0,
+    "human_assistance_during_trial_reported": 0,
+    "additional_solution_or_clarification_requests_reported": 0
+  },
+  "method": {
+    "recorded_edit_surface": "Typed set, append, edit, and up operations through the supplied receiver and CLI.",
+    "direct_document_edits_reported": 0,
+    "serialized_definition_injection_observed_in_trace": false,
+    "auxiliary_tools_reported": "Shell and Python for read-only instruction/log/export inspection and exact-number-preserving comparison; plain-text report written separately.",
+    "product_or_repository_python_implementation_added": false,
+    "runtime_source_continuity": "runtime-source.log",
+    "trial_boundary": "One actor continuation of a complete prototype checkpoint. No general success rate, independent security isolation, component resolver, or workflow cost advantage is established."
+  },
+  "result": {
+    "evaluation": "evaluation.json",
+    "evaluation_command": "evaluate.sh",
+    "evaluation_exit": 0,
+    "evaluated_attempts": 1,
+    "parent_repairs_to_submission": 0,
+    "submitted_checkpoint_sha256": "059833b9f497009e074b74eb8bca5874f01537c22c2c77c3652c56f54d02ff66",
+    "final_session_revision": "191",
+    "accepted_revision": "179",
+    "submission_files_unchanged_by_evaluation": true,
+    "immutable_inputs_unchanged": true,
+    "hash_checks": [
+      "immutable-inputs-before.log",
+      "immutable-inputs-after.log",
+      "submission-preservation.log"
+    ],
+    "evidence_authority": "Fresh actor execution plus pre-existing task oracle run by the producer; not independent third-party certification."
+  },
+  "repairs": {
+    "draft_repair": "String false at /mock_state/queue/paused replaced with boolean false through one typed set after the required schema rejection.",
+    "negative_test_correction": "Ordinary terminal quotes produced valid declared number/boolean inputs. Actor retained those successful calls and then tested escaped literal quotes, which rejected. Parent evaluator separately rejected an explicitly typed machine string for queue pause.",
+    "unmet_continuation_requirements_reported": [],
+    "broader_unexercised_catalog_predicates": "Retained verbatim in CONTINUATION-REPORT.txt; prior application tests remain separate evidence."
+  },
+  "interaction": {
+    "actor_elapsed_ms": null,
+    "elapsed_process_ms": "848",
+    "elapsed_receiver_ms": "1436",
+    "errors": {
+      "DEFINITION_MISMATCH": 1,
+      "INVALID_CLI_ARGUMENTS": 5,
+      "REVISION_CONFLICT": 1,
+      "SCHEMA_VIOLATION": 1,
+      "UNBOUND_OPERATION": 2
+    },
+    "human_interventions": null,
+    "input_bytes": 2635,
+    "input_lines": 96,
+    "operations": {
+      "activate": 2,
+      "append": 6,
+      "commit": 2,
+      "delete": 1,
+      "diff": 3,
+      "discover": 5,
+      "edit": 2,
+      "enter": 4,
+      "export-interface": 1,
+      "guide": 1,
+      "help": 2,
+      "invoke": 13,
+      "save": 1,
+      "schema": 2,
+      "set": 39,
+      "show": 5,
+      "status": 2,
+      "tree": 2,
+      "up": 2,
+      "validate": 1
+    },
+    "output_bytes": 186658,
+    "recorded_processes": 7,
+    "response_events": 97,
+    "response_scope": "Includes launcher rejection events without an input command.",
+    "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+    "tokens": null
+  },
+  "token_use": null,
+  "actor_report": "CONTINUATION-REPORT.txt",
+  "final_message": "agent-messages.json",
+  "mechanics": "Retain actor input, observed invocation settings, additional context account, resulting files, and evaluator probes separately.",
+  "rationale": "A passing outcome and a fresh task invocation answer different questions; preserve the evidence and its limits for each.",
+  "consequence": "Do not turn one successful continuation or recorder byte counts into universal independence, reuse, or economic claims.",
+  "artifact_bytes": {
+    "completed_definition": 2490,
+    "completed_interface": 7795,
+    "completed_checkpoint": 15209,
+    "actor_report": 9121
+  }
+}

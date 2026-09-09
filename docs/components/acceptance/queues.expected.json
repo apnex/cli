@@ -1,0 +1,72 @@
+{
+  "format": "cli-component-v1",
+  "requires": [
+    "services"
+  ],
+  "definition": {
+    "format": "cli-definition-v1",
+    "id": "queues",
+    "description": "Independent queue component.",
+    "contexts": {
+      "root": {
+        "parent": null,
+        "help": "Inspect and configure queues.",
+        "related": [],
+        "commands": {
+          "inspect": {
+            "id": "inspect",
+            "help": "Read only this component's simulated state.",
+            "parameters": [],
+            "binding": {
+              "kind": "simulated",
+              "steps": [],
+              "output": {
+                "source": "state",
+                "path": []
+              }
+            }
+          },
+          "pause": {
+            "id": "pause",
+            "help": "Change simulated paused.",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "boolean",
+                "help": "New paused."
+              }
+            ],
+            "binding": {
+              "kind": "simulated",
+              "steps": [
+                {
+                  "path": [
+                    {
+                      "key": "paused"
+                    }
+                  ],
+                  "value": {
+                    "source": "argument",
+                    "name": "value"
+                  }
+                }
+              ],
+              "output": {
+                "source": "state",
+                "path": [
+                  {
+                    "key": "paused"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "mock_state": {
+      "name": "jobs",
+      "paused": false
+    }
+  }
+}

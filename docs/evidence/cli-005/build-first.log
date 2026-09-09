@@ -1,0 +1,17 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+warning: function `create_trial_manifest` is never used
+  --> tools/continuation/trial_manifest.rs:31:8
+   |
+31 | pub fn create_trial_manifest(directory: &Path, dependencies: Value) -> TrialResult<()> {
+   |        ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `trial_commands` is never used
+   --> tools/continuation/trial_process.rs:187:8
+    |
+187 | pub fn trial_commands(process: &mut TrialProcess, text: &str) -> TrialResult<()> {
+    |        ^^^^^^^^^^^^^^
+
+warning: `programmable-cli` (bin "cli-trial-receiver") generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.46s

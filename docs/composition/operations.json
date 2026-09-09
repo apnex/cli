@@ -1,0 +1,14 @@
+{
+  "types": {
+    "cli_arguments": {"codec":"composition.cli_arguments_v1","contract":"CONTRACT.md#definition-interpretation"}
+  },
+  "operations": [
+    {"name":"assemble","handler":"composition.assemble","effect":"state","help":"Assemble the candidate manifest's local components into a portable CLI definition with independent state scopes.","arguments":[],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"assemble","positional":[]},"batchable":false},
+    {"name":"activate","handler":"composition.activate","effect":"state","help":"Activate the candidate CLI definition, or import a named definition or interface export.","arguments":[{"name":"source","type":"string","optional":true}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"activate","positional":["source"]},"batchable":false},
+    {"name":"enter","handler":"composition.enter","effect":"state","help":"Enter an interface context by identity; / selects root and .. selects parent.","arguments":[{"name":"context","type":"string"}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"enter","positional":["context"]},"batchable":false},
+    {"name":"discover","handler":"composition.discover","effect":"read","help":"Inspect active context, commands, simulated state, connected read requirements and grants, and the last historical outcome.","arguments":[],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"discover","positional":[]},"batchable":false},
+    {"name":"tree","handler":"composition.tree","effect":"read","help":"Print the active CLI contexts and verbs as a tree with required parameter types and binding labels.","arguments":[],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"tree","positional":[]},"batchable":false},
+    {"name":"invoke","handler":"composition.invoke","effect":"state","help":"Invoke a local command or qualified context-id/word; success records an explicitly simulated result or a granted JSON file observation. Exact receipt replay does not refresh observations.","arguments":[{"name":"command","type":"string"},{"name":"values","type":"cli_arguments","default":{}}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"invoke","positional":["command","values"]},"batchable":false},
+    {"name":"export-interface","handler":"composition.export","effect":"export","help":"Create a portable export retaining active definition, simulated state, and labeled outcomes.","arguments":[{"name":"destination","type":"string"}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"export-interface","positional":["destination"]},"batchable":false}
+  ]
+}

@@ -1,0 +1,60 @@
+set "" object
+set /format string "cli-component-v1"
+set /requires array
+set /definition object
+edit /definition
+set ./format string "cli-definition-v1"
+set ./id string "services"
+set ./description string "Independent service component."
+set ./contexts object
+set ./contexts/root object
+set ./contexts/root/parent null
+set ./contexts/root/help string "Inspect and configure services."
+set ./contexts/root/related array
+set ./contexts/root/commands object
+set ./contexts/root/commands/inspect object
+set ./contexts/root/commands/inspect/id string "inspect"
+set ./contexts/root/commands/inspect/help string "Read only this component's simulated state."
+set ./contexts/root/commands/inspect/parameters array
+set ./contexts/root/commands/inspect/binding object
+set ./contexts/root/commands/inspect/binding/kind string "simulated"
+set ./contexts/root/commands/inspect/binding/steps array
+set ./contexts/root/commands/inspect/binding/output object
+set ./contexts/root/commands/inspect/binding/output/source string "state"
+set ./contexts/root/commands/inspect/binding/output/path array
+set ./contexts/root/commands/quota object
+set ./contexts/root/commands/quota/id string "quota"
+set ./contexts/root/commands/quota/help string "Change simulated quota."
+set ./contexts/root/commands/quota/parameters array
+append ./contexts/root/commands/quota/parameters object
+set ./contexts/root/commands/quota/parameters/0/name string "value"
+set ./contexts/root/commands/quota/parameters/0/type string "number"
+set ./contexts/root/commands/quota/parameters/0/help string "New quota."
+set ./contexts/root/commands/quota/binding object
+set ./contexts/root/commands/quota/binding/kind string "simulated"
+set ./contexts/root/commands/quota/binding/steps array
+append ./contexts/root/commands/quota/binding/steps object
+set ./contexts/root/commands/quota/binding/steps/0/path array
+append ./contexts/root/commands/quota/binding/steps/0/path object
+set ./contexts/root/commands/quota/binding/steps/0/path/0/key string "quota"
+set ./contexts/root/commands/quota/binding/steps/0/value object
+set ./contexts/root/commands/quota/binding/steps/0/value/source string "argument"
+set ./contexts/root/commands/quota/binding/steps/0/value/name string "value"
+set ./contexts/root/commands/quota/binding/output object
+set ./contexts/root/commands/quota/binding/output/source string "state"
+set ./contexts/root/commands/quota/binding/output/path array
+append ./contexts/root/commands/quota/binding/output/path object
+set ./contexts/root/commands/quota/binding/output/path/0/key string "quota"
+set ./contexts/root/commands/restart object
+set ./contexts/root/commands/restart/id string "restart"
+set ./contexts/root/commands/restart/help string "Restart a real service."
+set ./contexts/root/commands/restart/parameters array
+set ./contexts/root/commands/restart/binding object
+set ./contexts/root/commands/restart/binding/kind string "unbound"
+set ./contexts/root/commands/restart/binding/reason string "No restart capability is attached."
+set ./mock_state object
+set ./mock_state/name string "api"
+set ./mock_state/quota number 1.2300
+top
+commit
+save services.component.json

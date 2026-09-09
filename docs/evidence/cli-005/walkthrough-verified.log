@@ -1,0 +1,184 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 6.17s
+{
+  "actor": "scripted producer",
+  "artifact_bytes": {
+    "CATALOG-TASK.md": 2291,
+    "START.md": 3748,
+    "TASK.md": 4589,
+    "abandoned-request.json": 239,
+    "cli": 11036136,
+    "handover.session.json": 12557,
+    "incompatible-operations.json": 8722,
+    "operations.json": 8721,
+    "queue-policy.json": 538,
+    "receiver": 10263104,
+    "source.session.json": 12493
+  },
+  "directory": "/home/apnex/taceng/cli/target/continuation-tTfDo9/rehearsal",
+  "elapsed_preparation_ms": "2027",
+  "fresh_actor_trial": "not-run",
+  "manifest_bytes": 4078,
+  "partial_extension": {
+    "actor_reasoning_time": null,
+    "applied": 16,
+    "elapsed_process_ms": "228",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 538,
+    "output_bytes": 20923,
+    "presentation": "terminal",
+    "requests": 16,
+    "started_unix_ms": "1788905889247",
+    "token_use": null
+  },
+  "policy_construction": {
+    "actor_reasoning_time": null,
+    "applied": 48,
+    "elapsed_process_ms": "480",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 1220,
+    "output_bytes": 37891,
+    "presentation": "terminal",
+    "requests": 49,
+    "started_unix_ms": "1788905887576",
+    "token_use": null
+  },
+  "reuse_scope": "Complete catalog definition and checkpoint, extended into a second task; no general component resolver.",
+  "source_asset_construction": {
+    "actor_reasoning_time": null,
+    "applied": 113,
+    "elapsed_process_ms": "1190",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 3157,
+    "output_bytes": 83055,
+    "presentation": "terminal",
+    "requests": 114,
+    "started_unix_ms": "1788905888056",
+    "token_use": null
+  },
+  "status": "prepared",
+  "targeted_edit_comparison": "not-run",
+  "timing_scope": "Includes source and policy construction, partial extension, file copying, executable hashing, and manifest creation; excludes compilation.",
+  "token_use": null
+}
+{
+  "actor": "scripted; not a fresh actor",
+  "status": "rehearsed"
+}
+{
+  "definition_bytes": 2490,
+  "fresh_actor_attestation": null,
+  "interaction": {
+    "actor_elapsed_ms": null,
+    "elapsed_process_ms": "777",
+    "elapsed_receiver_ms": "133",
+    "errors": {
+      "DEFINITION_MISMATCH": 1,
+      "REVISION_CONFLICT": 1,
+      "SCHEMA_VIOLATION": 1
+    },
+    "human_interventions": null,
+    "input_bytes": 2129,
+    "input_lines": 77,
+    "operations": {
+      "activate": 1,
+      "append": 6,
+      "commit": 2,
+      "delete": 1,
+      "diff": 1,
+      "discover": 1,
+      "edit": 12,
+      "enter": 2,
+      "export-interface": 1,
+      "guide": 1,
+      "help": 1,
+      "invoke": 2,
+      "save": 1,
+      "schema": 1,
+      "set": 39,
+      "show": 2,
+      "status": 1,
+      "tree": 2
+    },
+    "output_bytes": 121806,
+    "recorded_processes": 3,
+    "response_events": 78,
+    "response_scope": "Includes launcher rejection events without an input command.",
+    "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+    "tokens": null
+  },
+  "interface_export_bytes": 7795,
+  "scope": "Task fidelity and real CLI behavior; actor independence is attested separately.",
+  "status": "pass",
+  "submitted_checkpoint_sha256": "8ee50177fd2b9956c939d9908ac4cdc910e523f2afe25e3daa1e86529654b63d"
+}
+{
+  "actor": "scripted producer",
+  "artifact_bytes": {
+    "CATALOG-TASK.md": 2291,
+    "START.md": 3748,
+    "TASK.md": 4589,
+    "abandoned-request.json": 239,
+    "cli": 11036136,
+    "handover.session.json": 12557,
+    "incompatible-operations.json": 8722,
+    "operations.json": 8721,
+    "queue-policy.json": 538,
+    "receiver": 10263104,
+    "source.session.json": 12493
+  },
+  "directory": "/home/apnex/taceng/cli/target/continuation-tTfDo9/recipient",
+  "elapsed_preparation_ms": "1960",
+  "fresh_actor_trial": "not-run",
+  "manifest_bytes": 4078,
+  "partial_extension": {
+    "actor_reasoning_time": null,
+    "applied": 16,
+    "elapsed_process_ms": "203",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 538,
+    "output_bytes": 20923,
+    "presentation": "terminal",
+    "requests": 16,
+    "started_unix_ms": "1788905892318",
+    "token_use": null
+  },
+  "policy_construction": {
+    "actor_reasoning_time": null,
+    "applied": 48,
+    "elapsed_process_ms": "454",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 1220,
+    "output_bytes": 37891,
+    "presentation": "terminal",
+    "requests": 49,
+    "started_unix_ms": "1788905890696",
+    "token_use": null
+  },
+  "reuse_scope": "Complete catalog definition and checkpoint, extended into a second task; no general component resolver.",
+  "source_asset_construction": {
+    "actor_reasoning_time": null,
+    "applied": 113,
+    "elapsed_process_ms": "1166",
+    "exit_code": 0,
+    "failures": 0,
+    "input_bytes": 3157,
+    "output_bytes": 83055,
+    "presentation": "terminal",
+    "requests": 114,
+    "started_unix_ms": "1788905891151",
+    "token_use": null
+  },
+  "status": "prepared",
+  "targeted_edit_comparison": "not-run",
+  "timing_scope": "Includes source and policy construction, partial extension, file copying, executable hashing, and manifest creation; excludes compilation.",
+  "token_use": null
+}
+real 11.27
+user 20.08
+sys 0.66

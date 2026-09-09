@@ -1,0 +1,133 @@
+# Construct and explore a CLI
+
+The `--compose` profile keeps document authoring available while adding explicit activation, interface navigation, discovery, mock invocation, and portable exports.
+`tree` prints a verb tree derived from the active definition.
+The [platform mock example](examples/platform/README.md) constructs a CLI through commands and demonstrates the tree.
+Use the same flag when reopening its checkpoint.
+Add `--constraints` to combine this profile with [schema guidance and constrained authoring](../constraints/USE.md); that combination uses checkpoint format 4.
+This profile uses checkpoint format 2; ordinary authoring sessions continue to use their original profile and format.
+Checkpoints bind to exact kernel declaration bytes as well as the profile.
+When changing the kernel declaration, preserve the old binary and checkpoint; an interface export can be activated in a new session while the old checkpoint retains its authoring draft and receipt history.
+
+## Build and construct the example
+
+Run these shell commands from the repository root with Rust and Cargo available:
+
+```sh
+cargo build --locked --bin cli
+cli_project_root="$PWD"
+cli_demo_dir="$(mktemp -d -t cli-composition-XXXXXX)"
+(
+  cd "$cli_demo_dir"
+  "$cli_project_root/target/debug/cli" \
+    --definition "$cli_project_root/docs/authoring/operations.json" \
+    --compose --session session.json --create \
+    --intent-file "$cli_project_root/docs/composition/acceptance/TASK.md" \
+    --commands < "$cli_project_root/docs/composition/acceptance/catalog.commands" \
+    > construction.jsonl
+)
+```
+
+The [command trace](acceptance/catalog.commands) builds the definition from an empty document with `set`, `append`, `edit`, and `top`, then commits and saves it.
+It contains no serialized container literals and does not import the [separate expected document](acceptance/expected-definition.json).
+The session, event trace, and authored `catalog-definition.json` are in the new temporary directory.
+Construction leaves the definition inactive.
+
+Open the interactive session:
+
+```sh
+(
+  cd "$cli_demo_dir"
+  "$cli_project_root/target/debug/cli" \
+    --definition "$cli_project_root/docs/authoring/operations.json" \
+    --compose --session session.json
+)
+```
+
+Enter these CLI commands:
+
+```text
+activate
+tree
+discover
+enter services
+discover
+invoke inspect
+invoke quota 1e400
+invoke inspect
+invoke restart
+export-interface interface.json
+```
+
+Quota changes only in the simulated document and retains the exact spelling `1e400`.
+Restart reports `UNBOUND_OPERATION` because no behavior is attached.
+Successful mock outcomes say `binding: simulated` and `effect: simulation_only` outside their authored output.
+The prompt shows the document path and interface context separately.
+Tab completes local command words after `invoke` and context IDs after `enter`.
+Ctrl-D closes the session; acknowledged changes are already checkpointed.
+
+## Authoring and interface controls
+
+| Command | Meaning |
+|---|---|
+| `edit`, `up`, `top`, `set`, `append`, `insert`, `delete` | Navigate and change the authored document using the [authoring syntax](../authoring/USE.md). |
+| `commit`, `discard`, `save` | Accept, restore, or export the authored document; they do not activate it. |
+| `activate` | Validate and activate the current candidate as a CLI definition. |
+| `activate definition.json` | Activate a definition from an explicit file. |
+| `activate interface.json` | Restore an explicitly exported interface, including its simulated state. |
+| `enter services`, `enter ..`, `enter /` | Select a declared interface context, its parent, or root. |
+| `tree` | Print the full active verb tree with required parameter types and binding labels. |
+| `discover` | Read current command contracts, relationships, mock state, and last simulated outcome. |
+| `invoke quota 3` | Execute a configured local command with positional values of its declared types. |
+| `export-interface interface.json` | Create a bundle with definition, identity, context, simulated state, outcome labels, and provenance. |
+
+Changing a draft does not affect the current interface.
+Invalid activation leaves the old interface intact.
+Activating changed definition content resets its simulation and interface context; reactivating identical content preserves them.
+Importing an explicit interface bundle restores that bundle's state.
+Exports are create-only: identical bytes can be exported again, while different existing content is preserved with `EXPORT_EXISTS`.
+
+## Machine interaction
+
+`--machine` consumes JSON request lines; `--commands` consumes terminal command lines and emits the same structured responses.
+Both begin with `session_open` containing the session identity, revision, document context, optional active-interface header, original task, and last durable receipt.
+Use `help` for kernel controls and `discover` for the active configured surface.
+The structured `tree` result includes `verb_tree_text` and the active interface identity.
+
+The [existing request envelope](../authoring/SESSION-CONTRACT.md) remains in force.
+`activate`, `enter`, and `invoke` require the observed `expected_revision`; `discover` and `tree` omit it, and `export-interface` requires it without advancing the revision.
+Every successful invocation, including a mock read, records a receipt and advances the session revision.
+
+The arguments for quota invocation are:
+
+```json
+{
+  "command": "quota",
+  "values": {
+    "value": {"kind": "number", "value": "1e400"}
+  }
+}
+```
+
+Argument constructors preserve exact values through generic JSON clients.
+String and boolean parameters use the same `kind` and `value` shape.
+Command parameters are required; extra arguments and mismatched kinds reject.
+Discovery returns simulated binding programs as `program_json_text` to preserve literal number spelling, alongside directly readable parameter metadata and binding kind.
+
+Inspect `status`, `mutation`, and errors rather than treating process exit alone as an operation result.
+On `PERSISTENCE_UNCERTAIN`, close and reopen, then inspect the receipt before retrying the same request.
+Only the last successful state request is replayable; an older request is not automatically rebased.
+
+## Portable continuation and scope
+
+Create another `--compose` session with its own task file, then use `activate` with the exported interface's path.
+The receiver retains its own task and revision sequence; the interface retains its original activation provenance and simulation labels.
+The bundle also records the exporting session's task and revision.
+This is a local data transfer, not an execution-permission grant or an authenticated history.
+
+The [contract](CONTRACT.md) defines the supported format and limits.
+This slice supports required scalar arguments, explicit context relationships, static examples, and bounded stateful mocks.
+Schema enforcement, dynamic entity expansion, reusable dependency composition, and connected hooks remain later work on the [board](../BOARD.md).
+
+Build removal follows the [authoring guide](../authoring/USE.md#verify-and-remove).
+Keep any checkpoint or export you intend to resume before removing a demo directory.

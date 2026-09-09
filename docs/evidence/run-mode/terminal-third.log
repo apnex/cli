@@ -1,0 +1,25 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 20.77s
+     Running tests/cli_run.rs (target/release/deps/cli_run-f94e0ffa3a2f3b64)
+
+running 1 test
+
+thread 'actual_terminal_completes_context_and_executes_direct_commands' (178960) panicked at tests/cli_run.rs:744:5:
+Terminal status signal: 9 (SIGKILL): [6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mser[0m78[?25h[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m| [35m[0m[0m[37mser[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mser[0m[90m[1;7;32mvices[0m[90m[1;7;32m  [33mRead the granted catalog or change simulated quota.[0m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37mservices [0m78[?25h[J
+[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37mquota 1e400[0m78[?25h[J
+[simulated] services catalog.quota
+{"quota":1e400}
+[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [services][96m> [35m[0m[0m[37m:top[0m78[?25h[J
+[6n[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[0m[?25l[1;2H[J[1;1H[92mservice-catalog-connected [/][96m> [35m[0m[0m[37m:exit[0m78[?25h[J
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test actual_terminal_completes_context_and_executes_direct_commands ... FAILED
+
+failures:
+
+failures:
+    actual_terminal_completes_context_and_executes_direct_commands
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.25s
+
+error: test failed, to rerun pass `--test cli_run`

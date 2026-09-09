@@ -1,0 +1,17 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+error[E0308]: mismatched types
+   --> tests/connected_json_read.rs:229:17
+    |
+229 |                 response["result"]
+    |                 ^^^^^^^^^^^^^^^^^^ expected `Option<Value>`, found `Value`
+    |
+    = note: expected enum `Option<Value>`
+               found enum `Value`
+help: try wrapping the expression in `Some`
+    |
+229 |                 Some(response["result"])
+    |                 +++++                  +
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `programmable-cli` (test "connected_json_read") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

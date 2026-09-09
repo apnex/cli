@@ -1,0 +1,110 @@
+set /format string cli-definition-v1
+set /id string service-catalog
+set /description string "Service catalog prototype; all behavior is simulated or unbound."
+set /mock_state object
+edit /mock_state
+set ./name string api
+set ./quota number 1.2300
+set ./enabled boolean true
+top
+set /contexts object
+set /contexts/root object
+edit /contexts/root
+set ./parent null
+set ./help string "Explore the service catalog prototype."
+set ./related array
+set ./commands object
+set ./commands/about object
+edit ./commands/about
+set ./id string catalog.about
+set ./help string "Describe this prototype."
+set ./parameters array
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+set ./output object
+set ./output/source string literal
+set ./output/value string "Service catalog prototype"
+top
+set /contexts/services object
+edit /contexts/services
+set ./parent string root
+set ./help string "Inspect and simulate changes to a service."
+set ./related array
+append ./related string deployments
+set ./commands object
+set ./commands/inspect object
+edit ./commands/inspect
+set ./id string catalog.inspect
+set ./help string "Read simulated service state."
+set ./parameters array
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+set ./output object
+set ./output/source string state
+set ./output/path array
+edit /contexts/services/commands
+set ./quota object
+edit ./quota
+set ./id string catalog.quota
+set ./help string "Set the simulated quota to an exact JSON number."
+set ./parameters array
+append ./parameters object
+edit ./parameters/0
+set ./name string value
+set ./type string number
+set ./help string "New simulated quota."
+edit /contexts/services/commands/quota
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+append ./steps object
+edit ./steps/0
+set ./path array
+append ./path object
+set ./path/0/key string quota
+set ./value object
+set ./value/source string argument
+set ./value/name string value
+edit /contexts/services/commands/quota/binding
+set ./output object
+set ./output/source string state
+set ./output/path array
+append ./output/path object
+set ./output/path/0/key string quota
+edit /contexts/services/commands
+set ./restart object
+edit ./restart
+set ./id string catalog.restart
+set ./help string "Restart the real service when an implementation is attached."
+set ./parameters array
+set ./binding object
+set ./binding/kind string unbound
+set ./binding/reason string "No restart capability has been attached."
+top
+set /contexts/deployments object
+edit /contexts/deployments
+set ./parent string root
+set ./help string "Explore a deployment example."
+set ./related array
+set ./commands object
+set ./commands/plan object
+edit ./commands/plan
+set ./id string deployment.plan
+set ./help string "Return a simulated deployment example."
+set ./parameters array
+set ./binding object
+edit ./binding
+set ./kind string simulated
+set ./steps array
+set ./output object
+set ./output/source string literal
+set ./output/value object
+set ./output/value/status string planned
+top
+commit
+save catalog-definition.json

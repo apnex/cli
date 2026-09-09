@@ -1,0 +1,15 @@
+{
+  "format": "cli-assembly-v1",
+  "id": "worker-platform",
+  "description": "Assembled service and queue interface.",
+  "components": [
+    {
+      "mount": "services",
+      "source": "services.component.json"
+    },
+    {
+      "mount": "queues",
+      "source": "queues.component.json"
+    }
+  ]
+}

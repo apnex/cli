@@ -1,0 +1,15 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.96s
+     Running tests/authoring_limits.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/authoring_limits-28d57cf9e62c0879)
+
+running 4 tests
+test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+PASS declared-limits:scalar-depth-document-request-checkpoint-batch
+test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+PASS declared-limits:receipt-overhead
+PASS bounded-result-delivery
+test receipt_overhead_and_response_bound_reject_before_publication ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.73s
+

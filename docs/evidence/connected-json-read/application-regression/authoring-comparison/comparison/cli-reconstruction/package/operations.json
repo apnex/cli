@@ -1,0 +1,393 @@
+{
+  "format_version": 1,
+  "definition_id": "bootstrap-json-authoring-v1",
+  "status": "hand-authored-bootstrap",
+  "contract": "SESSION-CONTRACT.md",
+  "types": {
+    "document_path": {
+      "codec": "authoring.document_path_v1",
+      "contract": "SESSION-CONTRACT.md#addressing-and-navigation"
+    },
+    "value_constructor": {
+      "codec": "authoring.value_constructor_v1",
+      "contract": "SESSION-CONTRACT.md#typed-values-and-terminal-input"
+    },
+    "primitive_edits": {
+      "codec": "authoring.primitive_edits_v1",
+      "contract": "SESSION-CONTRACT.md#ordering-failure-and-retry"
+    }
+  },
+  "operations": [
+    {
+      "name": "status",
+      "handler": "authoring.status",
+      "effect": "read",
+      "help": "Inspect the authoritative session and last successful mutation receipt.",
+      "arguments": [],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "status",
+        "positional": []
+      },
+      "batchable": false
+    },
+    {
+      "name": "show",
+      "handler": "authoring.show",
+      "effect": "read",
+      "help": "Read an exact JSON value from the candidate or accepted document.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path",
+          "default": {
+            "base": "context",
+            "segments": []
+          }
+        },
+        {
+          "name": "view",
+          "type": "enum",
+          "values": [
+            "candidate",
+            "accepted"
+          ],
+          "default": "candidate"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "show",
+        "positional": [
+          "path",
+          "view"
+        ]
+      },
+      "batchable": false
+    },
+    {
+      "name": "help",
+      "handler": "authoring.help",
+      "effect": "read",
+      "help": "Discover the declared operation surface and argument contracts.",
+      "arguments": [
+        {
+          "name": "operation",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "help",
+        "positional": [
+          "operation"
+        ]
+      },
+      "batchable": false
+    },
+    {
+      "name": "complete",
+      "handler": "authoring.complete",
+      "effect": "read",
+      "help": "List existing child locations with explicit pagination.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path",
+          "default": {
+            "base": "context",
+            "segments": []
+          }
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 50
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "complete",
+        "positional": [
+          "path",
+          "offset",
+          "limit"
+        ]
+      },
+      "batchable": false
+    },
+    {
+      "name": "diff",
+      "handler": "authoring.diff",
+      "effect": "read",
+      "help": "Review candidate changes against the accepted baseline.",
+      "arguments": [],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "diff",
+        "positional": []
+      },
+      "batchable": false
+    },
+    {
+      "name": "edit",
+      "handler": "authoring.edit",
+      "effect": "state",
+      "help": "Focus an existing document value.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "edit",
+        "positional": [
+          "path"
+        ]
+      },
+      "batchable": false
+    },
+    {
+      "name": "up",
+      "handler": "authoring.up",
+      "effect": "state",
+      "help": "Move context one level toward the root.",
+      "arguments": [],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "up",
+        "positional": []
+      },
+      "batchable": false
+    },
+    {
+      "name": "top",
+      "handler": "authoring.top",
+      "effect": "state",
+      "help": "Move context to the root.",
+      "arguments": [],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "top",
+        "positional": []
+      },
+      "batchable": false
+    },
+    {
+      "name": "set",
+      "handler": "authoring.set",
+      "effect": "state",
+      "help": "Replace a value or create a final object member.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path"
+        },
+        {
+          "name": "value",
+          "type": "value_constructor"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "set",
+        "positional": [
+          "path",
+          "value"
+        ]
+      },
+      "batchable": true
+    },
+    {
+      "name": "append",
+      "handler": "authoring.append",
+      "effect": "state",
+      "help": "Append one value to an existing array.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path"
+        },
+        {
+          "name": "value",
+          "type": "value_constructor"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "append",
+        "positional": [
+          "path",
+          "value"
+        ]
+      },
+      "batchable": true
+    },
+    {
+      "name": "insert",
+      "handler": "authoring.insert",
+      "effect": "state",
+      "help": "Insert a value at an existing array boundary.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path"
+        },
+        {
+          "name": "index",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "value",
+          "type": "value_constructor"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "insert",
+        "positional": [
+          "path",
+          "index",
+          "value"
+        ]
+      },
+      "batchable": true
+    },
+    {
+      "name": "delete",
+      "handler": "authoring.delete",
+      "effect": "state",
+      "help": "Delete an existing member or array element.",
+      "arguments": [
+        {
+          "name": "path",
+          "type": "document_path"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "delete",
+        "positional": [
+          "path"
+        ]
+      },
+      "batchable": true
+    },
+    {
+      "name": "batch",
+      "handler": "authoring.batch",
+      "effect": "state",
+      "help": "Apply absolute primitive edits atomically in order.",
+      "arguments": [
+        {
+          "name": "operations",
+          "type": "primitive_edits",
+          "minimum_items": 1,
+          "maximum_items": 256
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "block",
+        "start": "batch",
+        "submit": "end",
+        "cancel": "cancel"
+      },
+      "batchable": false
+    },
+    {
+      "name": "commit",
+      "handler": "authoring.commit",
+      "effect": "state",
+      "help": "Accept the candidate as the new local baseline.",
+      "arguments": [],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "commit",
+        "positional": []
+      },
+      "batchable": false
+    },
+    {
+      "name": "discard",
+      "handler": "authoring.discard",
+      "effect": "state",
+      "help": "Restore the accepted baseline and return to root.",
+      "arguments": [],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "discard",
+        "positional": []
+      },
+      "batchable": false
+    },
+    {
+      "name": "import",
+      "handler": "authoring.import",
+      "effect": "state",
+      "help": "Replace the entire candidate from a JSON file and return to root; commit and activate remain explicit.",
+      "arguments": [
+        {
+          "name": "source",
+          "type": "string"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "import",
+        "positional": [
+          "source"
+        ]
+      },
+      "batchable": false
+    },
+    {
+      "name": "save",
+      "handler": "authoring.save",
+      "effect": "export",
+      "help": "Export candidate JSON without replacing different existing content.",
+      "arguments": [
+        {
+          "name": "destination",
+          "type": "string"
+        }
+      ],
+      "unknown_arguments": "reject",
+      "terminal": {
+        "form": "tokens",
+        "command": "save",
+        "positional": [
+          "destination"
+        ]
+      },
+      "batchable": false
+    }
+  ]
+}

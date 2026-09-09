@@ -1,0 +1,12 @@
+[package]
+name = "cli-authoring-dependency-probe"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["raw_value"] }
+sha2 = "0.10"
+uuid = { version = "1", features = ["v4", "serde"] }
+reedline = "*"

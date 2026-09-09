@@ -1,0 +1,127 @@
+{
+  "format_version": 1,
+  "milestone": "CLI-004",
+  "status": "complete",
+  "authority": "../../context/cli-004-approval.json",
+  "application_acceptance": {
+    "status": "pass",
+    "all_features_tests": 51,
+    "normal_tests": 44,
+    "all_features_log": "application-tests-final.log",
+    "normal_log": "normal-tests-final.log",
+    "source_fingerprints": "application-source.sha256",
+    "binary_fingerprint": "application-binary.sha256",
+    "environment": "Local Linux; Rust 1.98.1"
+  },
+  "upstream_cases": {
+    "status": "pass",
+    "positive": 141,
+    "negative": 168,
+    "files": 11,
+    "source": "https://github.com/json-schema-org/JSON-Schema-Test-Suite/tree/main/tests/draft2020-12",
+    "captured_hashes": "upstream.sha256",
+    "hash_check": "upstream-check.log",
+    "scope": "Every case in the eleven retained files; no filtering; selected coverage only."
+  },
+  "walkthrough": {
+    "status": "pass",
+    "responses": 95,
+    "intentional_rejected_commits": 1,
+    "commands": "walkthrough.sh",
+    "inspection_commands": "inspection.commands",
+    "execution_log": "walkthrough-final.log",
+    "assertions": "dependency-probe/src/bin/verify-walkthrough.rs",
+    "verification_log": "walkthrough-verification-final.log",
+    "demo_directory": "demo-directory.txt",
+    "scope": "Literal shell-block replay with piped command input; expected schema, accepted instance and OpenAPI output asserted."
+  },
+  "interactive": {
+    "status": "pass",
+    "transport": "Actual PTY with Reedline",
+    "actions": [
+      "guide /port",
+      "set /mode string p<Tab>",
+      "Ctrl-C",
+      "Ctrl-D"
+    ],
+    "observations": [
+      "Referenced integer bounds displayed",
+      "Completion menu offered production",
+      "No edit submitted; complete checkpoint bytes unchanged"
+    ],
+    "transcript": "interactive.typescript",
+    "checkpoint_check": "interactive-readonly.log"
+  },
+  "fault_evidence": {
+    "status": "pass",
+    "log": "application-tests-final.log",
+    "required_markers": [
+      "before_checkpoint_write",
+      "after_checkpoint_rename",
+      "before_response_delivery"
+    ],
+    "scope": "Markers identify point, action and process; failed publication, uncertainty, killed process and idempotent replay observed locally."
+  },
+  "dependency": {
+    "name": "jsonschema",
+    "version": "0.55.0",
+    "features": [
+      "arbitrary-precision"
+    ],
+    "default_features": false,
+    "probe": "dependency-probe.log",
+    "reproduction": "dependency-probe-reproduction.log"
+  },
+  "documentation_checks": {
+    "status": "pass",
+    "tests": 13,
+    "log": "scaffold-tests-final.log",
+    "scaffold_check": "scaffold-check.log",
+    "declared_layers": 7,
+    "synchronized_views": 15,
+    "unresolved_local_inline_links": 0,
+    "unmet_ready_prerequisites": 0,
+    "application_format": "application-format.log",
+    "scaffold_format": "scaffold-format.log"
+  },
+  "acceptance_sources_sha256": {
+    "docs/constraints/acceptance/TASK.md": "6d163dd90ed2890ef107d757f0a10f7a2ab047f91fa54af0c48a9b4c029a07c5",
+    "docs/constraints/acceptance/instance.commands": "6a040564f630b6d1448b0c31a87b77eb54649e697a0c0d1615ddd9984f70dfc4",
+    "docs/constraints/acceptance/openapi.commands": "81a28c2eb808876f02595ff709cf5d1ac1a024dbe308fe186294e2b16a24cde5",
+    "docs/constraints/acceptance/schema.commands": "9a6cedb2841fda136d535c615285dcb5f910dc2057d3371600e3ea03a6ebcb37",
+    "docs/constraints/acceptance/openapi.expected.json": "430a2879e6df73f91b9fdcb36591b8ab058c87995173501c4a563547ee81106a",
+    "docs/constraints/acceptance/service.expected.json": "aa0a7c5f4924e62145e8af1a8623a6c0ecad937e1594f40b4fd53b4e97199ce3",
+    "docs/constraints/acceptance/service.schema.json": "adfc7b60ff6c06f4bfabc790fe825345420b9125a7431f63b7116afe25b204c9"
+  },
+  "limits": [
+    "local-2020-12-v1 admission subset; external, recursive and dynamic references rejected",
+    "Format is annotation-only; guidance is advisory",
+    "Schema: 64 KiB, 256 schema locations, 4096 expansion visits, expansion depth 64",
+    "Constraint numbers: 1024-byte tokens, exponent magnitude at most 4096; preserved draft values remain editable",
+    "At most 100 findings with explicit truncation",
+    "OpenAPI description construction only; full OpenAPI conformance and invocation unclaimed",
+    "Fresh-actor continuation, reuse economics, remote deployment and hardware power-loss guarantees unclaimed"
+  ],
+  "corrections": [
+    "Oracle JSON files and traces were transcribed from the pre-implementation task after initial implementation began; see the audit timing correction.",
+    "Initial compile and test harness failures are retained in their logs. Final application runs pass.",
+    "Boolean-schema findings use the validator's keyword identity. Profile assembly reads the bootstrap declaration once.",
+    "Guidance marks reference sibling intersections incomplete; the final application tests include the intersecting enum case."
+  ],
+  "compatibility": {
+    "status": "pass",
+    "legacy_authoring": {
+      "source": "../cli-002/interactive-checkpoint.json",
+      "revision": "2",
+      "events": "legacy-authoring.jsonl"
+    },
+    "legacy_composition": {
+      "source": "../tree-command/session.json",
+      "revision": "216",
+      "events": "legacy-composition.jsonl",
+      "tree": "Matches docs/composition/examples/platform/expected-verb-tree.txt"
+    },
+    "checkpoint_check": "compatibility-readonly.log",
+    "scope": "Copies of saved checkpoints from earlier milestones reopened without mutation; composition tree compared to its existing expected output."
+  }
+}

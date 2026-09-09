@@ -1,0 +1,100 @@
+Script started on 2026-09-08 21:29:43+10:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="80" LINES="24"]
+Session "c991a515-5777-43d3-b5d4-145a1a2a1acf" | revision "10" | accepted "10" | draft matches accepted
+Task: "# Schema construction and constraint task\n\nFixed before application implementation for CLI-004.\n\nBuild a schema for a service record using only navigation and typed value constructors. Its root is an object with no undeclared properties. It requires `name`, `port`, and `mode`. Name is a nonempty string. Port references a local `$defs/port` integer schema with inclusive bounds 1 and 65535. Mode is `development` or `production`. Optional `tags` is an array of unique strings. A schema with these rules must remain ordinary data until explicitly attached.\n\nSave the schema, then start an independent empty instance session, attach it, discover the missing fields, and author a valid service. Empty drafts and a string-valued port stay editable but cannot commit. Rejection identifies instance and schema paths and changes no saved byte. Fix the port, commit, reopen after removing the source file, inspect the attachment and continue. Changing and detaching constraints must be explicit. Human command and machine request journeys must agree on resulting documents, guidance, and findings.\n\nSeparately construct an OpenAPI 3.1.1 description with title `Service catalog`, version `1.0.0`, and GET `/services` operation `listServices`. Its successful `200` response has description `Service list`, JSON media type, and an array schema whose items reference `#/components/schemas/Service`. That component is an object requiring a string `name` and integer `port`. Preserve the slash-containing path and numeric-looking response key as literal object keys. No raw JSON containers may be typed into either construction trace. No API invocation is part of this task.\n\nValidation must also agree with retained, unmodified positive and negative cases from the JSON Schema project's Draft 2020-12 suite. Pin the downloaded bytes before application implementation. Exercise local references and their siblings, boolean schemas, numeric equivalence, invalid schemas, unsupported dialects and features, external and cyclic references, annotation data containing schema-looking keys, conditional guidance limits, and checkpoint failure recovery. This task fixes behavior; tests do not derive the expected service schema or API document from the produced artifact.\n"
+{
+  "accepted_revision": "10",
+  "active_constraint": {
+    "dialect": "https://json-schema.org/draft/2020-12/schema",
+    "policy": "local-2020-12-v1",
+    "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+  },
+  "constraint_mode": "json-schema-2020-12",
+  "context": [],
+  "definition_id": "bootstrap-json-constraints-v1",
+  "definition_sha256": "0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7",
+  "dirty": false,
+  "durability": "durable",
+  "node_kind": "object",
+  "revision": "10",
+  "session_id": "c991a515-5777-43d3-b5d4-145a1a2a1acf"
+}
+Last receipt: {
+  "request": {
+    "arguments": {},
+    "expected_revision": "9",
+    "operation": "commit",
+    "request_id": "02fd3918-43c9-4db7-b75c-a4ea269a41c5",
+    "session_id": "c991a515-5777-43d3-b5d4-145a1a2a1acf"
+  },
+  "response": {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "02fd3918-43c9-4db7-b75c-a4ea269a41c5",
+    "result": {
+      "accepted_revision": "10"
+    },
+    "session": {
+      "accepted_revision": "10",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "10",
+      "session_id": "c991a515-5777-43d3-b5d4-145a1a2a1acf"
+    },
+    "status": "ok"
+  }
+}
+[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m[37mguide /port[0m78[?25h[J
+{
+  "guidance": {
+    "children": [],
+    "complete": true,
+    "notes": [],
+    "path": {
+      "base": "root",
+      "segments": [
+        {
+          "key": "port"
+        }
+      ]
+    },
+    "required": [],
+    "rules": [
+      {
+        "schema_json_text": "{\"maximum\":65535,\"minimum\":1,\"type\":\"integer\"}",
+        "schema_path": "/$defs/port"
+      },
+      {
+        "schema_json_text": "{\"$ref\":\"#/$defs/port\"}",
+        "schema_path": "/properties/port"
+      }
+    ],
+    "schema_paths": [
+      "/$defs/port",
+      "/properties/port"
+    ],
+    "terminal_path": "/port",
+    "types": [
+      "integer"
+    ],
+    "values": []
+  }
+}
+Mutation: "none" | replayed: false
+Session: {"accepted_revision":"10","active_constraint":{"dialect":"https://json-schema.org/draft/2020-12/schema","policy":"local-2020-12-v1","schema_sha256":"c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"},"constraint_mode":"json-schema-2020-12","context":[],"definition_id":"bootstrap-json-constraints-v1","definition_sha256":"0aad1c15cea491185b47162132a97930c6e246599d800692e2f2ce6ffa24a0e7","dirty":false,"durability":"durable","node_kind":"object","revision":"10","session_id":"c991a515-5777-43d3-b5d4-145a1a2a1acf"}
+[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m7[37m[0m8[?25h[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m| [35m[0m[0m[37mset /mode string p[0m7[2;1H[J[0m[90m[1;7;32m[0m[90m[1;4;7;32mp[0m[90m[1;7;32mroduction[0m[90m[1;7;32m  [33m"schema literal suggestion; validate the complete draft"[0m[0m8[?25h[J
+[6n[0m[?25l[1;2H[J[1;1H[92m[""] r10[96m> [35m[0m[0m7[37m[0m8[?25h[J[37m[0m
+
+Script done on 2026-09-08 21:30:03+10:00 [COMMAND_EXIT_CODE="0"]

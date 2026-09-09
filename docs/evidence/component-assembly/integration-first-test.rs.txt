@@ -1,0 +1,924 @@
+mod authoring_fixture;
+use authoring_fixture::*;
+use programmable_cli::document_value::DocumentValue;
+use programmable_cli::operation_definition::OperationDefinition;
+use programmable_cli::terminal_input::compile_terminal_request;
+use serde_json::{Value, json};
+use std::fs;
+
+fn assembly_start(fixture: &AuthoringFixture, terminal: bool, create: bool) -> AuthoringProcess {
+    let mut command = fixture.command(terminal, create);
+    command.args(["--compose", "--constraints"]);
+    let process = AuthoringProcess::spawn(command);
+    assert_eq!(
+        process.header["event"], "session_open",
+        "{}",
+        process.header
+    );
+    process
+}
+
+fn assembly_request(process: &AuthoringProcess, operation: &str, arguments: Value) -> Value {
+    let mut request = json!({"request_id":uuid::Uuid::new_v4().to_string(),"session_id":process.header["session"]["session_id"],"operation":operation,"arguments":arguments});
+    if ![
+        "tree", "discover", "show", "diff", "status", "help", "complete", "validate", "guide",
+    ]
+    .contains(&operation)
+    {
+        request["expected_revision"] = process.header["session"]["revision"].clone();
+    }
+    request
+}
+
+fn assembly_step(
+    process: &mut AuthoringProcess,
+    terminal: bool,
+    line: &str,
+    operation: &str,
+    arguments: Value,
+) -> Value {
+    let response = if terminal {
+        process.terminal(line)
+    } else {
+        process.submit(&assembly_request(process, operation, arguments))
+    };
+    assert_eq!(response["status"], "ok", "{line}: {response}");
+    response
+}
+
+fn author_component(name: &str, terminal: bool) -> AuthoringFixture {
+    let fixture = AuthoringFixture::new();
+    fs::copy(
+        repository_path("docs/components/acceptance/TASK.md"),
+        &fixture.intent,
+    )
+    .unwrap();
+    let mut process = fixture.start(terminal, true);
+    let definition = OperationDefinition::load_operation_definition(&fixture.declaration).unwrap();
+    let recipe = fs::read_to_string(repository_path(&format!(
+        "docs/components/acceptance/{name}.commands"
+    )))
+    .unwrap();
+    let mut events = vec![process.header.clone()];
+    for line in recipe.lines() {
+        assert!(
+            !line.contains(['{', '}', '[', ']']),
+            "Raw container literal: {line}"
+        );
+        let request =
+            compile_terminal_request(line, &definition, &fixture.checkpoint_state()).unwrap();
+        let response = if terminal {
+            process.terminal(line)
+        } else {
+            process.submit(&serde_json::to_value(request).unwrap())
+        };
+        assert_eq!(response["status"], "ok", "{line}: {response}");
+        events.push(response);
+    }
+    let expected = DocumentValue::parse_document(
+        &fs::read_to_string(repository_path(&format!(
+            "docs/components/acceptance/{name}.expected.json"
+        )))
+        .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(fixture.checkpoint_state().candidate, expected);
+    assert_eq!(fixture.checkpoint_state().accepted, expected);
+    assert_eq!(
+        DocumentValue::parse_document(
+            &fs::read_to_string(fixture.directory.join(format!("{name}.component.json"))).unwrap()
+        )
+        .unwrap(),
+        expected
+    );
+    retain_acceptance_bytes(
+        &format!("component-{name}-{terminal}.json"),
+        &serde_json::to_vec_pretty(&events).unwrap(),
+    );
+    assert!(process.close().success());
+    fixture
+}
+
+fn assembly_inputs(fixture: &AuthoringFixture) {
+    for name in ["services", "queues"] {
+        fs::copy(
+            repository_path(&format!("docs/components/acceptance/{name}.expected.json")),
+            fixture.directory.join(format!("{name}.component.json")),
+        )
+        .unwrap();
+    }
+    fs::copy(
+        repository_path("docs/components/acceptance/assembly.expected.json"),
+        fixture.directory.join("assembly.json"),
+    )
+    .unwrap();
+}
+
+fn invocation_output(response: &Value) -> DocumentValue {
+    assert_eq!(
+        response["result"]["invocation"]["effect"],
+        "simulation_only"
+    );
+    DocumentValue::parse_document(
+        response["result"]["invocation"]["output_json_text"]
+            .as_str()
+            .unwrap(),
+    )
+    .unwrap()
+}
+
+#[test]
+fn authored_components_assemble_transfer_and_preserve_independent_behavior() {
+    let mut artifacts = Vec::new();
+    for terminal in [false, true] {
+        let services = author_component("services", terminal);
+        let queues = author_component("queues", terminal);
+        let fixture = AuthoringFixture::new();
+        for (source, name) in [(&services, "services"), (&queues, "queues")] {
+            fs::copy(
+                source.directory.join(format!("{name}.component.json")),
+                fixture.directory.join(format!("{name}.component.json")),
+            )
+            .unwrap();
+        }
+        let mut process = assembly_start(&fixture, terminal, true);
+        let definition = OperationDefinition::load_kernel_profile(
+            &fixture.declaration,
+            programmable_cli::kernel_profile::KernelProfile::ConstrainedComposition,
+        )
+        .unwrap();
+        let recipe = fs::read_to_string(repository_path(
+            "docs/components/acceptance/assembly.commands",
+        ))
+        .unwrap();
+        for line in recipe.lines() {
+            assert!(!line.contains(['{', '}', '[', ']']));
+            let request =
+                compile_terminal_request(line, &definition, &fixture.checkpoint_state()).unwrap();
+            let response = if terminal {
+                process.terminal(line)
+            } else {
+                process.submit(&serde_json::to_value(request).unwrap())
+            };
+            assert_eq!(response["status"], "ok", "{line}: {response}");
+        }
+        let before = fixture.checkpoint_state();
+        let response = assembly_step(&mut process, terminal, "assemble", "assemble", json!({}));
+        let assembled = fixture.checkpoint_state();
+        assert!(assembled.context.is_empty());
+        assert_eq!(assembled.accepted, before.accepted);
+        assert_eq!(assembled.active_constraint, before.active_constraint);
+        assert_eq!(assembled.active_interface, before.active_interface);
+        assert_eq!(
+            serde_json::to_value(&assembled.candidate).unwrap()["format"],
+            "cli-definition-v2"
+        );
+        assert!(
+            !response["result"]["changed_paths"]
+                .as_array()
+                .unwrap()
+                .is_empty()
+        );
+        artifacts.push(assembled.candidate.clone());
+        assembly_step(&mut process, terminal, "commit", "commit", json!({}));
+        assembly_step(
+            &mut process,
+            terminal,
+            "save worker-platform.json",
+            "save",
+            json!({"destination":"worker-platform.json"}),
+        );
+        assert!(process.close().success());
+
+        let consumer = AuthoringFixture::new();
+        fs::copy(
+            fixture.directory.join("worker-platform.json"),
+            consumer.directory.join("spec.json"),
+        )
+        .unwrap();
+        fs::remove_file(fixture.directory.join("services.component.json")).unwrap();
+        fs::remove_file(fixture.directory.join("queues.component.json")).unwrap();
+        let mut receiver = assembly_start(&consumer, terminal, true);
+        assembly_step(
+            &mut receiver,
+            terminal,
+            "import spec.json",
+            "import",
+            json!({"source":"spec.json"}),
+        );
+        assembly_step(&mut receiver, terminal, "commit", "commit", json!({}));
+        assembly_step(&mut receiver, terminal, "activate", "activate", json!({}));
+        let tree = assembly_step(&mut receiver, terminal, "tree", "tree", json!({}));
+        let text = tree["result"]["verb_tree_text"].as_str().unwrap();
+        for fragment in [
+            "services", "queues", "inspect", "quota", "pause", "restart", "unbound",
+        ] {
+            assert!(text.contains(fragment), "{text}");
+        }
+        assembly_step(
+            &mut receiver,
+            terminal,
+            "enter services",
+            "enter",
+            json!({"context":"services"}),
+        );
+        let service_before = invocation_output(&assembly_step(
+            &mut receiver,
+            terminal,
+            "invoke inspect",
+            "invoke",
+            json!({"command":"inspect"}),
+        ));
+        assert_eq!(
+            service_before,
+            DocumentValue::parse_document(r#"{"name":"api","quota":1.2300}"#).unwrap()
+        );
+        assembly_step(
+            &mut receiver,
+            terminal,
+            "enter queues",
+            "enter",
+            json!({"context":"queues"}),
+        );
+        let paused = assembly_step(
+            &mut receiver,
+            terminal,
+            "invoke pause true",
+            "invoke",
+            json!({"command":"pause","values":{"value":{"kind":"boolean","value":true}}}),
+        );
+        assert_eq!(invocation_output(&paused), DocumentValue::Boolean(true));
+        let queue_before = invocation_output(&assembly_step(
+            &mut receiver,
+            terminal,
+            "invoke inspect",
+            "invoke",
+            json!({"command":"inspect"}),
+        ));
+        assert_eq!(
+            queue_before,
+            DocumentValue::parse_document(r#"{"name":"jobs","paused":true}"#).unwrap()
+        );
+        assembly_step(
+            &mut receiver,
+            terminal,
+            "enter services",
+            "enter",
+            json!({"context":"services"}),
+        );
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut receiver,
+                terminal,
+                "invoke inspect",
+                "invoke",
+                json!({"command":"inspect"})
+            )),
+            service_before
+        );
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut receiver,
+                terminal,
+                "invoke quota 1e400",
+                "invoke",
+                json!({"command":"quota","values":{"value":{"kind":"number","value":"1e400"}}})
+            ))
+            .compact_document_json(),
+            "1e400"
+        );
+        assembly_step(
+            &mut receiver,
+            terminal,
+            "export-interface interface.json",
+            "export-interface",
+            json!({"destination":"interface.json"}),
+        );
+        retain_acceptance_bytes(
+            &format!("assembled-interface-{terminal}.json"),
+            &fs::read(consumer.directory.join("interface.json")).unwrap(),
+        );
+        fs::remove_file(consumer.directory.join("spec.json")).unwrap();
+        assert!(receiver.close().success());
+        let mut reopened = assembly_start(&consumer, terminal, false);
+        assembly_step(
+            &mut reopened,
+            terminal,
+            "enter queues",
+            "enter",
+            json!({"context":"queues"}),
+        );
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut reopened,
+                terminal,
+                "invoke inspect",
+                "invoke",
+                json!({"command":"inspect"})
+            )),
+            queue_before
+        );
+        assembly_step(
+            &mut reopened,
+            terminal,
+            "save resumed.json",
+            "save",
+            json!({"destination":"resumed.json"}),
+        );
+        assert_eq!(
+            fs::read(fixture.directory.join("worker-platform.json")).unwrap(),
+            fs::read(consumer.directory.join("resumed.json")).unwrap()
+        );
+        assert!(reopened.close().success());
+    }
+    assert_eq!(
+        artifacts[0], artifacts[1],
+        "Terminal and machine assembly diverged"
+    );
+}
+
+fn write_assembly_json(fixture: &AuthoringFixture, name: &str, value: &Value) {
+    fs::write(
+        fixture.directory.join(name),
+        serde_json::to_vec(value).unwrap(),
+    )
+    .unwrap();
+}
+
+fn read_assembly_json(fixture: &AuthoringFixture, name: &str) -> Value {
+    serde_json::from_slice(&fs::read(fixture.directory.join(name)).unwrap()).unwrap()
+}
+
+#[test]
+fn component_graph_source_and_collision_failures_preserve_the_checkpoint() {
+    let cases = [
+        ("missing-dependency", "CLI_COMPONENT_DEPENDENCY"),
+        ("cycle", "CLI_COMPONENT_DEPENDENCY"),
+        ("self-dependency", "CLI_COMPONENT_DEPENDENCY"),
+        ("duplicate-dependency", "CLI_COMPONENT_DEPENDENCY"),
+        ("duplicate-identity", "CLI_COMPONENT_COLLISION"),
+        ("duplicate-mount", "CLI_COMPONENT_COLLISION"),
+        ("reserved-mount", "CLI_COMPONENT_COLLISION"),
+        ("derived-context-collision", "CLI_COMPONENT_COLLISION"),
+        ("derived-operation-collision", "CLI_COMPONENT_COLLISION"),
+        ("bad-context", "INVALID_CLI_DEFINITION"),
+        ("unknown-field", "INVALID_CLI_ASSEMBLY"),
+        ("missing-file", "CLI_COMPONENT_SOURCE"),
+        ("directory-source", "CLI_COMPONENT_SOURCE"),
+        ("duplicate-json-key", "INVALID_CLI_ASSEMBLY"),
+        ("oversized-source", "LIMIT_EXCEEDED"),
+        ("oversized-output", "LIMIT_EXCEEDED"),
+        ("empty-components", "LIMIT_EXCEEDED"),
+        ("too-many-components", "LIMIT_EXCEEDED"),
+        ("long-derived-name", "INVALID_CLI_DEFINITION"),
+        ("nested-component", "INVALID_CLI_ASSEMBLY"),
+    ];
+    for terminal in [false, true] {
+        for (case, code) in cases {
+            let fixture = AuthoringFixture::new();
+            assembly_inputs(&fixture);
+            let mut manifest = read_assembly_json(&fixture, "assembly.json");
+            let mut services = read_assembly_json(&fixture, "services.component.json");
+            let mut queues = read_assembly_json(&fixture, "queues.component.json");
+            match case {
+                "missing-dependency" => {
+                    manifest["components"].as_array_mut().unwrap().remove(0);
+                }
+                "cycle" => services["requires"] = json!(["queues"]),
+                "self-dependency" => queues["requires"] = json!(["queues"]),
+                "duplicate-dependency" => queues["requires"] = json!(["services", "services"]),
+                "duplicate-identity" => {
+                    queues["definition"]["id"] = json!("services");
+                    queues["requires"] = json!([]);
+                }
+                "duplicate-mount" => manifest["components"][1]["mount"] = json!("services"),
+                "reserved-mount" => manifest["components"][0]["mount"] = json!("root"),
+                "derived-context-collision" => {
+                    services["definition"]["contexts"]["child"] = json!({"parent":"root","help":"Nested services.","related":[],"commands":{}});
+                    manifest["components"][1]["mount"] = json!("services.child");
+                }
+                "derived-operation-collision" => {
+                    services["definition"]["contexts"]["root"]["commands"]["inspect"]["id"] =
+                        json!("child.inspect");
+                    manifest["components"][1]["mount"] = json!("services.child");
+                }
+                "bad-context" => {
+                    services["definition"]["contexts"]["root"]["related"] = json!(["absent"])
+                }
+                "unknown-field" => manifest["unexpected"] = json!(true),
+                "missing-file" => manifest["components"][1]["source"] = json!("missing.json"),
+                "directory-source" => manifest["components"][1]["source"] = json!("."),
+                "empty-components" => manifest["components"] = json!([]),
+                "too-many-components" => {
+                    manifest["components"] =
+                        json!(vec![json!({"mount":"x","source":"missing.json"}); 33])
+                }
+                "long-derived-name" => manifest["components"][0]["mount"] = json!("s".repeat(64)),
+                "nested-component" => services["definition"]["format"] = json!("cli-definition-v2"),
+                "oversized-output" => {
+                    let big: serde_json::Map<String, Value> = (0..6)
+                        .map(|i| (format!("data{i}"), json!("x".repeat(60000))))
+                        .collect();
+                    services["definition"]["mock_state"] = json!(big);
+                    queues["definition"]["mock_state"] =
+                        services["definition"]["mock_state"].clone();
+                }
+                "duplicate-json-key" | "oversized-source" => {}
+                _ => unreachable!(),
+            }
+            write_assembly_json(&fixture, "assembly.json", &manifest);
+            write_assembly_json(&fixture, "services.component.json", &services);
+            write_assembly_json(&fixture, "queues.component.json", &queues);
+            if case == "duplicate-json-key" {
+                fs::write(
+                    fixture.directory.join("queues.component.json"),
+                    br#"{"format":"cli-component-v1","format":"cli-component-v1"}"#,
+                )
+                .unwrap();
+            }
+            if case == "oversized-source" {
+                fs::write(
+                    fixture.directory.join("queues.component.json"),
+                    vec![b' '; programmable_cli::document_value::MAX_DOCUMENT_BYTES + 1],
+                )
+                .unwrap();
+            }
+            let mut process = assembly_start(&fixture, terminal, true);
+            fs::copy(
+                repository_path("docs/composition/acceptance/expected-definition.json"),
+                fixture.directory.join("prior.json"),
+            )
+            .unwrap();
+            assembly_step(
+                &mut process,
+                terminal,
+                "activate prior.json",
+                "activate",
+                json!({"source":"prior.json"}),
+            );
+            assembly_step(
+                &mut process,
+                terminal,
+                "import assembly.json",
+                "import",
+                json!({"source":"assembly.json"}),
+            );
+            assembly_step(&mut process, terminal, "commit", "commit", json!({}));
+            let before = fixture.checkpoint_bytes();
+            let response = if terminal {
+                process.terminal("assemble")
+            } else {
+                process.submit(&assembly_request(&process, "assemble", json!({})))
+            };
+            check_rejection(&fixture, &before, &response, code);
+            println!("ASSEMBLY_REJECTED {case} terminal={terminal} code={code}");
+            assert!(process.close().success());
+        }
+    }
+}
+
+#[test]
+fn component_root_reads_and_replacements_preserve_other_scopes_and_nested_navigation() {
+    use programmable_cli::authoring_protocol::SessionRevision;
+    use programmable_cli::cli_definition::CliDefinition;
+    use programmable_cli::cli_interface::{ActiveCliInterface, CliInterfaceOrigin};
+    use std::collections::BTreeMap;
+    for value in [
+        r#"17"#,
+        r#"["x",1e400]"#,
+        r#"{"":"empty","a/b":1.2300,"0":true}"#,
+    ] {
+        let fixture = AuthoringFixture::new();
+        assembly_inputs(&fixture);
+        let mut services = read_assembly_json(&fixture, "services.component.json");
+        let commands = &mut services["definition"]["contexts"]["root"]["commands"];
+        commands["snapshot"] = json!({"id":"snapshot","help":"Copy only local state.","parameters":[],"binding":{"kind":"simulated","steps":[{"path":[{"key":"copy"}],"value":{"source":"state","path":[]}}],"output":{"source":"state","path":[{"key":"copy"}]}}});
+        commands["replace"] = json!({"id":"replace","help":"Replace local state root.","parameters":[],"binding":{"kind":"simulated","steps":[{"path":[],"value":{"source":"literal","value":serde_json::from_str::<Value>(value).unwrap()}}],"output":{"source":"state","path":[]}}});
+        services["definition"]["contexts"]["detail"] = json!({"parent":"root","help":"Nested service view.","related":["root"],"commands":{"inspect":{"id":"detail.inspect","help":"Read local service state.","parameters":[],"binding":{"kind":"simulated","steps":[],"output":{"source":"state","path":[]}}}}});
+        write_assembly_json(&fixture, "services.component.json", &services);
+        let source = CliDefinition::parse_cli_definition(
+            &serde_json::to_vec(&services["definition"]).unwrap(),
+        )
+        .unwrap();
+        let mut standalone = ActiveCliInterface::initialize_cli_interface(
+            source,
+            CliInterfaceOrigin {
+                intent_text: "Independent service behavior.".into(),
+                revision: SessionRevision(0),
+            },
+        );
+        let independent = standalone
+            .invoke_cli_command("inspect", &BTreeMap::new())
+            .unwrap();
+        let mut process = assembly_start(&fixture, false, true);
+        assembly_step(
+            &mut process,
+            false,
+            "import assembly.json",
+            "import",
+            json!({"source":"assembly.json"}),
+        );
+        assembly_step(&mut process, false, "assemble", "assemble", json!({}));
+        assembly_step(&mut process, false, "activate", "activate", json!({}));
+        assembly_step(
+            &mut process,
+            false,
+            "enter services.detail",
+            "enter",
+            json!({"context":"services.detail"}),
+        );
+        let nested = assembly_step(&mut process, false, "discover", "discover", json!({}));
+        assert_eq!(nested["result"]["context"]["parent"], "services");
+        assert_eq!(nested["result"]["context"]["related"], json!(["services"]));
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut process,
+                false,
+                "invoke inspect",
+                "invoke",
+                json!({"command":"inspect"})
+            ))
+            .compact_document_json(),
+            independent.output_json_text
+        );
+        assembly_step(
+            &mut process,
+            false,
+            "enter ..",
+            "enter",
+            json!({"context":".."}),
+        );
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut process,
+                false,
+                "invoke snapshot",
+                "invoke",
+                json!({"command":"snapshot"})
+            ))
+            .compact_document_json(),
+            independent.output_json_text
+        );
+        let replaced = invocation_output(&assembly_step(
+            &mut process,
+            false,
+            "invoke replace",
+            "invoke",
+            json!({"command":"replace"}),
+        ));
+        assert_eq!(replaced, DocumentValue::parse_document(value).unwrap());
+        assert_eq!(
+            standalone
+                .invoke_cli_command("replace", &BTreeMap::new())
+                .unwrap()
+                .output_json_text,
+            replaced.compact_document_json()
+        );
+        assembly_step(
+            &mut process,
+            false,
+            "enter queues",
+            "enter",
+            json!({"context":"queues"}),
+        );
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut process,
+                false,
+                "invoke inspect",
+                "invoke",
+                json!({"command":"inspect"})
+            )),
+            DocumentValue::parse_document(r#"{"name":"jobs","paused":false}"#).unwrap()
+        );
+        assert!(process.close().success());
+        let mut reopened = assembly_start(&fixture, false, false);
+        assembly_step(
+            &mut reopened,
+            false,
+            "enter services",
+            "enter",
+            json!({"context":"services"}),
+        );
+        assert_eq!(
+            invocation_output(&assembly_step(
+                &mut reopened,
+                false,
+                "invoke inspect",
+                "invoke",
+                json!({"command":"inspect"})
+            )),
+            replaced
+        );
+        assert!(reopened.close().success());
+    }
+}
+
+#[test]
+fn assembly_replay_and_transfer_validate_embedded_sources_without_reopening_files() {
+    let fixture = AuthoringFixture::new();
+    assembly_inputs(&fixture);
+    let mut process = assembly_start(&fixture, false, true);
+    assembly_step(
+        &mut process,
+        false,
+        "import assembly.json",
+        "import",
+        json!({"source":"assembly.json"}),
+    );
+    let request = assembly_request(&process, "assemble", json!({}));
+    let response = process.submit(&request);
+    assert_eq!(response["status"], "ok", "{response}");
+    let assembled = fixture.checkpoint_bytes();
+    for source in ["services.component.json", "queues.component.json"] {
+        fs::remove_file(fixture.directory.join(source)).unwrap();
+    }
+    let mut stale = assembly_request(&process, "assemble", json!({}));
+    stale["expected_revision"] = json!("0");
+    let rejected = process.submit(&stale);
+    check_rejection(&fixture, &assembled, &rejected, "REVISION_CONFLICT");
+    assert_eq!(process.submit(&request)["replayed"], true);
+    assert_eq!(fixture.checkpoint_bytes(), assembled);
+    assert!(process.close().success());
+    let mut reopened = assembly_start(&fixture, false, false);
+    assert_eq!(reopened.submit(&request)["replayed"], true);
+    assert_eq!(fixture.checkpoint_bytes(), assembled);
+    assembly_step(&mut reopened, false, "activate", "activate", json!({}));
+    let pristine = serde_json::to_value(&fixture.checkpoint_state().candidate).unwrap();
+    for (path, value, code) in [
+        (
+            "/contexts/services/commands/inspect/binding/output/path",
+            json!([]),
+            "INVALID_CLI_ASSEMBLY",
+        ),
+        (
+            "/contexts/services/commands/quota/binding/steps/0/path",
+            json!([{"key":"queues"},{"key":"paused"}]),
+            "INVALID_CLI_ASSEMBLY",
+        ),
+        (
+            "/assembly/components/queues/component/requires",
+            json!([]),
+            "INVALID_CLI_ASSEMBLY",
+        ),
+        (
+            "/assembly/components/services/component_sha256",
+            json!("0".repeat(64)),
+            "INVALID_CLI_ASSEMBLY",
+        ),
+        (
+            "/assembly/components/services/source_sha256",
+            json!("invalid"),
+            "INVALID_CLI_ASSEMBLY",
+        ),
+        ("/assembly", Value::Null, "INVALID_CLI_DEFINITION"),
+    ] {
+        let mut mutant = pristine.clone();
+        *mutant.pointer_mut(path).unwrap() = value;
+        assert_ne!(mutant, pristine, "INVALID: assembly mutation did not land");
+        write_assembly_json(&fixture, "mutant.json", &mutant);
+        let before = fixture.checkpoint_bytes();
+        let result = reopened.submit(&assembly_request(
+            &reopened,
+            "activate",
+            json!({"source":"mutant.json"}),
+        ));
+        check_rejection(&fixture, &before, &result, code);
+        println!("ASSEMBLY_MUTANT_REJECTED {path}");
+    }
+    assembly_step(
+        &mut reopened,
+        false,
+        "export-interface interface.json",
+        "export-interface",
+        json!({"destination":"interface.json"}),
+    );
+    let export = read_assembly_json(&fixture, "interface.json");
+    let receiver = AuthoringFixture::new();
+    write_assembly_json(&receiver, "interface.json", &export);
+    let mut imported = assembly_start(&receiver, false, true);
+    assembly_step(
+        &mut imported,
+        false,
+        "activate interface.json",
+        "activate",
+        json!({"source":"interface.json"}),
+    );
+    assert_eq!(
+        fixture.checkpoint_state().active_interface,
+        receiver.checkpoint_state().active_interface
+    );
+    assert!(imported.close().success());
+    let mut invalid_export = export.clone();
+    invalid_export["interface"]["mock_state"]
+        .as_object_mut()
+        .unwrap()
+        .remove("services");
+    assert_ne!(invalid_export, export);
+    write_assembly_json(&fixture, "invalid-interface.json", &invalid_export);
+    let before = fixture.checkpoint_bytes();
+    let response = reopened.submit(&assembly_request(
+        &reopened,
+        "activate",
+        json!({"source":"invalid-interface.json"}),
+    ));
+    check_rejection(&fixture, &before, &response, "INVALID_CLI_ASSEMBLY");
+    assert!(reopened.close().success());
+    let saved = fixture.checkpoint_bytes();
+    let mut invalid_checkpoint: Value = serde_json::from_slice(&saved).unwrap();
+    invalid_checkpoint["active_interface"]["mock_state"]
+        .as_object_mut()
+        .unwrap()
+        .remove("queues");
+    assert_ne!(
+        invalid_checkpoint,
+        serde_json::from_slice::<Value>(&saved).unwrap()
+    );
+    fs::write(
+        &fixture.checkpoint,
+        serde_json::to_vec(&invalid_checkpoint).unwrap(),
+    )
+    .unwrap();
+    let before = fixture.checkpoint_bytes();
+    let mut command = fixture.command(false, false);
+    command.args(["--compose", "--constraints"]);
+    let mut rejected = AuthoringProcess::spawn(command);
+    assert_eq!(
+        rejected.header["error"]["code"], "INVALID_SESSION",
+        "{}",
+        rejected.header
+    );
+    assert_eq!(fixture.checkpoint_bytes(), before);
+    assert!(!rejected.close().success());
+    fs::write(&fixture.checkpoint, saved).unwrap();
+
+    // The last assembly receipt also rejects an edited candidate expansion on recovery.
+    fs::write(&fixture.checkpoint, &assembled).unwrap();
+    let mut invalid_receipt: Value = serde_json::from_slice(&assembled).unwrap();
+    invalid_receipt["candidate"]["contexts"]["services"]["commands"]["inspect"]["binding"]["output"]
+        ["path"] = json!([]);
+    fs::write(
+        &fixture.checkpoint,
+        serde_json::to_vec(&invalid_receipt).unwrap(),
+    )
+    .unwrap();
+    let mut command = fixture.command(false, false);
+    command.args(["--compose", "--constraints"]);
+    let mut rejected = AuthoringProcess::spawn(command);
+    assert_eq!(
+        rejected.header["error"]["code"], "INVALID_SESSION",
+        "{}",
+        rejected.header
+    );
+    assert!(!rejected.close().success());
+}
+
+#[test]
+fn assembly_keeps_constraints_and_active_behavior_and_is_order_independent() {
+    let fixture = AuthoringFixture::new();
+    assembly_inputs(&fixture);
+    fs::copy(
+        repository_path("docs/composition/acceptance/expected-definition.json"),
+        fixture.directory.join("prior.json"),
+    )
+    .unwrap();
+    fs::write(
+        fixture.directory.join("policy.json"),
+        br#"{"type":"object","properties":{"format":{"const":"cli-assembly-v1"}}}"#,
+    )
+    .unwrap();
+    let mut process = assembly_start(&fixture, true, true);
+    assembly_step(
+        &mut process,
+        true,
+        "activate prior.json",
+        "activate",
+        json!({"source":"prior.json"}),
+    );
+    assembly_step(
+        &mut process,
+        true,
+        "import assembly.json",
+        "import",
+        json!({"source":"assembly.json"}),
+    );
+    assembly_step(
+        &mut process,
+        true,
+        "constrain policy.json",
+        "constrain",
+        json!({"source":"policy.json"}),
+    );
+    assembly_step(&mut process, true, "commit", "commit", json!({}));
+    assembly_step(&mut process, true, "edit /components/0", "edit", json!({}));
+    let before = fixture.checkpoint_state();
+    assembly_step(&mut process, true, "assemble", "assemble", json!({}));
+    let assembled = fixture.checkpoint_state();
+    assert!(assembled.context.is_empty());
+    assert_eq!(before.active_interface, assembled.active_interface);
+    assert_eq!(before.active_constraint, assembled.active_constraint);
+    assert_eq!(before.accepted, assembled.accepted);
+    let bytes = fixture.checkpoint_bytes();
+    check_rejection(
+        &fixture,
+        &bytes,
+        &process.terminal("commit"),
+        "SCHEMA_VIOLATION",
+    );
+    assembly_step(&mut process, true, "unconstrain", "unconstrain", json!({}));
+    assembly_step(&mut process, true, "commit", "commit", json!({}));
+    let mut manifest = read_assembly_json(&fixture, "assembly.json");
+    manifest["components"].as_array_mut().unwrap().reverse();
+    write_assembly_json(&fixture, "reversed.json", &manifest);
+    assembly_step(
+        &mut process,
+        true,
+        "import reversed.json",
+        "import",
+        json!({"source":"reversed.json"}),
+    );
+    assembly_step(&mut process, true, "assemble", "assemble", json!({}));
+    assert_eq!(fixture.checkpoint_state().candidate, assembled.candidate);
+    let help = process.terminal("help assemble");
+    assert_eq!(help["status"], "ok", "{help}");
+    assert_eq!(help["result"]["operations"][0]["name"], "assemble");
+    let declaration = OperationDefinition::load_kernel_profile(
+        &fixture.declaration,
+        programmable_cli::kernel_profile::KernelProfile::ConstrainedComposition,
+    )
+    .unwrap();
+    assert!(!declaration.operations["assemble"].batchable);
+    assert!(process.close().success());
+}
+
+#[cfg(feature = "fault-injection")]
+#[test]
+fn assembly_publication_failures_and_uncertainty_preserve_recoverability() {
+    for point in ["after_checkpoint_write", "after_checkpoint_rename"] {
+        let fixture = AuthoringFixture::new();
+        assembly_inputs(&fixture);
+        let mut process = assembly_start(&fixture, false, true);
+        assembly_step(
+            &mut process,
+            false,
+            "import assembly.json",
+            "import",
+            json!({"source":"assembly.json"}),
+        );
+        assert!(process.close().success());
+        let before = fixture.checkpoint_bytes();
+        let marker = fixture.directory.join("assembly-fault.json");
+        let mut command = fixture.command(false, false);
+        command
+            .args(["--compose", "--constraints"])
+            .env("CLI_TEST_FAULT_POINT", point)
+            .env("CLI_TEST_FAULT_ACTION", "error")
+            .env("CLI_TEST_FAULT_MARKER", &marker);
+        let mut failing = AuthoringProcess::spawn(command);
+        assert_eq!(
+            failing.header["event"], "session_open",
+            "{}",
+            failing.header
+        );
+        let request = assembly_request(&failing, "assemble", json!({}));
+        let response = failing.submit(&request);
+        wait_for_fault(&marker, point, &failing);
+        if point == "after_checkpoint_write" {
+            check_rejection(&fixture, &before, &response, "PERSISTENCE_FAILED");
+            assert!(failing.close().success());
+        } else {
+            assert_eq!(response["status"], "uncertain", "{response}");
+            let published = fixture.checkpoint_bytes();
+            assert_eq!(
+                failing.submit(&request)["error"]["code"],
+                "PERSISTENCE_UNCERTAIN"
+            );
+            assert_eq!(fixture.checkpoint_bytes(), published);
+            assert!(!failing.close().success());
+            fs::remove_file(fixture.directory.join("services.component.json")).unwrap();
+            fs::remove_file(fixture.directory.join("queues.component.json")).unwrap();
+            let mut resumed = assembly_start(&fixture, false, false);
+            assert_eq!(resumed.submit(&request)["replayed"], true);
+            assert_eq!(fixture.checkpoint_bytes(), published);
+            assembly_step(&mut resumed, false, "activate", "activate", json!({}));
+            assembly_step(
+                &mut resumed,
+                false,
+                "enter queues",
+                "enter",
+                json!({"context":"queues"}),
+            );
+            assert_eq!(
+                invocation_output(&assembly_step(
+                    &mut resumed,
+                    false,
+                    "invoke inspect",
+                    "invoke",
+                    json!({"command":"inspect"})
+                )),
+                DocumentValue::parse_document(r#"{"name":"jobs","paused":false}"#).unwrap()
+            );
+            assert!(resumed.close().success());
+        }
+    }
+}

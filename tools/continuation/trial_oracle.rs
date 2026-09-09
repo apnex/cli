@@ -1,0 +1,388 @@
+//! Evaluate the externally fixed worker-platform task without giving its oracle to the recipient.
+
+use crate::trial_manifest::{trial_file_digest, verify_trial_manifest};
+use crate::trial_process::{TrialProcess, TrialResult, require_trial, write_trial_json};
+use programmable_cli::authoring_protocol::SessionCheckpoint;
+use programmable_cli::cli_interface::CliInterfaceExport;
+use programmable_cli::document_path::DocumentSegment;
+use programmable_cli::document_value::DocumentValue;
+use serde_json::{Value, json};
+use std::collections::BTreeMap;
+use std::fs;
+use std::path::Path;
+
+fn object(document: &mut DocumentValue) -> TrialResult<&mut BTreeMap<String, DocumentValue>> {
+    match document {
+        DocumentValue::Object(value) => Ok(value),
+        _ => Err("Oracle expected an object".into()),
+    }
+}
+
+/// The target combines the unchanged original oracle with fields fixed in the second task.
+pub fn expected_worker_definition(root: &Path) -> TrialResult<DocumentValue> {
+    let mut expected = DocumentValue::parse_document(&fs::read_to_string(
+        root.join("docs/composition/acceptance/expected-definition.json"),
+    )?)?;
+    let fields = object(&mut expected)?;
+    fields.insert("id".into(), DocumentValue::String("worker-platform".into()));
+    fields.insert(
+        "description".into(),
+        DocumentValue::String(
+            "Worker platform prototype; all behavior is simulated or unbound.".into(),
+        ),
+    );
+    let contexts = object(fields.get_mut("contexts").unwrap())?;
+    object(contexts.get_mut("root").unwrap())?.insert(
+        "help".into(),
+        DocumentValue::String("Explore the worker platform prototype.".into()),
+    );
+    contexts.insert(
+        "queues".into(),
+        DocumentValue::parse_document(&fs::read_to_string(
+            root.join("docs/reuse/acceptance/queue-context.expected.json"),
+        )?)?,
+    );
+    object(fields.get_mut("mock_state").unwrap())?.insert(
+        "queue".into(),
+        DocumentValue::parse_document(r#"{"name":"ingest","depth":0,"paused":false}"#)?,
+    );
+    Ok(expected)
+}
+
+/// Check full task fidelity, including fields a structurally valid CLI can get wrong.
+pub fn check_worker_state(
+    root: &Path,
+    state: &SessionCheckpoint,
+    seed: &SessionCheckpoint,
+) -> TrialResult<()> {
+    let expected = expected_worker_definition(root)?;
+    require_trial(
+        state.candidate == expected && state.accepted == expected,
+        "Worker definition differs from the fixed task or has not been committed",
+    )?;
+    check_worker_runtime(root, state, seed)
+}
+
+/// Check the common runtime outcome without assuming an external file is also the staged candidate.
+fn check_worker_runtime(
+    root: &Path,
+    state: &SessionCheckpoint,
+    seed: &SessionCheckpoint,
+) -> TrialResult<()> {
+    let expected = expected_worker_definition(root)?;
+    require_trial(
+        state.active_constraint == seed.active_constraint && state.active_constraint.is_some(),
+        "Worker continuation changed or detached its policy",
+    )?;
+    require_trial(
+        state.intent_text == seed.intent_text && state.session_id == seed.session_id,
+        "Worker continuation lost its originating task or session identity",
+    )?;
+    let interface = state
+        .active_interface
+        .as_ref()
+        .ok_or("Worker interface has not been activated")?;
+    let active_document =
+        DocumentValue::parse_document(&serde_json::to_string(&interface.definition)?)?;
+    require_trial(
+        active_document == expected,
+        "Active interface does not match the completed definition",
+    )?;
+    let expected_state = DocumentValue::parse_document(
+        r#"{"name":"api","quota":1e400,"enabled":true,"queue":{"name":"ingest","depth":0,"paused":true}}"#,
+    )?;
+    require_trial(
+        interface.mock_state == expected_state,
+        "Final simulated state differs from the task",
+    )?;
+    require_trial(
+        interface.context == "queues",
+        "Final interface context must be queues",
+    )?;
+    let expected_context =
+        ["contexts", "queues", "commands"].map(|key| DocumentSegment::Key { key: key.into() });
+    require_trial(
+        state.context == expected_context,
+        "Final authoring context differs from the task",
+    )?;
+    let outcome = interface
+        .last_invocation
+        .as_ref()
+        .ok_or("Final simulated outcome is missing")?;
+    require_trial(
+        outcome.operation_id == "queue.pause"
+            && outcome.binding == "simulated"
+            && outcome.effect == "simulation_only"
+            && outcome.simulated_steps == 1
+            && DocumentValue::parse_document(&outcome.output_json_text)?
+                == DocumentValue::parse_document(r#"{"name":"ingest","depth":0,"paused":true}"#)?,
+        "Final queue outcome is missing, incorrectly labeled, or has the wrong payload",
+    )?;
+    Ok(())
+}
+
+fn check_rejected_bytes(
+    directory: &Path,
+    before: &[u8],
+    result: &Value,
+    code: &str,
+) -> TrialResult<()> {
+    require_trial(
+        result["status"] == "error"
+            && result["error"]["code"] == code
+            && result["mutation"] == "none",
+        &format!("Expected rejection {code}: {result}"),
+    )?;
+    require_trial(
+        fs::read(directory.join("work.session.json"))? == before,
+        "Rejected evaluation probe changed checkpoint bytes",
+    )
+}
+
+/// Count retained wire records, keeping protocol volume separate from unknown model/token costs.
+pub fn measure_trial_logs(directory: &Path) -> TrialResult<Value> {
+    let mut inputs = 0u64;
+    let mut outputs = 0u64;
+    let mut input_lines = 0usize;
+    let mut responses = 0usize;
+    let mut errors = BTreeMap::<String, usize>::new();
+    let mut operations = BTreeMap::<String, usize>::new();
+    let mut processes = 0usize;
+    let mut elapsed_process_ms = 0u128;
+    let mut elapsed_receiver_ms = 0u128;
+    for entry in fs::read_dir(directory.join("logs"))? {
+        let entry = entry?;
+        let name = entry.file_name().to_string_lossy().into_owned();
+        if name.ends_with(".input.txt") {
+            let bytes = fs::read(entry.path())?;
+            inputs += bytes.len() as u64;
+            input_lines += bytes.iter().filter(|value| **value == b'\n').count();
+        } else if name.ends_with(".output.jsonl") {
+            let bytes = fs::read(entry.path())?;
+            outputs += bytes.len() as u64;
+            for line in bytes
+                .split(|value| *value == b'\n')
+                .filter(|line| !line.is_empty())
+            {
+                let value: Value = serde_json::from_slice(line)?;
+                if value["event"] == "response" {
+                    responses += 1;
+                }
+                if let Some(code) = value["error"]["code"].as_str() {
+                    *errors.entry(code.into()).or_default() += 1;
+                }
+                if let Some(operation) = value["operation"].as_str() {
+                    *operations.entry(operation.into()).or_default() += 1;
+                }
+            }
+        } else if name.ends_with(".metrics.json") {
+            let metrics: Value = serde_json::from_slice(&fs::read(entry.path())?)?;
+            elapsed_process_ms += metrics["elapsed_process_ms"]
+                .as_str()
+                .ok_or("Missing process duration")?
+                .parse::<u128>()?;
+            processes += 1;
+        } else if name.ends_with(".receiver.json") {
+            let metrics: Value = serde_json::from_slice(&fs::read(entry.path())?)?;
+            elapsed_receiver_ms += metrics["elapsed_receiver_ms"]
+                .as_str()
+                .ok_or("Missing receiver duration")?
+                .parse::<u128>()?;
+        }
+    }
+    Ok(
+        json!({"input_lines":input_lines,"response_events":responses,"response_scope":"Includes launcher rejection events without an input command.","input_bytes":inputs,"output_bytes":outputs,
+        "errors":errors,"operations":operations,"recorded_processes":processes,"elapsed_process_ms":elapsed_process_ms.to_string(),
+        "elapsed_receiver_ms":elapsed_receiver_ms.to_string(),
+        "timing_overlap":"Receiver durations include their nested process time; do not add the two columns.",
+        "tokens":null,"actor_elapsed_ms":null,"human_interventions":null}),
+    )
+}
+
+fn check_continuation_trace(package: &Path) -> TrialResult<()> {
+    let interaction = measure_trial_logs(package)?;
+    for code in [
+        "DEFINITION_MISMATCH",
+        "REVISION_CONFLICT",
+        "SCHEMA_VIOLATION",
+    ] {
+        require_trial(
+            interaction["errors"][code].as_u64().unwrap_or(0) > 0,
+            &format!("Required trial failure was not recorded: {code}"),
+        )?;
+    }
+    for operation in ["status", "schema", "discover", "tree", "diff", "show"] {
+        require_trial(
+            interaction["operations"][operation].as_u64().unwrap_or(0) > 0,
+            &format!("Required inspection was not recorded: {operation}"),
+        )?;
+    }
+    require_trial(
+        interaction["operations"]["unconstrain"]
+            .as_u64()
+            .unwrap_or(0)
+            == 0,
+        "Continuation detached its constraints during the trial",
+    )
+}
+
+/// Preserve the original full continuation contract, including staged documents and required history.
+pub fn evaluate_continuation(
+    root: &Path,
+    package: &Path,
+    destination: &Path,
+) -> TrialResult<Value> {
+    verify_trial_manifest(package)?;
+    let state = serde_json::from_slice(&fs::read(package.join("work.session.json"))?)?;
+    let seed = serde_json::from_slice(&fs::read(package.join("handover.session.json"))?)?;
+    check_worker_state(root, &state, &seed)?;
+    check_continuation_trace(package)?;
+    evaluate_worker_artifacts(root, package, destination)
+}
+
+/// Check shared definition and runtime outcomes; report the stricter staged-continuation verdict too.
+pub fn evaluate_worker_artifacts(
+    root: &Path,
+    package: &Path,
+    destination: &Path,
+) -> TrialResult<Value> {
+    verify_trial_manifest(package)?;
+    let submitted_bytes = fs::read(package.join("work.session.json"))?;
+    let state: SessionCheckpoint = serde_json::from_slice(&submitted_bytes)?;
+    let seed: SessionCheckpoint =
+        serde_json::from_slice(&fs::read(package.join("handover.session.json"))?)?;
+    check_worker_runtime(root, &state, &seed)?;
+    let saved = DocumentValue::parse_document(&fs::read_to_string(
+        package.join("completed.definition.json"),
+    )?)?;
+    require_trial(
+        saved == expected_worker_definition(root)?,
+        "Saved definition differs from the fixed worker task",
+    )?;
+    state
+        .active_constraint
+        .as_ref()
+        .unwrap()
+        .require_valid_instance(&saved)?;
+    let bundle: CliInterfaceExport =
+        serde_json::from_slice(&fs::read(package.join("completed.interface.json"))?)?;
+    require_trial(
+        bundle.format == "cli-interface-export-v1"
+            && Some(&bundle.interface) == state.active_interface.as_ref()
+            && bundle.source_intent_text == state.intent_text
+            && bundle.source_revision == state.revision,
+        "Exported interface lost state, task, labels, or final revision",
+    )?;
+    let interaction = measure_trial_logs(package)?;
+    let continuation_error = check_worker_state(root, &state, &seed)
+        .and_then(|_| check_continuation_trace(package))
+        .err()
+        .map(|error| error.to_string());
+    fs::create_dir(destination)?;
+    let destination = destination.canonicalize()?;
+    fs::copy(
+        package.join("work.session.json"),
+        destination.join("work.session.json"),
+    )?;
+    fs::copy(
+        package.join("operations.json"),
+        destination.join("operations.json"),
+    )?;
+    let mut process = TrialProcess::start(
+        &package.join("cli"),
+        &destination,
+        "work.session.json",
+        "operations.json",
+        None,
+        true,
+        "logs/evaluation",
+    )?;
+    require_trial(
+        process.header["event"] == "session_open",
+        "Submitted checkpoint cannot reopen",
+    )?;
+    let initial_queue = process.command("invoke inspect")?;
+    require_trial(
+        initial_queue["result"]["invocation"]["output_json_text"]
+            == r#"{"depth":0,"name":"ingest","paused":true}"#,
+        "Queue read has wrong scope or values",
+    )?;
+    let before = fs::read(destination.join("work.session.json"))?;
+    let drain = process.command("invoke drain")?;
+    check_rejected_bytes(&destination, &before, &drain, "UNBOUND_OPERATION")?;
+    // A typed string uses a canonical machine request so terminal boolean lowering cannot hide a coercion bug.
+    let header = process.header["session"].clone();
+    process.close()?;
+    let mut machine = TrialProcess::start(
+        &package.join("cli"),
+        &destination,
+        "work.session.json",
+        "operations.json",
+        None,
+        false,
+        "logs/typed-rejection",
+    )?;
+    let request = json!({"request_id":uuid::Uuid::new_v4().to_string(),"session_id":header["session_id"],
+        "expected_revision":header["revision"],"operation":"invoke","arguments":{"command":"pause","values":{"paused":{"kind":"string","value":"false"}}}});
+    let wrong_type = machine.send_wire(format!("{request}\n").as_bytes())?;
+    check_rejected_bytes(&destination, &before, &wrong_type, "INVALID_CLI_ARGUMENTS")?;
+    require_trial(
+        machine.command("enter services")?["status"] == "ok",
+        "Cannot reach reused service controls",
+    )?;
+    let before_restart = fs::read(destination.join("work.session.json"))?;
+    let restart = machine.command("invoke restart")?;
+    check_rejected_bytes(&destination, &before_restart, &restart, "UNBOUND_OPERATION")?;
+    let quota = machine.command("invoke quota 1.2300")?;
+    require_trial(
+        quota["result"]["invocation"]["output_json_text"] == "1.2300",
+        "Reused service quota lost exact numeric behavior",
+    )?;
+    let inspect = machine.command("invoke inspect")?;
+    require_trial(
+        inspect["result"]["invocation"]["output_json_text"]
+            == machine
+                .state()?
+                .active_interface
+                .as_ref()
+                .unwrap()
+                .mock_state
+                .compact_document_json(),
+        "Reused catalog inspection no longer returns its declared whole-state view",
+    )?;
+    require_trial(
+        machine.command("enter queues")?["status"] == "ok",
+        "Cannot return to queue context",
+    )?;
+    let pause = machine.command("invoke pause false")?;
+    require_trial(
+        pause["result"]["invocation"]["output_json_text"]
+            == r#"{"depth":0,"name":"ingest","paused":false}"#,
+        "Queue pause did not update only its intended field",
+    )?;
+    let evaluated = machine.state()?;
+    let evaluated_mock = &evaluated.active_interface.as_ref().unwrap().mock_state;
+    require_trial(
+        *evaluated_mock
+            == DocumentValue::parse_document(
+                r#"{"name":"api","quota":1.2300,"enabled":true,"queue":{"name":"ingest","depth":0,"paused":false}}"#,
+            )?,
+        "Queue operation changed unrelated simulated content",
+    )?;
+    require_trial(
+        machine.close()?["exit_code"] == 0,
+        "Evaluation process failed",
+    )?;
+    require_trial(
+        fs::read(package.join("work.session.json"))? == submitted_bytes,
+        "Evaluation changed the submitted checkpoint",
+    )?;
+    let report = json!({"status":"pass","scope":"Fixed definition, unchanged schema, exports, and real CLI behavior; staged continuation and actor independence are separate verdicts.",
+        "full_staged_continuation":{"status":if continuation_error.is_none() {"pass"} else {"fail"},"error":continuation_error},
+        "submitted_checkpoint_sha256":trial_file_digest(&package.join("work.session.json"))?,
+        "definition_bytes":fs::metadata(package.join("completed.definition.json"))?.len(),
+        "interface_export_bytes":fs::metadata(package.join("completed.interface.json"))?.len(),
+        "interaction":interaction,"fresh_actor_attestation":null});
+    write_trial_json(&destination.join("evaluation.json"), &report)?;
+    Ok(report)
+}

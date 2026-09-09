@@ -1,0 +1,58 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+error[E0599]: `CompletionResult` is not an iterator
+   --> tests/cli_composition.rs:517:10
+    |
+515 |       let values: Vec<_> = completer
+    |  __________________________-
+516 | |         .complete("invoke q", 8)
+517 | |         .into_iter()
+    | |         -^^^^^^^^^ `CompletionResult` is not an iterator
+    | |_________|
+    |
+    |
+   ::: /tmp/cli-rust-toolchain-VjSXVO/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/reedline-0.51.0/src/completion/base.rs:76:1
+    |
+ 76 |   pub enum CompletionResult {
+    |   ------------------------- doesn't satisfy `CompletionResult: IntoIterator` or `CompletionResult: Iterator`
+    |
+    = note: the following trait bounds were not satisfied:
+            `CompletionResult: Iterator`
+            which is required by `CompletionResult: IntoIterator`
+            `&CompletionResult: Iterator`
+            which is required by `&CompletionResult: IntoIterator`
+            `&mut CompletionResult: Iterator`
+            which is required by `&mut CompletionResult: IntoIterator`
+
+error[E0599]: `CompletionResult` is not an iterator
+   --> tests/cli_composition.rs:534:10
+    |
+532 |       let context_choices: Vec<_> = completer
+    |  ___________________________________-
+533 | |         .complete("enter d", 7)
+534 | |         .into_iter()
+    | |         -^^^^^^^^^ `CompletionResult` is not an iterator
+    | |_________|
+    |
+    |
+   ::: /tmp/cli-rust-toolchain-VjSXVO/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/reedline-0.51.0/src/completion/base.rs:76:1
+    |
+ 76 |   pub enum CompletionResult {
+    |   ------------------------- doesn't satisfy `CompletionResult: IntoIterator` or `CompletionResult: Iterator`
+    |
+    = note: the following trait bounds were not satisfied:
+            `CompletionResult: Iterator`
+            which is required by `CompletionResult: IntoIterator`
+            `&CompletionResult: Iterator`
+            which is required by `&CompletionResult: IntoIterator`
+            `&mut CompletionResult: Iterator`
+            which is required by `&mut CompletionResult: IntoIterator`
+
+error[E0599]: no method named `is_empty` found for enum `CompletionResult` in the current scope
+   --> tests/cli_composition.rs:540:47
+    |
+540 |     assert!(completer.complete("invoke q", 8).is_empty());
+    |                                               ^^^^^^^^ method not found in `CompletionResult`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `programmable-cli` (test "cli_composition") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...

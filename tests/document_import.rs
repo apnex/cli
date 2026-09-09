@@ -1,0 +1,634 @@
+mod authoring_fixture;
+use authoring_fixture::*;
+use programmable_cli::document_value::{DocumentValue, MAX_REQUEST_BYTES, MAX_SCALAR_BYTES};
+use programmable_cli::kernel_profile::KernelProfile;
+use programmable_cli::operation_definition::OperationDefinition;
+use programmable_cli::terminal_completion::AuthoringCompleter;
+use programmable_cli::terminal_input::quote_terminal_token;
+use reedline::Completer;
+use serde_json::{Value, json};
+use sha2::{Digest, Sha256};
+use std::fs;
+
+fn import_cases() -> Value {
+    serde_json::from_slice(
+        &fs::read(repository_path(
+            "docs/authoring/acceptance/import-cases.json",
+        ))
+        .unwrap(),
+    )
+    .unwrap()
+}
+
+fn import_request(process: &AuthoringProcess, source: &str) -> Value {
+    json!({"request_id":uuid::Uuid::new_v4().to_string(),"session_id":process.header["session"]["session_id"],
+        "expected_revision":process.header["session"]["revision"],"operation":"import","arguments":{"source":source}})
+}
+
+fn submit_import(process: &mut AuthoringProcess, terminal: bool, source: &str) -> Value {
+    if terminal {
+        process.terminal(&format!("import {}", quote_terminal_token(source)))
+    } else {
+        process.submit(&import_request(process, source))
+    }
+}
+
+fn start_import_consumer(
+    fixture: &AuthoringFixture,
+    terminal: bool,
+    create: bool,
+) -> AuthoringProcess {
+    let mut command = fixture.command(terminal, create);
+    command.args(["--compose", "--constraints"]);
+    let process = AuthoringProcess::spawn(command);
+    assert_eq!(
+        process.header["event"], "session_open",
+        "{}",
+        process.header
+    );
+    process
+}
+
+fn import_consumer_step(
+    process: &mut AuthoringProcess,
+    terminal: bool,
+    line: &str,
+    operation: &str,
+    arguments: Value,
+    state: bool,
+) -> Value {
+    if terminal {
+        process.terminal(line)
+    } else {
+        let mut request = json!({"request_id":uuid::Uuid::new_v4().to_string(),"session_id":process.header["session"]["session_id"],"operation":operation,"arguments":arguments});
+        if state {
+            request["expected_revision"] = process.header["session"]["revision"].clone();
+        }
+        process.submit(&request)
+    }
+}
+
+#[test]
+fn document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations() {
+    let corpus = import_cases();
+    for case in corpus["valid"].as_array().unwrap() {
+        let mut observations = Vec::new();
+        for terminal in [false, true] {
+            let fixture = AuthoringFixture::new();
+            fixture.seed(&corpus["initial"]);
+            let before = fixture.checkpoint_state();
+            let source = case["source"].as_str().unwrap().as_bytes();
+            fs::write(fixture.directory.join("input data.json"), source).unwrap();
+            let mut process = fixture.start(terminal, false);
+            let response = submit_import(&mut process, terminal, "input data.json");
+            assert_eq!(response["status"], "ok", "{response}");
+            let state = fixture.checkpoint_state();
+            assert_eq!(
+                state.candidate,
+                DocumentValue::parse_document(case["expected_json"].as_str().unwrap()).unwrap()
+            );
+            assert_eq!(state.accepted, before.accepted);
+            assert_eq!(state.accepted_revision, before.accepted_revision);
+            assert_eq!(state.intent_text, before.intent_text);
+            assert!(state.context.is_empty());
+            assert_eq!(state.revision.0, before.revision.0 + 1);
+            assert_eq!(response["result"]["source_bytes"], source.len());
+            assert_eq!(
+                response["result"]["source_sha256"],
+                format!("{:x}", Sha256::digest(source))
+            );
+            assert_eq!(response["result"]["source"], "input data.json");
+            assert!(
+                !response["result"]["changed_paths"]
+                    .as_array()
+                    .unwrap()
+                    .is_empty()
+            );
+            observations.push(normalize_generated_fields(&response, &fixture.directory));
+            let after = fixture.checkpoint_bytes();
+            let saved = if terminal {
+                process.terminal("save output.json")
+            } else {
+                process
+                    .request(&json!({"operation":"save","arguments":{"destination":"output.json"}}))
+            };
+            assert_eq!(saved["status"], "ok", "{saved}");
+            assert_eq!(fixture.checkpoint_bytes(), after);
+            assert_eq!(
+                DocumentValue::parse_document(
+                    &fs::read_to_string(fixture.directory.join("output.json")).unwrap()
+                )
+                .unwrap(),
+                state.candidate
+            );
+            assert!(process.close().success());
+            fs::remove_file(fixture.directory.join("input data.json")).unwrap();
+            let mut reopened = fixture.start(terminal, false);
+            assert_eq!(
+                reopened.header["event"], "session_open",
+                "{}",
+                reopened.header
+            );
+            assert_eq!(fixture.checkpoint_state(), state);
+            assert!(reopened.close().success());
+        }
+        assert_eq!(
+            observations[0], observations[1],
+            "Import presentation divergence: {}",
+            case["id"]
+        );
+        retain_acceptance_bytes(
+            &format!("import-{}.json", case["id"].as_str().unwrap()),
+            &serde_json::to_vec_pretty(&observations).unwrap(),
+        );
+    }
+}
+
+#[test]
+fn rejected_document_import_preserves_checkpoint_and_missing_source_replay_is_idempotent() {
+    let corpus = import_cases();
+    for terminal in [false, true] {
+        let fixture = AuthoringFixture::new();
+        fixture.seed(&corpus["initial"]);
+        let before = fixture.checkpoint_bytes();
+        let mut process = fixture.start(terminal, false);
+        for case in corpus["invalid"].as_array().unwrap() {
+            fs::write(
+                fixture.directory.join("bad.json"),
+                case["source"].as_str().unwrap(),
+            )
+            .unwrap();
+            check_rejection(
+                &fixture,
+                &before,
+                &submit_import(&mut process, terminal, "bad.json"),
+                case["code"].as_str().unwrap(),
+            );
+        }
+        for (bytes, code) in [
+            (vec![b'"', 0xff, b'"'], "INVALID_VALUE"),
+            (vec![b' '; MAX_REQUEST_BYTES + 1], "LIMIT_EXCEEDED"),
+            (
+                format!("\"{}\"", "x".repeat(MAX_SCALAR_BYTES + 1)).into_bytes(),
+                "LIMIT_EXCEEDED",
+            ),
+            (
+                format!("{}0{}", "[".repeat(65), "]".repeat(65)).into_bytes(),
+                "LIMIT_EXCEEDED",
+            ),
+            (
+                serde_json::to_vec(&vec!["x".repeat(60_000); 18]).unwrap(),
+                "LIMIT_EXCEEDED",
+            ),
+        ] {
+            fs::write(fixture.directory.join("bad.json"), bytes).unwrap();
+            check_rejection(
+                &fixture,
+                &before,
+                &submit_import(&mut process, terminal, "bad.json"),
+                code,
+            );
+        }
+        for source in ["missing.json", "."] {
+            check_rejection(
+                &fixture,
+                &before,
+                &submit_import(&mut process, terminal, source),
+                "IMPORT_FAILED",
+            );
+        }
+        std::os::unix::fs::symlink(
+            fixture.directory.join("bad.json"),
+            fixture.directory.join("link.json"),
+        )
+        .unwrap();
+        check_rejection(
+            &fixture,
+            &before,
+            &submit_import(&mut process, terminal, "link.json"),
+            "IMPORT_FAILED",
+        );
+        assert!(process.close().success());
+    }
+
+    let fixture = AuthoringFixture::new();
+    fixture.seed(&corpus["initial"]);
+    fs::write(fixture.directory.join("source.json"), b"{\"quota\":1.2300}").unwrap();
+    let mut process = fixture.start(false, false);
+    let mut stale = import_request(&process, "missing.json");
+    stale["expected_revision"] = json!("99");
+    check_rejection(
+        &fixture,
+        &fixture.checkpoint_bytes(),
+        &process.submit(&stale),
+        "REVISION_CONFLICT",
+    );
+    let request = import_request(&process, "source.json");
+    let mut expected = process.submit(&request);
+    assert_eq!(expected["status"], "ok", "{expected}");
+    let imported = fixture.checkpoint_bytes();
+    expected["replayed"] = json!(true);
+    fs::remove_file(fixture.directory.join("source.json")).unwrap();
+    assert_eq!(process.submit(&request), expected);
+    assert_eq!(fixture.checkpoint_bytes(), imported);
+    assert!(process.close().success());
+    let mut reopened = fixture.start(false, false);
+    assert_eq!(
+        reopened.header["event"], "session_open",
+        "{}",
+        reopened.header
+    );
+    assert_eq!(reopened.submit(&request), expected);
+    assert_eq!(fixture.checkpoint_bytes(), imported);
+    let discard = reopened.request(&json!({"operation":"discard","arguments":{}}));
+    assert_eq!(discard["status"], "ok");
+    assert_eq!(
+        fixture.checkpoint_state().candidate,
+        fixture.checkpoint_state().accepted
+    );
+    assert!(reopened.close().success());
+}
+
+#[test]
+fn authored_cli_spec_exports_imports_and_runs_in_a_separate_resumable_session() {
+    let producer = AuthoringFixture::new();
+    fs::copy(
+        repository_path("docs/composition/acceptance/TASK.md"),
+        &producer.intent,
+    )
+    .unwrap();
+    let mut author = producer.start(true, true);
+    let mut producer_events = vec![author.header.clone()];
+    for line in fs::read_to_string(repository_path(
+        "docs/composition/acceptance/catalog.commands",
+    ))
+    .unwrap()
+    .lines()
+    {
+        assert!(
+            !line.contains(['{', '}', '[', ']']),
+            "Raw containers in the authoring journey"
+        );
+        let response = author.terminal(line);
+        assert_eq!(response["status"], "ok", "{line}: {response}");
+        producer_events.push(response);
+    }
+    assert!(author.close().success());
+    let source = fs::read(producer.directory.join("catalog-definition.json")).unwrap();
+    let expected = DocumentValue::parse_document(
+        &fs::read_to_string(repository_path(
+            "docs/composition/acceptance/expected-definition.json",
+        ))
+        .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(producer.checkpoint_state().candidate, expected);
+    retain_acceptance_bytes(
+        "import-cli-producer.json",
+        &serde_json::to_vec_pretty(&producer_events).unwrap(),
+    );
+    retain_acceptance_bytes("import-cli-definition.json", &source);
+    for terminal in [false, true] {
+        let fixture = AuthoringFixture::new();
+        fs::write(
+            &fixture.intent,
+            "Use the exported service catalog in a separate session.\n",
+        )
+        .unwrap();
+        fs::write(fixture.directory.join("spec.json"), &source).unwrap();
+        let mut process = start_import_consumer(&fixture, terminal, true);
+        assert_ne!(
+            fixture.checkpoint_state().session_id,
+            producer.checkpoint_state().session_id
+        );
+        let mut events = vec![process.header.clone()];
+        let imported = submit_import(&mut process, terminal, "spec.json");
+        assert_eq!(imported["status"], "ok", "{imported}");
+        assert_eq!(fixture.checkpoint_state().candidate, expected);
+        assert_eq!(
+            fixture.checkpoint_state().accepted.compact_document_json(),
+            "{}"
+        );
+        assert!(fixture.checkpoint_state().active_interface.is_none());
+        events.push(imported);
+        for (line, operation, arguments, state) in [
+            ("diff", "diff", json!({}), false),
+            ("commit", "commit", json!({}), true),
+            ("activate", "activate", json!({}), true),
+            ("tree", "tree", json!({}), false),
+            (
+                "enter services",
+                "enter",
+                json!({"context":"services"}),
+                true,
+            ),
+            (
+                "invoke quota 1e400",
+                "invoke",
+                json!({"command":"quota","values":{"value":{"kind":"number","value":"1e400"}}}),
+                true,
+            ),
+            (
+                "invoke inspect",
+                "invoke",
+                json!({"command":"inspect","values":{}}),
+                true,
+            ),
+            (
+                "export-interface interface.json",
+                "export-interface",
+                json!({"destination":"interface.json"}),
+                true,
+            ),
+        ] {
+            let response =
+                import_consumer_step(&mut process, terminal, line, operation, arguments, state);
+            assert_eq!(response["status"], "ok", "{response}");
+            if operation == "tree" {
+                let tree = response["result"]["verb_tree_text"].as_str().unwrap();
+                for verb in [
+                    "service-catalog",
+                    "invoke quota <value:number> [simulated]",
+                    "invoke restart [unbound]",
+                ] {
+                    assert!(tree.contains(verb), "{tree}");
+                }
+                retain_acceptance_bytes("import-cli-tree.txt", tree.as_bytes());
+            }
+            events.push(response);
+        }
+        let state = fixture.checkpoint_state();
+        assert_eq!(state.candidate, expected);
+        assert_eq!(state.accepted, expected);
+        let active = state.active_interface.as_ref().unwrap();
+        assert_eq!(active.context, "services");
+        assert_eq!(
+            active.mock_state,
+            DocumentValue::parse_document(r#"{"name":"api","quota":1e400,"enabled":true}"#)
+                .unwrap()
+        );
+        assert_eq!(
+            active.last_invocation.as_ref().unwrap().effect,
+            "simulation_only"
+        );
+        assert!(process.close().success());
+        fs::remove_file(fixture.directory.join("spec.json")).unwrap();
+        let mut resumed = start_import_consumer(&fixture, terminal, false);
+        assert_eq!(fixture.checkpoint_state(), state);
+        let response = import_consumer_step(
+            &mut resumed,
+            terminal,
+            "invoke inspect",
+            "invoke",
+            json!({"command":"inspect","values":{}}),
+            true,
+        );
+        assert_eq!(response["status"], "ok", "{response}");
+        events.push(response);
+        let before = fixture.checkpoint_bytes();
+        let unbound = import_consumer_step(
+            &mut resumed,
+            terminal,
+            "invoke restart",
+            "invoke",
+            json!({"command":"restart","values":{}}),
+            true,
+        );
+        check_rejection(&fixture, &before, &unbound, "UNBOUND_OPERATION");
+        events.push(unbound);
+        let mode = if terminal { "terminal" } else { "machine" };
+        retain_acceptance_bytes(
+            &format!("import-cli-{mode}.json"),
+            &serde_json::to_vec_pretty(&events).unwrap(),
+        );
+        retain_acceptance_bytes(
+            &format!("import-cli-{mode}.session.json"),
+            &fixture.checkpoint_bytes(),
+        );
+        retain_acceptance_bytes(
+            &format!("import-cli-{mode}.interface.json"),
+            &fs::read(fixture.directory.join("interface.json")).unwrap(),
+        );
+        assert!(resumed.close().success());
+    }
+}
+
+#[test]
+fn imported_draft_keeps_schema_and_active_cli_until_explicit_commit_and_activation() {
+    for terminal in [false, true] {
+        let fixture = AuthoringFixture::new();
+        fs::copy(
+            repository_path("docs/composition/acceptance/expected-definition.json"),
+            fixture.directory.join("catalog.json"),
+        )
+        .unwrap();
+        fs::write(
+            fixture.directory.join("policy.json"),
+            br#"{"type":"object","required":["port"],"properties":{"port":{"type":"integer"}}}"#,
+        )
+        .unwrap();
+        fs::write(
+            fixture.directory.join("invalid.json"),
+            br#"{"port":"5432"}"#,
+        )
+        .unwrap();
+        let mut process = start_import_consumer(&fixture, terminal, true);
+        for (line, operation, arguments) in [
+            (
+                "set /saved boolean true",
+                "set",
+                json!({"path":{"base":"root","segments":[{"key":"saved"}]},"value":{"kind":"boolean","value":true}}),
+            ),
+            ("commit", "commit", json!({})),
+            (
+                "set /draft object",
+                "set",
+                json!({"path":{"base":"root","segments":[{"key":"draft"}]},"value":{"kind":"object"}}),
+            ),
+            (
+                "edit /draft",
+                "edit",
+                json!({"path":{"base":"root","segments":[{"key":"draft"}]}}),
+            ),
+            (
+                "activate catalog.json",
+                "activate",
+                json!({"source":"catalog.json"}),
+            ),
+            ("enter services", "enter", json!({"context":"services"})),
+            (
+                "invoke quota 1e400",
+                "invoke",
+                json!({"command":"quota","values":{"value":{"kind":"number","value":"1e400"}}}),
+            ),
+            (
+                "constrain policy.json",
+                "constrain",
+                json!({"source":"policy.json"}),
+            ),
+        ] {
+            let response =
+                import_consumer_step(&mut process, terminal, line, operation, arguments, true);
+            assert_eq!(response["status"], "ok", "{response}");
+        }
+        let before = fixture.checkpoint_state();
+        let response = submit_import(&mut process, terminal, "invalid.json");
+        assert_eq!(response["status"], "ok", "{response}");
+        let imported = fixture.checkpoint_state();
+        assert!(imported.context.is_empty());
+        assert_eq!(imported.active_interface, before.active_interface);
+        assert_eq!(imported.active_constraint, before.active_constraint);
+        assert_eq!(imported.accepted, before.accepted);
+        assert_eq!(imported.accepted_revision, before.accepted_revision);
+        let imported_bytes = fixture.checkpoint_bytes();
+        let rejected =
+            import_consumer_step(&mut process, terminal, "commit", "commit", json!({}), true);
+        check_rejection(&fixture, &imported_bytes, &rejected, "SCHEMA_VIOLATION");
+        assert_eq!(fixture.checkpoint_state(), imported);
+        assert_eq!(
+            import_consumer_step(
+                &mut process,
+                terminal,
+                "set /port number 5432",
+                "set",
+                json!({"path":{"base":"root","segments":[{"key":"port"}]},"value":{"kind":"number","value":"5432"}}),
+                true
+            )["status"],
+            "ok"
+        );
+        assert_eq!(
+            import_consumer_step(&mut process, terminal, "commit", "commit", json!({}), true)["status"],
+            "ok"
+        );
+        assert_eq!(
+            fixture.checkpoint_state().accepted.compact_document_json(),
+            "{\"port\":5432}"
+        );
+        assert_eq!(
+            fixture.checkpoint_state().active_interface,
+            before.active_interface
+        );
+        assert!(process.close().success());
+    }
+}
+
+#[test]
+fn import_discovery_follows_declaration_and_corrupt_receipts_cannot_reopen() {
+    let fixture = AuthoringFixture::new();
+    let mut definition: Value =
+        serde_json::from_slice(&fs::read(&fixture.declaration).unwrap()).unwrap();
+    let operation = definition["operations"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|value| value["handler"] == "authoring.import")
+        .unwrap();
+    operation["name"] = json!("load-document");
+    operation["terminal"]["command"] = json!("load-file");
+    fs::write(
+        &fixture.declaration,
+        serde_json::to_vec(&definition).unwrap(),
+    )
+    .unwrap();
+    fs::write(fixture.directory.join("source.json"), b"{\"quota\":1.2300}").unwrap();
+    let mut process = fixture.start(true, true);
+    let help = process.terminal("help load-document");
+    assert_eq!(
+        help["result"]["operations"][0]["arguments"][0]["name"],
+        "source"
+    );
+    let declaration = OperationDefinition::load_operation_definition(&fixture.declaration).unwrap();
+    let mut completion =
+        AuthoringCompleter::new_authoring_completer(declaration, fixture.checkpoint_state());
+    assert_eq!(
+        completion.complete("load-", 5).suggestions()[0].value,
+        "load-file"
+    );
+    let response = process.terminal("load-file source.json");
+    assert_eq!(response["status"], "ok", "{response}");
+    let pristine = fixture.checkpoint_bytes();
+    assert!(process.close().success());
+    fs::remove_file(fixture.directory.join("source.json")).unwrap();
+    for (path, value) in [
+        (
+            "/last_receipt/response/result/source",
+            json!("different.json"),
+        ),
+        (
+            "/last_receipt/response/result/source_sha256",
+            json!("invalid-digest"),
+        ),
+        ("/last_receipt/response/result/source_bytes", json!(0)),
+        (
+            "/last_receipt/response/result/changed_paths",
+            json!([{"base":"context","segments":[]}]),
+        ),
+        ("/last_receipt/response/result/extra", json!(true)),
+    ] {
+        let mut state: Value = serde_json::from_slice(&pristine).unwrap();
+        if path.ends_with("/extra") {
+            state["last_receipt"]["response"]["result"]["extra"] = value;
+        } else {
+            *state.pointer_mut(path).unwrap() = value;
+        }
+        fs::write(&fixture.checkpoint, serde_json::to_vec(&state).unwrap()).unwrap();
+        fixture.reject_open("INVALID_SESSION");
+    }
+    fs::write(&fixture.checkpoint, pristine).unwrap();
+    let mut resumed = fixture.start(false, false);
+    assert_eq!(
+        resumed.header["event"], "session_open",
+        "{}",
+        resumed.header
+    );
+    assert!(resumed.close().success());
+    let combined = OperationDefinition::load_kernel_profile(
+        &repository_path("docs/authoring/operations.json"),
+        KernelProfile::ConstrainedComposition,
+    )
+    .unwrap();
+    assert!(!combined.operations["import"].batchable);
+}
+
+#[cfg(feature = "fault-injection")]
+#[test]
+fn document_import_publication_failure_and_uncertainty_recover_without_source() {
+    for point in ["after_checkpoint_write", "after_checkpoint_rename"] {
+        let fixture = AuthoringFixture::new();
+        fixture.seed(&json!({"candidate_json":"{\"draft\":true}"}));
+        fs::write(fixture.directory.join("source.json"), b"{\"quota\":1.2300}").unwrap();
+        let before = fixture.checkpoint_bytes();
+        let (mut process, marker) = fixture.start_fault(false, point, "error");
+        let request = import_request(&process, "source.json");
+        let response = process.submit(&request);
+        wait_for_fault(&marker, point, &process);
+        if point == "after_checkpoint_write" {
+            check_rejection(&fixture, &before, &response, "PERSISTENCE_FAILED");
+            assert!(process.close().success());
+        } else {
+            assert_eq!(response["status"], "uncertain", "{response}");
+            assert_eq!(response["mutation"], "unknown");
+            let published = fixture.checkpoint_bytes();
+            let blocked = process.submit(&request);
+            assert_eq!(blocked["error"]["code"], "PERSISTENCE_UNCERTAIN");
+            assert_eq!(fixture.checkpoint_bytes(), published);
+            assert!(!process.close().success());
+            fs::remove_file(fixture.directory.join("source.json")).unwrap();
+            let mut reopened = fixture.start(false, false);
+            assert_eq!(
+                reopened.header["event"], "session_open",
+                "{}",
+                reopened.header
+            );
+            assert_eq!(
+                fixture.checkpoint_state().candidate.compact_document_json(),
+                "{\"quota\":1.2300}"
+            );
+            let replay = reopened.submit(&request);
+            assert_eq!(replay["status"], "ok", "{replay}");
+            assert_eq!(replay["replayed"], true);
+            assert_eq!(fixture.checkpoint_bytes(), published);
+            assert!(reopened.close().success());
+        }
+    }
+}

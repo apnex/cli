@@ -1,0 +1,48 @@
+{
+  "definition_bytes": 2490,
+  "fresh_actor_attestation": null,
+  "full_staged_continuation": {
+    "error": "Worker definition differs from the fixed task or has not been committed",
+    "status": "fail"
+  },
+  "interaction": {
+    "actor_elapsed_ms": null,
+    "elapsed_process_ms": "53",
+    "elapsed_receiver_ms": "121",
+    "errors": {
+      "DEFINITION_MISMATCH": 1,
+      "REVISION_CONFLICT": 1,
+      "SCHEMA_VIOLATION": 1
+    },
+    "human_interventions": null,
+    "input_bytes": 528,
+    "input_lines": 19,
+    "operations": {
+      "activate": 1,
+      "commit": 1,
+      "delete": 1,
+      "diff": 1,
+      "discover": 1,
+      "enter": 2,
+      "export-interface": 1,
+      "guide": 1,
+      "help": 1,
+      "invoke": 2,
+      "save": 1,
+      "schema": 1,
+      "show": 2,
+      "status": 1,
+      "tree": 2
+    },
+    "output_bytes": 56505,
+    "recorded_processes": 3,
+    "response_events": 20,
+    "response_scope": "Includes launcher rejection events without an input command.",
+    "timing_overlap": "Receiver durations include their nested process time; do not add the two columns.",
+    "tokens": null
+  },
+  "interface_export_bytes": 7795,
+  "scope": "Fixed definition, unchanged schema, exports, and real CLI behavior; staged continuation and actor independence are separate verdicts.",
+  "status": "pass",
+  "submitted_checkpoint_sha256": "517b27e70304c740f1ceb27e728f5ef8b0a587a9137dfbf51a598d4a9a03570e"
+}

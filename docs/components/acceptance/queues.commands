@@ -1,0 +1,54 @@
+set "" object
+set /format string "cli-component-v1"
+set /requires array
+append /requires string "services"
+set /definition object
+edit /definition
+set ./format string "cli-definition-v1"
+set ./id string "queues"
+set ./description string "Independent queue component."
+set ./contexts object
+set ./contexts/root object
+set ./contexts/root/parent null
+set ./contexts/root/help string "Inspect and configure queues."
+set ./contexts/root/related array
+set ./contexts/root/commands object
+set ./contexts/root/commands/inspect object
+set ./contexts/root/commands/inspect/id string "inspect"
+set ./contexts/root/commands/inspect/help string "Read only this component's simulated state."
+set ./contexts/root/commands/inspect/parameters array
+set ./contexts/root/commands/inspect/binding object
+set ./contexts/root/commands/inspect/binding/kind string "simulated"
+set ./contexts/root/commands/inspect/binding/steps array
+set ./contexts/root/commands/inspect/binding/output object
+set ./contexts/root/commands/inspect/binding/output/source string "state"
+set ./contexts/root/commands/inspect/binding/output/path array
+set ./contexts/root/commands/pause object
+set ./contexts/root/commands/pause/id string "pause"
+set ./contexts/root/commands/pause/help string "Change simulated paused."
+set ./contexts/root/commands/pause/parameters array
+append ./contexts/root/commands/pause/parameters object
+set ./contexts/root/commands/pause/parameters/0/name string "value"
+set ./contexts/root/commands/pause/parameters/0/type string "boolean"
+set ./contexts/root/commands/pause/parameters/0/help string "New paused."
+set ./contexts/root/commands/pause/binding object
+set ./contexts/root/commands/pause/binding/kind string "simulated"
+set ./contexts/root/commands/pause/binding/steps array
+append ./contexts/root/commands/pause/binding/steps object
+set ./contexts/root/commands/pause/binding/steps/0/path array
+append ./contexts/root/commands/pause/binding/steps/0/path object
+set ./contexts/root/commands/pause/binding/steps/0/path/0/key string "paused"
+set ./contexts/root/commands/pause/binding/steps/0/value object
+set ./contexts/root/commands/pause/binding/steps/0/value/source string "argument"
+set ./contexts/root/commands/pause/binding/steps/0/value/name string "value"
+set ./contexts/root/commands/pause/binding/output object
+set ./contexts/root/commands/pause/binding/output/source string "state"
+set ./contexts/root/commands/pause/binding/output/path array
+append ./contexts/root/commands/pause/binding/output/path object
+set ./contexts/root/commands/pause/binding/output/path/0/key string "paused"
+set ./mock_state object
+set ./mock_state/name string "jobs"
+set ./mock_state/paused boolean false
+top
+commit
+save queues.component.json

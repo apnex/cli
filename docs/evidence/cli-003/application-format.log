@@ -1,0 +1,19 @@
+Diff in /home/apnex/taceng/cli/tests/cli_composition.rs:816:
+                     too_many["contexts"]["root"]["commands"][format!("verb{index}")] = json!({"id":format!("operation{index}"),"help":"Unbound command","parameters":[],"binding":{"kind":"unbound","reason":"Unimplemented"}});
+                 }
+             }
+[31m-            "parameters" => too_many["contexts"]["services"]["commands"]["quota"]["parameters"] = json!(
+(B[m[32m+            "parameters" => {
+(B[m[32m+                too_many["contexts"]["services"]["commands"]["quota"]["parameters"] = json!(
+(B[m                 (0..count)
+                     .map(
+                         |index| json!({"name":format!("arg{index}"),"type":"number","help":"Value"})
+Diff in /home/apnex/taceng/cli/tests/cli_composition.rs:823:
+                     )
+                     .collect::<Vec<_>>()
+[31m-            ),
+(B[m[32m+            )
+(B[m[32m+            }
+(B[m             _ => {
+                 too_many["contexts"]["services"]["commands"]["quota"]["binding"]["steps"] =
+                     json!(vec![

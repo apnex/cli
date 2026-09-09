@@ -1,0 +1,39 @@
+set /openapi string 3.1.1
+set /info object
+edit /info
+set ./title string "Service catalog"
+set ./version string 1.0.0
+top
+set /paths object
+set /paths/~1services object
+edit /paths/~1services
+set ./get object
+edit ./get
+set ./operationId string listServices
+set ./responses object
+set ./responses/200 object
+edit ./responses/200
+set ./description string "Service list"
+set ./content object
+set ./content/application~1json object
+edit ./content/application~1json
+set ./schema object
+set ./schema/type string array
+set ./schema/items object
+set ./schema/items/$ref string #/components/schemas/Service
+top
+set /components object
+set /components/schemas object
+set /components/schemas/Service object
+edit /components/schemas/Service
+set ./type string object
+set ./required array
+append ./required string name
+append ./required string port
+set ./properties object
+set ./properties/name object
+set ./properties/name/type string string
+set ./properties/port object
+set ./properties/port/type string integer
+top
+commit

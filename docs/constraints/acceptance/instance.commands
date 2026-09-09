@@ -1,0 +1,14 @@
+guide
+validate
+set /name string catalog
+set /port string 5432
+set /mode string production
+commit
+validate
+set /port number 5432
+set /tags array
+edit /tags
+append . string public
+top
+validate
+commit

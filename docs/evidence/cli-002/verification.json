@@ -1,0 +1,541 @@
+{
+  "format_version": 1,
+  "work_item": "CLI-002",
+  "recorded_utc": "2026-09-08 03:42:24 UTC",
+  "status": "pass",
+  "scope": "Local Rust JSON authoring application and its unchanged CLI-001 acceptance corpus; no deployment or independent review certification",
+  "acceptance_corpus_sha256": "234caef068cd4875ed21a22be0d00ee39cccb954e5f5620f13ecc22e63bfc42f",
+  "operation_declaration_sha256": "0f3d174ce523f1ae7149e1476bd6d960f963d16cebd62e29654df5a4ad1ba363",
+  "application_source_sha256": {
+    "src/authoring_error.rs": "d083b5f799a9f72b89feb88db8f1acea0c7d407e8011bf1715c190a040f190a5",
+    "src/authoring_frontend.rs": "67fccdf5e7c30e4740847f90ef9362854d7581d789895136f90db0521d927ced",
+    "src/authoring_operations.rs": "8334b2b122cdc045e6a75994c143f65e7999d2b2c6d264519faaa5ceaf542cee",
+    "src/authoring_protocol.rs": "fd9fc05c239c9d2226f2b5936717c49afa27f5eec2296f2598b87a216789b670",
+    "src/authoring_result.rs": "38c51470b5a7b151560354ceecf2efe2d1b56d458240cabe8df2df540310d338",
+    "src/authoring_runtime.rs": "7cb9b72cf4881b40d4438a0b948ad4b9f4a503c661508814afac970eeb4c3380",
+    "src/document_path.rs": "c3d5f24c70805d6251987d0ae383829a32dd5b44d9398ac16442c99d6dc58dd0",
+    "src/document_value.rs": "5e30da980a9a546aedfa06a3ff157133d877c07b3b2a46793a0b7551971e75c9",
+    "src/lib.rs": "8838dc0518e2503fc8780ce6e33ce327c789632356825925c7de8f57beeab01d",
+    "src/main.rs": "02020f2fc058ecd50521ec4654c81fe5d0854a9679ff9d393a57a96a87eb729a",
+    "src/operation_definition.rs": "ae0a8ca19a27f6e75980f25228ed32dcd00ab24eaaa3bfa72097af78a0416a21",
+    "src/session_storage.rs": "296abee85f6191787677b36ee0f49ebac79ba3edf851bb036faa91f720030ad7",
+    "src/storage_faults.rs": "70e14680f4e4b307f38525c4e32538329705593abc384ee640637fcb36dd9e4a",
+    "src/terminal_completion.rs": "21d105e2c1d0d95d5b3b97ff4d29b481b93b896d9e0421110e5fab37ad20b747",
+    "src/terminal_input.rs": "8519fe8820401e2346ad30b6d348a53fb25752250da858d037e5f52f57fa2772",
+    "tests/authoring_acceptance.rs": "4ccb3d1d7ba3e913868f3d768dc4ca5cefab84ef01cb2964fc61ce7136bbbe30",
+    "tests/authoring_discovery.rs": "41b3be7e48b26a82b5e85bfc6b892e38d83c74faaf10ec42ed40bfe40c99ac52",
+    "tests/authoring_fixture/mod.rs": "cbfd3e4308687d583fd8ce3a5ff84cd8f81d827dee1447de5bad2c8adebd81d7",
+    "tests/authoring_limits.rs": "2fcc9d876c6fd1b60c04eed6e6985735c51c5fa030a3ad81b021aea6a756bf06",
+    "tests/authoring_recovery.rs": "2280780bab98d6cac1ed1d30c35e6d2e228b61eba70d2b9f8949446321bbc4f7",
+    "tests/fixtures/changed_argument.rs": "0445aa2b3e45510db220d788fb151d02915125d2836723389f0e9b9eac2cf2c0",
+    "tests/fixtures/extra_handler.rs": "949c1b8bb1df89806eaa2d44f3aacd2863eace193c7b4e43480fdeaa6818029c",
+    "tests/fixtures/handler_contract_probe.rs": "2aa44e8b0dfc28a0b7f7756eaa0d91b25ebc877cff54b6e35a34b6ac6fb9ec4b",
+    "tests/fixtures/missing_handler.rs": "6ace2fe01d27390e51a32317705410060d77fd2fb89bf876833aa972b3378905",
+    "Cargo.toml": "c9ae5300a99f70f97116ea83314580ffb91b7ea37097d6e29cd2fa1690315b48",
+    "Cargo.lock": "5d265cbc1c5ca6a597dee2c91da7db4d5575bbf4de98e4a6605e396c1379bd86",
+    ".gitignore": "306fd52e74fca6746e12acc750f232de15e71da917756a1270d74c91f5eb7368"
+  },
+  "environment": {
+    "compiler": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1",
+    "record": "toolchain.log",
+    "toolchain_setup": "Existing isolated temporary toolchain; no shell profile changes",
+    "normal_binary": "../../../target/debug/cli",
+    "normal_binary_sha256": "5c4ee55030eb1a486b22004446e9123917c00c344daabc73b91c676242ddba41"
+  },
+  "application_acceptance": {
+    "status": "pass",
+    "instrumented_test_results": {
+      "passed": 28,
+      "failed": 0,
+      "ignored": 0
+    },
+    "normal_build_test_results": {
+      "passed": 24,
+      "failed": 0,
+      "ignored": 0
+    },
+    "journey": {
+      "id": "service-catalog",
+      "steps_per_presentation": 38,
+      "presentations": [
+        "machine",
+        "terminal-command-stream"
+      ],
+      "semantic_differences": 0,
+      "exports_identical": true,
+      "normalized_transcripts": [
+        "machine-journey.json",
+        "terminal-journey.json"
+      ],
+      "exports": [
+        "machine-catalog.json",
+        "terminal-catalog.json",
+        "machine-draft.json",
+        "terminal-draft.json"
+      ]
+    },
+    "operation_cases": [
+      {
+        "id": "numeric-object-key",
+        "status": "pass"
+      },
+      {
+        "id": "wrong-segment-kind",
+        "status": "pass"
+      },
+      {
+        "id": "missing-intermediate",
+        "status": "pass"
+      },
+      {
+        "id": "root-replacement",
+        "status": "pass"
+      },
+      {
+        "id": "root-delete",
+        "status": "pass"
+      },
+      {
+        "id": "set-is-not-append",
+        "status": "pass"
+      },
+      {
+        "id": "insert-shifts-context",
+        "status": "pass"
+      },
+      {
+        "id": "delete-shifts-context",
+        "status": "pass"
+      },
+      {
+        "id": "replace-ancestor-context",
+        "status": "pass"
+      },
+      {
+        "id": "delete-current-context",
+        "status": "pass"
+      },
+      {
+        "id": "batch-rollback",
+        "status": "pass"
+      },
+      {
+        "id": "batch-one-revision",
+        "status": "pass"
+      },
+      {
+        "id": "batch-context-path-rejected",
+        "status": "pass"
+      },
+      {
+        "id": "stale-revision",
+        "status": "pass"
+      },
+      {
+        "id": "wrong-session",
+        "status": "pass"
+      },
+      {
+        "id": "wrong-value-type",
+        "status": "pass"
+      },
+      {
+        "id": "unknown-argument",
+        "status": "pass"
+      },
+      {
+        "id": "unknown-operation",
+        "status": "pass"
+      },
+      {
+        "id": "no-op-consumes-revision",
+        "status": "pass"
+      },
+      {
+        "id": "number-spelling-is-authored",
+        "status": "pass"
+      },
+      {
+        "id": "complete-is-paginated",
+        "status": "pass"
+      },
+      {
+        "id": "accepted-needs-root-path",
+        "status": "pass"
+      },
+      {
+        "id": "empty-key-terminal",
+        "status": "pass"
+      },
+      {
+        "id": "one-pass-pointer-escape",
+        "status": "pass"
+      },
+      {
+        "id": "array-leading-zero-terminal",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-25",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-26",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-27",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-28",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-29",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-30",
+        "status": "pass"
+      },
+      {
+        "id": "invalid-number-31",
+        "status": "pass"
+      },
+      {
+        "id": "help-exposes-value-contract",
+        "status": "pass"
+      },
+      {
+        "id": "second-completion-page",
+        "status": "pass"
+      }
+    ],
+    "system_scenarios": [
+      {
+        "id": "duplicate-decoded-checkpoint-key",
+        "status": "pass",
+        "assertion_markers": [
+          "duplicate-decoded-checkpoint-key"
+        ]
+      },
+      {
+        "id": "unpaired-surrogate-checkpoint",
+        "status": "pass",
+        "assertion_markers": [
+          "unpaired-surrogate-checkpoint"
+        ]
+      },
+      {
+        "id": "malformed-machine-line",
+        "status": "pass",
+        "assertion_markers": [
+          "malformed-machine-line"
+        ]
+      },
+      {
+        "id": "missing-revision",
+        "status": "pass",
+        "assertion_markers": [
+          "missing-revision"
+        ]
+      },
+      {
+        "id": "receipt-replay-after-lost-response",
+        "status": "pass",
+        "assertion_markers": [
+          "receipt-replay-after-lost-response"
+        ]
+      },
+      {
+        "id": "receipt-identifier-reuse",
+        "status": "pass",
+        "assertion_markers": [
+          "receipt-identifier-reuse"
+        ]
+      },
+      {
+        "id": "old-retry-is-not-rebased",
+        "status": "pass",
+        "assertion_markers": [
+          "old-retry-is-not-rebased"
+        ]
+      },
+      {
+        "id": "failure-before-rename",
+        "status": "pass",
+        "assertion_markers": [
+          "failure-before-rename"
+        ]
+      },
+      {
+        "id": "failure-after-rename",
+        "status": "pass",
+        "assertion_markers": [
+          "failure-after-rename"
+        ]
+      },
+      {
+        "id": "crash-publication-boundaries",
+        "status": "pass",
+        "assertion_markers": [
+          "crash-publication-boundaries"
+        ]
+      },
+      {
+        "id": "second-writer-lock",
+        "status": "pass",
+        "assertion_markers": [
+          "second-writer-lock"
+        ]
+      },
+      {
+        "id": "outside-checkpoint-edit",
+        "status": "pass",
+        "assertion_markers": [
+          "outside-checkpoint-edit"
+        ]
+      },
+      {
+        "id": "create-only-export",
+        "status": "pass",
+        "assertion_markers": [
+          "create-only-export"
+        ]
+      },
+      {
+        "id": "repeat-identical-export",
+        "status": "pass",
+        "assertion_markers": [
+          "repeat-identical-export"
+        ]
+      },
+      {
+        "id": "uncertain-export",
+        "status": "pass",
+        "assertion_markers": [
+          "uncertain-export"
+        ]
+      },
+      {
+        "id": "unsupported-checkpoint-version",
+        "status": "pass",
+        "assertion_markers": [
+          "unsupported-checkpoint-version"
+        ]
+      },
+      {
+        "id": "declared-limits",
+        "status": "pass",
+        "assertion_markers": [
+          "declared-limits:scalar-depth-document-request-checkpoint-batch",
+          "declared-limits:receipt-overhead"
+        ]
+      },
+      {
+        "id": "declaration-handler-drift",
+        "status": "pass",
+        "assertion_markers": [
+          "declaration-handler-drift"
+        ]
+      },
+      {
+        "id": "definition-change-on-reopen",
+        "status": "pass",
+        "assertion_markers": [
+          "definition-change-on-reopen"
+        ]
+      },
+      {
+        "id": "terminal-machine-parity",
+        "status": "pass",
+        "assertion_markers": [
+          "terminal-machine-parity"
+        ]
+      },
+      {
+        "id": "terminal-batch-buffer",
+        "status": "pass",
+        "assertion_markers": [
+          "terminal-batch-buffer"
+        ]
+      },
+      {
+        "id": "bootstrap-reuse-boundary",
+        "status": "pass",
+        "assertion_markers": [
+          "bootstrap-reuse-boundary"
+        ]
+      },
+      {
+        "id": "checkpoint-cross-field-corruption",
+        "status": "pass",
+        "assertion_markers": [
+          "checkpoint-cross-field-corruption"
+        ]
+      },
+      {
+        "id": "bounded-result-delivery",
+        "status": "pass",
+        "assertion_markers": [
+          "bounded-result-delivery"
+        ]
+      }
+    ],
+    "fault_observations": [
+      {
+        "action": "error",
+        "pid": 42605,
+        "point": "after_checkpoint_write"
+      },
+      {
+        "action": "pause",
+        "pid": 42606,
+        "point": "before_checkpoint_write"
+      },
+      {
+        "action": "error",
+        "pid": 42635,
+        "point": "reopen_file_sync"
+      },
+      {
+        "action": "error",
+        "pid": 42640,
+        "point": "after_export_publish"
+      },
+      {
+        "action": "error",
+        "pid": 42641,
+        "point": "after_checkpoint_rename"
+      },
+      {
+        "action": "error",
+        "pid": 42649,
+        "point": "reopen_directory_sync"
+      },
+      {
+        "action": "pause",
+        "pid": 42647,
+        "point": "after_checkpoint_file_sync"
+      },
+      {
+        "action": "pause",
+        "pid": 42673,
+        "point": "after_checkpoint_rename"
+      },
+      {
+        "action": "pause",
+        "pid": 42679,
+        "point": "after_checkpoint_directory_sync"
+      },
+      {
+        "action": "pause",
+        "pid": 42683,
+        "point": "before_response_delivery"
+      }
+    ],
+    "fault_observation_scope": "Markers were read from each instrumented child before checking the fault outcome or killing it. Pause observations are process-kill tests, not power-loss tests.",
+    "interactive_smoke": {
+      "status": "pass",
+      "evidence": "interactive-smoke.json",
+      "checkpoint": "interactive-checkpoint.json",
+      "reopen": "interactive-reopen.jsonl",
+      "observed": "Normal binary: constructor input, actual Tab menu selection, contextual prompt, exact 1.2300 display, Ctrl-D exit 0, and reopen"
+    }
+  },
+  "checks": [
+    {
+      "command": "cargo test --locked --all-features --all-targets -- --nocapture",
+      "exit_code": 0,
+      "output": "application-tests.log",
+      "configuration": "CLI_ACCEPTANCE_EVIDENCE_DIR points to this evidence directory; explicit fault-injection and contract-probes features enabled"
+    },
+    {
+      "command": "cargo test --locked --all-targets",
+      "exit_code": 0,
+      "output": "normal-build-tests.log"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "output": "application-format.log"
+    },
+    {
+      "command": "cargo build --locked --bin cli",
+      "exit_code": 0,
+      "output": "local-build.log"
+    },
+    {
+      "command": "cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "output": "scaffold-check.log"
+    },
+    {
+      "command": "cargo test --locked --manifest-path tools/scaffold/Cargo.toml -- --nocapture",
+      "exit_code": 0,
+      "output": "scaffold-tests.log"
+    },
+    {
+      "command": "cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "output": "scaffold-format.log"
+    },
+    {
+      "command": "cargo test --locked --manifest-path tools/scaffold/Cargo.toml --test project_records -- --nocapture",
+      "exit_code": 0,
+      "output": "project-records-final.log"
+    },
+    {
+      "command": "sha256sum --check docs/evidence/cli-002/source-files.sha256",
+      "exit_code": 0,
+      "output": "source-hash-check.log"
+    },
+    {
+      "command": "sha256sum --check docs/evidence/cli-002/documentation-files.sha256",
+      "exit_code": 0,
+      "output": "documentation-hash-check.log"
+    }
+  ],
+  "documentation_checks": {
+    "application_acceptance_in_this_check": "not-executed",
+    "board_records": 8,
+    "board_state_mismatches": 0,
+    "declared_operations": 16,
+    "dependency_cycles": 0,
+    "design_corpus_status_at_creation": "not-run-against-application",
+    "documentation_layout_violations": 0,
+    "journey_steps": 38,
+    "local_inline_links": 275,
+    "markdown_documents": 32,
+    "milestones": 5,
+    "operation_cases": 34,
+    "scope": "Static project-record checks; no application requests executed",
+    "status": "pass",
+    "system_scenarios": 24,
+    "uncovered_operations": [],
+    "unmet_ready_prerequisites": 0,
+    "unresolved_local_inline_links": 0,
+    "scaffold_test_results": {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    },
+    "renderer": {
+      "declared_layers": 7,
+      "synchronized_views": 15
+    },
+    "source_hashes": "documentation-files.sha256"
+  },
+  "not_claimed": [
+    "General CLI self-authorship or definition activation",
+    "Mocks, schema enforcement, or domain hooks",
+    "Cross-platform qualification",
+    "Power-loss durability across storage devices",
+    "Atomic compare-and-swap against a simultaneous noncooperating writer",
+    "Independent reviewer approval, PR merge, or deployment",
+    "Measured agent workflow advantage, reuse economics, or fresh-agent task performance"
+  ],
+  "historical_evidence": "../cli-001/verification.json remains the original design/probe record; the corpus execution_status records its creation-time state."
+}

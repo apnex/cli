@@ -1,0 +1,18 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+warning: function `assembly_inputs` is never used
+   --> tests/cli_assembly.rs:102:4
+    |
+102 | fn assembly_inputs(fixture: &AuthoringFixture) {
+    |    ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `programmable-cli` (test "cli_assembly") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 22.86s
+     Running tests/cli_assembly.rs (target/release/deps/cli_assembly-bf80903d1dce9ad4)
+
+running 1 test
+test authored_components_assemble_transfer_and_preserve_independent_behavior ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+

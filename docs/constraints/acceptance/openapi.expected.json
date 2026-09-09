@@ -1,0 +1,30 @@
+{
+  "openapi": "3.1.1",
+  "info": {"title": "Service catalog", "version": "1.0.0"},
+  "paths": {
+    "/services": {
+      "get": {
+        "operationId": "listServices",
+        "responses": {
+          "200": {
+            "description": "Service list",
+            "content": {
+              "application/json": {
+                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/Service"}}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Service": {
+        "type": "object",
+        "required": ["name", "port"],
+        "properties": {"name": {"type": "string"}, "port": {"type": "integer"}}
+      }
+    }
+  }
+}

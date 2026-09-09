@@ -1,0 +1,31 @@
+//! Unpublished authoring kernel: one document model and dispatcher for every presentation.
+
+pub mod authoring_error;
+pub mod authoring_frontend;
+pub mod authoring_operations;
+pub mod authoring_protocol;
+pub mod authoring_result;
+pub mod authoring_runtime;
+pub mod cli_assembly;
+pub mod cli_composition;
+pub mod cli_definition;
+pub mod cli_file_read;
+pub mod cli_interface;
+pub mod cli_run_completion;
+pub mod cli_run_frontend;
+pub mod cli_run_launcher;
+pub mod cli_run_routes;
+pub mod cli_run_session;
+pub mod cli_terminal;
+mod cli_verb_tree;
+pub mod constraint_operations;
+pub mod document_path;
+pub mod document_value;
+pub mod kernel_profile;
+pub mod operation_definition;
+pub mod schema_constraint;
+pub mod schema_guidance;
+pub mod session_storage;
+pub mod storage_faults;
+pub mod terminal_completion;
+pub mod terminal_input;

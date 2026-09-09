@@ -1,0 +1,26 @@
+{
+  "contract": "../IMPORT.md",
+  "operation": "import",
+  "status_at_creation": "specified-before-implementation",
+  "initial": {
+    "candidate_json": "{\"draft\":{\"unfinished\":true}}",
+    "accepted_json": "{\"saved\":true}",
+    "context": [{"key":"draft"}]
+  },
+  "valid": [
+    {"id":"exact-nested-document","source":" {\"\":{\"0\":[9007199254740993,1.2300,1e400,-0]},\"a/b\":\"true\",\"~\":null,\"line\\nkey\":false} \n","expected_json":"{\"\":{\"0\":[9007199254740993,1.2300,1e400,-0]},\"a/b\":\"true\",\"~\":null,\"line\\nkey\":false}"},
+    {"id":"root-array","source":"[null,{\"name\":\"queue\"},true]","expected_json":"[null,{\"name\":\"queue\"},true]"},
+    {"id":"root-number","source":"1.2300\n","expected_json":"1.2300"},
+    {"id":"root-string","source":"\"false\"","expected_json":"\"false\""},
+    {"id":"root-null","source":"null","expected_json":"null"}
+  ],
+  "invalid": [
+    {"id":"nested-decoded-duplicate","source":"{\"outer\":{\"name\":1,\"n\\u0061me\":2}}","code":"INVALID_VALUE"},
+    {"id":"unpaired-surrogate","source":"\"\\uD800\"","code":"INVALID_VALUE"},
+    {"id":"trailing-input","source":"{} []","code":"INVALID_VALUE"},
+    {"id":"unfinished-json","source":"{\"unfinished\":","code":"INVALID_VALUE"},
+    {"id":"non-json-number","source":"NaN","code":"INVALID_VALUE"},
+    {"id":"leading-zero","source":"01","code":"INVALID_VALUE"},
+    {"id":"empty-file","source":"","code":"INVALID_VALUE"}
+  ]
+}

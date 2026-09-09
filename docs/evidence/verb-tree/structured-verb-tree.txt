@@ -1,0 +1,15 @@
+platform
+|-- invoke version [simulated]
+|-- deployments/
+|   |-- invoke apply <release:string> [unbound]
+|   |-- invoke plan <environment:string> [simulated]
+|   `-- releases/
+|       |-- invoke list [simulated]
+|       `-- invoke rollback <version:string> [unbound]
+|-- environments/
+|   |-- invoke list [simulated]
+|   `-- invoke select <name:string> [simulated]
+`-- services/
+    |-- invoke inspect [simulated]
+    |-- invoke restart [unbound]
+    `-- invoke scale <replicas:number> [simulated]

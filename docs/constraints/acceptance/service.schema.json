@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "port", "mode"],
+  "$defs": {"port": {"type": "integer", "minimum": 1, "maximum": 65535}},
+  "properties": {
+    "name": {"type": "string", "minLength": 1},
+    "port": {"$ref": "#/$defs/port"},
+    "mode": {"type": "string", "enum": ["development", "production"]},
+    "tags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+  }
+}

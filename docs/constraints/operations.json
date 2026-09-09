@@ -1,0 +1,9 @@
+{
+  "operations": [
+    {"name":"constrain","handler":"constraints.attach","effect":"state","help":"Attach a snapshot of the whole candidate schema, or a local schema file, under local-2020-12-v1.","arguments":[{"name":"source","type":"string","optional":true}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"constrain","positional":["source"]},"batchable":false},
+    {"name":"unconstrain","handler":"constraints.detach","effect":"state","help":"Explicitly detach schema constraints without changing the draft or accepted document.","arguments":[],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"unconstrain","positional":[]},"batchable":false},
+    {"name":"schema","handler":"constraints.inspect","effect":"read","help":"Inspect the active schema snapshot, exact text, and interpretation policy.","arguments":[],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"schema","positional":[]},"batchable":false},
+    {"name":"validate","handler":"constraints.validate","effect":"read","help":"Validate a complete candidate or accepted document and report precise findings; drafts remain editable.","arguments":[{"name":"view","type":"enum","values":["candidate","accepted"],"default":"candidate"}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"validate","positional":["view"]},"batchable":false},
+    {"name":"guide","handler":"constraints.guide","effect":"read","help":"Inspect schema guidance at an existing path or absent final property, with explicit completeness limits.","arguments":[{"name":"path","type":"document_path","default":{"base":"context","segments":[]}}],"unknown_arguments":"reject","terminal":{"form":"tokens","command":"guide","positional":["path"]},"batchable":false}
+  ]
+}

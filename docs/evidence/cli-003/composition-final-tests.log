@@ -1,0 +1,37 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.60s
+     Running tests/cli_composition.rs (/tmp/cli-rust-toolchain-VjSXVO/app-target/debug/deps/cli_composition-39d77a22ea4af991)
+
+running 12 tests
+PASS cli-003-live-registry-drift
+test composition_registry_checks_actual_handler_and_argument_drift ... ok
+PASS cli-003-configured-signature-discovery
+test configured_names_drive_discovery_completion_and_invocation ... ok
+FAULT_LANDED {"action":"error","pid":81833,"point":"before_checkpoint_write"}
+PASS cli-003-explicit-replacement
+test definition_edits_and_failed_activation_preserve_the_prior_active_interface ... ok
+PASS cli-003-checkpoint-validation
+test composition_checkpoint_corruption_and_wrong_profile_are_rejected ... ok
+PASS cli-003-exact-number-boundaries
+test exact_numbers_survive_arguments_literals_discovery_and_reopen ... ok
+PASS cli-003-configured-domain-words-and-types
+test domain_word_collisions_and_scalar_types_are_configured_without_new_handlers ... ok
+FAULT_LANDED {"action":"error","pid":81891,"point":"after_checkpoint_rename"}
+FAULT_LANDED {"action":"pause","pid":81893,"point":"before_response_delivery"}
+PASS cli-003-activation-publication-faults
+test activation_publication_failures_and_uncertainty_use_the_existing_checkpoint_boundary ... ok
+PASS cli-003-lost-mock-response
+test lost_mock_response_replays_after_process_death_without_another_transition ... ok
+PASS cli-003-invalid-definition-and-atomic-mock
+test invalid_definitions_and_mock_failures_never_publish_partial_state ... ok
+PASS cli-003-definition-input-boundaries
+test definition_limits_unknown_fields_and_duplicate_keys_reject_before_activation ... ok
+PASS cli-003-simulation-provenance
+test runtime_simulation_labels_survive_authored_claims_and_corrupt_transfer_is_rejected ... ok
+PASS cli-003-construction-parity-transfer
+test constructed_cli_activates_and_runs_through_both_presentations_and_transfers ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.47s
+

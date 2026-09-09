@@ -1,0 +1,21 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 6.03s
+     Running tests/connected_json_read.rs (target/release/deps/connected_json_read-fe2039ee1e2e67ff)
+
+running 1 test
+
+thread 'connected_definition_is_authored_with_typed_commands_and_activates_without_authority' (120454) panicked at tests/connected_json_read.rs:26:5:
+assertion `left == right` failed: {"error":{"code":"INVALID_CLI_DEFINITION","message":"JSON value rejected: CLI behavior binding kind is unsupported at line 1 column 229","recovery":"Supply valid JSON with unique decoded keys and valid Unicode."},"event":"response","mutation":"none","operation":"activate","replayed":false,"request_id":"1791370c-bd5b-40ea-a07d-320d5bd8d4c5","result":null,"session":{"accepted_revision":"56","constraint_mode":"unconstrained","context":[],"definition_id":"bootstrap-cli-composition-v1","definition_sha256":"0ed04074169caa2c0cd8629c6cf08432954337598735398e98bb567656e0da7b","dirty":false,"durability":"durable","node_kind":"object","revision":"56","session_id":"0f95b020-2154-4c2c-bcc0-b454778d4770"},"status":"error"}
+  left: String("error")
+ right: "ok"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test connected_definition_is_authored_with_typed_commands_and_activates_without_authority ... FAILED
+
+failures:
+
+failures:
+    connected_definition_is_authored_with_typed_commands_and_activates_without_authority
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test connected_json_read`

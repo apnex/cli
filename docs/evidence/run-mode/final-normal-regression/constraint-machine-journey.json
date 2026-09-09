@@ -1,0 +1,660 @@
+[
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "constrain",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      }
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "guide",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "guidance": {
+        "children": [
+          {
+            "key": "mode",
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "mode"
+                }
+              ]
+            },
+            "required": true,
+            "terminal_path": "/mode",
+            "types": [
+              "string"
+            ]
+          },
+          {
+            "key": "name",
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "name"
+                }
+              ]
+            },
+            "required": true,
+            "terminal_path": "/name",
+            "types": [
+              "string"
+            ]
+          },
+          {
+            "key": "port",
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "port"
+                }
+              ]
+            },
+            "required": true,
+            "terminal_path": "/port",
+            "types": [
+              "integer"
+            ]
+          },
+          {
+            "key": "tags",
+            "path": {
+              "base": "root",
+              "segments": [
+                {
+                  "key": "tags"
+                }
+              ]
+            },
+            "required": false,
+            "terminal_path": "/tags",
+            "types": [
+              "array"
+            ]
+          }
+        ],
+        "complete": true,
+        "notes": [],
+        "path": {
+          "base": "root",
+          "segments": []
+        },
+        "required": [
+          "mode",
+          "name",
+          "port"
+        ],
+        "rules": [
+          {
+            "schema_json_text": "{\"$defs\":{\"port\":{\"maximum\":65535,\"minimum\":1,\"type\":\"integer\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"mode\":{\"enum\":[\"development\",\"production\"],\"type\":\"string\"},\"name\":{\"minLength\":1,\"type\":\"string\"},\"port\":{\"$ref\":\"#/$defs/port\"},\"tags\":{\"items\":{\"type\":\"string\"},\"type\":\"array\",\"uniqueItems\":true}},\"required\":[\"name\",\"port\",\"mode\"],\"type\":\"object\"}",
+            "schema_path": ""
+          }
+        ],
+        "schema_paths": [
+          ""
+        ],
+        "terminal_path": "",
+        "types": [
+          "object"
+        ],
+        "values": []
+      }
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "validate",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "validation": {
+        "findings": [
+          {
+            "instance_path": "",
+            "keyword": "required",
+            "message": "\"name\" is a required property",
+            "message_truncated": false,
+            "schema_path": "/required"
+          },
+          {
+            "instance_path": "",
+            "keyword": "required",
+            "message": "\"port\" is a required property",
+            "message_truncated": false,
+            "schema_path": "/required"
+          },
+          {
+            "instance_path": "",
+            "keyword": "required",
+            "message": "\"mode\" is a required property",
+            "message_truncated": false,
+            "schema_path": "/required"
+          }
+        ],
+        "truncated": false,
+        "valid": false
+      },
+      "view": "candidate"
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "1",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "name"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "2",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "port"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "3",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "mode"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": {
+      "code": "SCHEMA_VIOLATION",
+      "message": "Candidate does not satisfy the attached schema.",
+      "path": "/port",
+      "recovery": "Use validate to inspect findings, edit the preserved draft, then commit again.",
+      "validation": {
+        "findings": [
+          {
+            "instance_path": "/port",
+            "keyword": "type",
+            "message": "\"5432\" is not of type \"integer\"",
+            "message_truncated": false,
+            "schema_path": "/$defs/port/type"
+          }
+        ],
+        "truncated": false,
+        "valid": false
+      }
+    },
+    "event": "response",
+    "mutation": "none",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": null,
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "error"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "validate",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "validation": {
+        "findings": [
+          {
+            "instance_path": "/port",
+            "keyword": "type",
+            "message": "\"5432\" is not of type \"integer\"",
+            "message_truncated": false,
+            "schema_path": "/$defs/port/type"
+          }
+        ],
+        "truncated": false,
+        "valid": false
+      },
+      "view": "candidate"
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "4",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "port"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "set",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "tags"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "6",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "edit",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "path": [
+        {
+          "key": "tags"
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "tags"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "array",
+      "revision": "7",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "append",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "changed_paths": [
+        {
+          "base": "root",
+          "segments": [
+            {
+              "key": "tags"
+            }
+          ]
+        }
+      ]
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "tags"
+        }
+      ],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "array",
+      "revision": "8",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "top",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "path": []
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "validate",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "validation": {
+        "findings": [],
+        "truncated": false,
+        "valid": true
+      },
+      "view": "candidate"
+    },
+    "session": {
+      "accepted_revision": "0",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": true,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "commit",
+    "replayed": false,
+    "request_id": "<generated-request_id>",
+    "result": {
+      "accepted_revision": "10"
+    },
+    "session": {
+      "accepted_revision": "10",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "c61ba2423e8f23f5b6b67556b082f151534979a98860cf0b7be49ec816035e37"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [],
+      "definition_id": "bootstrap-json-constraints-v1",
+      "definition_sha256": "a833841cf7eefd12ad14b45f3716817478c72e5d1fa7da541532863c413892c3",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "10",
+      "session_id": "<generated-session_id>"
+    },
+    "status": "ok"
+  }
+]

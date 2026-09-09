@@ -1,0 +1,42 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `release` profile [optimized] target(s) in 28.46s
+     Running tests/continuation_trials.rs (target/release/deps/continuation_trials-341292a6c310a29e)
+
+running 6 tests
+test targeted_edit_rejects_missing_or_ambiguous_anchors_without_partial_write ... ok
+CONTINUATION_MUTANT_LANDED_AND_REJECTED 0
+CONTINUATION_MUTANT_LANDED_AND_REJECTED 1
+CONTINUATION_MUTANT_LANDED_AND_REJECTED 2
+test oracle_rejects_activatable_semantic_mutations_and_constraint_removal ... ok
+test receiver_reopens_edits_instead_of_replacing_them_from_handover ... ok
+test receiver_detects_missing_or_changed_inputs_before_creating_work ... ok
+test paired_rehearsals_preserve_whole_handover_and_meet_both_tasks ... ok
+COMPARISON_EXTERNAL_MUTANT_LANDED_AND_REJECTED
+test authoring_comparison_preserves_file_activation_gap_and_checks_imported_continuation ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.06s
+
+     Running tests/document_import.rs (target/release/deps/document_import-64043265002b85a2)
+
+running 6 tests
+FAULT_LANDED {"action":"error","pid":72402,"point":"after_checkpoint_write"}
+FAULT_LANDED {"action":"error","pid":72408,"point":"after_checkpoint_rename"}
+
+thread 'document_import_publication_failure_and_uncertainty_recover_without_source' (72389) panicked at tests/document_import.rs:615:13:
+assertion failed: process.close().success()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test document_import_publication_failure_and_uncertainty_recover_without_source ... FAILED
+test import_discovery_follows_declaration_and_corrupt_receipts_cannot_reopen ... ok
+test imported_draft_keeps_schema_and_active_cli_until_explicit_commit_and_activation ... ok
+test rejected_document_import_preserves_checkpoint_and_missing_source_replay_is_idempotent ... ok
+test authored_cli_spec_exports_imports_and_runs_in_a_separate_resumable_session ... ok
+test document_import_replaces_only_the_candidate_and_preserves_exact_values_in_both_presentations ... ok
+
+failures:
+
+failures:
+    document_import_publication_failure_and_uncertainty_recover_without_source
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `--test document_import`

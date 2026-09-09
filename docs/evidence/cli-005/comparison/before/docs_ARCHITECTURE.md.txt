@@ -1,0 +1,260 @@
+---
+instant: target
+scope: Programmable CLI
+---
+
+# Target architecture proposal
+
+This is a proposed target instant, expressed in the present tense of that target.
+It is not a report of implemented behavior.
+Every section carries its own maturity and decision authority.
+The [vision](../VISION.md) holds purpose, and [captured intent](project-intent.md) distinguishes user direction from design inference.
+The [CLI-002 implementation record](authoring/CLI-002.md) identifies the implemented authoring subset and its measured acceptance results; broader sections below retain their stated proposal status.
+The [CLI-003 record](composition/CLI-003.md) adds bounded authored definitions, explicit activation, contextual discovery, and simulated bindings. The [CLI-004 record](constraints/CLI-004.md) adds explicit schema snapshots, contextual guidance, and constrained authoring; broader reuse and connected execution remain proposals.
+The [CLI-005 experiment](reuse/CLI-005.md) exercises whole-checkpoint reuse through the existing runtime, including a [fresh-agent continuation](reuse/FRESH-ACTOR-TRIAL.md) that passed the fixed task evaluator.
+General component composition and comparative workflow evidence remain open; the trial tooling does not add a kernel layer or definition format.
+
+## Identity and scope
+
+**Maturity: provisional.**
+
+The system interprets a loaded definition as a contextual CLI.
+Its interaction derives from declared operations, structured state, constraints, and explicit behavior bindings.
+Structured authoring is independently useful and also constructs definitions for that runtime.
+
+The system does not invent domain functionality from a verb name, infer authority from a definition, or treat a saved document as an observation of an external system.
+The ownership tree of a JSON document and the graph of relationships in a modeled system are distinct structures.
+
+---
+
+## Justification chain
+
+**Maturity: provisional.**
+
+### Domain
+
+The domain is contextual construction and use of structured interfaces by people and agents.
+The defining need is preservation of meaning through construction, composition, execution, and transfer to another actor.
+
+### Axioms
+
+| Anchor | Commitment relevant to this shape |
+|---|---|
+| [A3: sovereign composition](https://github.com/apnex/mission-kit/blob/main/axioms/A3-sovereign-composition.md) | Each concern has an explicit boundary; stable public surfaces require real consumers. |
+| [A4: zero-loss knowledge](https://github.com/apnex/mission-kit/blob/main/axioms/A4-zero-loss-knowledge.md) | Source intent, exact definitions, rationale, and evidence remain recoverable. |
+| [A5: perceptual parity](https://github.com/apnex/mission-kit/blob/main/axioms/A5-perceptual-parity.md) | Human and agent presentations expose equivalent relevant meanings and observations. |
+| [A7: resilient agentic operations](https://github.com/apnex/mission-kit/blob/main/axioms/A7-resilient-agentic-operations.md) | Interrupted or failed work has observable state and actionable outcomes. |
+| [A11: cognitive minimalism](https://github.com/apnex/mission-kit/blob/main/axioms/A11-cognitive-minimalism.md) | Declared mechanical rules are interpreted deterministically rather than reconstructed by an agent. |
+
+### System north star
+
+One declared operation model determines discoverable choices and execution meaning while retaining enough explicit state and evidence for another actor to continue.
+
+### Principles
+
+- Structured documents remain useful without a project-specific CLI definition.
+- A schema has an explicit role as authored data or as an active constraint.
+- The CLI definition records operation meaning and dependencies once.
+- Definition editing and definition activation have distinct boundaries.
+- A mock is an explicit binding state with distinguishable results.
+- Document acceptance and evidence of external effects are separate claims.
+- A modeled system carries explicit relationships rather than relying on tree location to explain every dependency.
+- Human and machine presentations share dispatch semantics.
+- Specification size remains separate from the value of its construction workflow.
+
+The [verbs-as-data pattern](https://github.com/apnex/mission-kit/blob/main/patterns/P5-verbs-as-data-surface.md) grounds the shared operation model.
+Its handler-completeness rule is scoped here to bindings that claim implemented behavior.
+Declared and mocked operations are legitimate states in the owner's requested workflow, and their state is explicit.
+
+### Design choices and their authority
+
+The responsibility boundaries in the following model are author proposals derived from the principles above.
+They are not ratified public APIs, crate boundaries, or process boundaries.
+The owner authorized the initial scaffold and subsequently selected CLI-001, CLI-002, and [CLI-003](context/cli-003-approval.json).
+The [first authoring decision](authoring/CLI-001.md#decision-0001-establish-the-bounded-authoring-contract) establishes the bounded engineering contract for CLI-002; it does not ratify the full decomposition as public APIs.
+
+### Model
+
+The anchored core below gives each responsibility a named scope, declared dependencies, and a reason for its boundary.
+The directory structure makes those proposals inspectable without selecting their implementation packaging.
+Layer documentation lives under `docs/layers/`; the first application uses one unpublished Rust package with internal responsibilities.
+
+---
+
+## Anchored core
+
+**Maturity: provisional.**
+
+The following view is generated from the [layer registry](layers.json).
+Each dependency is a proposed semantic dependency, not evidence of a source-code import.
+
+<!-- BEGIN GENERATED LAYER MAP -->
+| Responsibility | Duty | Consumes | Exposes | Depends on | Local record |
+|---|---|---|---|---|---|
+| `document` | Own the structured document model. | JSON values; Unambiguous document locations; Proposed document transformations | Typed values and document locations; Snapshots and structural differences; Explicit transformation results | None | [Vision](layers/document/VISION.md), [responsibility](layers/document/contract.md) |
+| `authoring` | Own the authoring session. | Document snapshots; Explicit editing intentions; A declared acceptance policy | Working context and candidate state; Atomic edit and batch results; Pending changes and resumable session state | `document` | [Vision](layers/authoring/VISION.md), [responsibility](layers/authoring/contract.md) |
+| `constraints` | Own constraint interpretation. | A document under evaluation; An explicitly selected schema and dialect; Reference-resolution inputs | Validation findings with document and schema locations; Supported constraint semantics; Contextual guidance with stated completeness limits | `document` | [Vision](layers/constraints/VISION.md), [responsibility](layers/constraints/contract.md) |
+| `definitions` | Own the declarative CLI model. | Authored CLI definitions; Referenced schemas and reusable components; Declared operation expectations | An inspectable model of contexts and operations; Explicit references between modeled entities; Definition diagnostics and dependency requirements | `document`, `constraints` | [Vision](layers/definitions/VISION.md), [responsibility](layers/definitions/contract.md) |
+| `bindings` | Own operation-to-behavior bindings. | Declared operation contracts; Explicit mock behavior or connected capabilities; Granted execution authority | Binding availability and compatibility; Distinguishable unbound, simulated, and real invocation outcomes; Effect evidence and uncertainty supplied by the connected capability | `definitions` | [Vision](layers/bindings/VISION.md), [responsibility](layers/bindings/contract.md) |
+| `runtime` | Own configured operation dispatch. | An explicitly activated CLI definition; An identified session and operation request; Authoring, constraint, and binding results | Available operations in the current context; Definition and state identity for each request; Structured operation results and resulting context | `authoring`, `constraints`, `definitions`, `bindings` | [Vision](layers/runtime/VISION.md), [responsibility](layers/runtime/contract.md) |
+| `interaction` | Own interaction presentation. | Runtime discovery and operation results; Human input or agent requests; Presentation preferences | Contextual navigation, help, and completion; Structured machine interaction; Visible results with accessible detail and provenance | `runtime` | [Vision](layers/interaction/VISION.md), [responsibility](layers/interaction/contract.md) |
+
+Arrows point from a consumer to its declared dependency.
+
+```mermaid
+flowchart TD
+    document["Structured documents"]
+    authoring["Contextual authoring"]
+    constraints["Constraint interpretation"]
+    definitions["CLI definitions"]
+    bindings["Behavior bindings"]
+    runtime["Configured runtime"]
+    interaction["Human and agent interaction"]
+    authoring --> document
+    constraints --> document
+    definitions --> document
+    definitions --> constraints
+    bindings --> definitions
+    runtime --> authoring
+    runtime --> constraints
+    runtime --> definitions
+    runtime --> bindings
+    interaction --> runtime
+```
+<!-- END GENERATED LAYER MAP -->
+
+---
+
+## Entity model and interfaces
+
+**Maturity: conceptual model, with a concrete first authoring contract.**
+
+| Entity | Meaning | Required distinction |
+|---|---|---|
+| Document | Structured values with explicit identity and locations. | An object key is not inferred to be an array index from its spelling. |
+| Authoring session | Working context, draft, accepted baseline, pending changes, and relevant revision references. | A current prompt is a presentation of session state. |
+| Constraint attachment | A selected schema, its interpretation, and its reference context. | Schema content being edited is distinct from schema content governing an edit. |
+| CLI definition | Contexts, operations, input and output expectations, relationships, dependencies, and behavior references. | JSON ownership and modeled entity relationships are distinct. |
+| Operation binding | The relationship between a declared operation and available behavior. | Unbound, simulated, and connected behavior have different meanings. |
+| Invocation record | A request's definition identity, inputs, relevant state, outcome, and effect evidence. | Acceptance, simulation, execution, and observed consequence are different observations. |
+| Resumption context | References to original intent, definitions, drafts, constraints, unresolved questions, and evidence. | Declared knowledge and externally observed state retain their provenance. |
+
+These are conceptual entities, not a published serialization schema.
+The dependency registry states what each responsibility consumes and exposes at this altitude.
+The [authoring contract](authoring/SESSION-CONTRACT.md) specifies the first slice's typed paths, session checkpoint, revision fields, operation requests, and results.
+The [bootstrap declaration](authoring/operations.json) carries its operation surface as loaded data.
+The [constraints contract](constraints/CONTRACT.md) specifies the supported Draft 2020-12 subset, local references, editable drafts, guidance limits, and checkpoint formats 3 and 4. Broader schema coverage, reusable definitions, and connected invocation contracts remain in the open register.
+The [composition contract](composition/CONTRACT.md) specifies the first active definition format, context relationships, scalar command signatures, and mock instructions.
+
+---
+
+## Runtime behavior
+
+**Maturity: bounded CLI-002 authoring and CLI-003 composition transitions are implemented and tested locally; broader runtime behavior remains provisional.**
+
+An authoring session exposes unfinished work and pending validation findings.
+An edit either produces its declared document transition or reports a failure whose mutation outcome is explicit.
+Accepting a draft evaluates the applicable whole-document constraints under the selected policy.
+
+The first slice explicitly selects unconstrained authoring.
+Its `commit` copies candidate to accepted, while every accepted state-changing request durably checkpoints the session and its last receipt before acknowledgment.
+Its `save` exports candidate bytes without changing acceptance or revision.
+Failed edits preserve state, and uncertain checkpoint publication stops writes until reopening, as specified in the [persistence contract](authoring/SESSION-CONTRACT.md#persistence-and-export).
+
+A definition is editable as data independently of whether it is active.
+Activation selects an identified definition for subsequent discovery and invocation.
+Operation availability and binding state are visible before invocation.
+The composition profile retains active interface state separately from candidate and accepted documents, inside the existing checkpoint transaction.
+Its `invoke` control resolves local command words from active data and records simulation-only outcomes.
+
+An unbound operation has a discoverable contract without claiming executed functionality.
+A mock returns explicitly simulated results under its declared behavior.
+A connected operation reports the evidence and uncertainty that its actual capability supports.
+
+Local document atomicity does not imply atomicity of external effects.
+After interruption or a conflicting edit, the available record identifies known outcomes and unresolved uncertainty before a retry decision is justified.
+
+---
+
+## Verification obligations
+
+**Maturity: provisional criteria; no runtime behavior is certified by this document.**
+
+| Claim | Required observation |
+|---|---|
+| Precise authoring | Invalid edits, unusual keys, exact value types, array changes, and batch failures preserve the stated document guarantees. |
+| Constraint fidelity | Accepted and rejected examples agree with the selected schema semantics, including supported references and unsupported features. |
+| Interface consistency | Equivalent human and machine requests produce equivalent interpretation and observable results. |
+| Definition integrity | Discovery, input handling, and dispatch agree on the same active operation model. |
+| Honest mocking | Simulated outcomes remain distinguishable from real execution through capture, export, and resumption. |
+| Resumability | A fresh actor continues from recorded artifacts and original requirements without the originating conversation. |
+| Recovery | Interrupted and conflicting operations expose enough evidence to avoid guessing whether a mutation or effect occurred. |
+| Reuse | Definitions produced for different purposes compose with explicit dependencies and visible incompatibilities. |
+
+Independent evaluation against the original task tests meaning that a self-authored schema and mock cannot establish by agreement alone.
+The [service-catalog task](authoring/acceptance/SERVICE-CATALOG.md) and [acceptance corpus](authoring/acceptance/authoring-cases.json) establish that independent first-slice input; [CLI-002](authoring/CLI-002.md) records actual application execution separately from the original design fixture.
+The [working approach](approach.md) describes the experimental workflow without making its sequence part of this target instant.
+
+---
+
+## Axiom alignment and tensions
+
+**Maturity: first-slice design audit complete; broader alignment remains preliminary.**
+
+| Anchor | Alignment | Open tension or limit |
+|---|---|---|
+| A3 | Responsibility directories isolate a concern without publishing APIs. | The proposed dependencies require validation against concrete consumers before they become stable interfaces. |
+| A4 | The complete source discussion is retained beside derived intent. | The exact resumption artifact must preserve decisions and evidence without requiring a full conversation dump at every invocation. |
+| A5 | Both interaction audiences consume the same runtime meaning. | Local paired authoring, composition, and constraint trials exercise shared meaning; connected behavior remains untested. |
+| A7 | Outcomes, interruption, and recovery are first-class requirements. | A behavior binding may be unable to determine an external outcome; such uncertainty must remain explicit. |
+| A11 | Definitions and reusable deterministic operations carry mechanical work. | Total agent effort includes construction and repair; specification length alone is not the economic objective. |
+
+The [dedicated CLI-001 audit](authoring/AXIOM-AUDIT.md) records `pass-with-guardrails` for the bounded authoring implementation.
+It identifies required recovery, fidelity, declaration-integrity, and parity observations; a passing design audit is not a passing application test.
+Broader reusable definitions, additional schema semantics, and connected behavior require their own concrete contracts and audit coverage. The first constraint subset has its [own audit](constraints/AXIOM-AUDIT.md).
+The [CLI-003 audit](composition/AXIOM-AUDIT.md) covers the first definition and mock interpreter, including its exact-number boundary correction.
+
+Correction, 2026-09-08: the previous A5 row said "application parity remains untested" after CLI-002 already retained passing application comparisons.
+That stale claim is withdrawn; the table now separates the tested local slices from future capabilities.
+
+---
+
+## Owed-and-open register
+
+**Maturity: first authoring questions resolved in scope; broader consumers remain open.**
+
+| Concern | Consumer | What settles it |
+|---|---|---|
+| Implementation packaging and Rust toolchain | The first implementation slice | [CLI-002](authoring/CLI-002.md) implements one unpublished Rust package and records actual build and test evidence; public package boundaries remain unselected. |
+| Document fidelity and addressing | JSON authoring | [Document and path contracts](authoring/SESSION-CONTRACT.md#document-fidelity) are exercised in the [application acceptance suite](authoring/CLI-002.md#acceptance-observations), including number tokens, arbitrary keys, and positional arrays. |
+| Draft acceptance and persistence | Resuming authors | [Checkpoint and export contracts](authoring/SESSION-CONTRACT.md#persistence-and-export) pass the local process and fault scenarios recorded in CLI-002; hardware power-loss guarantees remain unclaimed. |
+| JSON Schema coverage | Constrained authoring | [CLI-004](constraints/CLI-004.md) establishes the local-2020-12-v1 subset, local acyclic references, contextual guidance limits, and an unchanged upstream corpus; further dialects and reference mechanisms need a consumer. |
+| Definition vocabulary and graph identities | CLI construction and reuse | [CLI-003](composition/CLI-003.md) establishes stable context and operation identities, parent/related references, and explicit activation; cross-definition dependencies and compatibility remain CLI-005. |
+| OpenAPI interpretation | API-oriented CLI definitions | [CLI-004](constraints/CLI-004.md) demonstrates representative description authoring. CLI-007 retains the extra mapping and protocol behavior required for invocation. |
+| Mock semantics | Specification-driven exploration | [CLI-003 contract](composition/CONTRACT.md#bindings) implements static examples and bounded stateful mocks, with persistent simulation labels and atomic local failure. |
+| Hook mechanism and guarantees | Connected domain operations | An actual capability establishes transport, authority, interruption, retry, and effect-evidence requirements. |
+| Machine-call and terminal grammar | Humans and agents | [Request and result contracts](authoring/SESSION-CONTRACT.md#request-and-result-contracts) are exercised through independent paired machine and terminal-command journeys in CLI-002. |
+| Resumption contents | An actor with no conversation history | The [CLI-005 package](reuse/CONTRACT.md) combines a full checkpoint with both tasks, exact executable/declaration identities, policy, and a recorder; one [fresh-agent trial](reuse/FRESH-ACTOR-TRIAL.md) passed task acceptance with its context-exposure limits retained. Comparative workflow evidence and general component composition remain open. |
+
+Layer-specific questions remain with their generated responsibility records.
+
+---
+
+## Mechanics, rationale, and consequence
+
+**Maturity: provisional.**
+
+### Mechanics
+
+The registry declares the component scopes and semantic dependency graph.
+Generated views carry that declaration into the anchored core and local responsibility records.
+Open questions remain explicit until evidence or the owner's intent resolves them.
+
+### Rationale
+
+The scaffold gives an arriving actor a concrete structure to reason from while preserving the distinction between agreed purpose and proposed design.
+
+### Consequence of violation
+
+Treating provisional boundaries as settled APIs would hide the remaining design work.
+Treating a target description as implemented reality would manufacture evidence that the scaffold does not contain.

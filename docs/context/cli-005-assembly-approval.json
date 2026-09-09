@@ -1,0 +1,20 @@
+{
+  "format_version": 1,
+  "record": "CLI-005",
+  "increment": "component-assembly",
+  "observed_at_utc": "2026-09-09 01:24:27 UTC",
+  "user_message": "approved",
+  "approved_recommendation": [
+    "Author and export separate services and queues components through the CLI.",
+    "Assemble them into a worker-platform CLI with explicit state ownership and dependencies.",
+    "Verify that each component preserves its behavior, with clear rejection of naming collisions and missing dependencies.",
+    "Export, import, and exercise the assembled interface in another session.",
+    "Start by fixing that acceptance contract."
+  ],
+  "interpretation": "Implement and verify this bounded component assembly journey locally in Rust; existing historical whole-prototype trials retain their contract.",
+  "survey_bypass": {
+    "authority": "The user approval above selects the immediately preceding concrete recommendation.",
+    "rationale": "The journey and required outcomes are fixed; namespace syntax, local formats, and resolver limits are implementation decisions within that scope."
+  },
+  "scope": "Local implementation, documentation, and executor-run validation. No new agents, external hooks, publication, or comparative agent-performance claims."
+}

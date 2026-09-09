@@ -1,0 +1,128 @@
+[
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "none",
+    "operation": "tree",
+    "replayed": false,
+    "request_id": "0dfe5557-7f53-4525-9644-ed521914c0fa",
+    "result": {
+      "interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "primary.services",
+        "definition_id": "catalog-pair",
+        "definition_sha256": "5115ebbbf8deea58e2b2386e1d1055dff0e05cc88da0883f22b99de5b9681626"
+      },
+      "verb_tree_text": "catalog-pair\n|-- primary/\n|   `-- primary.services/\n|       |-- invoke inspect [connected:json-file-read-v1]\n|       |-- invoke quota <value:number> [simulated]\n|       `-- invoke restart [unbound]\n`-- secondary/\n    `-- secondary.services/\n        |-- invoke inspect [connected:json-file-read-v1]\n        |-- invoke quota <value:number> [simulated]\n        `-- invoke restart [unbound]\n"
+    },
+    "session": {
+      "accepted_revision": "3",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "primary.services",
+        "definition_id": "catalog-pair",
+        "definition_sha256": "5115ebbbf8deea58e2b2386e1d1055dff0e05cc88da0883f22b99de5b9681626"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "f2b8b8247697567ae3762877ac597eb44fac63279fda9f711d5467dde2f70c63",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "5",
+      "session_id": "cd823653-d148-457e-afb3-fc4d8a409deb"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "41cd4ad9-df9c-4e76-82a1-2790117e2509",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "primary.services",
+        "definition_sha256": "5115ebbbf8deea58e2b2386e1d1055dff0e05cc88da0883f22b99de5b9681626",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "0c8eaee908f26b53b8a192fcb3b3fe76a097dada9d705a32332cc4a2a148a727",
+          "provider": "json-file-read-v1",
+          "source_bytes": 45,
+          "source_sha256": "e66a51d565b686bb5d2dba57de19caabaf67dae04816cb5577771f82202240a2"
+        },
+        "operation_id": "primary.catalog.inspect",
+        "output_json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1.2300}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "3",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "primary.services",
+        "definition_id": "catalog-pair",
+        "definition_sha256": "5115ebbbf8deea58e2b2386e1d1055dff0e05cc88da0883f22b99de5b9681626"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "f2b8b8247697567ae3762877ac597eb44fac63279fda9f711d5467dde2f70c63",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "8",
+      "session_id": "cd823653-d148-457e-afb3-fc4d8a409deb"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "310c8779-5718-4d22-b393-d9adf741b15f",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "secondary.services",
+        "definition_sha256": "5115ebbbf8deea58e2b2386e1d1055dff0e05cc88da0883f22b99de5b9681626",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "0c8eaee908f26b53b8a192fcb3b3fe76a097dada9d705a32332cc4a2a148a727",
+          "provider": "json-file-read-v1",
+          "source_bytes": 45,
+          "source_sha256": "e66a51d565b686bb5d2dba57de19caabaf67dae04816cb5577771f82202240a2"
+        },
+        "operation_id": "secondary.catalog.inspect",
+        "output_json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1.2300}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "3",
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "secondary.services",
+        "definition_id": "catalog-pair",
+        "definition_sha256": "5115ebbbf8deea58e2b2386e1d1055dff0e05cc88da0883f22b99de5b9681626"
+      },
+      "constraint_mode": "unconstrained",
+      "context": [],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "f2b8b8247697567ae3762877ac597eb44fac63279fda9f711d5467dde2f70c63",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "10",
+      "session_id": "cd823653-d148-457e-afb3-fc4d8a409deb"
+    },
+    "status": "ok"
+  }
+]

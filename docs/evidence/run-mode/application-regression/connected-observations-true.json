@@ -1,0 +1,173 @@
+[
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "46340133-9c0b-4495-8ceb-b9921962d477",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "services",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "0c8eaee908f26b53b8a192fcb3b3fe76a097dada9d705a32332cc4a2a148a727",
+          "provider": "json-file-read-v1",
+          "source_bytes": 45,
+          "source_sha256": "e66a51d565b686bb5d2dba57de19caabaf67dae04816cb5577771f82202240a2"
+        },
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"enabled\":true,\"name\":\"api\",\"quota\":1.2300}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0"
+      },
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "7",
+      "session_id": "6d5ab180-eead-4260-a316-4bc3be48f9fe"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "d4e99fb9-dfba-4062-bade-4896feb11031",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "services",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "d3a74f50f026aa20fea1a5c4e525ff7940bb6cd94615af0b0e0049d685bbb249",
+          "provider": "json-file-read-v1",
+          "source_bytes": 48,
+          "source_sha256": "a71255fec1a6d736f963680c19340fbba456daa1bed4c16bfe4938a9cc771eb2"
+        },
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"enabled\":false,\"name\":\"worker\",\"quota\":1e400}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0"
+      },
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "8",
+      "session_id": "6d5ab180-eead-4260-a316-4bc3be48f9fe"
+    },
+    "status": "ok"
+  },
+  {
+    "error": null,
+    "event": "response",
+    "mutation": "applied",
+    "operation": "invoke",
+    "replayed": false,
+    "request_id": "e7b28ec4-b520-4873-aa8d-569d08d5b9a2",
+    "result": {
+      "invocation": {
+        "binding": "connected",
+        "context": "services",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+        "effect": "external_read",
+        "observation": {
+          "capability": "services.catalog",
+          "output_sha256": "44eada2823463e2dbc73a02a33330911ebd79e6472c2d80e99cdffc00dbcb3aa",
+          "provider": "json-file-read-v1",
+          "source_bytes": 61,
+          "source_sha256": "44eada2823463e2dbc73a02a33330911ebd79e6472c2d80e99cdffc00dbcb3aa"
+        },
+        "operation_id": "catalog.inspect",
+        "output_json_text": "{\"binding\":\"simulated\",\"effect\":\"success\",\"observation\":null}",
+        "simulated_steps": 0
+      }
+    },
+    "session": {
+      "accepted_revision": "2",
+      "active_constraint": {
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "policy": "local-2020-12-v1",
+        "schema_sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0"
+      },
+      "active_interface": {
+        "binding_scope": "includes_connected_read",
+        "context": "services",
+        "definition_id": "service-catalog-connected",
+        "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+      },
+      "constraint_mode": "json-schema-2020-12",
+      "context": [
+        {
+          "key": "contexts"
+        },
+        {
+          "key": "services"
+        }
+      ],
+      "definition_id": "bootstrap-cli-constraints-v1",
+      "definition_sha256": "996bab8a3ba4a837d53786a45aba00b1e6c503cf55600478acab19687cdfd07a",
+      "dirty": false,
+      "durability": "durable",
+      "node_kind": "object",
+      "revision": "9",
+      "session_id": "6d5ab180-eead-4260-a316-4bc3be48f9fe"
+    },
+    "status": "ok"
+  }
+]

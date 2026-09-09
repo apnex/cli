@@ -1,0 +1,11 @@
+# Schema construction and constraint task
+
+Fixed before application implementation for CLI-004.
+
+Build a schema for a service record using only navigation and typed value constructors. Its root is an object with no undeclared properties. It requires `name`, `port`, and `mode`. Name is a nonempty string. Port references a local `$defs/port` integer schema with inclusive bounds 1 and 65535. Mode is `development` or `production`. Optional `tags` is an array of unique strings. A schema with these rules must remain ordinary data until explicitly attached.
+
+Save the schema, then start an independent empty instance session, attach it, discover the missing fields, and author a valid service. Empty drafts and a string-valued port stay editable but cannot commit. Rejection identifies instance and schema paths and changes no saved byte. Fix the port, commit, reopen after removing the source file, inspect the attachment and continue. Changing and detaching constraints must be explicit. Human command and machine request journeys must agree on resulting documents, guidance, and findings.
+
+Separately construct an OpenAPI 3.1.1 description with title `Service catalog`, version `1.0.0`, and GET `/services` operation `listServices`. Its successful `200` response has description `Service list`, JSON media type, and an array schema whose items reference `#/components/schemas/Service`. That component is an object requiring a string `name` and integer `port`. Preserve the slash-containing path and numeric-looking response key as literal object keys. No raw JSON containers may be typed into either construction trace. No API invocation is part of this task.
+
+Validation must also agree with retained, unmodified positive and negative cases from the JSON Schema project's Draft 2020-12 suite. Pin the downloaded bytes before application implementation. Exercise local references and their siblings, boolean schemas, numeric equivalence, invalid schemas, unsupported dialects and features, external and cyclic references, annotation data containing schema-looking keys, conditional guidance limits, and checkpoint failure recovery. This task fixes behavior; tests do not derive the expected service schema or API document from the produced artifact.

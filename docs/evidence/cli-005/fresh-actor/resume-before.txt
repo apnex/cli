@@ -1,0 +1,66 @@
+# Continue the project
+
+## Recover the intent
+
+Read the [vision](../VISION.md) and [captured intent](project-intent.md).
+The full [source discussion](context/design-discussion.json) remains available when a qualifier, correction, or design rationale needs examination.
+
+The owner's latest correction is load-bearing: contextual construction can justify a substantial specification.
+Portability, deterministic interpretation, reuse, and resumption are valuable independently of specification size.
+
+The definition is intended to expose a structure resembling the relevant target system so another actor can continue reasoning from it.
+It must distinguish intended structure from observations of implemented behavior.
+
+## Inspect the scaffold
+
+The [target architecture](ARCHITECTURE.md) describes proposed responsibilities and explicitly identifies open contracts.
+The [layer registry](layers.json) owns the dependency declaration and generated local records.
+The [scaffold workflow](scaffold-workflow.md) gives the available mechanical check.
+
+The directories under `docs/layers/` are documentation scopes for proposed responsibilities.
+Their existence does not establish an implementation, a crate boundary, a published API, or a passing product test.
+
+## Choose concrete work from the open questions
+
+Read the [project board](BOARD.md) for the proposed sequence, current readiness, and decisions that block each move.
+The [backlog](BACKLOG.md) retains the findings, evidence, and revival triggers behind that sequence.
+The [working approach](approach.md#evidence-journeys) contains candidate evidence journeys.
+The [architecture's open register](ARCHITECTURE.md#owed-and-open-register) identifies the consumers and observations needed to settle unresolved contracts.
+
+CLI-001 is complete under the [recorded first authoring decision](authoring/CLI-001.md#decision-0001-establish-the-bounded-authoring-contract).
+CLI-002 implements and verifies the service-catalog journey in one Rust package, using the [build choices](authoring/BUILD-CHOICES.md), [session contract](authoring/SESSION-CONTRACT.md), and [acceptance corpus](authoring/acceptance/authoring-cases.json).
+Read its [implementation evidence](authoring/CLI-002.md) and [usage guide](authoring/USE.md) to work with the actual authoring application.
+Read the [independent task](authoring/acceptance/SERVICE-CATALOG.md) before the fixture so requested outcomes remain the evaluation input.
+
+The contract specifies machine requests, terminal input, exact values, saved drafts, and a bounded continuation checkpoint.
+The [CLI-003 contract](composition/CONTRACT.md) and [implementation record](composition/CLI-003.md) add explicit definition activation, static and stateful mocks, and process transfer.
+Use the [composition guide](composition/USE.md) and read its [independent task](composition/acceptance/TASK.md) before the example definition.
+The [constraint contract](constraints/CONTRACT.md) and [implementation record](constraints/CLI-004.md) add an independent `--constraints` profile: schema snapshots, Draft 2020-12 validation, guidance, and commit enforcement. Use the [walkthrough](constraints/USE.md) to construct a schema and OpenAPI description through typed commands. Reusable component resolution and broader agent continuation remain later board work.
+
+The [completed CLI-001 audit](authoring/AXIOM-AUDIT.md) records `pass-with-guardrails` for this bounded implementation.
+The [CLI-002 guardrail disposition](authoring/CLI-002.md#audit-guardrail-disposition) links its fault, fidelity, and parity obligations to actual application tests; the retained dependency probe and scaffold checks are narrower evidence.
+If the selected scope or contract changes, revisit the affected audit before accepting changed behavior.
+Keep owner-confirmed intent separate from implementation proposals throughout that work.
+
+CLI-003 was selected by the [subsequent approval](context/cli-003-approval.json); the board records its verified disposition.
+CLI-004 was selected for end-to-end completion by the [later approval](context/cli-004-approval.json). Its [audit](constraints/AXIOM-AUDIT.md) and [execution evidence](evidence/cli-004/verification.json) establish the supported schema policy and local recovery results.
+CLI-005 is active under the [resumption selection](context/cli-005-approval.json).
+Read the [worker-platform task](reuse/acceptance/TASK.md), [experiment contract](reuse/CONTRACT.md), and [audit](reuse/AXIOM-AUDIT.md) before preparing or evaluating its continuation.
+The selected first experiment reuses a complete checkpoint; general component resolution, a fresh-actor result, and claimed workflow advantage remain separate obligations.
+The [CLI-005 progress record](reuse/CLI-005.md) and [execution record](evidence/cli-005/verification.json) distinguish completed scripted checks from the unrun actor trial.
+Follow the [walkthrough](reuse/USE.md) to reproduce preparation; the execution record locates the separate untouched package for the next actor.
+
+## Mechanics, rationale, and consequence
+
+### Mechanics
+
+Follow source intent to proposed responsibilities, then to the unresolved contract relevant to the task.
+Measure existing behavior through available checks before claiming that a proposal is implemented.
+
+### Rationale
+
+This guide gives another actor a usable starting point without treating conversation memory as a dependency.
+
+### Consequence of violation
+
+Resuming from directory names alone can turn scaffolding choices into unstated requirements and erase the workflow value the project exists to deliver.

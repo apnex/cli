@@ -1,0 +1,40 @@
+//! Prepare and rehearse a scoped reuse experiment; independent actor outcomes remain separately attested.
+
+mod trial_manifest;
+mod trial_oracle;
+mod trial_package;
+mod trial_process;
+mod trial_rehearsal;
+
+use crate::trial_oracle::evaluate_continuation;
+use crate::trial_package::prepare_continuation;
+use crate::trial_process::TrialResult;
+use crate::trial_rehearsal::rehearse_continuation;
+use serde_json::{Value, json};
+use std::path::Path;
+
+fn run_continuation_trial() -> TrialResult<Value> {
+    let args: Vec<_> = std::env::args().skip(1).collect();
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    match args.as_slice() {
+        [mode, cli, receiver, destination] if mode == "prepare" => prepare_continuation(
+            root, &Path::new(cli).canonicalize()?, &Path::new(receiver).canonicalize()?, Path::new(destination), true),
+        [mode, package] if mode == "rehearse" => {
+            rehearse_continuation(root, &Path::new(package).canonicalize()?, true)?;
+            Ok(json!({"status":"rehearsed","actor":"scripted; not a fresh actor"}))
+        },
+        [mode, package, destination] if mode == "check" => evaluate_continuation(
+            root, &Path::new(package).canonicalize()?, Path::new(destination)),
+        _ => Err("Usage: continuation-trial prepare <cli> <receiver> <new-directory> | rehearse <package> | check <package> <new-evaluation-directory>".into()),
+    }
+}
+
+fn main() {
+    match run_continuation_trial() {
+        Ok(result) => println!("{}", serde_json::to_string_pretty(&result).unwrap()),
+        Err(error) => {
+            eprintln!("Continuation trial failed: {error}");
+            std::process::exit(1);
+        }
+    }
+}

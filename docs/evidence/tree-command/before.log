@@ -1,0 +1,21 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.46s
+     Running tests/cli_verb_tree.rs (target/debug/deps/cli_verb_tree-498a921bc4d09dda)
+
+running 1 test
+
+thread 'constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session' (68848) panicked at tests/cli_verb_tree.rs:21:5:
+assertion `left == right` failed
+  left: String("UNKNOWN_OPERATION")
+ right: "NO_ACTIVE_INTERFACE"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session ... FAILED
+
+failures:
+
+failures:
+    constructed_cli_prints_a_derived_verb_tree_without_mutating_the_session
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--test cli_verb_tree`

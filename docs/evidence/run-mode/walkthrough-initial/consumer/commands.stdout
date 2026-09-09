@@ -1,0 +1,40 @@
+{"quota":12}
+{"quota":1.2300}
+{
+  "children": {
+    "services": "Read the granted catalog or change simulated quota."
+  },
+  "context": {
+    "commands": {},
+    "help": "Explore the service catalog.",
+    "parent": null,
+    "related": []
+  },
+  "description": "Read an external catalog and explore explicit mocks.",
+  "interface": {
+    "binding_scope": "includes_connected_read",
+    "context": "root",
+    "definition_id": "service-catalog-connected",
+    "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc"
+  },
+  "last_invocation": {
+    "binding": "simulated",
+    "context": "services",
+    "definition_sha256": "813a9b5fd3c8223e46ec0e2963d1a8bf78a84b62f317bdd61fc77b30249e2cfc",
+    "effect": "simulation_only",
+    "operation_id": "catalog.quota",
+    "output_json_text": "{\"quota\":1.2300}",
+    "simulated_steps": 1
+  },
+  "mock_state_json_text": "{\"quota\":1.2300}",
+  "origin": {
+    "intent_text": "Receiving session created to execute a supplied CLI specification in run mode. This is generated run provenance, not the original authoring task.",
+    "revision": "0"
+  }
+}
+{
+  "destination": "/home/apnex/taceng/cli/target/run-mode-QDTAAZ/consumer/portable.json",
+  "publication": "created",
+  "revision": "4",
+  "sha256": "b3b87dfa3553fb11fb11e028ee8c7e7f6b0f9e5ea75c74bcacf9313c7107f16e"
+}

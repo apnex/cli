@@ -1,0 +1,18 @@
+set "" object
+set /format string "cli-assembly-v1"
+set /id string "worker-platform"
+set /description string "Assembled service and queue interface."
+set /components array
+edit /components
+append . object
+set ./0/mount string "services"
+set ./0/source string "services.component.json"
+append . object
+set ./1/mount string "queues"
+set ./1/source string "queues.component.json"
+top
+commit
+save assembly.json
+assemble
+commit
+save worker-platform.json
