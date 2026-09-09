@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "executable_sha256": "1ffd74c98829a43b7b0c551907c4d65e551db52257a513a2dbc0eacca617cb44",
+  "cases": [
+    {
+      "name": "release-tree",
+      "args": [
+        "run",
+        "docs/connected/acceptance/expected-definition.json",
+        ":tree"
+      ],
+      "status": 0
+    },
+    {
+      "name": "release-quota",
+      "args": [
+        "run",
+        "docs/connected/acceptance/expected-definition.json",
+        "services",
+        "quota",
+        "12"
+      ],
+      "status": 0
+    },
+    {
+      "name": "release-invalid-quota",
+      "args": [
+        "run",
+        "docs/connected/acceptance/expected-definition.json",
+        "services",
+        "quota",
+        "not-a-number"
+      ],
+      "status": 2
+    }
+  ]
+}

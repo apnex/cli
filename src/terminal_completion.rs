@@ -73,21 +73,21 @@ impl AuthoringCompleter {
             let escaped = render_document_pointer(&[segment]);
             children.insert(escaped[1..].to_owned(), value.document_kind().to_owned());
         }
-        if let Some(constraint) = &snapshot.active_constraint {
-            if let Ok(guidance) = crate::schema_guidance::describe_schema_path(
+        if let Some(constraint) = &snapshot.active_constraint
+            && let Ok(guidance) = crate::schema_guidance::describe_schema_path(
                 constraint,
                 &path.absolute_segments(&snapshot.context),
-            ) {
-                for child in guidance.children {
-                    let escaped = crate::schema_constraint::escape_schema_component(&child.key);
-                    children.entry(escaped).or_insert_with(|| {
-                        format!(
-                            "schema: {}{}",
-                            child.types.join(" or "),
-                            if child.required { "; required" } else { "" }
-                        )
-                    });
-                }
+            )
+        {
+            for child in guidance.children {
+                let escaped = crate::schema_constraint::escape_schema_component(&child.key);
+                children.entry(escaped).or_insert_with(|| {
+                    format!(
+                        "schema: {}{}",
+                        child.types.join(" or "),
+                        if child.required { "; required" } else { "" }
+                    )
+                });
             }
         }
         let mut suggestions = Vec::new();

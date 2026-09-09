@@ -469,8 +469,7 @@ fn receiver_reopens_edits_instead_of_replacing_them_from_handover() {
     let response: Value = serde_json::from_slice(
         output
             .split(|byte| *byte == b'\n')
-            .filter(|line| !line.is_empty())
-            .last()
+            .rfind(|line| !line.is_empty())
             .unwrap(),
     )
     .unwrap();

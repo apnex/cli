@@ -342,11 +342,10 @@ impl TerminalInputBuffer {
         let tokens = match tokenize_terminal_input(line) {
             Ok(tokens) => tokens,
             Err(error) => {
-                if let Some(pending) = &mut self.pending {
-                    if pending.first_error.is_none() {
-                        pending.first_error =
-                            Some(error.clone().at_batch_index(pending.edits.len()));
-                    }
+                if let Some(pending) = &mut self.pending
+                    && pending.first_error.is_none()
+                {
+                    pending.first_error = Some(error.clone().at_batch_index(pending.edits.len()));
                 }
                 return TerminalInputOutcome::Rejected {
                     operation: self

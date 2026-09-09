@@ -1,5 +1,8 @@
 # Publication preparation review
 
+**Later development:** [CLI-011](../lint/CLI-011.md) resolves the strict lint findings and establishes the required gate.\
+The original preparation findings and failed lint result below remain unchanged.
+
 **Later delivery:** the [private GitHub bootstrap](BOOTSTRAP.md) records the subsequent source push and hosted verification.\
 The review body below remains the original preparation record.
 

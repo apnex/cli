@@ -10,12 +10,13 @@ pub struct AuthoringError {
     pub code: String,
     pub message: String,
     pub recovery: String,
+    /// Store optional document context separately while preserving its JSON representation.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub path: Option<Value>,
+    pub path: Option<Box<Value>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub failed_operation_index: Option<usize>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub validation: Option<crate::schema_constraint::SchemaValidationReport>,
+    pub validation: Option<Box<crate::schema_constraint::SchemaValidationReport>>,
 }
 
 impl AuthoringError {
@@ -33,7 +34,9 @@ impl AuthoringError {
 
     /// Attach the absolute document location implicated by this failure.
     pub fn at_document_path(mut self, path: impl Serialize) -> Self {
-        self.path = Some(serde_json::to_value(path).expect("Document paths serialize"));
+        self.path = Some(Box::new(
+            serde_json::to_value(path).expect("Document paths serialize"),
+        ));
         self
     }
 

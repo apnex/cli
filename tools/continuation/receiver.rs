@@ -116,11 +116,11 @@ fn main() {
                 "overlap":"Contains the nested process durations; do not add them to this duration."});
             let record =
                 Path::new(directory).join(format!("logs/{}.receiver.json", uuid::Uuid::new_v4()));
-            if Path::new(directory).is_dir() {
-                if let Err(error) = write_trial_json(&record, &measurement) {
-                    eprintln!("Receiver timing could not be retained: {error}");
-                    std::process::exit(1);
-                }
+            if Path::new(directory).is_dir()
+                && let Err(error) = write_trial_json(&record, &measurement)
+            {
+                eprintln!("Receiver timing could not be retained: {error}");
+                std::process::exit(1);
             }
             result
         }

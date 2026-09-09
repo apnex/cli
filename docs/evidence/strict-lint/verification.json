@@ -1,0 +1,275 @@
+{
+  "status": "complete",
+  "record": "CLI-011",
+  "scope": "Local strict lint implementation and compatibility verification",
+  "verified_at_utc": "2026-09-09T22:40:11.342Z",
+  "owner_statement_record": "docs/context/cli-011-selection.json",
+  "base_commit": "ff6554d96f3969ea27ea3cf4e130f741df9d15ce",
+  "source_identity": "The base commit precedes this change; source_inputs_sha256 identifies the modified Rust, build, workflow, and embedded declaration inputs actually checked.",
+  "environment_setup": ". docs/evidence/verb-tree/toolchain-env.sh",
+  "environment": {
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: x86_64-unknown-linux-gnu\nrelease: 1.98.1\nLLVM version: 22.1.8",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "clippy": "clippy 0.1.98 (48a229ceae 2026-09-01)"
+  },
+  "baseline_application": {
+    "command": "cargo clippy --locked --all-features --all-targets --message-format=json -- -D warnings",
+    "exit_code": 101,
+    "diagnostic_stream": "baseline-application.jsonl",
+    "stderr": "baseline-application.stderr",
+    "distinct_diagnostic_count": 139,
+    "distinct_counts_by_lint": {
+      "clippy::result_large_err": 131,
+      "clippy::collapsible_if": 7,
+      "clippy::byte_char_slices": 1
+    }
+  },
+  "further_application_findings": [
+    {
+      "exit_code": 101,
+      "diagnostic_stream": "expanded-application.jsonl",
+      "stderr": "expanded-application.stderr",
+      "distinct_diagnostic_count": 2,
+      "distinct_counts_by_lint": {
+        "clippy::assertions_on_constants": 1,
+        "clippy::collapsible_if": 1
+      }
+    },
+    {
+      "exit_code": 101,
+      "diagnostic_stream": "all-target-application.jsonl",
+      "stderr": "all-target-application.stderr",
+      "distinct_diagnostic_count": 2,
+      "distinct_counts_by_lint": {
+        "clippy::collapsible_if": 1,
+        "clippy::double_ended_iterator_last": 1
+      }
+    }
+  ],
+  "intermediate_iterator_fix": {
+    "exit_code": 101,
+    "log": "intermediate-filter-next.log",
+    "disposition": "The first iterator rewrite exposed filter_next; the final rfind expression passes the strict gate."
+  },
+  "baseline_scaffold": {
+    "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo clippy --locked --manifest-path tools/scaffold/Cargo.toml --all-targets -- -D warnings",
+    "exit_code": 101,
+    "log": "baseline-scaffold.log"
+  },
+  "compatibility": {
+    "baseline_test_log": "baseline-error-compatibility.log",
+    "baseline_exit_code": 0,
+    "final_test_log": "error-compatibility.log",
+    "inline_error_bytes_before": 152,
+    "inline_error_bytes_after": 104,
+    "scope": "Error serialization and deserialization, optional field omission, typed and pointer paths, validation details, unknown-field rejection, and publication uncertainty classification; broader recovery is exercised by existing application suites."
+  },
+  "checks": {
+    "strict-application-normal": {
+      "command": "cargo clippy --locked --all-targets -- -D warnings",
+      "exit_code": 0,
+      "log": "strict-application-normal.log"
+    },
+    "strict-application-instrumented": {
+      "command": "cargo clippy --locked --all-features --all-targets -- -D warnings",
+      "exit_code": 0,
+      "log": "strict-application-instrumented.log"
+    },
+    "strict-scaffold": {
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo clippy --locked --manifest-path tools/scaffold/Cargo.toml --all-targets -- -D warnings",
+      "exit_code": 0,
+      "log": "strict-scaffold.log"
+    },
+    "error-compatibility": {
+      "command": "cargo test --locked --test authoring_errors -- --nocapture",
+      "exit_code": 0,
+      "log": "error-compatibility.log",
+      "passed": 2,
+      "failed": 0
+    },
+    "normal-tests": {
+      "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=\"$PWD/target/strict-lint/normal-acceptance\" cargo test --locked --all-targets -- --nocapture",
+      "exit_code": 0,
+      "log": "normal-tests.log",
+      "passed": 72,
+      "failed": 0
+    },
+    "instrumented-tests": {
+      "command": "CLI_ACCEPTANCE_EVIDENCE_DIR=\"$PWD/target/strict-lint/instrumented-acceptance\" cargo test --locked --all-features --all-targets -- --nocapture",
+      "exit_code": 0,
+      "log": "instrumented-tests.log",
+      "passed": 89,
+      "failed": 0
+    },
+    "application-format": {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "application-format.log"
+    },
+    "document-tests": {
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml",
+      "exit_code": 0,
+      "log": "document-tests.log",
+      "passed": 13,
+      "failed": 0
+    },
+    "generated-views": {
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "log": "generated-views.log"
+    },
+    "scaffold-format": {
+      "command": "cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "log": "scaffold-format.log"
+    },
+    "normal-release": {
+      "command": "cargo build --locked --release --bin cli",
+      "exit_code": 0,
+      "log": "normal-release.log"
+    }
+  },
+  "release_smoke": {
+    "status": "pass",
+    "executable_sha256": "1ffd74c98829a43b7b0c551907c4d65e551db52257a513a2dbc0eacca617cb44",
+    "cases": [
+      {
+        "name": "release-tree",
+        "args": [
+          "run",
+          "docs/connected/acceptance/expected-definition.json",
+          ":tree"
+        ],
+        "status": 0
+      },
+      {
+        "name": "release-quota",
+        "args": [
+          "run",
+          "docs/connected/acceptance/expected-definition.json",
+          "services",
+          "quota",
+          "12"
+        ],
+        "status": 0
+      },
+      {
+        "name": "release-invalid-quota",
+        "args": [
+          "run",
+          "docs/connected/acceptance/expected-definition.json",
+          "services",
+          "quota",
+          "not-a-number"
+        ],
+        "status": 2
+      }
+    ]
+  },
+  "preserved_inputs": {
+    "record": "preserved-inputs.json",
+    "file_count": 4922,
+    "changed_files": [],
+    "comparison": "Compare HEAD blob identity to git hash-object --no-filters for each protected file; no newline or attribute normalization."
+  },
+  "source_inputs_sha256": {
+    ".github/workflows/check.yml": "f5005260156ea659bd5c13a4dbba14abecc295fbab43ac31f55a3306d5479b19",
+    "Cargo.lock": "60b5c6a4289101f9e95eb4e02a02d3158fafda1059f9ec8c820b969e5237f0cf",
+    "Cargo.toml": "fa90b1e356b80231bed57cbbe5017d107b8f3cb19381739dced64d87438e123b",
+    "docs/authoring/operations.json": "2923ba677353df6e5fd3d9bdf0ca3003e12387e2a1e5c35f5709ebe8913cf886",
+    "docs/composition/operations.json": "111b6f444154b2052e1537f8b22ac870c983da1bdb74e5eb2c0d368eacacfb7b",
+    "docs/constraints/operations.json": "0d45c0af626388bcb69db3549e15d506e1e399fbbd43213bde0210dd90f69e83",
+    "rust-toolchain.toml": "887f9be066a15585a2c583578e84b0fcb541126d81546276bad3d2ff00d61167",
+    "src/authoring_error.rs": "7052b568e5261ca80482367841c2f4840994e13808d0e44c8b27b3b6b016c919",
+    "src/authoring_frontend.rs": "373020b7b1bba57eebc9915f46d2a728b94da913224d313e648ed1199fd938aa",
+    "src/authoring_operations.rs": "b85916e447e1f33485dd1f7734ee6e6182f4b4f339678233185efe1754c738d8",
+    "src/authoring_protocol.rs": "cab2a7d74fa4b7af49066c6ba2b486c82224d0f91df29f7663463c670b75b000",
+    "src/authoring_result.rs": "38c51470b5a7b151560354ceecf2efe2d1b56d458240cabe8df2df540310d338",
+    "src/authoring_runtime.rs": "5565e847235884912e74e23700eb0da976c33e6d35ea6afebe16a924c7eec7be",
+    "src/cli_assembly.rs": "8f440641f6da0d8a4aa69d79d2c90893abf728dfb645bd643d17dfce57742df3",
+    "src/cli_composition.rs": "c198ec95d2b89094e72d700d139750fc36ddfddf051473edbc1746ccc34fc0e9",
+    "src/cli_definition.rs": "2e5c0d5573793c21ec92a606e49f68d914a62c1efc79d2f286b2ee2d0eb7e6d1",
+    "src/cli_file_read.rs": "45f826ca3b4f67cad8d548b23835010dbae2c2e8e1894691a3e26c092a474949",
+    "src/cli_interface.rs": "530be315ea45f7588bf650e119cd694d5d8f667a717cacca79d2f337a191b897",
+    "src/cli_run_completion.rs": "5f290c91ee20f82475235a3176ded962e0b8c059e1772c92b1eaee6c86369024",
+    "src/cli_run_frontend.rs": "d5cb168ac289111657f1d2a4833ecb8b78ad47102b19153c2fd7fe5046abda52",
+    "src/cli_run_launcher.rs": "16f55b033475e181358ed31791c61c751d861e0e1eb3b8b5c485d9e156bef4bf",
+    "src/cli_run_routes.rs": "6a1ca5bdfcb72259fa4b357dfb8e08f70b002a01aaf09b566fac30f36716146b",
+    "src/cli_run_session.rs": "c7f4aae73ca88259a71661a6dd15b68311335e0d1a914fa9feac7381ce912f48",
+    "src/cli_terminal.rs": "01cfd6954b298b8fc4bdd5fa725f9997d4b99d43c07d1953d55cfe86915eedb3",
+    "src/cli_verb_tree.rs": "efcfb65de663e1ff7af764130454563a4fa4fa9cb7e8429626fbc8fa7c88d3e3",
+    "src/constraint_operations.rs": "b607381c82928bf6a89e671569a849240629a81ce01869d371a0e2269fb59dc7",
+    "src/document_path.rs": "76a2bd88e82dda89dce1f8b3e93f4e2dff7cbce1f68bd7dd5a9e96bc0c870714",
+    "src/document_value.rs": "5e30da980a9a546aedfa06a3ff157133d877c07b3b2a46793a0b7551971e75c9",
+    "src/kernel_profile.rs": "e636c31ba3031f3db5aec7a9a9224463f812bb3cd7fb275195db381b35ffbc1c",
+    "src/lib.rs": "06e2d1d19b2d92351841cdf3af10ef156c5a814e281d9328f387f332fc2042d5",
+    "src/main.rs": "65baa27b07accf749601748d626f167685e9a6ab4ebbd100abc424b31ccf7954",
+    "src/operation_definition.rs": "eb0daf8bef8bfd388cfd447658edffc0940901d7ed408df2ecca861121efb078",
+    "src/schema_constraint.rs": "7d0fbf7dd04695a13348901f9bc6d2721bb595bd76f5425fa066b271f6cf7d60",
+    "src/schema_guidance.rs": "e7d38a6208e5bd9fc14a7102d3c05119a619bfb26966df9d8a14d038791cac7f",
+    "src/session_storage.rs": "7d190cba2fa00d1b0301f85e2bdc2322dfcf6bf93d95cfcabe5e0b4addc04748",
+    "src/storage_faults.rs": "70e14680f4e4b307f38525c4e32538329705593abc384ee640637fcb36dd9e4a",
+    "src/terminal_completion.rs": "9a76113a71418690295b8924ccd4843216f07f7119b34de247a6f4dac241ba77",
+    "src/terminal_input.rs": "dad803b1e9bf1c7ab95bac8b96f86de3f8486e914d4975154b9dc81e4928eb48",
+    "tests/authoring_acceptance.rs": "4ccb3d1d7ba3e913868f3d768dc4ca5cefab84ef01cb2964fc61ce7136bbbe30",
+    "tests/authoring_discovery.rs": "41b3be7e48b26a82b5e85bfc6b892e38d83c74faaf10ec42ed40bfe40c99ac52",
+    "tests/authoring_errors.rs": "1b60dc400abe0aa6f8a650b69e6e839240da763fcf7250ba24fa14cd53d34d42",
+    "tests/authoring_fixture/mod.rs": "d92253252e48876cce637ea659f26c2ea9c460215eadddcc39dc356ff6a2142d",
+    "tests/authoring_limits.rs": "2fcc9d876c6fd1b60c04eed6e6985735c51c5fa030a3ad81b021aea6a756bf06",
+    "tests/authoring_recovery.rs": "b29125fdc3ec2a8151e683f2d6b8d9c0e6d23c3c9ac1ee0936ee47b95806145f",
+    "tests/cli_assembly.rs": "e954dfd565cdc674bdfbf2c4978a62c6f70cfecff5a39c90ab66e823a76fd55d",
+    "tests/cli_composition.rs": "7a65d0c1269435c29e11d9cfd2547f303fe570c22fb77318b799c3b47390907d",
+    "tests/cli_run.rs": "46232b08d5df83823d98d12ebfb95dd0e01a08199992db4cc7a9071bd848909c",
+    "tests/cli_verb_tree.rs": "b3e50a4f0a420325ef3da20ae2a15e6ea52b5046f225e737f1ccf4e4244425d0",
+    "tests/connected_json_read.rs": "2bf1e9d1f65ce0c234016fc1e37ca46fadc8070104b1f170f59ecdc7a63846bd",
+    "tests/continuation_trials.rs": "66fc4f0d1aeb6bdab99de1560c245b7ad3357b457388b2527767c1f03e1332a3",
+    "tests/document_import.rs": "cc4d8d336c520e35a976bfaa4636bb2515c85ffa6a09b2a2052be64446a000dd",
+    "tests/fixtures/changed_argument.rs": "0445aa2b3e45510db220d788fb151d02915125d2836723389f0e9b9eac2cf2c0",
+    "tests/fixtures/extra_handler.rs": "949c1b8bb1df89806eaa2d44f3aacd2863eace193c7b4e43480fdeaa6818029c",
+    "tests/fixtures/handler_contract_probe.rs": "2aa44e8b0dfc28a0b7f7756eaa0d91b25ebc877cff54b6e35a34b6ac6fb9ec4b",
+    "tests/fixtures/missing_handler.rs": "6ace2fe01d27390e51a32317705410060d77fd2fb89bf876833aa972b3378905",
+    "tests/schema_constraints.rs": "23261d61a40a17aa8c829d91cccb915fa51e3997dbc4f00b05b17414dc8b679c",
+    "tools/continuation/main.rs": "02587d53f54cb2db18c8ce70aaed8b97f01713e7dc79ca35d4f69d732fcdbab6",
+    "tools/continuation/receiver.rs": "e8753d3e8916876381b973dc843fb6baa99795cf238ec832916c007740ae57a6",
+    "tools/continuation/trial_comparison.rs": "bd13c77f457223faa0da295d309edfdf3fb5a494472c1d9cd6250e7f751e9ffb",
+    "tools/continuation/trial_manifest.rs": "0da2a3824af01b106bcbe4e755207cbd0bb01af79692a5e7d551e5a743e30aa3",
+    "tools/continuation/trial_oracle.rs": "8daff89de46e97ed78f6f49ef7bcef0aef8dd3d19f7cbf17a888046e3dacadb9",
+    "tools/continuation/trial_package.rs": "b830e260f1aacb4fd375367e9e5b932e8672111cec42bd8378c492cad9692185",
+    "tools/continuation/trial_process.rs": "61c7c0006b6c881021080974e3cb257336647a084c36a1e58a4e03e9caf5ecf3",
+    "tools/continuation/trial_rehearsal.rs": "f95597f3240aa76b76ae2bf655cd34120980263acf16a52861f49d6b36add43c",
+    "tools/continuation/trial_text_edit.rs": "f32ab932ca37981fe2bea72b919a248a505011dcada709a51f21e05f4aa28960",
+    "tools/scaffold/Cargo.lock": "ebe0aae85fb91cd027b504e193edc8311b5916bc75ed860a7fde39624c81506a",
+    "tools/scaffold/Cargo.toml": "918198756b791247f9b0703f5b10d4a696d264e5c698ab52b80ba438f420d69a",
+    "tools/scaffold/src/main.rs": "be1d2a4ad120716054588ba3beba944879b1d5641558ee3f5d695a891c2df6f0",
+    "tools/scaffold/tests/project_records.rs": "fae63ca126103f93399d07a1a31bf9d5e79c5fa5977e17b3a51ded5680ff0077",
+    "tools/scaffold/tests/scaffold_guards.rs": "2dc7cd9ecffae24a53d33497a87e2031528ab6ecd74a21dc6003822c029c6885"
+  },
+  "limits": [
+    "Executor checks, not independent behavioral assurance.",
+    "Inline size is measured on the recorded host; allocations, latency, and broader platform performance were not benchmarked.",
+    "Hosted execution of the new workflow is recorded separately by GitHub Actions after push."
+  ],
+  "documentation_closeout": {
+    "verified_at_utc": "2026-09-09T22:43:09.147Z",
+    "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml",
+    "exit_code": 0,
+    "passed": 13,
+    "log": "final-document-tests.log",
+    "style": {
+      "rule": "S6",
+      "exit_code": 0,
+      "log": "final-style-check.log"
+    },
+    "historical_review_body": "byte-identical below the appended status banner"
+  },
+  "staged_whitespace_review": {
+    "full_command": "git diff --cached --check",
+    "full_exit_code": 2,
+    "findings": 6,
+    "log": "staged-whitespace.log",
+    "scope": "Trailing blank lines in six original raw test logs; retained without normalization.",
+    "maintained_command": "git diff --cached --check -- . ':!docs/evidence/strict-lint'",
+    "maintained_exit_code": 0,
+    "maintained_log": "maintained-whitespace.log"
+  }
+}

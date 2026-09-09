@@ -27,6 +27,11 @@ jobs:
           rustup show active-toolchain
           rustc --version
           cargo --version
+      - name: Verify strict lint
+        run: |
+          cargo clippy --locked --all-targets -- -D warnings
+          cargo clippy --locked --all-features --all-targets -- -D warnings
+          CARGO_TARGET_DIR="$PWD/target" cargo clippy --locked --manifest-path tools/scaffold/Cargo.toml --all-targets -- -D warnings
       - name: Verify normal application
         run: cargo test --locked --all-targets
       - name: Verify instrumented application

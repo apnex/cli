@@ -1,6 +1,6 @@
 # Programmable CLI backlog
 
-**Status: CLI-010 GitHub source bootstrap and public visibility are complete. Local preparation and prior selected implementation scopes remain closed; three follow-ups are parked.**
+**Status: CLI-011 strict lint gate is complete; two follow-ups remain parked.**
 The [board](BOARD.md) proposes ordering and dependencies.
 This record retains findings and their disposition when that ordering changes.
 
@@ -28,7 +28,7 @@ The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns
 ## Open
 
 No selected release or implementation work remains open.
-The release record below retains its earlier holds, selection, and completion; broader follow-ups remain parked.
+CLI-011 retains its earlier hold, development selection, and completed verification below.
 
 ---
 
@@ -103,20 +103,31 @@ Future rulings amend or supersede this dated decision without rewriting its sour
 
 ---
 
-## Parked
+## Closed lint development
 
-These are proposed holds for the broader sequence, not a ruling to remove the capabilities from the vision.
+The original lint finding and hold remain visible alongside the later selection.
 
 ### CLI-011
 
 | Field | Record |
 |---|---|
-| Finding | Strict Clippy fails on the current library with 139 diagnostics: 131 large-error warnings, seven collapsible conditions, and one byte-string suggestion. |
+| Initial finding | Strict Clippy fails on the current library with 139 diagnostics: 131 large-error warnings, seven collapsible conditions, and one byte-string suggestion. |
 | Evidence | The [publication review](publication/REVIEW.md) retains the command and raw lint result. Compilation stops in the library, so this is not a complete all-target lint inventory. |
-| State | Parked. |
-| Reason held | The existing required checks do not include a zero-warning Clippy gate. Changing the error representation throughout the application is a separate implementation concern without a measured behavior defect. |
+| State | Closed for the strict lint gate implementation. |
+| Initial reason held | The existing required checks do not include a zero-warning Clippy gate. Changing the error representation throughout the application is a separate implementation concern without a measured behavior defect. |
 | Revival trigger | A consumer requires a strict lint gate, or measured error-path costs justify changing the error representation. |
 | Closure evidence required | An explicit lint policy is selected, relevant diagnostics are resolved with preserved error semantics, and the strict command completes across every requested target. |
+| Development selection | The owner requested more development against the board; the [selection record](context/cli-011-selection.json) identifies CLI-011 as the implementer's next self-contained move within that request. |
+| Selected scope | The [implementation contract](lint/CLI-011.md) requires strict Clippy across both Rust packages and application feature configurations, compatibility checks for structured errors, and local and hosted enforcement. |
+| Completion evidence | The [verification record](evidence/strict-lint/verification.json) records all three strict lint commands passing, compatible error fields, 72 normal tests, 89 instrumented tests, 13 documentation tests, a normal release build, literal run checks, and unchanged historical inputs. |
+| State history | Parked after publication preparation; opened under the continued-development request; closed after strict lint and compatibility checks passed and the workflow required the same commands. |
+| Remaining boundary | Error payload storage changes internal Rust field types; no allocation, latency, or broader platform improvement is claimed. |
+
+---
+
+## Parked
+
+These are proposed holds for the broader sequence, not a ruling to remove the capabilities from the vision.
 
 ### CLI-012
 

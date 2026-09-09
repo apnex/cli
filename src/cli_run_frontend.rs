@@ -274,10 +274,12 @@ pub fn write_run_response(
     errors: &mut impl Write,
 ) -> io::Result<i32> {
     let bytes = checked_response_bytes(response).map_err(io::Error::other)?;
-    if response.status == "ok" && response.mutation == "applied" && !response.replayed {
-        if let Some(session) = session {
-            session.runtime.before_response_delivery()?;
-        }
+    if response.status == "ok"
+        && response.mutation == "applied"
+        && !response.replayed
+        && let Some(session) = session
+    {
+        session.runtime.before_response_delivery()?;
     }
     if let Some(error) = &response.error {
         if structured {

@@ -46,6 +46,9 @@ These are internal Rust boundaries, not separately versioned public libraries.
 
 Run these commands sequentially from the repository root:
 ```sh
+cargo clippy --locked --all-targets -- -D warnings
+cargo clippy --locked --all-features --all-targets -- -D warnings
+CARGO_TARGET_DIR="$PWD/target" cargo clippy --locked --manifest-path tools/scaffold/Cargo.toml --all-targets -- -D warnings
 cargo test --locked --all-targets
 cargo test --locked --all-features --all-targets
 cargo fmt --all -- --check
@@ -66,9 +69,10 @@ Capture output before filtering it and record the command's own exit code.\
 If a command needs an undocumented step, fix the document and rerun the affected journey.\
 When retaining application fixtures, set `CLI_ACCEPTANCE_EVIDENCE_DIR` to a fresh directory under `target` for local work or under `docs/evidence` for a deliberately retained record.
 
-Clippy is an additional diagnostic, not an established clean gate for this prototype.\
-The [publication review](publication/REVIEW.md) records the initial strict-lint result and its disposition.\
-Do not silence diagnostics or restructure the error protocol merely to make a publishing sweep look clean.
+Strict Clippy is a required gate for both Rust packages under [CLI-011](lint/CLI-011.md).\
+The toolchain includes Clippy, and CI runs the same three strict commands above.\
+Resolve diagnostics while preserving the declared behavior; do not globally suppress warnings or raise thresholds to bypass the gate.\
+The [publication review](publication/REVIEW.md) retains the earlier failed diagnostic run as historical evidence.
 
 ---
 

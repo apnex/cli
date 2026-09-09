@@ -386,7 +386,7 @@ fn project_records_resolve_and_keep_design_and_application_evidence_distinct() {
             covered.insert(operation);
             let terminal = step["terminal"].as_str().unwrap();
             assert!(
-                !terminal.contains(|c| matches!(c, '{' | '}' | '[' | ']')),
+                !terminal.contains(['{', '}', '[', ']']),
                 "Journey imports serialized containers"
             );
             if effects[operation] == "state" && step["expect"]["status"] != "error" {

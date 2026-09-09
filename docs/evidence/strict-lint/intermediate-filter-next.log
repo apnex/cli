@@ -1,0 +1,20 @@
+    Checking programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+error: called `filter(..).next_back()` on an `DoubleEndedIterator`
+   --> tests/continuation_trials.rs:470:9
+    |
+470 | /         output
+471 | |             .split(|byte| *byte == b'\n')
+472 | |             .filter(|line| !line.is_empty())
+473 | |             .next_back()
+    | |________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#filter_next
+    = note: `-D clippy::filter-next` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::filter_next)]`
+help: use `.rfind(..)` instead
+    |
+470 ~         output
+471 +             .split(|byte| *byte == b'\n').rfind(|line| !line.is_empty())
+    |
+
+error: could not compile `programmable-cli` (test "continuation_trials") due to 1 previous error

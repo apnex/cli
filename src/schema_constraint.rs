@@ -223,7 +223,7 @@ fn collect_schema_nodes(
                 || target
                     .as_bytes()
                     .windows(2)
-                    .any(|pair| pair[0] == b'~' && ![b'0', b'1'].contains(&pair[1]))
+                    .any(|pair| pair[0] == b'~' && !b"01".contains(&pair[1]))
                 || target.ends_with('~')
             {
                 return Err(schema_error(
@@ -421,7 +421,7 @@ impl SchemaConstraint {
             "Use validate to inspect findings, edit the preserved draft, then commit again.",
         )
         .at_document_path(&report.findings[0].instance_path);
-        error.validation = Some(report);
+        error.validation = Some(Box::new(report));
         Err(error)
     }
 }

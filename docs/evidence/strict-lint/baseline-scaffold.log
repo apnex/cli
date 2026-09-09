@@ -1,0 +1,43 @@
+    Checking memchr v2.8.3
+    Checking serde_core v1.0.229
+    Checking serde v1.0.229
+    Checking serde_json v1.0.151
+    Checking cli-layer-scaffold v0.1.0 (/home/apnex/taceng/cli/tools/scaffold)
+error: this manual char comparison can be written more succinctly
+   --> tests/project_records.rs:389:36
+    |
+389 |                 !terminal.contains(|c| matches!(c, '{' | '}' | '[' | ']')),
+    |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using an array of `char`: `['{', '}', '[', ']']`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#manual_pattern_char_comparison
+    = note: `-D clippy::manual-pattern-char-comparison` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_pattern_char_comparison)]`
+
+error: could not compile `cli-layer-scaffold` (test "project_records") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: this `if` statement can be collapsed
+   --> src/main.rs:413:9
+    |
+413 | /         if let Some(content) = &current {
+414 | |             if path != &architecture_path && !content.contains(LAYER_FILE_MARKER) {
+415 | |                 return Err(format!(
+416 | |                     "Layer scaffold ownership conflict: {} is not marked generated",
+...   |
+420 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+413 ~         if let Some(content) = &current
+414 ~             && path != &architecture_path && !content.contains(LAYER_FILE_MARKER) {
+415 |                 return Err(format!(
+...
+418 |                 ));
+419 ~             }
+    |
+
+error: could not compile `cli-layer-scaffold` (bin "cli-layer-scaffold") due to 1 previous error
+error: could not compile `cli-layer-scaffold` (bin "cli-layer-scaffold" test) due to 1 previous error

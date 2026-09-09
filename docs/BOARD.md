@@ -1,13 +1,13 @@
 # Programmable CLI board
 
-**Status: CLI-010 GitHub source bootstrap is complete; the repository is public.**
+**Status: CLI-011 strict lint gate is complete; two follow-ups remain held.**
 
 The owner selected [repository bootstrap](context/cli-010-bootstrap.json) for `apnex/cli`.\
 The owner selected [MIT](BACKLOG.md#decision-0002-use-the-mit-license).\
 The [bootstrap record](publication/BOOTSTRAP.md) identifies the source delivered to [apnex/cli](https://github.com/apnex/cli), matching remote contents, and passing local and hosted checks.\
 The owner's later [public visibility instruction](context/cli-010-public-visibility.json) is complete, with [anonymous access verified](evidence/publication/public-visibility.json).\
-Three broader follow-ups remain held with their original triggers.\
-The [publication review](publication/REVIEW.md) owns the current sweep, while the [workflow index](README.md) links each implemented capability to its contract and evidence.\
+The [development selection](context/cli-011-selection.json) is complete: the [strict lint gate](lint/CLI-011.md) passes with error compatibility and recovery verified; two broader follow-ups remain held with their original triggers.\
+The [publication review](publication/REVIEW.md) retains preparation findings, while the [workflow index](README.md) links each implemented capability to its contract and evidence.\
 Comparative agent savings remain unmeasured.\
 The [vision](../VISION.md) states value, the [target architecture](ARCHITECTURE.md) states responsibility boundaries, and the [backlog](BACKLOG.md) retains selection and disposition history.
 
@@ -56,7 +56,7 @@ The selected repository bootstrap is complete; broader moves retain explicit con
 |---|---|---|---|---|---|
 | [CLI-009](BACKLOG.md#cli-009) | Source publication preparation | 0 | 0 | Done | The [publication review](publication/REVIEW.md) records the four-document set, clean-copy build and tests, literal author/export/run journey, preservation checks, and explicit release holds. |
 | [CLI-010](BACKLOG.md#cli-010) | Publish the reviewed source | 0 | 0 | Done | The [bootstrap record](publication/BOOTSTRAP.md) verifies source delivery and local and hosted checks; the later [visibility check](evidence/publication/public-visibility.json) verifies public access to `apnex/cli`. |
-| [CLI-011](BACKLOG.md#cli-011) | Establish a strict lint gate | 1 | 0 | Held | Strict Clippy exposes an existing error-size design choice and syntax suggestions; the [review](publication/REVIEW.md) retains the failed diagnostic run. |
+| [CLI-011](BACKLOG.md#cli-011) | Establish a strict lint gate | 0 | 0 | Done | The [implementation and verification](lint/CLI-011.md) establish strict Clippy for both Rust packages, compatible structured errors, passing behavior and recovery suites, and matching local and CI commands. |
 | [CLI-012](BACKLOG.md#cli-012) | Derive current architecture from verified criteria | 1 | 0 | Held | The [open register](ARCHITECTURE.md#owed-and-open-register) identifies the projection gap; target generation is not current-state derivation. |
 | [CLI-008](BACKLOG.md#cli-008) | Direct CLI run mode | 0 | 0 | Done | [Measured run results](run/RESULTS.md) satisfy direct one-shot and actual terminal use, generated views, exact arguments, process status, optional persistent state, and existing invocation/recovery semantics. |
 | [CLI-005](BACKLOG.md#cli-005) | Reuse, agent continuation, and workflow evaluation | 0 | 0 | Done | [Fresh-agent continuation](reuse/FRESH-ACTOR-TRIAL.md), [document import](authoring/IMPORT-RESULTS.md), and [local component assembly](components/RESULTS.md) pass their separate scoped checks. Four-method costs and unmeasured actor-effort limits remain explicit. |
@@ -87,6 +87,7 @@ Ready means available for selection, not that implementation is already authoriz
 | M7: Expose configured verbs directly | [CLI-008](BACKLOG.md#cli-008) | Done | CLI-003, CLI-005, CLI-006 | Direct one-shot and interactive calls, generated help/tree/completion, meaningful output and exits, and optional persistent state pass the [run acceptance task](run/acceptance/TASK.md). |
 | M8: Prepare source publication | [CLI-009](BACKLOG.md#cli-009) | Done | CLI-008 | The four-document set is coherent, literal consumer and contributor journeys pass, historical evidence remains intact, and publication choices are explicit. |
 | M9: Publish reviewed source | [CLI-010](BACKLOG.md#cli-010) | Done | CLI-009 | The MIT source is delivered to public `apnex/cli`; the bootstrap records passing local and hosted checks, and the visibility record verifies anonymous access to matching source. |
+| M10: Require strict lint | [CLI-011](BACKLOG.md#cli-011) | Done | CLI-010 | Both Rust packages pass strict Clippy; error and recovery compatibility remain verified, and the CI workflow requires the same contributor checks. |
 
 Arrows below mean prerequisite to dependent move.\
 M3 and M4 are independent after M2; their ordering expresses the proposed emphasis on the self-authoring loop, not a mandatory product lifecycle.
@@ -102,6 +103,7 @@ flowchart LR
     connected --> run["CLI-008: direct run mode"]
     run --> preparation["CLI-009: publication preparation"]
     preparation --> publication["CLI-010: owner-selected release"]
+    publication --> lint["CLI-011: strict lint gate"]
 ```
 
 Collect acceptance examples and comparison costs from M1 onward.\
@@ -116,7 +118,6 @@ Their triggers cause reconsideration, not automatic implementation.
 
 | Record | Impact | Principle breach | Why held | Revival trigger |
 |---|---|---|---|---|
-| [CLI-011](BACKLOG.md#cli-011) | 1 | 0 | No strict lint policy or measured error-path cost justifies a broad protocol refactor. | A consumer needs that gate, or profiling establishes a useful error representation change. |
 | [CLI-012](BACKLOG.md#cli-012) | 1 | 0 | Current architecture cannot be inferred from generated target documentation. | A selected architecture delta needs a mechanically verified current/target comparison. |
 | [CLI-007](BACKLOG.md#cli-007) | 1 | 0 | API invocation needs a representative interaction and protocol requirements. | An API description and requested CLI task establish mapping, authentication, and response expectations. |
 

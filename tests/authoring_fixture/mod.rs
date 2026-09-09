@@ -123,16 +123,13 @@ impl AuthoringFixture {
     pub fn start(&self, terminal: bool, create: bool) -> AuthoringProcess {
         AuthoringProcess::spawn(self.command(terminal, create))
     }
+    #[cfg(feature = "fault-injection")]
     pub fn start_fault(
         &self,
         terminal: bool,
         point: &str,
         action: &str,
     ) -> (AuthoringProcess, PathBuf) {
-        assert!(
-            cfg!(feature = "fault-injection"),
-            "Fault tests require an explicit fault-injection build"
-        );
         let marker = self
             .directory
             .join(format!("fault-{}.json", uuid::Uuid::new_v4()));
@@ -277,17 +274,17 @@ impl Drop for AuthoringProcess {
 pub fn wait_for_fault(marker: &Path, point: &str, child: &AuthoringProcess) {
     let deadline = std::time::Instant::now() + Duration::from_secs(15);
     loop {
-        if let Ok(bytes) = fs::read(marker) {
-            if let Ok(value) = serde_json::from_slice::<Value>(&bytes) {
-                assert_eq!(value["point"], point, "INVALID: unexpected fault boundary");
-                assert_eq!(
-                    value["pid"],
-                    child.child.id(),
-                    "INVALID: marker belongs to another process"
-                );
-                println!("FAULT_LANDED {value}");
-                return;
-            }
+        if let Ok(bytes) = fs::read(marker)
+            && let Ok(value) = serde_json::from_slice::<Value>(&bytes)
+        {
+            assert_eq!(value["point"], point, "INVALID: unexpected fault boundary");
+            assert_eq!(
+                value["pid"],
+                child.child.id(),
+                "INVALID: marker belongs to another process"
+            );
+            println!("FAULT_LANDED {value}");
+            return;
         }
         assert!(
             std::time::Instant::now() < deadline,

@@ -204,12 +204,11 @@ fn reset_shifted_array_context(
     array_path: &[DocumentSegment],
     index: usize,
 ) {
-    if context.starts_with(array_path) {
-        if let Some(DocumentSegment::Index { index: focused }) = context.get(array_path.len()) {
-            if *focused >= index {
-                *context = array_path.to_vec();
-            }
-        }
+    if context.starts_with(array_path)
+        && let Some(DocumentSegment::Index { index: focused }) = context.get(array_path.len())
+        && *focused >= index
+    {
+        *context = array_path.to_vec();
     }
 }
 

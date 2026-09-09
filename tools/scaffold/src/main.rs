@@ -410,13 +410,14 @@ fn render_layer_scaffold(root: &Path, write: bool) -> Result<(), String> {
         if current.as_ref() == Some(expected) {
             continue;
         }
-        if let Some(content) = &current {
-            if path != &architecture_path && !content.contains(LAYER_FILE_MARKER) {
-                return Err(format!(
-                    "Layer scaffold ownership conflict: {} is not marked generated",
-                    path.display()
-                ));
-            }
+        if let Some(content) = &current
+            && path != &architecture_path
+            && !content.contains(LAYER_FILE_MARKER)
+        {
+            return Err(format!(
+                "Layer scaffold ownership conflict: {} is not marked generated",
+                path.display()
+            ));
         }
         differences.push((path, expected));
     }

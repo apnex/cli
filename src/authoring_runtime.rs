@@ -96,14 +96,14 @@ impl AuthoringRuntime {
                 let bytes = storage.read_session_checkpoint()?;
                 let envelope: Value =
                     decode_authoring_json(&bytes, MAX_CHECKPOINT_BYTES, "INVALID_SESSION")?;
-                if let Some(version) = envelope.get("format_version").and_then(Value::as_u64) {
-                    if version != u64::from(definition.kernel_profile().checkpoint_version()) {
-                        return Err(AuthoringError::new(
-                            "UNSUPPORTED_FORMAT",
-                            "Checkpoint format version is unsupported.",
-                            "Use a compatible version without rewriting the checkpoint.",
-                        ));
-                    }
+                if let Some(version) = envelope.get("format_version").and_then(Value::as_u64)
+                    && version != u64::from(definition.kernel_profile().checkpoint_version())
+                {
+                    return Err(AuthoringError::new(
+                        "UNSUPPORTED_FORMAT",
+                        "Checkpoint format version is unsupported.",
+                        "Use a compatible version without rewriting the checkpoint.",
+                    ));
                 }
                 if !definition.kernel_profile().has_composition()
                     && (envelope.get("active_interface").is_some()
@@ -326,27 +326,27 @@ impl AuthoringRuntime {
                 "Use the session identity from the startup event or status response.",
             ));
         }
-        if let Some(receipt) = &self.state.last_receipt {
-            if receipt.request.request_id == request.request_id {
-                if receipt.request != *request {
-                    return Err(AuthoringError::new(
-                        "REQUEST_ID_REUSE",
-                        "Last receipt identifier was reused with different input.",
-                        "Inspect the saved receipt and use a fresh identifier for a different request.",
-                    ));
-                }
-                if self.uncertain {
-                    return Err(AuthoringError::new(
-                        "PERSISTENCE_UNCERTAIN",
-                        "Receipt replay is unavailable until uncertain checkpoint publication is resolved.",
-                        "Close and reopen the session, then inspect and retry the original request.",
-                    ));
-                }
-                let mut response = receipt.response.clone();
-                response.replayed = true;
-                checked_response_bytes(&response)?;
-                return Ok(response);
+        if let Some(receipt) = &self.state.last_receipt
+            && receipt.request.request_id == request.request_id
+        {
+            if receipt.request != *request {
+                return Err(AuthoringError::new(
+                    "REQUEST_ID_REUSE",
+                    "Last receipt identifier was reused with different input.",
+                    "Inspect the saved receipt and use a fresh identifier for a different request.",
+                ));
             }
+            if self.uncertain {
+                return Err(AuthoringError::new(
+                    "PERSISTENCE_UNCERTAIN",
+                    "Receipt replay is unavailable until uncertain checkpoint publication is resolved.",
+                    "Close and reopen the session, then inspect and retry the original request.",
+                ));
+            }
+            let mut response = receipt.response.clone();
+            response.replayed = true;
+            checked_response_bytes(&response)?;
+            return Ok(response);
         }
         let operation = declared.ok_or_else(|| {
             AuthoringError::new(

@@ -72,7 +72,8 @@ A runtime-only binary consumer can use an exported spec without the source check
 
 Record the exact commit after the selected files are committed, the build environment, the normal executable digest, and the raw test results.\
 Preparation evidence cannot certify later edits or a different release candidate.\
-The strict Clippy baseline and any advisory-scan limits remain visible in the [review](publication/REVIEW.md).
+The [strict lint gate](lint/CLI-011.md) is now required by contributor verification and CI.\
+The earlier Clippy failure and advisory-scan limits remain historical observations in the [review](publication/REVIEW.md).
 
 ---
 
