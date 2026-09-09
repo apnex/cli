@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "record": "CLI-010",
+  "scope": "Public visibility of the existing reviewed source repository",
+  "owner_statement": "make it public",
+  "owner_statement_record": "docs/context/cli-010-public-visibility.json",
+  "verified_at_utc": "2026-09-09T12:33:06.696Z",
+  "action": {
+    "command": "gh repo edit apnex/cli --visibility public",
+    "exit_code": 0
+  },
+  "authenticated_observation": {
+    "defaultBranchRef": {
+      "name": "main"
+    },
+    "nameWithOwner": "apnex/cli",
+    "url": "https://github.com/apnex/cli",
+    "visibility": "PUBLIC"
+  },
+  "anonymous_observations": {
+    "requests": [
+      "curl -qfsS https://api.github.com/repos/apnex/cli",
+      "curl -qfsS https://api.github.com/repos/apnex/cli/branches/main",
+      "curl -qfsS https://raw.githubusercontent.com/apnex/cli/main/README.md"
+    ],
+    "credentials": "No authorization supplied; -q disables curl configuration files.",
+    "repository": {
+      "full_name": "apnex/cli",
+      "private": false,
+      "visibility": "public",
+      "html_url": "https://github.com/apnex/cli",
+      "default_branch": "main",
+      "license": "MIT"
+    },
+    "branch": {
+      "name": "main",
+      "commit": "fcbd345252a724993d4eb5c531cb17548c7cee84"
+    },
+    "local_commit": "fcbd345252a724993d4eb5c531cb17548c7cee84",
+    "branch_matches_local_commit": true,
+    "readme_matches_local_bytes": true,
+    "readme_sha256": "fb64b41c19de103fc09cb1a9fd06e6e53c0838ba464a92bc8d81abfc98e28e5f"
+  },
+  "previous_visibility": {
+    "value": "private",
+    "evidence": "docs/evidence/remote-bootstrap/initial-remote-repository.json"
+  },
+  "settings_recovery": "Visibility can be returned to private; copies obtained while public cannot be recalled.",
+  "limits": [
+    "Snapshot at the recorded verification time; later documentation commits are identified by Git history.",
+    "Application suites were not repeated for this visibility and documentation change."
+  ]
+}

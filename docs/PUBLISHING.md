@@ -1,19 +1,20 @@
 # Prepare and publish source
 
-The repository is prepared as an experimental Rust source distribution.\
+The repository is available as a public, experimental Rust source distribution.\
 The [preparation review](publication/REVIEW.md) records local checks and remaining findings.\
-This guide is a release checklist for the owner; it does not grant permission to publish or make a claim that a release exists.
+This guide records the delivered source and the checks and owner decisions for further distributions.
 
 The owner has selected [repository bootstrap](context/cli-010-bootstrap.json) for `apnex/cli`.\
-The [bootstrap record](publication/BOOTSTRAP.md) closes [CLI-010](BACKLOG.md#cli-010) with the delivered private source repository, exact source identity, and passing local and hosted checks.
+The [bootstrap record](publication/BOOTSTRAP.md) closes [CLI-010](BACKLOG.md#cli-010) with the initial private source delivery, exact source identity, and passing local and hosted checks.\
+The owner's later [public visibility instruction](context/cli-010-public-visibility.json) is complete; the [visibility verification](evidence/publication/public-visibility.json) records anonymous access to matching source.
 
 ## Current release boundary
 
 | Surface | Position |
 |---|---|
-| Source checkout | The initial distribution is the private GitHub source repository, including manifests, lockfiles, declarations, tests, guides, and retained evidence. |
+| Source checkout | The distribution is the public GitHub source repository, including manifests, lockfiles, declarations, tests, guides, and retained evidence. |
 | Project license | [MIT](../LICENSE), selected by the owner in [decision 0002](BACKLOG.md#decision-0002-use-the-mit-license), with matching metadata in both Rust manifests. |
-| Hosting destination | [apnex/cli](https://github.com/apnex/cli), private, with `main` as the default branch. |
+| Hosting destination | [apnex/cli](https://github.com/apnex/cli), public, with `main` as the default branch. |
 | Package registry | `publish = false` remains in both [application](../Cargo.toml) and [scaffold](../tools/scaffold/Cargo.toml) manifests. No crates.io package is prepared or claimed. |
 | Binary release | Normal-feature builds only; platform coverage is the tested local Linux environment. |
 | Automated checks | The [GitHub Actions workflow](../.github/workflows/check.yml) uses read-only repository permissions; the [initial hosted run](https://github.com/apnex/cli/actions/runs/34348866527) passed. Its [run history](https://github.com/apnex/cli/actions/workflows/check.yml) identifies later checked commits. |
@@ -49,7 +50,7 @@ The [source discussion](context/README.md), approvals, acceptance tasks, results
 The preparation preserves them intact instead of making historical outputs match a new machine or toolchain.\
 Their machine paths are historical provenance, not portable prerequisites.
 
-Before making the repository public, the owner reviews that retained material for intended disclosure.\
+The owner authorized public visibility of this reviewed repository, including its retained engineering record.\
 A bounded credential-pattern search is evidence about its named patterns, not a guarantee that every sensitive value has been identified.\
 If a record requires withholding, preserve its original privately and document the public omission explicitly; do not silently rewrite a failure, approval, or task.
 
@@ -75,17 +76,17 @@ The strict Clippy baseline and any advisory-scan limits remain visible in the [r
 
 ---
 
-## Owner decisions before publication
+## Owner publication decisions
 
 | Decision | Required result |
 |---|---|
 | License | Resolved: the owner selected [MIT](../LICENSE); both Rust manifests declare `license = "MIT"`. |
-| Destination and visibility | Destination resolved: `apnex/cli`; bootstrapped as private using the stated default. Public visibility remains an owner choice. |
-| Historical disclosure | Retain the reviewed source discussion, approval records, paths, and test evidence in the bootstrap; public disclosure follows the owner's visibility selection. |
+| Destination and visibility | Resolved: public `apnex/cli`, following the initial private bootstrap and the owner's explicit public visibility instruction. |
+| Historical disclosure | The owner's public visibility instruction authorizes disclosure of the reviewed source discussion, approval records, paths, and test evidence retained in this repository. |
 | Release scope | Source repository for this bootstrap; package or binary distribution remains a separate selection. |
-| Release authorization | The owner's bootstrap instruction authorized the completed initial source push and verification; it does not authorize a separate package or binary release. |
+| Release authorization | The owner's bootstrap and public visibility instructions authorize the completed source delivery; package or binary release remains a separate selection. |
 
-The [board](BOARD.md) closes the source bootstrap and retains broader distribution choices.\
+The [board](BOARD.md) closes the source bootstrap and public visibility selection and retains broader distribution choices.\
 A published repository or successful upload does not establish production readiness or universal CLI coverage.
 
 ---

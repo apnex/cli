@@ -1,5 +1,8 @@
 # GitHub repository bootstrap
 
+**Later visibility change:** the owner subsequently selected public visibility, and [anonymous access was verified](../evidence/publication/public-visibility.json).\
+The [publication guide](../PUBLISHING.md) describes the current public repository; the private bootstrap record below remains unchanged.
+
 **Status: private source repository bootstrapped; local and hosted verification passed.**\
 This is the delivery record for [CLI-010](../BACKLOG.md#cli-010).\
 The owner's instruction was "Bootstrap the apnex/cli remote"; the [source statement](../context/cli-010-bootstrap.json) retains the instruction and its interpretation.
