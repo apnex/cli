@@ -34,7 +34,8 @@ Its build output can share the root `target` directory through `CARGO_TARGET_DIR
 | Schema interpretation and contextual guidance | [constraints](../src/schema_constraint.rs), [guidance](../src/schema_guidance.rs) |
 | Configured CLI definitions and active state | [definitions](../src/cli_definition.rs), [active interface](../src/cli_interface.rs) |
 | Reusable component composition | [assembly](../src/cli_assembly.rs) |
-| Granted external observations | [JSON file reads](../src/cli_file_read.rs) |
+| Granted external observations | [JSON file reads](../src/cli_file_read.rs), [loopback HTTP reads](../src/cli_http_get.rs), [shared receipts](../src/cli_read_observation.rs) |
+| Native configured applications | [Application profiles and launcher](../src/cli_application.rs), [consumer guide](native-app/USE.md) |
 | Direct commands, help, and completion | [run routes](../src/cli_run_routes.rs), [run frontend](../src/cli_run_frontend.rs) |
 | Authored output views and native tables | [view model](../src/cli_output_view.rs), [expressions](../src/cli_view_expression.rs), [table rendering](../src/cli_table_render.rs), [view frontend](../src/cli_view_frontend.rs) |
 | Acceptance tests and fault scenarios | [tests](../tests/), [test fault controls](../src/storage_faults.rs) |

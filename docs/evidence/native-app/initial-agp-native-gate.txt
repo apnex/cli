@@ -1,0 +1,176 @@
+
+> agp@0.1.0 test:rustcli
+> node rustcli/scripts/verify.mjs
+
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.10s
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+   Compiling agp-cli v0.1.0 (/home/apnex/taceng/agp/rustcli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.07s
+    Checking cfg-if v1.0.4
+    Checking memchr v2.8.3
+    Checking libc v0.2.189
+    Checking serde_core v1.0.229
+    Checking itoa v1.0.18
+    Checking num-traits v0.2.19
+    Checking log v0.4.34
+    Checking smallvec v1.16.1
+    Checking scopeguard v1.2.0
+    Checking regex-syntax v0.8.11
+    Checking lock_api v0.4.14
+   Compiling unicode-segmentation v1.13.3
+    Checking typenum v1.20.1
+    Checking zmij v1.0.23
+    Checking aho-corasick v1.1.5
+    Checking zerocopy v0.8.57
+   Compiling convert_case v0.10.0
+    Checking num-integer v0.1.47
+    Checking generic-array v0.14.7
+    Checking num-complex v0.4.6
+    Checking num-bigint v0.4.8
+    Checking errno v0.3.14
+    Checking parking_lot_core v0.9.12
+    Checking signal-hook-registry v1.4.8
+    Checking getrandom v0.3.4
+    Checking parking_lot v0.12.5
+    Checking num-iter v0.1.46
+    Checking linux-raw-sys v0.12.1
+    Checking once_cell v1.21.4
+    Checking ref-cast v1.0.27
+    Checking signal-hook v0.3.18
+    Checking mio v1.2.3
+   Compiling derive_more-impl v2.1.1
+    Checking allocator-api2 v0.2.21
+    Checking regex-automata v0.4.18
+    Checking borrow-or-share v0.2.4
+    Checking percent-encoding v2.3.2
+    Checking bit-vec v0.8.0
+    Checking bytes v1.12.1
+    Checking equivalent v1.0.2
+    Checking serde v1.0.229
+    Checking bitflags v2.13.2
+    Checking serde_json v1.0.151
+    Checking num-rational v0.4.2
+    Checking foldhash v0.2.0
+    Checking rustix v1.1.4
+    Checking hashbrown v0.17.1
+    Checking http v1.5.0
+    Checking num v0.4.3
+    Checking fraction v0.17.0
+    Checking fluent-uri v0.4.1
+    Checking derive_more v2.1.1
+    Checking bit-set v0.8.0
+    Checking signal-hook-mio v0.2.5
+    Checking httparse v1.10.1
+    Checking strum v0.28.0
+    Checking block-buffer v0.10.4
+    Checking crypto-common v0.1.7
+    Checking vte v0.14.1
+    Checking micromap v0.3.0
+    Checking base64 v0.23.1
+    Checking iana-time-zone v0.1.65
+    Checking vsimd v0.8.0
+    Checking num-cmp v0.1.0
+    Checking bytecount v0.6.9
+    Checking either v1.18.0
+    Checking outref v0.5.2
+    Checking ureq-proto v0.6.3
+    Checking chrono v0.4.45
+    Checking uuid-simd v0.8.0
+    Checking strip-ansi-escapes v0.2.1
+    Checking thiserror v2.0.20
+    Checking digest v0.10.7
+    Checking itertools v0.15.0
+    Checking unicode-general-category v1.1.0
+    Checking getrandom v0.4.3
+    Checking email_address v0.2.9
+    Checking jsonschema-regex v0.55.1
+    Checking utf8-zero v0.8.1
+    Checking data-encoding v2.11.1
+    Checking fd-lock v4.0.4
+    Checking crossterm v0.29.0
+    Checking nu-ansi-term v0.50.3
+    Checking unicase v2.9.0
+    Checking cpufeatures v0.2.17
+    Checking unicode-width v0.2.2
+    Checking sha2 v0.10.9
+    Checking ureq v3.4.2
+    Checking regex v1.13.1
+    Checking fancy-regex v0.19.2
+    Checking uuid v1.26.1
+    Checking ahash v0.8.12
+    Checking jsonschema-value v0.55.1
+    Checking referencing v0.55.1
+    Checking reedline v0.51.0
+    Checking jsonschema v0.55.0
+    Checking programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Checking agp-cli v0.1.0 (/home/apnex/taceng/agp/rustcli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 29.79s
+definition: 4121 authoring events; 27164 bytes; exact match
+application: 1840 authoring events; 9430 bytes; exact match
+
+> agp@0.1.0 build
+> tsc -b
+
+
+> agp@0.1.0 docs:check
+> tools/check-docs.sh
+
+
+clean: 49 file(s), rule S13.
+
+clean: 49 file(s), rule S6.
+
+clean: 49 file(s), rule S10.
+
+clean: 49 file(s), rule S12.
+
+clean: 49 file(s), rule S8.
+docs: 49 file(s) clean against S6, S8, S10, S12, S13.
+
+> agp@0.1.0 test:architecture
+> node scripts/check-test-architecture.mjs
+
+Test architecture PASS: 209 orthogonally owned files.
+
+=== rustcli/test (2 files) ===
+✔ given a frozen live node pair, when every native management verb and view executes, then SDK HTTP JSON and independent table cells agree without shell helpers (19641.721218ms)
+✔ given a configured native operator shell, when contexts shortcuts help and saved sessions are used, then domain verbs stay direct and exported observations grant no endpoint authority (1807.49601ms)
+✔ given invalid endpoints and management responses, when native verbs execute, then usage transport status contract and presentation failures remain distinguishable (2507.400441ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24892.46539
+
+=== suite summary ===
+PASS  rustcli/test (2 files)
+1/1 suites passed, 2 files.
+
+=== test/e2e (12 files) ===
+✔ given three independently started uniform-node processes in a line when source exports converge through the transit node then edge JSON routes symmetrically over two hops (2656.670433ms)
+✔ given a converged independent WebSocket pair when the dialing process is replaced then equivalent reachability is rebuilt under fresh adapter and session authority (2724.544637ms)
+✔ given a converged independent uniform-node star when separate read-only CLI processes inspect every management URL then sessions and all selected endpoint paths are visible (3588.743499ms)
+✔ given both independent leaves advertise one endpoint when the star converges then the center retains both candidates and deterministically selects the Alpha origin (2647.406363ms)
+✔ given the independent center advertises its own endpoint when both leaves converge then each leaf routes JSON to the center-local handler (2550.526866ms)
+✔ given three independently started uniform-node processes in a star when every source export is ACKed then all uniquely owned leaf endpoints route JSON in both directions (2633.850405ms)
+✔ given the sovereign persistent Loopback example when its three management APIs and read-only CLI are inspected then the live star is converged routable and gracefully stoppable (2331.989248ms)
+✔ given one converged topology under a frozen clock, when SDK HTTP CLI JSON and static tables sample it, then every surface represents the exact same capture (1516.296384ms)
+✔ given two public nodes with a live finite-hold WebSocket session, when SDK HTTP and CLI sample it separately, then non-time state is identical and monotonic uptime and TTL remain bounded with one-second display steps (2417.299026ms)
+✔ given a live independent uniform-node star when each exact child is explicitly stopped then every process exits and every listener port is immediately reusable (3422.733737ms)
+✔ Given equivalent three-node lines over production Loopback and independent-process WebSocket, when both edge directions traverse one transit node, then normalized sessions RIB exports forwarding and deliveries are identical (2645.711742ms)
+✔ Given equivalent three-node stars over production Loopback and independent-process WebSocket, when routes converge and one leaf sends JSON to the other, then normalized sessions RIB exports forwarding and delivery are identical (3020.910578ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36539.474537
+
+=== suite summary ===
+PASS  test/e2e (12 files)
+1/1 suites passed, 12 files.

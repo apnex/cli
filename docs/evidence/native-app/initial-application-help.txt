@@ -1,0 +1,54 @@
+agp
+Inspect a local AGP node. Enter a context, then use show or ls.
+  advertisements/  Received advertisements and their source sessions.
+  configuration/  Effective redacted node configuration.
+  connections/  Display connection identities, states, supplied uptime and hold TTL.
+  counters/  Canonical operational counters.
+  endpoints/  Locally registered endpoints and binding identities.
+  forwarding/  Resolved forwarding entries.
+  health/  Node lifecycle, readiness, and identity.
+  resources/  Resource usage and observed high-water marks.
+  routes/  Display route candidates and supplied selected-route membership.
+  snapshot/  Summary of one canonical operations capture; --json retains all sections.
+  advertisements.list [connected:json-http-get-v1]
+    Received advertisements and their source sessions.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: advertisements (use --table)
+  configuration.list [connected:json-http-get-v1]
+    Effective redacted node configuration.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: configuration (use --table)
+  connections.list [connected:json-http-get-v1]
+    Display connection identities, states, supplied uptime and hold TTL.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: connections (use --table)
+  counters.list [connected:json-http-get-v1]
+    Canonical operational counters.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: counters (use --table)
+  endpoints.list [connected:json-http-get-v1]
+    Locally registered endpoints and binding identities.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: endpoints (use --table)
+  forwarding.list [connected:json-http-get-v1]
+    Resolved forwarding entries.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: forwarding (use --table)
+  health.list [connected:json-http-get-v1]
+    Node lifecycle, readiness, and identity.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: health (use --table)
+  resources.list [connected:json-http-get-v1]
+    Resource usage and observed high-water marks.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: resources (use --table)
+  routes.list [connected:json-http-get-v1]
+    Display route candidates and supplied selected-route membership.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: routes (use --table)
+  snapshot.list [connected:json-http-get-v1]
+    Summary of one canonical operations capture; --json retains all sections.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: false
+    Output view: snapshot (use --table)
+Controls: :help :tree :up :top :status :views :render <view> :export <file> :exit
+Shortcuts: ?=:help exit=:exit help=:help top=:top tree=:tree up=:up

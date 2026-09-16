@@ -133,6 +133,7 @@ pub struct OperationDefinition {
     handlers: BTreeMap<String, RegisteredAuthoringHandler>,
     codecs: BTreeMap<String, HandlerArgumentKind>,
     json_read_grants: crate::cli_file_read::JsonFileReadGrants,
+    http_get_grants: crate::cli_http_get::JsonHttpGetGrants,
 }
 
 /// A validated argument keeps typed paths and constructors separate from textual metadata.
@@ -174,6 +175,29 @@ fn declared_word_valid(word: &str) -> bool {
 }
 
 impl OperationDefinition {
+    pub fn with_http_get_grants(mut self, grants: crate::cli_http_get::JsonHttpGetGrants) -> Self {
+        self.http_get_grants = grants;
+        self
+    }
+
+    pub fn http_get_grants(&self) -> &crate::cli_http_get::JsonHttpGetGrants {
+        &self.http_get_grants
+    }
+
+    pub fn has_read_capability(
+        &self,
+        provider: &crate::cli_definition::CliConnectedProvider,
+        capability: &crate::cli_definition::CliCapabilityId,
+    ) -> bool {
+        match provider {
+            crate::cli_definition::CliConnectedProvider::JsonFileRead => {
+                self.json_read_grants.has_json_read_grant(capability)
+            }
+            crate::cli_definition::CliConnectedProvider::JsonHttpGet => {
+                self.http_get_grants.has_json_http_get_grant(capability)
+            }
+        }
+    }
     /// Attach launcher-owned authority independently of declaration identity and serialized state.
     pub fn with_json_read_grants(
         mut self,
@@ -365,6 +389,7 @@ impl OperationDefinition {
             handlers,
             codecs,
             json_read_grants: crate::cli_file_read::JsonFileReadGrants::default(),
+            http_get_grants: crate::cli_http_get::JsonHttpGetGrants::default(),
         };
         let mut bound_handlers = BTreeSet::new();
         let mut terminal_words = BTreeSet::new();

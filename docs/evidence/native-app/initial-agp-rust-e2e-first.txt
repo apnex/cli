@@ -1,0 +1,30 @@
+
+> agp@0.1.0 test:e2e
+> node scripts/run-tests.mjs test/e2e
+
+
+=== test/e2e (12 files) ===
+✔ given three independently started uniform-node processes in a line when source exports converge through the transit node then edge JSON routes symmetrically over two hops (1731.637937ms)
+✔ given a converged independent WebSocket pair when the dialing process is replaced then equivalent reachability is rebuilt under fresh adapter and session authority (1751.271736ms)
+✔ given a converged independent uniform-node star when separate read-only CLI processes inspect every management URL then sessions and all selected endpoint paths are visible (2223.490552ms)
+✔ given both independent leaves advertise one endpoint when the star converges then the center retains both candidates and deterministically selects the Alpha origin (1695.00066ms)
+✔ given the independent center advertises its own endpoint when both leaves converge then each leaf routes JSON to the center-local handler (1684.47069ms)
+✔ given three independently started uniform-node processes in a star when every source export is ACKed then all uniquely owned leaf endpoints route JSON in both directions (1714.965392ms)
+✔ given the sovereign persistent Loopback example when its three management APIs and read-only CLI are inspected then the live star is converged routable and gracefully stoppable (1190.608258ms)
+✔ given one converged topology under a frozen clock, when SDK HTTP CLI JSON and static tables sample it, then every surface represents the exact same capture (798.496425ms)
+✔ given two public nodes with a live finite-hold WebSocket session, when SDK HTTP and CLI sample it separately, then non-time state is identical and monotonic uptime and TTL remain bounded with one-second display steps (2226.840281ms)
+✔ given a live independent uniform-node star when each exact child is explicitly stopped then every process exits and every listener port is immediately reusable (1700.638878ms)
+✔ Given equivalent three-node lines over production Loopback and independent-process WebSocket, when both edge directions traverse one transit node, then normalized sessions RIB exports forwarding and deliveries are identical (1777.822683ms)
+✔ Given equivalent three-node stars over production Loopback and independent-process WebSocket, when routes converge and one leaf sends JSON to the other, then normalized sessions RIB exports forwarding and delivery are identical (2149.706528ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23300.954664
+
+=== suite summary ===
+PASS  test/e2e (12 files)
+1/1 suites passed, 12 files.

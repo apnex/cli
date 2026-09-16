@@ -187,7 +187,10 @@ fn execute_cli_discovery(
             .active_interface
             .as_ref()
             .ok_or_else(inactive_cli_error)?
-            .discover_cli_interface(definition.json_read_grants()),
+            .discover_cli_interface_with_http(
+                definition.json_read_grants(),
+                definition.http_get_grants(),
+            ),
     ))
 }
 
@@ -219,10 +222,11 @@ fn execute_cli_invocation(
         .active_interface
         .as_mut()
         .ok_or_else(inactive_cli_error)?
-        .invoke_cli_command(
+        .invoke_cli_command_with_http(
             composition_text(arguments, "command"),
             values,
             definition.json_read_grants(),
+            definition.http_get_grants(),
         )?;
     Ok(HandlerOutcome::Data(json!({"invocation":outcome})))
 }

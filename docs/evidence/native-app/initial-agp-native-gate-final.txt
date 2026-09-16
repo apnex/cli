@@ -1,0 +1,56 @@
+
+> agp@0.1.0 test:rustcli
+> node rustcli/scripts/verify.mjs
+
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.06s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+definition: 4121 authoring events; 27164 bytes; exact match
+application: 1840 authoring events; 9430 bytes; exact match
+
+> agp@0.1.0 build
+> tsc -b
+
+
+> agp@0.1.0 docs:check
+> tools/check-docs.sh
+
+
+clean: 49 file(s), rule S13.
+
+clean: 49 file(s), rule S6.
+
+clean: 49 file(s), rule S10.
+
+clean: 49 file(s), rule S12.
+
+clean: 49 file(s), rule S8.
+docs: 49 file(s) clean against S6, S8, S10, S12, S13.
+
+> agp@0.1.0 test:architecture
+> node scripts/check-test-architecture.mjs
+
+Test architecture PASS: 209 orthogonally owned files.
+
+=== rustcli/test (2 files) ===
+✔ given a frozen live node pair, when every native management verb and view executes, then SDK HTTP JSON and independent table cells agree without shell helpers (12066.487799ms)
+✔ given populated resource gauges at the HTTP boundary, when the native resource view renders them, then every current maximum and high-water value is preserved in sorted rows (170.774578ms)
+✔ given a configured native operator shell, when contexts shortcuts help and saved sessions are used, then domain verbs stay direct and exported observations grant no endpoint authority (1129.10421ms)
+✔ given invalid endpoints and management responses, when native verbs execute, then usage transport status contract and presentation failures remain distinguishable (1561.584016ms)
+✔ given an HTTP peer that never completes its body, when a native read reaches its total deadline, then it fails as transport without printing partial JSON (7597.288289ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23092.789374
+
+=== suite summary ===
+PASS  rustcli/test (2 files)
+1/1 suites passed, 2 files.
+
+=== test/e2e (12 files) ===
+✔ given three independently started uniform-node processes in a line when source exports converge through the transit node then edge JSON routes symmetrically over two hops (1596.576071ms)
+✔ given a converged independent WebSocket pair when the dialing process is replaced then equivalent reachability is rebuilt under fresh adapter and session authority (1641.674896ms)

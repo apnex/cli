@@ -6,7 +6,8 @@ use crate::cli_definition::{
     CliBehaviorBinding, CliCommand, CliContextParent, CliDefinition, CliMockExpression,
     cli_definition_error,
 };
-use crate::cli_file_read::{JsonFileReadGrants, JsonFileReadObservation};
+use crate::cli_file_read::JsonFileReadGrants;
+use crate::cli_read_observation::CliReadObservation;
 use crate::document_path::{read_document_path, set_document_value};
 use crate::document_value::{DocumentValue, MAX_SCALAR_BYTES};
 use serde::{Deserialize, Serialize};
@@ -35,7 +36,7 @@ pub struct CliInvocationOutcome {
     pub output_json_text: String,
     pub simulated_steps: usize,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub observation: Option<JsonFileReadObservation>,
+    pub observation: Option<CliReadObservation>,
 }
 
 /// Origin records are provenance only, never a grant of authority to a receiving session.
@@ -129,13 +130,19 @@ impl ActiveCliInterface {
                         && outcome.simulated_steps == steps.len()
                         && outcome.observation.is_none()
                 }
-                CliBehaviorBinding::Connected { capability, .. } => {
+                CliBehaviorBinding::Connected {
+                    provider,
+                    capability,
+                } => {
                     outcome.binding == "connected"
                         && outcome.effect == "external_read"
                         && outcome.simulated_steps == 0
                         && outcome.observation.as_ref().is_some_and(|observation| {
-                            observation
-                                .validate_file_observation(capability, &outcome.output_json_text)
+                            observation.validate_read_observation(
+                                provider,
+                                capability,
+                                &outcome.output_json_text,
+                            )
                         })
                 }
                 CliBehaviorBinding::Unbound { .. } => false,
@@ -202,15 +209,34 @@ impl ActiveCliInterface {
 
     /// Discovery separates declared connected requirements, process authority, and historical observations.
     pub fn discover_cli_interface(&self, grants: &JsonFileReadGrants) -> Value {
+        self.discover_cli_interface_with_http(
+            grants,
+            &crate::cli_http_get::JsonHttpGetGrants::default(),
+        )
+    }
+
+    pub fn discover_cli_interface_with_http(
+        &self,
+        grants: &JsonFileReadGrants,
+        http: &crate::cli_http_get::JsonHttpGetGrants,
+    ) -> Value {
         let context = &self.definition.contexts[&self.context];
         let mut context_view = json!(context);
         for (word, command) in &context.commands {
             if matches!(command.binding, CliBehaviorBinding::Simulated { .. }) {
                 context_view["commands"][word]["binding"] = json!({"kind":"simulated","program_json_text":serde_json::to_string(&command.binding).unwrap()});
             }
-            if let CliBehaviorBinding::Connected { capability, .. } = &command.binding {
-                context_view["commands"][word]["binding"]["granted"] =
-                    json!(grants.has_json_read_grant(capability));
+            if let CliBehaviorBinding::Connected {
+                provider,
+                capability,
+            } = &command.binding
+            {
+                context_view["commands"][word]["binding"]["granted"] = json!(match provider {
+                    crate::cli_definition::CliConnectedProvider::JsonFileRead =>
+                        grants.has_json_read_grant(capability),
+                    crate::cli_definition::CliConnectedProvider::JsonHttpGet =>
+                        http.has_json_http_get_grant(capability),
+                });
                 context_view["commands"][word]["binding"]["effect"] = json!("external_read");
             }
         }
@@ -292,11 +318,36 @@ impl ActiveCliInterface {
         values: &BTreeMap<String, Value>,
         grants: &JsonFileReadGrants,
     ) -> Result<CliInvocationOutcome, AuthoringError> {
+        self.invoke_cli_command_with_http(
+            word,
+            values,
+            grants,
+            &crate::cli_http_get::JsonHttpGetGrants::default(),
+        )
+    }
+
+    pub fn invoke_cli_command_with_http(
+        &mut self,
+        word: &str,
+        values: &BTreeMap<String, Value>,
+        grants: &JsonFileReadGrants,
+        http: &crate::cli_http_get::JsonHttpGetGrants,
+    ) -> Result<CliInvocationOutcome, AuthoringError> {
         let arguments = self.validate_cli_arguments(word, values)?;
         let (context, command) = self.resolve_cli_command_target(word)?;
         let (steps, output) = match &command.binding {
-            CliBehaviorBinding::Connected { capability, .. } => {
-                let (output, observation) = grants.read_granted_json_file(capability)?;
+            CliBehaviorBinding::Connected {
+                provider,
+                capability,
+            } => {
+                let (output, observation) = match provider {
+                    crate::cli_definition::CliConnectedProvider::JsonFileRead => {
+                        grants.read_granted_json_file(capability)?
+                    }
+                    crate::cli_definition::CliConnectedProvider::JsonHttpGet => {
+                        http.read_granted_json_http(capability)?
+                    }
+                };
                 let outcome = CliInvocationOutcome {
                     definition_sha256: self.definition_sha256.clone(),
                     operation_id: command.id.clone(),

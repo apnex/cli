@@ -32,11 +32,18 @@ impl Completer for CliRunCompleter {
             return CompletionResult::fresh(Vec::new());
         };
         let active = self.active.lock().expect("Run completion mutex");
-        let help = previous.first().is_some_and(|token| token.text == ":help");
+        let control = previous.first().map(|token| {
+            self.routes
+                .control_aliases
+                .get(&token.text)
+                .unwrap_or(&token.text)
+                .as_str()
+        });
+        let help = control == Some(":help");
         let words = if help { &previous[1..] } else { &previous[..] };
         let mut choices = Vec::new();
         if previous.len() == 1
-            && previous[0].text == ":render"
+            && control == Some(":render")
             && let Some(views) = &active.definition.views
         {
             choices.extend(
@@ -46,6 +53,12 @@ impl Completer for CliRunCompleter {
             );
         }
         if previous.is_empty() {
+            choices.extend(
+                self.routes
+                    .control_aliases
+                    .iter()
+                    .map(|(alias, target)| (alias.clone(), format!("Shortcut for {target}"))),
+            );
             choices.extend(
                 RUN_CONTROLS.map(|(word, description)| (word.to_owned(), description.to_owned())),
             );

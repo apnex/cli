@@ -1,0 +1,132 @@
+[6n[0m[?25l[1;2H[J[1;1H[92magp [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92magp [/][96m> [35m[0m[0m[37mconnections[0m78[?25h[J
+agp / connections
+Display connection identities, states, supplied uptime and hold TTL.
+  ls [connected:json-http-get-v1]
+    Display connection identities, states, supplied uptime and hold TTL.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: connections (use --table)
+  show [connected:json-http-get-v1]
+    Display connection identities, states, supplied uptime and hold TTL.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: connections (use --table)
+Controls: :help :tree :up :top :status :views :render <view> :export <file> :exit
+Options: --url <loopback-url>, --table, --json (raw result), --view <name>, --events (runtime events), --session <file>. Use -- before literal command arguments.
+Shortcuts: ?=:help exit=:exit help=:help top=:top tree=:tree up=:up
+[6n[0m[?25l[1;2H[J[1;1H[92magp [connections][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92magp [connections][96m> [35m[0m[0m[37mshow[0m78[?25h[J
+SESSION_ID  REMOTE_NODE  DIRECTION  STATE        UPTIME    TTL  LAST_EVENT
+95a302      leaf.alpha   inbound    Established  00:00:00  30s  DispositionReceived
+06b886      leaf.beta    inbound    Established  00:00:00  30s  DispositionReceived
+[6n[0m[?25l[1;2H[J[1;1H[92magp [connections][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92magp [connections][96m> [35m[0m[0m[37m?[0m78[?25h[J
+agp / connections
+Display connection identities, states, supplied uptime and hold TTL.
+  ls [connected:json-http-get-v1]
+    Display connection identities, states, supplied uptime and hold TTL.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: connections (use --table)
+  show [connected:json-http-get-v1]
+    Display connection identities, states, supplied uptime and hold TTL.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: connections (use --table)
+Controls: :help :tree :up :top :status :views :render <view> :export <file> :exit
+Options: --url <loopback-url>, --table, --json (raw result), --view <name>, --events (runtime events), --session <file>. Use -- before literal command arguments.
+Shortcuts: ?=:help exit=:exit help=:help top=:top tree=:tree up=:up
+[6n[0m[?25l[1;2H[J[1;1H[92magp [connections][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92magp [connections][96m> [35m[0m[0m[37mup[0m78[?25h[J
+agp
+Inspect a local AGP node. Enter a context, then use show or ls.
+  advertisements/  Received advertisements and their source sessions.
+  configuration/  Effective redacted node configuration.
+  connections/  Display connection identities, states, supplied uptime and hold TTL.
+  counters/  Canonical operational counters.
+  endpoints/  Locally registered endpoints and binding identities.
+  forwarding/  Resolved forwarding entries.
+  health/  Node lifecycle, readiness, and identity.
+  resources/  Resource usage and observed high-water marks.
+  routes/  Display route candidates and supplied selected-route membership.
+  snapshot/  Summary of one canonical operations capture; --json retains all sections.
+  advertisements.list [connected:json-http-get-v1]
+    Received advertisements and their source sessions.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: advertisements (use --table)
+  configuration.list [connected:json-http-get-v1]
+    Effective redacted node configuration.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: configuration (use --table)
+  connections.list [connected:json-http-get-v1]
+    Display connection identities, states, supplied uptime and hold TTL.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: connections (use --table)
+  counters.list [connected:json-http-get-v1]
+    Canonical operational counters.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: counters (use --table)
+  endpoints.list [connected:json-http-get-v1]
+    Locally registered endpoints and binding identities.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: endpoints (use --table)
+  forwarding.list [connected:json-http-get-v1]
+    Resolved forwarding entries.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: forwarding (use --table)
+  health.list [connected:json-http-get-v1]
+    Node lifecycle, readiness, and identity.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: health (use --table)
+  resources.list [connected:json-http-get-v1]
+    Resource usage and observed high-water marks.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: resources (use --table)
+  routes.list [connected:json-http-get-v1]
+    Display route candidates and supplied selected-route membership.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: routes (use --table)
+  snapshot.list [connected:json-http-get-v1]
+    Summary of one canonical operations capture; --json retains all sections.
+    Endpoint: --url <loopback-url> or AGP_MANAGEMENT_URL; granted: true
+    Output view: snapshot (use --table)
+Controls: :help :tree :up :top :status :views :render <view> :export <file> :exit
+Options: --url <loopback-url>, --table, --json (raw result), --view <name>, --events (runtime events), --session <file>. Use -- before literal command arguments.
+Shortcuts: ?=:help exit=:exit help=:help top=:top tree=:tree up=:up
+[6n[0m[?25l[1;2H[J[1;1H[92magp [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92magp [/][96m> [35m[0m[0m[37mtree[0m78[?25h[J
+agp
+|-- advertisements.list [connected:json-http-get-v1]
+|-- configuration.list [connected:json-http-get-v1]
+|-- connections.list [connected:json-http-get-v1]
+|-- counters.list [connected:json-http-get-v1]
+|-- endpoints.list [connected:json-http-get-v1]
+|-- forwarding.list [connected:json-http-get-v1]
+|-- health.list [connected:json-http-get-v1]
+|-- resources.list [connected:json-http-get-v1]
+|-- routes.list [connected:json-http-get-v1]
+|-- snapshot.list [connected:json-http-get-v1]
+|-- advertisements/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- configuration/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- connections/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- counters/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- endpoints/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- forwarding/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- health/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- resources/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+|-- routes/
+|   |-- ls [connected:json-http-get-v1]
+|   `-- show [connected:json-http-get-v1]
+`-- snapshot/
+    |-- ls [connected:json-http-get-v1]
+    `-- show [connected:json-http-get-v1]
+exit
+[6n[0m[?25l[1;2H[J[1;1H[92magp [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92magp [/][96m> [35m[0m[0m[37mexit[0m78[?25h[J

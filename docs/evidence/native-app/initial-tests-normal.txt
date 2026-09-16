@@ -1,0 +1,98 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.23s
+     Running unittests src/lib.rs (target/debug/deps/programmable_cli-4d736392c41f30e8)
+
+running 2 tests
+test document_value::tests::invalid_numbers_duplicates_and_unicode_are_rejected_recursively ... ok
+test document_value::tests::authored_numbers_and_strings_survive_without_coercion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/cli-9221a0979661e0fb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_acceptance.rs (target/debug/deps/authoring_acceptance-44a7d2da96a63d60)
+
+running 4 tests
+test terminal_batch_edits_share_atomic_dispatch_and_context_rules ... ok
+test duplicate_and_unknown_request_shapes_reject_without_losing_next_line ... ok
+test recorded_operation_cases_execute_against_application ... ok
+test service_catalog_journey_through_both_process_presentations ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+
+     Running tests/authoring_discovery.rs (target/debug/deps/authoring_discovery-ab10766132ffe6af)
+
+running 4 tests
+test completion_reports_partial_menus_and_follows_unsent_batch_preview ... ok
+test completion_escapes_arbitrary_keys_and_uses_current_context_and_constructor_metadata ... ok
+test readable_terminal_errors_include_path_mutation_and_recovery ... ok
+test changed_declared_words_and_positions_drive_help_completion_and_dispatch ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring_errors.rs (target/debug/deps/authoring_errors-e6bbf85e4edd3d0c)
+
+running 2 tests
+test authoring_error_wire_fields_preserve_paths_and_optional_details ... ok
+test authoring_error_decodes_existing_validation_details_and_rejects_unknown_fields ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_limits.rs (target/debug/deps/authoring_limits-a416f2f22aa34924)
+
+running 5 tests
+test invalid_framing_inside_terminal_batch_cannot_publish_valid_prefix ... ok
+test maximal_explicit_show_and_task_text_are_delivered_completely ... ok
+test maximal_supported_context_path_survives_navigation_receipt_and_reopen ... ok
+test declared_scalar_depth_document_request_checkpoint_and_batch_boundaries ... ok
+test receipt_overhead_and_response_bound_reject_before_publication ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.38s
+
+     Running tests/authoring_recovery.rs (target/debug/deps/authoring_recovery-845df0248e1cbee0)
+
+running 9 tests
+test last_receipt_replays_but_different_and_older_requests_do_not ... ok
+test export_is_create_only_repeatable_and_reports_observed_bytes ... ok
+test normal_binary_ignores_test_fault_environment ... ok
+test prior_outside_edits_and_changed_definition_bytes_are_preserved ... ok
+test stable_lock_survives_checkpoint_replacement_and_owner_exit ... ok
+test bootstrap_discovery_reports_its_actual_origin_and_rejects_unbound_behavior ... ok
+test checkpoint_creation_and_exports_reject_final_symlinks ... ok
+test terminal_unsent_batch_cancel_eof_and_failed_submission_preserve_checkpoint ... ok
+test corrupt_checkpoints_are_rejected_and_never_rewritten ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/cli_application.rs (target/debug/deps/cli_application-ca814814a6043dfa)
+
+running 9 tests
+test literal_ipv6_grant_performs_a_native_read ... FAILED
+test object_entries_and_collection_lengths_preserve_keys_values_and_order ... ok
+test configured_control_completion_follows_the_same_context_routes ... ok
+test renderer_failure_preserves_successful_http_receipt_and_application_status ... ok
+test endpoint_and_profile_rejection_precede_any_invocation ... ok
+test navigation_shortcuts_help_and_tree_share_configured_routes ... ok
+test native_http_keeps_exact_json_and_tables_without_helpers_or_proxies ... ok
+test http_history_survives_failed_read_export_and_reopen_without_authority ... ok
+test http_errors_reject_status_redirect_invalid_json_and_contract_in_raw_mode ... ok
+
+failures:
+
+---- literal_ipv6_grant_performs_a_native_read stdout ----
+
+thread 'literal_ipv6_grant_performs_a_native_read' (63940) panicked at tests/cli_application.rs:78:47:
+called `Result::unwrap()` on an `Err` value: Os { code: 99, kind: AddrNotAvailable, message: "Cannot assign requested address" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    literal_ipv6_grant_performs_a_native_read
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+error: test failed, to rerun pass `--test cli_application`

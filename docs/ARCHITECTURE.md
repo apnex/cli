@@ -199,6 +199,11 @@ Mocks retain simulation labels through presentation, receipts, and export.\
 Connected operations use authority granted outside the imported definition.\
 The selected native JSON read provider pins a parent directory and reads bounded regular-file bytes through an explicit process grant.
 
+Native applications can also grant bounded JSON GET reads from exact loopback HTTP resources.
+An [application profile](native-app/USE.md) supplies capability paths, response requirements, endpoint options, navigation aliases, and output preferences.
+The consumer embeds data and a shared launcher entry point; dispatch, completion, HTTP transport, and rendering remain kernel mechanisms.
+The profile is process configuration and is not part of a persisted definition's identity or authority.
+
 A fresh connected call requires a current grant.\
 Replaying an exact saved receipt returns a historical result without claiming a new observation.\
 Neither transferred history nor a self-authored CLI enlarges authority.\
@@ -247,7 +252,8 @@ The [publication review](publication/REVIEW.md) examines every mission-kit axiom
 It does not claim blanket axiom conformance or replace independent verification with an author's own review.
 
 Correction retained from the earlier architecture: the A5 statement "application parity remains untested" was withdrawn after the retained application comparisons were checked.\
-The [run results](run/RESULTS.md) and earlier linked results carry the tested local scopes; remote and mutating providers remain untested.
+The [run results](run/RESULTS.md) and earlier linked results carry the tested local scopes; general remote and mutating providers remain untested.
+The selected [native AGP integration](native-app/CONTRACT.md) adds a separate local live-suite acceptance boundary.
 
 ---
 

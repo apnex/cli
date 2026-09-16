@@ -1,0 +1,30 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.55s
+     Running tests/cli_application.rs (target/debug/deps/cli_application-ca814814a6043dfa)
+
+running 7 tests
+test object_entries_and_collection_lengths_preserve_keys_values_and_order ... ok
+test renderer_failure_preserves_successful_http_receipt_and_application_status ... ok
+test native_http_keeps_exact_json_and_tables_without_helpers_or_proxies ... FAILED
+test endpoint_and_profile_rejection_precede_any_invocation ... ok
+test navigation_shortcuts_help_and_tree_share_configured_routes ... ok
+test http_history_survives_failed_read_export_and_reopen_without_authority ... ok
+test http_errors_reject_status_redirect_invalid_json_and_contract_in_raw_mode ... ok
+
+failures:
+
+---- native_http_keeps_exact_json_and_tables_without_helpers_or_proxies stdout ----
+
+thread 'native_http_keeps_exact_json_and_tables_without_helpers_or_proxies' (46974) panicked at tests/cli_application.rs:91:5:
+assertion `left == right` failed
+  left: "{\"items\":[{\"id\":9007199254740993}],\"kind\":\"Catalog\"}\n"
+ right: "{\"kind\":\"Catalog\",\"items\":[{\"id\":9007199254740993}]}\n"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    native_http_keeps_exact_json_and_tables_without_helpers_or_proxies
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `--test cli_application`

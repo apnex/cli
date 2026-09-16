@@ -1,0 +1,19 @@
+✔ Given the triage ledger, when each candidate is read, then it is scored on both dimensions and cites a record (14.054381ms)
+✔ Given every record cited by the board, when the link is resolved, then the target and its anchor exist (55.658814ms)
+✔ Given the held section, when each item is read, then it is scored and carries a revival trigger (2.292303ms)
+✔ Given the decisions required, when each is read, then it names exactly what it blocks (2.7738ms)
+✔ Given every board identifier, when the ledger and milestones are compared, then neither contains an item the other omits (2.5079ms)
+✔ Given every board item, when its ledger status is compared with where it sits, then the board does not disagree with itself about its state (15.246026ms)
+✔ Given the milestones, when each is read, then no landed item is presented as a live move and the closed count matches the closed set (6.954907ms)
+✔ Given every record that cites a board item, when the citation is resolved, then the item exists on the board (98.945685ms)
+✔ Given the architecture maturity table, when a reopen trigger is read, then it names a condition that has not already happened (2.927017ms)
+✔ Given confirmed intent, when a row says it was amended, then it names the decision that amended it (1.592714ms)
+✔ Given every ratified decision, when it is checked against the vision, then it has been absorbed or explicitly ruled not to change purpose (1.799785ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 239.581957

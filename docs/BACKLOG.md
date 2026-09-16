@@ -1,6 +1,6 @@
 # Programmable CLI backlog
 
-**Status: CLI-013 native AGP output views are complete; two follow-ups remain parked.**
+**Status: CLI-014 full native AGP integration is complete for local acceptance; two follow-ups remain parked.**
 The [board](BOARD.md) proposes ordering and dependencies.
 This record retains findings and their disposition when that ordering changes.
 
@@ -24,6 +24,24 @@ A trigger returns a record to triage; it does not authorize or automatically res
 The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns the correspondence between these records and board items.
 
 ---
+
+## Closed native application integration
+
+### CLI-014
+
+| Field | Record |
+|---|---|
+| Finding | AGP views are available, but operators still need a native configured launcher, HTTP reads, and contextual navigation defaults. |
+| Evidence and selection | The [owner's complete instruction](context/cli-014-selection.json) selects full AGP integration and local live-suite validation. |
+| State | Closed for the selected native consumer and local live acceptance. |
+| Scope | [Native application contract](native-app/CONTRACT.md) and [preimplementation audit](native-app/AXIOM-AUDIT.md). |
+| Prerequisites | CLI-013 output views and CLI-008 direct run are complete. |
+| Closure evidence required | All ten management resources, all configured verbs/views, original live parity tests, failure boundaries, contextual construction, and both projects' required checks pass. |
+| Continuation trigger | Continue the owner's selected integration through measured local acceptance and shared CLI commits. |
+| Disposition | The [implementation results](native-app/RESULTS.md) and [AGP native gate](evidence/native-app/agp-native-gate.txt) establish authored configuration, all ten resources and views, direct/contextual verbs, native HTTP, recovery, and required checks. |
+| State history | Selected by the owner, implemented across CLI and AGP, and closed after local live and installed-terminal acceptance. |
+| Remaining limit | Successful IPv6 transport is unmeasured on this host because loopback IPv6 is disabled; the unavailable transport path is tested explicitly. |
+| Revival trigger | A concrete consumer requires a missing transport, identity context, response projection, or configuration-reuse capability. |
 
 ## Closed output views
 

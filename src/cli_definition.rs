@@ -47,11 +47,13 @@ pub struct CliMockAssignment {
 #[serde(transparent)]
 pub struct CliCapabilityId(pub String);
 
-/// The first connected provider reads one granted JSON file without executing authored code.
+/// Connected providers require explicit transient authority and execute no authored code.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CliConnectedProvider {
     #[serde(rename = "json-file-read-v1")]
     JsonFileRead,
+    #[serde(rename = "json-http-get-v1")]
+    JsonHttpGet,
 }
 
 /// A binding distinguishes absent, simulated, and connected behavior independently of runtime authority.

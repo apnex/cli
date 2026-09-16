@@ -1,0 +1,7 @@
+{
+  "record": "CLI-014",
+  "source": "Project owner in the active conversation, 2026-09-16",
+  "statement": "show or ls could both work. Agree with the updates above. Perhaps let's structure this as an exercise in FULL integration of the rust CLI for AGP as a canonical first consumer - this means we could cretae a new directory in agp/rustcli and implement the entire surface, and actively validate against the live test agp suite locally to ensure all verbs and views are functional. Any modifications and extensions to the CLI component that we require and unified/generalised for all other consumers (such as the table and other verb traversal) we can commit back to CLI project.",
+  "interpretation": "Implement AGP's complete existing read-only management surface in a native configured Rust consumer; extend and commit the shared CLI mechanisms, and validate against AGP's live local suite.",
+  "survey_bypass": "Direction is fully specified by the stakeholder; remaining bounded mechanism choices are engineering work."
+}

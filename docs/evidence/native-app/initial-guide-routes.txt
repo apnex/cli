@@ -1,0 +1,10 @@
+SELECTED  ENDPOINT              ROUTE_CLASS  LEARNED_KIND  NEXT_HOP           ORIGIN_NODE  PATH            ELIGIBLE  REASON
+>         billing/charge        learned      direct        leaf.beta@06b886   leaf.beta    leaf.beta>hub   true      ONLY_ELIGIBLE
+>         catalog/products.get  learned      direct        leaf.alpha@95a302  leaf.alpha   leaf.alpha>hub  true      ONLY_ELIGIBLE
+>         hub/service           local                      local              hub          hub             true      ONLY_ELIGIBLE
+>         inventory/reserve     learned      direct        leaf.alpha@95a302  leaf.alpha   leaf.alpha>hub  true      ONLY_ELIGIBLE
+>         notifications/send    learned      direct        leaf.beta@06b886   leaf.beta    leaf.beta>hub   true      ONLY_ELIGIBLE
+>         orders/create         learned      direct        leaf.alpha@95a302  leaf.alpha   leaf.alpha>hub  true      ONLY_ELIGIBLE
+>         shared/service        learned      direct        leaf.alpha@95a302  leaf.alpha   leaf.alpha>hub  true      LOWEST_ORIGIN_NODE_ID
+          shared/service        learned      direct        leaf.beta@06b886   leaf.beta    leaf.beta>hub   true      LOWEST_ORIGIN_NODE_ID
+>         shipping/quote        learned      direct        leaf.beta@06b886   leaf.beta    leaf.beta>hub   true      ONLY_ELIGIBLE

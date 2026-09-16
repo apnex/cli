@@ -48,6 +48,8 @@ Each nested expression uses the same vocabulary.
 | `first` | `input`, `where`, `path` | From the first array item whose predicate is true, read the given path. Non-array input or no match returns missing. |
 | `any` | `input`, `where` | True when any array item matches; non-array input is an error. |
 | `concat` | `values` | Concatenate value text; missing/null become empty text, strings remain strings, other types use exact compact JSON. |
+| `entries` | `input` | Convert an object into rows containing `key` and `value`, in lexical key order; reject non-objects and more than 4096 members. |
+| `length` | `input` | Return the number of members in an object or elements in an array; reject other types. |
 
 Paths are arrays of typed segments: an object containing either `key` with a string or `index` with a nonnegative integer.
 An empty path selects the scope itself.

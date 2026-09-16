@@ -39,6 +39,9 @@ Print AGP's connection view from an included result fixture:
 [Output views](docs/output-views/USE.md) are authored and transferred with the CLI specification.\
 Rust performs projection and table rendering without Bash, jq, or column; the original JSON result remains accessible.
 
+[Native application profiles](docs/native-app/USE.md) turn the same runtime into a named executable with contextual verbs, navigation shortcuts, and explicitly granted loopback HTTP reads.
+AGP's `rustcli` consumer supplies its management surface as authored configuration.
+
 ---
 
 ## Test

@@ -1,0 +1,18 @@
+
+> agp@0.1.0 docs:check
+> tools/check-docs.sh
+
+
+clean: 49 file(s), rule S13.
+FAIL  S6   docs/CONTRIBUTING.md:38  sentence layout differs from S6; run --fix
+FAIL  S6   docs/rustcli/INTEGRATION.md:3  sentence layout differs from S6; run --fix
+FAIL  S6   docs/rustcli/USE.md:3  sentence layout differs from S6; run --fix
+FAIL  S6   rustcli/test/README.md:3  sentence layout differs from S6; run --fix
+
+4 S6 failure(s) across 49 file(s).
+
+clean: 49 file(s), rule S10.
+
+clean: 49 file(s), rule S12.
+
+clean: 49 file(s), rule S8.

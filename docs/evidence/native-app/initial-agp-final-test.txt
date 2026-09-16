@@ -1,0 +1,706 @@
+
+> agp@0.1.0 test
+> npm run build && npm run docs:check && npm run test:architecture && npm run test:packages && npm run test:cli && npm run test:system
+
+
+> agp@0.1.0 build
+> tsc -b
+
+
+> agp@0.1.0 docs:check
+> tools/check-docs.sh
+
+
+clean: 49 file(s), rule S13.
+
+clean: 49 file(s), rule S6.
+
+clean: 49 file(s), rule S10.
+
+clean: 49 file(s), rule S12.
+
+clean: 49 file(s), rule S8.
+docs: 49 file(s) clean against S6, S8, S10, S12, S13.
+
+> agp@0.1.0 test:architecture
+> node scripts/check-test-architecture.mjs
+
+Test architecture PASS: 209 orthogonally owned files.
+
+> agp@0.1.0 test:packages
+> npm run test --workspaces --if-present
+
+
+> @agp/protocol@0.1.0 test
+> npm run build && node --test --test-concurrency=1 test/unit/*.test.js test/contract/*.test.js
+
+
+> @agp/protocol@0.1.0 build
+> npm run generate:check && tsc -b
+
+
+> @agp/protocol@0.1.0 generate:check
+> node scripts/generate-contracts.mjs --check
+
+✔ Given the protocol package root and sovereign schema catalog, when carrier neutrality is inspected, then packet outcomes expose no subprotocol native close or frame vocabulary (19.920304ms)
+✔ Given the ratified v1 code catalogs, when their public values are inspected, then only the exact fatal, delivery, and route-rejection domains are exposed (2.255163ms)
+✔ Given schema-valid JSON-like legacy or ambiguous objects, when the v1 union validates them, then role, endpoint-update, unknown fields, and mismatched error reasons are rejected (9.639217ms)
+✔ Given the package schema catalog, when every entry is audited, then each sovereign identity, path, digest, reference, and generated type is exact (21.617696ms)
+✔ Given the root message schema, when its composition is inspected, then it contains only the seven external wire-message references and immutable metadata (0.347307ms)
+✔ Given the package semantic-rule catalog, when its entries are inspected, then the three protocol-owned registry rules point to exact implementations and orthogonal tests (1.640714ms)
+✔ Given one fixture for every v1 wire variant, when each is validated, encoded, and decoded, then the same closed message survives the round trip (15.260165ms)
+✔ Given a denominator of one, when a disposition tries to spell it, then the wire admits only its absence (8.790027ms)
+✔ Given a denominator above one, when a disposition carries it, then both the delivered and the failed arm accept it (0.404481ms)
+✔ Given an outcome that omits the denominator, when it is read through destinationsOf, then the absence reads back as one (0.170295ms)
+✔ Given a distinct expected peer approved by identity admission, when OPEN-IDENTITY-1 evaluates it, then the identity is accepted (1.861042ms)
+✔ Given one invalid OPEN identity dimension, when OPEN-IDENTITY-1 evaluates it, then the exact first identity rejection reason is returned (0.253187ms)
+✔ Given malformed JSON or a duplicate object member, when raw preflight runs before JSON.parse, then the erased evidence receives its exact fatal classification (2.572982ms)
+✔ Given lossy integer tokens or hostile in-memory graphs, when preflight inspects them, then numeric-profile and runtime-shape failures precede schema validation (0.528007ms)
+✔ Given invalid UTF-8 bytes or an oversized packet, when protocol byte admission runs, then neutral invalid-message classifications precede JSON semantics (0.259165ms)
+✔ Given fixed-width lowercase hexadecimal values, when ReturnToken shape is checked, then exactly the unsigned 64-bit lexical domain is accepted (1.503974ms)
+✔ Given the same textual value is considered in distinct identity domains, when scalar guards run, then SessionId and MessageId cannot stand in for ReturnToken shape (0.283155ms)
+✔ Given a wire path whose receiver append equals the negotiated maximum, when ROUTE-PATH-LIMIT-1 evaluates it, then equality is accepted (1.528911ms)
+✔ Given a wire path whose receiver append exceeds the negotiated maximum by one, when ROUTE-PATH-LIMIT-1 evaluates it, then PATH_TOO_LONG is returned (0.168587ms)
+✔ Given an origin-owned path ending at the admitted sender, when ROUTE-PATH-OWNERSHIP-1 evaluates it, then it is accepted (1.565179ms)
+✔ Given multiple invalid path facts, when ROUTE-PATH-OWNERSHIP-1 evaluates them, then forged origin precedes forged sender and repetition (0.217298ms)
+✔ Given a full snapshot, when canonical endpoint ordering and uniqueness are checked, then only a strictly ordered one-route-per-endpoint set is accepted (0.308671ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2731.626481
+
+> @agp/transport@0.1.0 test
+> npm run build && node --test --test-concurrency=1 test/unit/*.test.js test/contract/*.test.js
+
+
+> @agp/transport@0.1.0 build
+> npm run generate:check && tsc -b
+
+
+> @agp/transport@0.1.0 generate:check
+> node scripts/generate-contracts.mjs --check
+
+✔ Given accept and capacity callbacks that throw private values, when the reusable callback-fault case runs, then cleanup precedes bounded diagnostics and transferred channels survive one listener terminal (1.126087ms)
+✔ Given a neutral channel pair, when the packet-order case runs, then opaque packet boundaries and FIFO order are preserved bidirectionally (2.417071ms)
+✔ Given the ratified neutral invariants and obligations, when conformance coverage is indexed, then every T01 through T21 and obligation 1 through 24 has a reusable named case (1.692636ms)
+✔ Given absent, observing, and throwing diagnostic sinks, when a generated diagnostic and private cause are emitted, then absence and throws are inert while cause remains a separate process-local argument (2.231221ms)
+✔ Given an isolated consumer of the neutral package, when public runtime capabilities are inspected, then no concrete carrier is required or exposed (1.33614ms)
+✔ Given the neutral schema catalog, when generated documents are resolved and impossible terminal products are validated, then every catalog entry exists and closed products fail (1.940188ms)
+✔ Given a channel receiving repeated abort authority, when the terminal-once case reads repeatedly, then one stable immutable terminal wins (1.764669ms)
+✔ Given the closed transport operation matrix, when legal and illegal errors are constructed, then phase pairing and send acceptance are enforced (1.428928ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1406.329436
+
+> @agp/binding-websocket@0.1.0 test
+> npm run build && node --test --test-concurrency=1 test/unit/*.test.js test/contract/*.test.js
+
+
+> @agp/binding-websocket@0.1.0 build
+> npm run generate:check && tsc -b
+
+
+> @agp/binding-websocket@0.1.0 generate:check
+> node scripts/generate-contracts.mjs --check
+
+✔ Given binary and text WebSocket messages, when binding classification runs, then one binary message is one opaque packet and text is rejected before protocol decoding (1.801639ms)
+✔ Given an over-limit WebSocket message of either data kind, when binding classification runs, then size precedence selects PACKET_TOO_LARGE and Close 1009 (0.309339ms)
+✔ Given repeated references within one acquisition kind, when WebSocket reference uniqueness is evaluated, then the duplicate kind and reference are reported (1.663755ms)
+✔ Given one reference used once as listener and once as target, when WebSocket reference uniqueness is evaluated, then explicit resolver kinds keep both capabilities legal (0.187117ms)
+✔ Given the WebSocket binding catalog, when generated records are resolved and validated, then every carrier-owned schema is sovereign and closed (1.200406ms)
+✔ Given every neutral graceful-close intent, when WebSocket close mapping runs, then Close 1000 with an empty reason is selected (1.547956ms)
+✔ Given native framing and UTF-8 failures, when safe WebSocket mapping runs, then only bounded common rejection and empty close actions cross the binding (0.305695ms)
+✔ Given the certified profile, when configuration and locators are validated, then only exact agp.v1 over credential-free ws is admitted (3.363672ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1112.63034
+
+> @agp/transport-loopback@0.1.0 test
+> npm run build && node ../../scripts/run-tests.mjs test
+
+
+> @agp/transport-loopback@0.1.0 build
+> npm run contracts:check && tsc -b
+
+
+> @agp/transport-loopback@0.1.0 contracts:check
+> node scripts/generate-contracts.mjs --check
+
+Loopback contracts are current (19 schemas).
+
+=== test/conformance (9 files) ===
+✔ given Error and non-Error callback failures when the neutral fault case runs then authority is released and the listener fails closed exactly once (15.116722ms)
+✔ given capacity callback throws undefined when the adapter contains it then absence of an Error value still commits the exact callback-fault terminal (2.04668ms)
+✔ given a live listener when connect is invoked then accept enters asynchronously before connect settles (9.41822ms)
+✔ given one pending acquisition slot when two connects race then pending capacity is reported once after release (3.373167ms)
+✔ given one active channel slot when another connect begins then active capacity is reported without replacing the channel (2.08621ms)
+✔ given concurrent successful connects when both commit then each retains a distinct channel row and identity (1.685484ms)
+✔ given a synchronous connect burst beyond the fabric ceiling when dispositions are queued then retained callback authority stays bounded (2.033353ms)
+✔ given a connect callback is still queued when cancellation commits then the callback is suppressed and no authority escapes (9.547604ms)
+✔ given accept callback entry wins when cancellation fires reentrantly then both endpoints commit normally (3.709623ms)
+✔ given a cancelled pull read when a packet later arrives then the next read retains that packet (1.936176ms)
+✔ given fabric close has initiated when its caller cancels then only that wait rejects and transferred channels stay owner-controlled (1.388887ms)
+✔ given fabric close begins reentrantly inside accept when callback returns then the uncommitted acquisition is rejected and no channel row escapes (1.038409ms)
+✔ given a committed channel when peer evidence is inspected then it names the fabric-issued opposite transport only (9.441314ms)
+✔ given a live listener when one terminal wait is cancelled then listener ownership and later observation remain intact (10.355112ms)
+✔ given a transferred channel when its listener closes then the address and sole listener slot are reusable before close resolves (3.170225ms)
+✔ given a mutable sender byte view when send returns its promise then later mutation cannot alter the received packet (10.315667ms)
+✔ given an oversized byte view when send validates byteLength then rejection is known not accepted and the channel remains usable (2.365564ms)
+✔ given the neutral packet-order case when it runs over production Loopback then both directions preserve independent FIFO order (11.318346ms)
+✔ given a full receiver queue when another send begins then it waits within bounded pressure and resumes after one read (11.751944ms)
+✔ given a pressure-blocked send when its signal is cancelled then no packet is admitted and all reservations release (2.738465ms)
+✔ given an earlier large send and a later small send on different channels when only the later packet fits then sequence order still prevents overtaking (2.240481ms)
+✔ given repeated abort calls when neutral terminal-once runs then every later read returns the stable first terminal (9.943576ms)
+✔ given an initiated graceful close when its signal is cancelled before terminal commit then aborted wins for every joined close (1.806825ms)
+✔ given a fabric close with a transferred channel when listeners finish then close still waits for the channel owner (1.995949ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1729.310019
+
+=== test/contract (6 files) ===
+✔ given a diagnostic sink that throws when an accept callback faults then the sink cannot alter terminal or connection outcomes (11.262443ms)
+✔ given live retained resources when an adapter invariant fails then one truthful frozen terminal snapshot and diagnostic commit (7.623327ms)
+✔ given the reserved ordinary revision boundary when a listener mutation is attempted then one exact terminal failure revision commits (5.52621ms)
+✔ given a counter at its unsigned limit when one packet would increment it then the send is not accepted and terminal rows freeze at zero occupancy (4.248452ms)
+✔ given an exhausted arbitration sequence when pressure needs a FIFO ticket then the fabric fails without admitting the blocked packet (1.186355ms)
+✔ given an exhausted adapter-invariant counter when an invariant fault occurs then monotonic exhaustion truthfully owns the terminal class (0.650701ms)
+✔ given a live channel when its terminals commit and resources release then snapshots expose separate revisions without tombstone growth (11.126564ms)
+✔ given listeners registered out of order when a snapshot is produced then rows use deterministic UTF-8 address order (2.683348ms)
+✔ given opaque packet content when operations are queried then no payload bytes enter public state (3.228616ms)
+✔ given equal textual fabric identities when one target connects then it cannot reach the other fabric listener (12.641819ms)
+✔ given a reserved transport name when a duplicate is created then the incumbent remains usable (1.507213ms)
+✔ given a scoped resolver when references are resolved then capabilities are stable opaque values and malformed input fails closed (1.784776ms)
+✔ given a registered listener address when duplicate registration is attempted then the incumbent remains the sole accepting owner (2.67176ms)
+✔ given schema-incomplete or schema-expanded configuration when construction or acquisition validates it then every shape fails before authority or pressure (2.157747ms)
+✔ given the built package when its schema catalog is read then all sovereign records are closed and cataloged (16.426047ms)
+✔ given semantic rules when their implementations are resolved then the anchors name production source functions (1.955336ms)
+✔ given the closed fabric failure union when its discriminants are inspected then adapter faults cannot masquerade as monotonic exhaustion (2.157815ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1256.771871
+
+=== suite summary ===
+PASS  test/conformance (9 files)
+PASS  test/contract (6 files)
+2/2 suites passed, 15 files.
+
+> @agp/core@0.1.0 test
+> npm run build && node --test --test-concurrency=1 test/unit/*.test.js
+
+
+> @agp/core@0.1.0 build
+> npm run generate:check && tsc -b
+
+
+> @agp/core@0.1.0 generate:check
+> node scripts/generate-contracts.mjs --check
+
+✔ given a satisfied adjacency, when its winner is live then lost, then dial is suppressed before bounded retry resumes (1.52563ms)
+✔ given finite count byte and resource limits, when reservations succeed or fail, then accounting is atomic and release is idempotent (1.718865ms)
+✔ Given any pair in the corpus, when the comparator runs, then it agrees in sign with UTF-8 byte order (6.853998ms)
+✔ Given the corpus sorted by the comparator, when it is compared with a byte sort, then the sequences are identical (1.631215ms)
+✔ Given a supplementary character beside one below it in UTF-8, when they are ordered, then code-unit order is not used (0.281941ms)
+✔ Given equal strings and prefixes, when they are ordered, then equality is zero and a prefix sorts first (0.18875ms)
+✔ given an attempt without identity authority, when it ends, then one remote-free preidentity event exposes only its reserved local ID, derived direction, reason, and neutral terminal (4.908346ms)
+✔ given claimed or expected remote identity before admission, when preidentity event data is validated, then the closed schema rejects that invented authority (0.398431ms)
+✔ given a peer that never advertised a grant, when admission is tested, then credit is unlimited and nothing is refused (1.276771ms)
+✔ given a grant with room in bytes but not packets, when admission is tested, then the packet dimension refuses it (1.41786ms)
+✔ given a grant with room in packets but not bytes, when admission is tested, then the byte dimension refuses it (0.239232ms)
+✔ given spending against a ceiling, when the same ceiling is re-advertised, then it is not treated as fresh allowance (0.282151ms)
+✔ given a malformed advertisement, when it is observed, then it is rejected rather than silently accepted (0.299449ms)
+✔ given a receiver that has read nothing, when it advertises, then the ceiling is exactly its channel capacity (0.245827ms)
+✔ given a receiver consuming packets, when it advertises, then the ceiling advances by what it read so in-flight stays bounded by capacity (0.376936ms)
+✔ given a ceiling already observed, when a lower one arrives, then capacity already granted is not revoked (0.171435ms)
+✔ given a receiver draining, when the ceiling has advanced by half its capacity, then it becomes worth announcing unsolicited (0.282305ms)
+✔ given invalid construction, when a grantor or spend is created, then it fails rather than governing nothing (0.479162ms)
+✔ given every closed diagnostic domain and severity, when the sovereign record is validated, then only bounded canonical observation is accepted (2.657168ms)
+✔ given extension, raw-cause, control-text, and size violations, when diagnostic records are validated, then none can cross the closed sink boundary (0.520222ms)
+✔ given an ACKed source epoch, when its binding withdraws, then the epoch closes before the successor update (6.573326ms)
+✔ Given nothing measured, when the sample is read, then it reports nothing rather than a zero that looks measured (1.290149ms)
+✔ Given several durations, when the sample is read, then it carries the count, the last, and the highest (1.112601ms)
+✔ Given a count alongside a high-water mark, when both are read, then the count is present so the mark can be weighed (0.495446ms)
+✔ Given an impossible duration, when it is offered, then it is refused rather than recorded (0.224333ms)
+✔ Given a returned sample, when a caller tries to alter it, then the projection cannot be rewritten by its reader (0.506509ms)
+✔ given the last ordinary revision, when an ordinary mutation would consume the reserved terminal value, then it is replaced atomically by one inspectable revision-exhaustion failure (3.84869ms)
+✔ given the maximum event sequence, when a transaction needs one more event, then no event or proposed state escapes and observation completes on the terminal snapshot (0.666891ms)
+✔ given a counter near its unsigned-64 limit, when one transaction supplies a multi-unit overflowing delta, then the counter is retained and all other proposed mutations are discarded (0.470697ms)
+✔ given the generated closed event vocabulary, when every valid data variant and invalid legacy shape is checked, then the sovereign runtime union accepts exactly the published contracts (33.561796ms)
+✔ given unordered canonical entities, when the operations reader captures them, then one frozen ordered revision is returned (7.419836ms)
+✔ given a frozen operations revision, when monotonic time advances, then uptime and hold TTL materialize each second (20.838455ms)
+✔ given simultaneous cross-dial candidates, when either arrival order is compared, then the higher-node initiator wins (2.425036ms)
+✔ given an Established controller, when v1 wire families arrive, then the symmetric closed matrix rejects only OPEN (7.020911ms)
+✔ given dialed and accepted acquisitions, when OPEN completes, then each establishes only after peer KEEPALIVE (4.498857ms)
+✔ given a consumed inbound revision, when revisions are validated, then only the exact safe successor is accepted (2.082031ms)
+✔ given one outstanding snapshot, when ACKs are validated, then exact message revision and unique results are required (1.482459ms)
+✔ given a pending route continuation, when current stale and fault results arrive, then each exact disposition applies (3.387155ms)
+✔ given inbound and outbound Established sessions, when initial route exchange runs, then both schedule export and consume exact ACKs (4.738579ms)
+✔ given an Established controller, when fatal input arrives, then forwarding is gated before purge and release (2.875469ms)
+✔ given an Established controller, when protocol timers expire, then keepalive self-transitions and fatal deadlines teardown (3.959314ms)
+✔ Given a session record whose only movement is traffic-rated, when it is committed, then the revision does not advance (4.349792ms)
+✔ Given a structural change beside a traffic-rated one, when it is committed, then the revision advances (1.898173ms)
+✔ Given a different set of controllers, when it is committed, then the revision advances whatever the values are (0.378667ms)
+✔ given a canonical before-state, when one route transaction commits, then operations exposes one complete after-revision (4.444343ms)
+✔ given a nonretryable peer rejection, when its route tuple stays unchanged, then it remains filtered without resend (6.920903ms)
+✔ given two eligible alternatives, when the selected session is removed, then the remaining candidate is promoted atomically (6.273355ms)
+✔ given an installed local binding, when it closes, then candidate Loc-RIB and FIB disappear in one revision (3.049547ms)
+✔ given bounded candidate capacity, when a snapshot exceeds it, then a canonical prefix is admitted atomically (5.841414ms)
+✔ given selected local and learned routes, when peer export is derived, then transit and capacity reasons are exact (2.222249ms)
+✔ given two session-owned Adj-RIB-In sets, when one authoritative snapshot omits a route, then only that slot withdraws (5.751855ms)
+✔ given a selected learned path, when exporting to different peers, then only a path member is suppressed (1.256307ms)
+✔ given a receiver-containing path, when it is imported, then LOOP is committed without installation (4.207851ms)
+✔ given an unchanged POLICY rejection, when monotonic backoff expires, then exactly one saturated retry becomes pending (4.656694ms)
+✔ given equal-class alternatives, when they arrive in either order, then the shorter path wins deterministically (6.34967ms)
+✔ given routes from two controllers, when one session withdraws, then only its advertisements disappear (5.772615ms)
+✔ given authoritative admitted identity, when the attempt ends, then one pair-scoped session.closed event carries the exact local pair key and no pre-identity fields (13.495261ms)
+✔ given a legacy alias or absent remote authority, when session.closed data is validated, then it cannot masquerade as an admitted pair (0.356919ms)
+✔ given one six-hex local ID, when different remote pairs retain it, then coexistence is allowed only across peers (1.777068ms)
+✔ given an admitted dial retained for retry, when unrelated state changes and the next attempt starts, then one terminal survives only until the fresh pre-identity record replaces it (3.586966ms)
+✔ given a canonical session transition whose optional reason is absent, when the sovereign runtime schema validates it, then the transition is accepted unchanged (1.8987ms)
+✔ given an Established controller of either acquisition kind, when any transport loss cause arrives, then each one produces the same ordered teardown spine (3.145058ms)
+✔ given a dialed controller, when transport loss is retryable versus terminal, then exactly one retry decision is emitted and the next state matches it (0.917231ms)
+✔ given an accepted controller, when any transport loss cause arrives, then no retry decision is ever emitted and the controller goes Idle (0.847367ms)
+✔ given a controller already torn down by transport loss, when later peer input arrives, then it is inert and cannot re-enter teardown (0.493786ms)
+✔ Given a committed change, when the write returns, then it reports the revision rather than the state that follows it (2.294705ms)
+✔ Given canonical state that has not changed, when it is read twice, then the same frozen value is shared rather than copied again (0.898198ms)
+✔ Given a value already cloned and frozen, when it is cloned again, then the same reference is returned (0.351765ms)
+✔ Given a commit that changes nothing, when it is applied, then no revision is issued for it (0.375919ms)
+✔ Given a commit that changes nothing but announces something, when it is applied, then the event still earns a revision (0.367853ms)
+✔ Given ten times as much held state, when the same write is repeated, then its cost does not grow in proportion (2.415147ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 71
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34492.289556
+
+> @agp/transport-node-ws@0.1.0 test
+> npm run build && node ../../scripts/run-tests.mjs test
+
+
+> @agp/transport-node-ws@0.1.0 build
+> tsc -b
+
+
+=== test/conformance (3 files) ===
+✔ Given real accept and capacity callbacks that throw Error and non-Error values, when the neutral callback-fault case runs, then Node ws contains the throw, releases authority, terminalizes once, and preserves transferred channels (55.166571ms)
+✔ Given a real Node WebSocket channel pair, when the neutral packet-order case runs, then binary packets preserve bytes, boundaries, and bidirectional FIFO order (56.80334ms)
+✔ Given cancellation before and immediately after native send dispatch, when send races are linearized, then pre-dispatch is not accepted while the uncertain tail fails and terminalizes once (34.751812ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1035.257453
+
+=== test/contract (7 files) ===
+✔ Given arbitrary binary bytes and caller-buffer reuse, when a packet is sent over Node ws, then the synchronous snapshot reaches the peer unchanged without UTF-8 interpretation (38.478806ms)
+✔ Given absent, observing, and throwing diagnostic sinks, when a native acceptance callback fails, then only a bounded neutral diagnostic and separate cause are observed without changing the listener terminal (44.968119ms)
+✔ Given a legacy text peer selecting agp.v1, when it sends its first text message, then ordered malformed-input evidence precedes one remote binding terminal with no fallback packet (57.206924ms)
+✔ Given a binary message beyond the common packet bound, when ws rejects it natively, then PACKET_TOO_LARGE evidence precedes the stable binding terminal (12.244395ms)
+✔ Given a transferred WebSocket channel, when its listener closes, then listener terminal observation is stable while the channel remains independently usable (64.522748ms)
+✔ Given a listener configured on ephemeral port zero, when acquisition commits, then publication reports the sanitized actual bound URL without granting kernel authority (15.709153ms)
+✔ given node keying over a real TLS socket, when a peer presents a registered identity, then only the listener reports a verified principal (48.686396ms)
+✔ given network keying, when any holder of the single secret connects, then both sides report protection without a principal (13.237086ms)
+✔ given node keying, when a peer presents a wrong secret or an unregistered identity, then acquisition fails and no channel is created (14.31036ms)
+✔ given a preshared-key configuration, when no key port is injected or the locator is cleartext, then the factory refuses to construct (0.914914ms)
+✔ given emitted records for a secure channel, when they are serialised, then neither secret appears in any encoding (7.460787ms)
+✔ Given the certified Node ws factory, when configuration, resolution, and acquisition are evaluated, then only trusted-development ws yields exact unauthenticated network evidence (58.416209ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3053.498569
+
+=== suite summary ===
+PASS  test/conformance (3 files)
+PASS  test/contract (7 files)
+2/2 suites passed, 10 files.
+
+> @agp/node@0.1.0 test
+> npm run build && node --test --test-concurrency=1 test/unit/*.test.js test/contract/*.test.js
+
+
+> @agp/node@0.1.0 build
+> tsc -b
+
+✔ given a transferred accepted channel, when the listener reports an acceptance-callback adapter fault, then the running node fails once and session-owned transport closes once (23.502736ms)
+✔ Given a caller sending in a tight await loop, when the burst runs, then a macrotask timer still fires throughout (1319.275322ms)
+✔ Given a carrier that does not promise to await receiver capacity, when a session establishes, then the peer is credited (92.068549ms)
+✔ Given a carrier that promises to await receiver capacity, when a session establishes, then the peer is not credited (33.538531ms)
+✔ Given the two production carriers, when each establishes, then only the one that can be outrun is credited (316.046239ms)
+✔ Given data beyond what the peer granted, when the writer pumps, then it stops at the grant rather than writing past it (7.608826ms)
+✔ Given a queue stalled on credit, when the peer raises its ceiling, then the held data resumes in its original order (2.056046ms)
+✔ Given a queue stalled on credit, when control is enqueued behind the held data, then control reaches the wire without waiting for the grant (1.957376ms)
+✔ Given a queue stalled on credit, when a route snapshot sits behind the held data, then the snapshot waits and only control passes (1.886605ms)
+✔ Given a stall that begins and ends, when the writer reports it, then both edges are announced so the waiting can be timed (1.321936ms)
+✔ Given a writer stalled on credit, when it is stopped, then the stall releases and every held task settles (1.777081ms)
+▶ Given multi-failure transit frames, when admission runs, then only the first normative failure commits
+  ✔ Given invalid source and missing destination, when classified, then source failure wins (3.536594ms)
+  ✔ Given missing destination plus transit and hop failures, when classified, then route failure wins (0.705548ms)
+  ✔ Given local handler saturation and transit failures, when classified, then local capacity wins (0.779971ms)
+  ✔ Given disabled transit plus hop and egress failures, when classified, then transit capability wins (0.518366ms)
+  ✔ Given exhausted hop and unusable egress, when classified, then hop failure wins (0.452648ms)
+  ✔ Given equal ingress-egress plus size and export failures, when classified, then egress failure wins (0.558879ms)
+  ✔ Given an oversized frame and missing source export, when classified, then size failure wins (4.095319ms)
+  ✔ Given missing source export and labelBinding saturation, when classified, then export failure wins (0.978045ms)
+  ✔ Given every prior condition succeeds, when bounded capacity is full, then QUEUE_FULL wins (1.121599ms)
+✔ Given multi-failure transit frames, when admission runs, then only the first normative failure commits (15.727146ms)
+✔ Given two advertisers of one endpoint, when no instance is named, then the selected route still decides (318.623195ms)
+✔ Given the advertiser that was not selected, when a message pins it, then that instance serves the message (125.421933ms)
+✔ Given an instance nobody advertises, when a message pins it, then it is refused at delivery rather than served by the wrong one (175.010999ms)
+✔ Given an endpoint nobody advertises, when a message names no instance, then it is refused before the wire (118.888505ms)
+✔ Given an instance that advertises nothing, when a message prefers it, then the selected route carries it instead (189.366083ms)
+✔ Given a pinned message crossing a transit hop, when the hop forwards it, then the selector crosses with it (126.725275ms)
+✔ Given a hop that cannot resolve the pin, when it forwards, then the selector survives for a hop that can (134.004102ms)
+✔ given a dial that fails with a typed transport error, when the sink observes it, then the record is a frozen closed capture and the raw cause arrives separately (27.936169ms)
+✔ given an untyped dial failure, when the sink observes it, then the code degrades to the closed vocabulary rather than leaking the native message (4.915185ms)
+✔ given no sink at all, when a dial fails, then the node lifecycle is unchanged and remains inspectable (6.416787ms)
+✔ given a sink that throws and a sink that re-enters the reader, when a dial fails, then canonical state is identical to the absent-sink outcome (7.849349ms)
+✔ Given a current-node data failure, when its batch is sent, then one exact disposition writes directly to ingress (5.026885ms)
+✔ Given a current-node data failure, when nothing sends the batch, then ingress has not been written to yet (0.652816ms)
+✔ Given a transit binding, when a failure returns, then relay uses recorded ingress and translates only hop-local identity (24.739071ms)
+✔ Given a transit binding, when a delivery returns, then the binding releases and the delivery relays under the upstream label (13.834943ms)
+✔ Given several bound labels, when their deliveries return, then the relayed batch compresses them to one run (1.164162ms)
+✔ Given a range wider than the inbound bound, when it arrives, then nothing settles and the session is answered as a violation (0.696747ms)
+✔ Given messages that all succeed, when their dispositions return, then the label table empties without waiting for expiry (278.695099ms)
+✔ Given far more messages than the table holds, when each is reported, then none is refused for want of a label (265.045558ms)
+✔ Given a table told to evict, when it fills, then the data plane keeps moving rather than being refused (96.124322ms)
+✔ Given a message that is delivered, when its disposition returns, then the sender is told it settled and how many destinations owed it (170.680365ms)
+✔ Given a message whose outcome has not arrived, when the sender reads it, then the total is unknown rather than assumed to be one (39.490252ms)
+✔ Given a stream filtered to one endpoint, when two endpoints send, then only that endpoint's dispositions arrive (46.080426ms)
+✔ Given a destination on the sending node itself, when it is sent to, then the surface reports it settled without a binding to carry it (47.440537ms)
+✔ Given a peer that goes away with a message in flight, when the binding dies, then the sender is told rather than left waiting (37.354869ms)
+✔ given successful and failed local handlers, when each settles, then its exact event and closed counter commit once (33.744481ms)
+✔ Given the last usable hop, when transit is attempted, then HOP_LIMIT_EXCEEDED is returned with no onward data (3.854091ms)
+✔ given immutable channel peer evidence, when OPEN identity admission runs, then the exact observed object crosses unchanged and configuration cannot forge it (51.479232ms)
+✔ Given a receiver whose control queue cannot take its reverse errors, when deliveries are refused in a burst, then the process survives and the fault is bounded to that session (362.573874ms)
+✔ Given an inbound dispatch that fails, when it is disposed of, then the failure is reported rather than swallowed (162.667134ms)
+✔ Given a FIB that points back to exact ingress, when transit is admitted, then ingress is never used as egress (2.942345ms)
+✔ Given a valid exact-controller token and refId, when consumed twice, then only the first lookup returns the labelBinding (2.045753ms)
+✔ Given equal public session fields on distinct controllers, when reverse lookup runs, then exact identity wins without a RIB callback (1.385764ms)
+✔ Given label table capacity reached, when more is offered, then it is refused with a retryable capacity code (66.07737ms)
+✔ Given the correlation lifetime has elapsed, when sending resumes, then the capacity is available again (25.191182ms)
+✔ Given labelBindings that have expired, when sending resumes, then the retained set is replaced rather than grown (26.131549ms)
+✔ Given a matching token with the wrong refId, when reverse lookup runs, then fatal evidence does not consume the labelBinding (1.464108ms)
+✔ Given a handler held beyond the stop deadline, when its revoked binding settles late, then its signal is aborted and terminal operations cannot advance (16.422949ms)
+✔ Given a Created runtime, when it reaches Stopped, then restart is rejected and repeated stop is stable (12.084713ms)
+✔ Given transport acquisition fails, when start is retried, then Failed remains terminal (1.354889ms)
+✔ given a node with a listener, when start completes, then terminal observation was armed before Running was published (9.657047ms)
+✔ given a listener that terminalizes while start is still in flight, when the node settles, then it never reports Running behind a dead listener (61.403597ms)
+✔ given a Running node, when its listener terminalizes unexpectedly, then the node fails exactly once with the listener terminal recorded (61.689753ms)
+✔ given a node stopping under its own authority, when its listener closes, then the terminal is not re-entered as a failure (60.778138ms)
+✔ Given selected local endpoints, when a local send is admitted, then one route revision and exact binding are used (3.15526ms)
+✔ Given a selected local source but missing destination, when send runs, then NO_ROUTE creates no reservation or data write (3.63465ms)
+✔ given a live uniform-node lifecycle with routing and data activity, when its subscribed events are validated, then every emitted kind and data object belongs to the generated sovereign union (78.915637ms)
+✔ Given an operator subscriber doing real work, when a stream crosses the node, then it loses nothing even at the smallest buffer (273.460177ms)
+✔ Given a consumer that asks for per-message detail, when a stream crosses the node, then it still receives it (210.462868ms)
+✔ Given a delivery that fails, when it is reported, then the anomaly stays where an operator is watching (12.389593ms)
+✔ Given a node under load and teardown, when every packet it sent is inspected, then each one is schema-valid (111.738837ms)
+✔ given duplicate peer adjacency identities, when a node is constructed, then configuration fails before any transport authority resolves (5.753484ms)
+✔ Given an Established session, when monotonic time advances, then hold TTL decreases without a state revision (42.85139ms)
+✔ Given two distinct remote nodes, when one node allocates the same six-hex ID, then both pair-scoped sessions coexist (57.565814ms)
+✔ Given two accepted transports whose identities are not known at allocation, when distinct peers receive the same local six-hex ID, then identity admission retains both node pairs (23.344759ms)
+✔ Given an Established session with continuing outbound JSON traffic, when the keepalive interval passes, then successful writes postpone KeepaliveExpired while the hold timer remains peer-driven (57.908319ms)
+✔ Given an Established session, when a data message is delivered, then the stream announces the delivery and withholds the self-transition (56.537797ms)
+✔ Given a delivered message, when the session is queried, then the snapshot still records the self-transition it did not announce (16.479974ms)
+✔ Given an idle session, when a keepalive is processed, then the self-transition is announced because nothing else would report it (13.472591ms)
+✔ Given a peer route, when its exact source identity is not ACKed, then send fails without hidden queuing (5.308818ms)
+✔ Given admitted handler work, when stop begins, then new work is gated and admitted work drains once (18.00719ms)
+✔ Given nonlocal input with transit disabled, when admission runs, then one ingress error and zero onward data are written (3.060999ms)
+✔ Given asymmetric reverse selection, when inbound source is checked, then exact-ingress feasibility authorizes it (3.869259ms)
+✔ Given a feasible transit source with no destination route, when admitted, then one direct NO_ROUTE and zero onward data result (3.684048ms)
+✔ given competing read-terminal and write-failure outcomes, when one controller incarnation tears down, then exactly one disposition releases its channel and event (20.547107ms)
+✔ given packets accepted before local close, when protocol authority is revoked, then the sole reader drains them to terminal before transport release (3.659885ms)
+✔ given opaque listener and peer references, when a node is constructed, then each resolves once by kind and no capability enters kernel state (9.464454ms)
+✔ Given listener-only and dial-only configs, when two nodes start, then one NodeImpl converges and routes delivery (59.51365ms)
+✔ Given data admitted in an export epoch, when that epoch closes, then data writes before its withdrawing snapshot (4.902356ms)
+✔ Given the unsigned-64 terminal range, when tokens are allocated through its end, then no value repeats before exhaustion (1.857154ms)
+✔ Given an injected smaller token domain, when its terminal values allocate, then fixed-width wire shape is preserved (0.282001ms)
+ℹ tests 92
+ℹ suites 0
+ℹ pass 92
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54627.27282
+
+> @agp/management-http@0.1.0 test
+> npm run build && node --test --test-concurrency=1 --test-reporter=spec test/unit/*.test.js test/contract/*.test.js
+
+
+> @agp/management-http@0.1.0 build
+> npm run generate:check && tsc -b
+
+
+> @agp/management-http@0.1.0 generate:check
+> node scripts/generate-contracts.mjs --check
+
+✔ Given every stable management resource, when each GET is handled, then exactly one matching OperationsReader call produces one schema-valid no-store response (42.738533ms)
+✔ Given representative canonical SDK snapshots, when management projects them, then payload fields are preserved exactly without route, session, counter, or topology inference (9.278008ms)
+✔ Given unsupported mutation, body, query, malformed, and unknown requests, when handled, then the closed safe status/error catalog responds without OperationsReader access (30.014374ms)
+✔ Given a resource GET, when HEAD requests the same representation, then status and representation headers match while each request performs one query and HEAD emits no body (9.316889ms)
+✔ Given any management path, when OPTIONS is requested, then safe discovery is bodyless and performs no SDK query or CORS grant (3.040947ms)
+✔ Given the management v1 catalog, when every entry is audited, then twelve sovereign response contracts have exact identities, owners, digests, generated types, and resolvable external references (9.507061ms)
+✔ Given the response metadata and response schemas, when topology-neutrality is inspected, then schemaVersion, role, generic entity escape hatches, and inline named definitions are absent (1.171558ms)
+✔ Given a schema-valid response larger than the configured byte bound, when serialization measures it, then one SDK query is replaced by a bounded schema-valid RESPONSE_TOO_LARGE error (30.495441ms)
+✔ Given a reader exception or invalid cyclic projection, when a resource is queried, then the adapter emits one redacted INTERNAL error and does not leak exception or object content (7.052408ms)
+✔ Given a request target beyond the fixed UTF-8 byte bound, when admission checks it, then 414 is returned before any SDK query (3.383891ms)
+✔ Given valid defaults, when the management adapter is constructed and started, then construction is inert and the listener binds only a literal loopback address (12.705167ms)
+✔ Given a non-loopback host, invalid port, invalid response bound, or incomplete reader, when construction validates it, then CONFIG_INVALID is raised before binding or SDK access (0.831656ms)
+✔ Given one adapter instance, when start and stop are repeated, then starts are idempotent, stops are idempotent, restart rebinds, and lifecycle operations never query node state (13.731109ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4320.474
+
+> agp@0.1.0 test:cli
+> cli/test/run.sh
+
+✔ given valid management documents when each driver runs then it performs one exact read-only GET and emits one JSON document (117.569723ms)
+✔ given HTTP and response-contract failures when a driver runs then stdout stays clean and exits distinguish failures (108.801946ms)
+✔ given an unavailable endpoint or non-loopback URL when a driver runs then transport and usage exits remain distinct (15.929831ms)
+✔ given help missing and unsupported commands when dispatched then only the allowlisted grammar receives success (15.87824ms)
+✔ given environment and explicit loopback URLs when dispatching JSON and table modes then both consume the selected document (244.068967ms)
+✔ given hostile URL and option strings when parsed then no shell text executes and usage fails closed (29.465311ms)
+✔ given the MVP shell sources when statically inspected then dispatch has no dynamic code state files or mutation verbs (2.786815ms)
+✔ given an empty projection when rendered without a TTY then stable headers print without ANSI bytes (44.852757ms)
+✔ given column is absent when rows are rendered then deterministic tab-separated fallback remains successful (48.259482ms)
+✔ given hostile remote fields when rendered then terminal controls and embedded row separators cannot escape (42.690483ms)
+✔ given malformed input or an unlisted projection when rendered then renderer failure uses exit seven (44.427226ms)
+✔ Given an empty connection view, when the static template projects it, then an empty array remains a successful display input (50.235541ms)
+✔ Given admitted and hostile connection fields, when the static template projects them, then row shape is stable and controls are sanitized (46.661005ms)
+✔ Given a pre-identity controller without remote authority, when the static template projects it, then its local session is shown and remote node is a dash (44.150788ms)
+✔ Given consecutive SDK snapshots materialized one second apart, when connection rows are projected, then TTL follows the supplied monotonic remaining duration (87.902021ms)
+✔ Given an established connection older than one day, when the static template projects it, then materialized uptime retains total elapsed hours (43.77162ms)
+✔ Given a wrong-version connection document, when the static template validates it, then projection fails closed (46.733538ms)
+✔ Given an empty route view, when the static template projects it, then an empty array remains a successful display input (48.352528ms)
+✔ Given local session selected and losing routes, when the static template projects them, then next hops paths and winner markers are canonical (43.487227ms)
+✔ Given a wrong-kind route document, when the static template validates it, then projection fails closed (43.613955ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1543.153415
+
+> agp@0.1.0 test:system
+> node scripts/run-tests.mjs test
+
+
+=== test/conformance (18 files) ===
+✔ Given the triage ledger, when each candidate is read, then it is scored on both dimensions and cites a record (6.883506ms)
+✔ Given every record cited by the board, when the link is resolved, then the target and its anchor exist (23.464693ms)
+✔ Given the held section, when each item is read, then it is scored and carries a revival trigger (1.216134ms)
+✔ Given the decisions required, when each is read, then it names exactly what it blocks (0.79873ms)
+✔ Given every board identifier, when the ledger and milestones are compared, then neither contains an item the other omits (1.085287ms)
+✔ Given every design contract, when AX0 reads its consequence section, then the section names concrete faults rather than restating the rule (13.094525ms)
+✔ Given the default suite, when every named cell is resolved, then each test file it claims exists (7.67657ms)
+✔ Given the dimension table, when a value claims harness support, then the register does not silently overclaim it (2.480228ms)
+✔ Given the register, when it is read, then the rule that keeps the default suite sparse is stated rather than implied (4.458013ms)
+✔ Given the exclusion register, when each row is read, then it states both a reason and a re-entry condition (1.444802ms)
+✔ Given every live geometry test on disk, when the default suite is scanned, then none is absent from the register (1.408381ms)
+✔ Given normative Markdown and trace references, when AX0 resolves local targets, then every file and named anchor exists exactly (22.392744ms)
+✔ Given the normative design allowlist, when AX0 inspects knowledge structure, then every artifact has one mechanics rationale and consequence section (14.285801ms)
+✔ Given normative documents outside the design set, when AX0 inspects knowledge structure, then each one carries the same mechanics rationale and consequence triad (3.354569ms)
+✔ Given the frozen cross-document vocabulary, when AX0 scans its sovereign owners, then canonical terms and mappings are exact and stale target names are absent (8.073075ms)
+✔ Given the core event catalog, when AX1 resolves every concrete event and data contract, then each has one sovereign identity and the closed union references every event exactly once (17.334454ms)
+✔ Given every tracked markdown file, when its local links are resolved, then each target file exists (23.60537ms)
+✔ Given every tracked markdown file, when a link names an anchor, then the target heading exists (20.057292ms)
+✔ given the ratified in-place v1 replacement, when the public workspace surface is inspected, then only the uniform node runtime remains and no router or spoke package survives (5.282905ms)
+✔ Given an application importing only package roots, when it creates a local uniform node and management projection, then the public surface composes without a role-specific runtime factory (48.164123ms)
+✖ Given every board item, when its ledger status is compared with where it sits, then the board does not disagree with itself about its state (8.886656ms)
+✔ Given the milestones, when each is read, then no landed item is presented as a live move and the closed count matches the closed set (4.025525ms)
+✔ Given every record that cites a board item, when the citation is resolved, then the item exists on the board (39.536626ms)
+✔ Given the architecture maturity table, when a reopen trigger is read, then it names a condition that has not already happened (1.595435ms)
+✔ Given confirmed intent, when a row says it was amended, then it names the decision that amended it (0.919122ms)
+✔ Given every ratified decision, when it is checked against the vision, then it has been absorbed or explicitly ruled not to change purpose (1.83371ms)
+✔ Given package-owned sovereign schemas, when AX1 composes the root catalog, then identities, references, and committed digests are exact (481.4791ms)
+✔ Given every schema-owning package in an isolated consumer, when generation and declaration resolution run, then outputs are byte-current and all internal imports are declared (2927.876027ms)
+✔ Given a design document that lists a schema directory, when the directory is read, then the listing names exactly what is there (8.737347ms)
+✔ Given the semantic rule registry, when AX2 resolves its ownership graph, then every rule has one schema reference, implementation, and orthogonal primary test (127.417219ms)
+✔ Given the ratified intent graph, when AX0 validates it, then every U record and every decision the record declares has authorized and resolvable ownership (88.545079ms)
+✔ Given the frozen package graph and target vocabulary, when AX1-D inspects production manifests and sources, then carrier semantics remain in sovereign adapter owners (63.070327ms)
+✔ Given the verification ownership map, when its rows are resolved, then every named test file exists and no gate claims a missing oracle (7.711014ms)
+✔ Given the verification ownership map, when one file is claimed by several gates, then each claim is a distinct gate so no oracle is duplicated within a layer (1.769633ms)
+✔ Given the verification ownership map, when a gate names a package test file, then that file is also owned by its package suite README (32.471982ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 34
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5650.195873
+
+✖ failing tests:
+
+test at test/conformance/record-integrity.test.js:81:1
+✖ Given every board item, when its ledger status is compared with where it sits, then the board does not disagree with itself about its state (8.886656ms)
+  AssertionError [ERR_ASSERTION]: board state must agree with the ledger:
+  B42: reads open; selected but is in neither build order nor held
+  + actual - expected
+  
+  + [
+  +   'B42: reads open; selected but is in neither build order nor held'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///home/apnex/taceng/agp/test/conformance/record-integrity.test.js:116:10)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'B42: reads open; selected but is in neither build order nor held' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+=== test/e2e (12 files) ===
+✔ given three independently started uniform-node processes in a line when source exports converge through the transit node then edge JSON routes symmetrically over two hops (2410.271041ms)
+✔ given a converged independent WebSocket pair when the dialing process is replaced then equivalent reachability is rebuilt under fresh adapter and session authority (2677.239047ms)
+✔ given a converged independent uniform-node star when separate read-only CLI processes inspect every management URL then sessions and all selected endpoint paths are visible (3024.976741ms)
+✔ given both independent leaves advertise one endpoint when the star converges then the center retains both candidates and deterministically selects the Alpha origin (2510.33638ms)
+✔ given the independent center advertises its own endpoint when both leaves converge then each leaf routes JSON to the center-local handler (2458.502494ms)
+✔ given three independently started uniform-node processes in a star when every source export is ACKed then all uniquely owned leaf endpoints route JSON in both directions (2474.155652ms)
+✔ given the sovereign persistent Loopback example when its three management APIs and read-only CLI are inspected then the live star is converged routable and gracefully stoppable (1344.419213ms)
+✔ given one converged topology under a frozen clock, when SDK HTTP CLI JSON and static tables sample it, then every surface represents the exact same capture (592.437667ms)
+✔ given two public nodes with a live finite-hold WebSocket session, when SDK HTTP and CLI sample it separately, then non-time state is identical and monotonic uptime and TTL remain bounded with one-second display steps (2233.866978ms)
+✔ given a live independent uniform-node star when each exact child is explicitly stopped then every process exits and every listener port is immediately reusable (2496.217874ms)
+✔ Given equivalent three-node lines over production Loopback and independent-process WebSocket, when both edge directions traverse one transit node, then normalized sessions RIB exports forwarding and deliveries are identical (2536.298994ms)
+✔ Given equivalent three-node stars over production Loopback and independent-process WebSocket, when routes converge and one leaf sends JSON to the other, then normalized sessions RIB exports forwarding and delivery are identical (2517.512013ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30709.156336
+
+=== test/integration (3 files) ===
+✔ given public package-root factories, when a consumer composes a uniform node and management adapter, then no private import or role-specific package is required (8.947211ms)
+✔ given a three-node star whose channels are protected by per-node pre-shared keys, when routes converge, then leaf JSON transits the centre and the centre admitted each peer on observed evidence (193.474382ms)
+✔ given a listener whose policy requires a matching principal, when a peer holds a valid secret but claims another node, then admission denies it on security evidence (31.005342ms)
+✔ given two public nodes on a real loopback WebSocket, when they establish and exchange JSON, then routing and delivery work in both directions (97.070924ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2504.113862
+
+=== test/resilience (15 files) ===
+✔ Given a selected diamond branch and a successor export blocked in the alternate writer, when selected-branch death overlaps that outstanding export, then promotion is atomic and release converges the complete successor set (153.32321ms)
+✔ Given a canonical reciprocal session with both adjacencies suppressed or satisfied, when link loss overlaps two barrier-released reconnect dials, then the same higher-node direction wins with fresh exact sessions and complete snapshots (85.908496ms)
+✔ Given a held final handler slot and an ACKed remote binding, when exact saturation overlaps that binding withdrawal, then admission rejects promptly while withdrawal converges and control readiness survives (65.535009ms)
+✔ Given a three-node line with a remote route and an unrelated transit-local route, when the origin session closes, then withdrawal cascades atomically through each RIB while the unrelated route remains deliverable (90.377424ms)
+✔ Given two identical listening nodes with reciprocal adjacencies, when both dial attempts are released from one named barrier, then both retain the higher-node-initiated physical session and suppress the loser (59.143463ms)
+✔ Given an admitted handler held beyond a zero-duration drain deadline, when stop revokes its binding and the handler settles late, then the signal aborts and terminal canonical state remains at its exact stopped revision (18.468953ms)
+✔ Given a converged three-node line and a source limited to the last usable hop, when it sends across the transit node, then zero onward data and one correlated reverse HOP_LIMIT_EXCEEDED are observed while reverse traffic remains usable (143.415516ms)
+✔ Given two legal route revisions already linearized in order, when the transport deterministically replays the older revision after the newer barrier, then the stale order is rejected exactly and local sibling state survives (174.753347ms)
+✔ Given two established uniform peers with independent routes, when one connection receives malformed JSON, then only the offender is terminated and the sibling route still delivers (94.452857ms)
+✔ Given two established uniform peers within a bounded receive envelope, when one transport reports an oversized frame, then only that offender is terminated and canonical sibling routing remains usable (43.235652ms)
+✔ Given a one-event observer buffer over canonical node state, when three endpoint events overflow it before consumption, then explicit observer.gap evidence is retained while every endpoint remains queryable (15.535726ms)
+✔ Given the sole local handler reservation is held at a named barrier, when another delivery reaches exact saturation, then it fails QUEUE_FULL without waiting while control-plane route convergence remains responsive (82.003338ms)
+✔ Given an established raw peer and a healthy sibling route, when a schema-valid successor path contains the local receiver, then that route receives nonfatal LOOP and is never installed (57.079296ms)
+✔ Given a center that learned one route from a path member and has another peer, when exports are derived for both peers, then only the path member is visibly suppressed as PEER_IN_PATH (32.228482ms)
+✔ Given an ACKed pair, when one exact route update is lost, then the finite ACK timer replaces the session and a fresh authoritative snapshot restores every route (109.401737ms)
+✔ Given an established pair with an acknowledged revision, when one exact route ACK is lost, then ambiguity is bounded by replacement and the new session re-ACKs the complete desired set (59.900645ms)
+✔ Given a selected and an alternate diamond branch, when the selected transit node dies at the convergence barrier, then the alternate promotes and exactly one later data path is used (142.375207ms)
+✔ Given a healthy session with empty writer queues, when one exact route write fails, then its reservation releases once and replacement converges without stale forwarding (74.41776ms)
+✔ Given one established physical connection, when its exact orderly carrier close faults, then one neutral terminal completes bounded teardown and the peer purges the owning session (15.313866ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12092.996804
+
+=== test/topology (16 files) ===
+✔ given a converged transit hop, when many sends are issued concurrently, then every one reaches a definite outcome and no admitted message is lost (159.39302ms)
+✔ given capacity smaller than the burst, when the bound is reached, then excess sends fail QUEUE_FULL promptly rather than waiting (45.533005ms)
+✔ given a burst that has fully drained, when the node is sampled, then handler capacity is released and the control plane stayed responsive (107.493391ms)
+✔ given a chain deeper than one transit node, when an edge sends to the far edge, then it forwards through every interior node with one decrement per hop (125.140793ms)
+✔ given a chain deeper than one transit node, when the far edge replies, then both directions deliver over independently selected paths (71.007816ms)
+✔ given a receiver whose ring is smaller than the offered stream, when more messages are sent than it can hold, then every one arrives in order rather than the excess being lost (236.772421ms)
+✔ given a stream that exceeded the receive ring, when the session is inspected afterwards, then it was paced rather than reset and its routes never withdrew (134.667936ms)
+✔ given a sender paced by a peer grant, when the operations plane is queried, then the ceiling, the spend and the room left are all readable (526.021935ms)
+✔ given traffic offered past the ring, when the sender is queried, then the pacing it suffered is counted and timed (450.642498ms)
+✔ given a receiver that drained a stream, when it is queried, then what it read and what it advertised are both readable (229.079154ms)
+✔ given a session that exchanged a route snapshot, when it is queried, then the acknowledgement round trip is a measurement rather than only a deadline (134.844007ms)
+✔ given a receiver that sent no data of its own, when it is queried, then it reports no pacing rather than zeroes that look measured (117.247559ms)
+✔ given a healthy four-node diamond with two equal paths, when one message is sent, then deterministic selection uses only the preferred branch and leaves the alternate observable (166.578232ms)
+✔ given three identical nodes arranged as a line, when edge nodes exchange JSON, then the middle node forwards both directions through selected two-hop routes (106.303969ms)
+✔ given a converged pair that is fully replaced, when new one-shot instances start from empty derived state, then equivalent reachability reconverges under new instance identities (102.334005ms)
+✔ given many endpoints per node, when the topology converges, then every node selects every route and no path is malformed (154.744523ms)
+✔ given many endpoints per node, when a full snapshot is exchanged, then it stays inside the negotiated route and receive bounds (97.833754ms)
+✔ given many endpoints per node, when one endpoint is withdrawn, then only its routes disappear and the rest stay selected (95.36773ms)
+✔ given one listening node and two dialing nodes with multiple endpoints, when the star converges, then every endpoint is selected and leaf JSON crosses the center (98.143446ms)
+✔ given a converged transit hop, when many messages stream across it, then every one arrives exactly once in send order (217.90113ms)
+✔ given a stream that has fully drained, when bounded resources are sampled, then handler capacity returns to baseline and labelBindings stay within their bound (123.031665ms)
+✔ given a converged transit hop, when both edges stream simultaneously, then each direction preserves its own order independently (145.824584ms)
+✔ given three identical transit nodes forming a triangle, when all endpoint routes converge, then no candidate selected or exported path repeats a node (138.390584ms)
+✔ given one node with two local endpoint bindings and a converged peer, when one exact binding closes, then both local and remote RIBs remove only that endpoint and the sibling remains deliverable (95.892841ms)
+✔ given a converged three-node star with unrelated leaf reachability, when one leaf stops orderly, then surviving nodes remove every phantom next hop and remain established with each other (76.557595ms)
+✔ given a route admitted from one established peer alongside a sibling, when a later full snapshot denies only that exact route, then the rejected route withdraws while the sibling remains selected (60.128127ms)
+✔ given one live session owning two learned routes beside a local route, when only that session closes, then all and only its owned routing state disappears atomically (72.853151ms)
+✔ given an established peer whose authoritative snapshot contains two routes, when its successor snapshot omits one route, then the receiver replaces that peer set without retaining a stale candidate (83.056955ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26981.135959
+
+=== suite summary ===
+FAIL  test/conformance (18 files)
+PASS  test/e2e (12 files)
+PASS  test/integration (3 files)
+PASS  test/resilience (15 files)
+PASS  test/topology (16 files)
+4/5 suites passed, 64 files.

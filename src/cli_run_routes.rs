@@ -9,6 +9,7 @@ use std::collections::BTreeMap;
 #[derive(Clone, Debug)]
 pub struct CliRunRoutes {
     children: BTreeMap<String, BTreeMap<String, String>>,
+    pub(crate) control_aliases: BTreeMap<String, String>,
 }
 
 /// Parsing stops at a command so its remaining argument strings stay untouched.
@@ -73,7 +74,40 @@ impl CliRunRoutes {
                 ));
             }
         }
-        Ok(Self { children })
+        Ok(Self {
+            children,
+            control_aliases: BTreeMap::new(),
+        })
+    }
+
+    /// Aliases are optional presentation data and must never hide a domain route.
+    pub fn configure_control_aliases(
+        &mut self,
+        definition: &CliDefinition,
+        aliases: BTreeMap<String, String>,
+    ) -> Result<(), AuthoringError> {
+        if aliases.len() > 32 {
+            return Err(run_usage_error("At most 32 control aliases are supported."));
+        }
+        for (alias, target) in &aliases {
+            if (alias != "?" && crate::cli_definition::validate_cli_name(alias).is_err())
+                || !RUN_CONTROLS.iter().any(|(control, _)| *control == target)
+                || definition
+                    .contexts
+                    .values()
+                    .any(|context| context.commands.contains_key(alias))
+                || self
+                    .children
+                    .values()
+                    .any(|children| children.contains_key(alias))
+            {
+                return Err(run_usage_error(format!(
+                    "Control alias {alias:?} is invalid, shadows a domain route, or names an unknown control."
+                )));
+            }
+        }
+        self.control_aliases = aliases;
+        Ok(())
     }
 
     pub fn context_children(&self, context: &str) -> &BTreeMap<String, String> {

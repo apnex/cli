@@ -1,0 +1,37 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+error[E0615]: attempted to take value of method `suggestions` on type `CompletionResult`
+   --> tests/cli_application.rs:168:40
+    |
+168 |     assert!(completer.complete("?", 1).suggestions.iter().any(|item| item.value == "?"));
+    |                                        ^^^^^^^^^^^ method, not a field
+    |
+help: use parentheses to call the method
+    |
+168 |     assert!(completer.complete("?", 1).suggestions().iter().any(|item| item.value == "?"));
+    |                                                   ++
+
+error[E0615]: attempted to take value of method `suggestions` on type `CompletionResult`
+   --> tests/cli_application.rs:169:45
+    |
+169 |     assert!(completer.complete("help c", 6).suggestions.iter().any(|item| item.value == "catalog"));
+    |                                             ^^^^^^^^^^^ method, not a field
+    |
+help: use parentheses to call the method
+    |
+169 |     assert!(completer.complete("help c", 6).suggestions().iter().any(|item| item.value == "catalog"));
+    |                                                        ++
+
+error[E0615]: attempted to take value of method `suggestions` on type `CompletionResult`
+   --> tests/cli_application.rs:172:40
+    |
+172 |     assert!(completer.complete("s", 1).suggestions.iter().any(|item| item.value == "show"));
+    |                                        ^^^^^^^^^^^ method, not a field
+    |
+help: use parentheses to call the method
+    |
+172 |     assert!(completer.complete("s", 1).suggestions().iter().any(|item| item.value == "show"));
+    |                                                   ++
+
+For more information about this error, try `rustc --explain E0615`.
+error: could not compile `programmable-cli` (test "cli_application") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...

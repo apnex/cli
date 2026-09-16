@@ -1,0 +1,74 @@
+{
+  "node": "hub",
+  "managementUrl": "http://127.0.0.1:41883",
+  "cases": [
+    {
+      "arguments": [
+        "--help"
+      ],
+      "exit": 0,
+      "bytes": 3160
+    },
+    {
+      "arguments": [
+        "tree"
+      ],
+      "exit": 0,
+      "bytes": 1462
+    },
+    {
+      "arguments": [
+        "connections",
+        "show"
+      ],
+      "exit": 0,
+      "bytes": 243
+    },
+    {
+      "arguments": [
+        "routes",
+        "ls"
+      ],
+      "exit": 0,
+      "bytes": 1319
+    },
+    {
+      "arguments": [
+        "health",
+        "show"
+      ],
+      "exit": 0,
+      "bytes": 93
+    },
+    {
+      "arguments": [
+        "resources",
+        "show"
+      ],
+      "exit": 0,
+      "bytes": 39
+    },
+    {
+      "arguments": [
+        "counters",
+        "show"
+      ],
+      "exit": 0,
+      "bytes": 67
+    },
+    {
+      "arguments": [
+        "snapshot",
+        "show",
+        "--json"
+      ],
+      "exit": 0,
+      "bytes": 23371
+    }
+  ],
+  "terminal": {
+    "code": 0,
+    "signal": null,
+    "stage": 8
+  }
+}

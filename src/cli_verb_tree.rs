@@ -24,7 +24,14 @@ pub(crate) fn cli_binding_label(binding: &CliBehaviorBinding) -> &'static str {
     match binding {
         CliBehaviorBinding::Simulated { .. } => "simulated",
         CliBehaviorBinding::Unbound { .. } => "unbound",
-        CliBehaviorBinding::Connected { .. } => "connected:json-file-read-v1",
+        CliBehaviorBinding::Connected {
+            provider: crate::cli_definition::CliConnectedProvider::JsonFileRead,
+            ..
+        } => "connected:json-file-read-v1",
+        CliBehaviorBinding::Connected {
+            provider: crate::cli_definition::CliConnectedProvider::JsonHttpGet,
+            ..
+        } => "connected:json-http-get-v1",
     }
 }
 

@@ -15,6 +15,7 @@ The [root README](../README.md) is the short entrance; this index routes to deep
 | Assemble reusable local components | [Components](components/USE.md) | [Assembly](components/CONTRACT.md) | [Component results](components/RESULTS.md) |
 | Attach a granted JSON file read | [Connected reads](connected/USE.md) | [Authority and observations](connected/CONTRACT.md) | [Connected results](connected/RESULTS.md) |
 | Use configured verbs directly | [Run mode](run/USE.md) | [Routing, output, and persistence](run/CONTRACT.md) | [Run results](run/RESULTS.md) |
+| Package a named CLI with contextual verbs and live HTTP reads | [Native applications](native-app/USE.md) | [Application and provider contract](native-app/CONTRACT.md) | [Measured integration](native-app/RESULTS.md) |
 | Author reusable tables and project command results | [Output views](output-views/USE.md) | [Native projection and rendering](output-views/CONTRACT.md), [format](output-views/FORMAT.md) | [AGP consumer results](output-views/RESULTS.md) |
 | Prepare another actor to continue | [Reuse](reuse/USE.md) | [Continuation experiment](reuse/CONTRACT.md) | [Fresh-agent trial](reuse/FRESH-ACTOR-TRIAL.md) |
 | Reproduce measured workflow costs | [Comparison](reuse/COMPARISON-USE.md) | [Fixed comparison](reuse/COMPARISON-CONTRACT.md) | [Latest comparison](authoring/IMPORT-RESULTS.md) |
@@ -29,8 +30,8 @@ The [root README](../README.md) is the short entrance; this index routes to deep
 | An authored schema can govern another document. | The [selected dialect](constraints/CONTRACT.md#interpretation) is a bounded local subset; unsupported features are rejected. |
 | CLI definitions describe nested contexts and scalar command signatures. | Optional parameters, named flags, and arbitrary argument grammars are not implemented. |
 | Explicit mocks can show proposed functionality. | Simulation is labeled; a mock is not an external observation. |
-| A connected command can read a granted local JSON file. | There is no network, executable-hook, or mutation provider; authority is supplied for each process. |
-| Authored views project typed rows and print native Rust tables. | Bounded expressions cover the AGP consumers; sorting, grouping, scripts, themes, and terminal-width truncation are outside this increment. |
+| A connected command can read a granted local JSON file or explicit loopback HTTP resource. | General remote HTTP, executable hooks, and mutation providers remain outside the current contracts; authority is supplied for each process. |
+| Authored views project typed rows, object entries, and collection lengths into native Rust tables. | General array sorting, grouping, scripts, themes, and terminal-width truncation remain outside this increment. |
 | Components assemble with checked dependencies and isolated state. | Nested assemblies, shared mutable state, and version negotiation need new contracts. |
 | OpenAPI descriptions can be authored as data. | Automatic API command generation and invocation remain held on the [board](BOARD.md#held). |
 | One fresh-agent continuation passed its fixed task. | Comparative agent effort or token savings have not been established. |

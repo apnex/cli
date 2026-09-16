@@ -76,8 +76,11 @@ fn run_view(session: &CliRunSession, operation: &str, result: Value) -> Authorin
 
 fn command_help(session: &CliRunSession, word: &str, command: &CliCommand) -> Value {
     let requirement = match &command.binding {
-        CliBehaviorBinding::Connected { capability, .. } => {
-            json!({"provider":"json-file-read-v1", "capability":capability, "granted":session.runtime.operation_definition().json_read_grants().has_json_read_grant(capability)})
+        CliBehaviorBinding::Connected {
+            provider,
+            capability,
+        } => {
+            json!({"provider":provider, "capability":capability, "granted":session.runtime.operation_definition().has_read_capability(provider, capability)})
         }
         CliBehaviorBinding::Unbound { reason } => json!({"reason":reason}),
         _ => Value::Null,
@@ -140,8 +143,16 @@ fn run_help(
             escape_run_metadata(command["help"].as_str().unwrap())
         ));
         if let Some(capability) = command["requirement"]["capability"].as_str() {
+            let instruction = session.capability_help.clone().unwrap_or_else(|| {
+                if command["requirement"]["provider"] == "json-file-read-v1" {
+                    format!("Requires --grant-json-read {capability} <file>")
+                } else {
+                    format!("Requires HTTP capability {capability} from the application launcher")
+                }
+            });
             text.push_str(&format!(
-                "    Requires --grant-json-read {capability} <file>; granted: {}\n",
+                "    {}; granted: {}\n",
+                escape_run_metadata(&instruction),
                 command["requirement"]["granted"]
             ));
         }
@@ -176,10 +187,21 @@ fn run_help(
         }
     }
     text.push('\n');
+    if let Some(help) = &session.launch_help {
+        text.push_str(help);
+        text.push('\n');
+    }
+    if !session.routes.control_aliases.is_empty() {
+        text.push_str("Shortcuts:");
+        for (alias, target) in &session.routes.control_aliases {
+            text.push_str(&format!(" {alias}={target}"));
+        }
+        text.push('\n');
+    }
     run_view(
         session,
         ":help",
-        json!({"help_text":text,"definition_id":active.definition.id,"context":context,"path":path,"commands":commands,"contexts":children,"controls":RUN_CONTROLS}),
+        json!({"help_text":text,"definition_id":active.definition.id,"context":context,"path":path,"commands":commands,"contexts":children,"controls":RUN_CONTROLS,"control_aliases":session.routes.control_aliases}),
     )
 }
 
@@ -192,6 +214,12 @@ fn dispatch_run_tokens(
         .first()
         .map(|token| token.text.as_str())
         .unwrap_or(":help");
+    let first = session
+        .routes
+        .control_aliases
+        .get(first)
+        .map(String::as_str)
+        .unwrap_or(first);
     let start = if one_shot {
         "root".to_owned()
     } else {
@@ -358,7 +386,9 @@ pub fn write_run_response(
             writeln!(errors, "{}", escape_run_metadata(&error.to_string()))?;
         }
         errors.flush()?;
-        return Ok(run_error_exit(error));
+        return Ok(session
+            .and_then(|session| session.exit_codes.get(&error.code).copied())
+            .unwrap_or_else(|| run_error_exit(error)));
     }
     let result = response.result.as_ref().expect("Successful result");
     let presentation_failed = result["presentation"]["status"] == "error";
@@ -387,7 +417,9 @@ pub fn write_run_response(
                 escape_run_metadata(error["message"].as_str().unwrap_or("Output view failed."))
             )?;
             errors.flush()?;
-            return Ok(1);
+            return Ok(session
+                .and_then(|session| session.exit_codes.get("OUTPUT_VIEW_FAILED").copied())
+                .unwrap_or(1));
         }
         let text = if let Some(text) = result["presentation"]["table_text"].as_str() {
             text.to_owned()
@@ -412,7 +444,13 @@ pub fn write_run_response(
         output.write_all(text.as_bytes())?;
     }
     output.flush()?;
-    Ok(i32::from(presentation_failed))
+    Ok(if presentation_failed {
+        session
+            .and_then(|session| session.exit_codes.get("OUTPUT_VIEW_FAILED").copied())
+            .unwrap_or(1)
+    } else {
+        0
+    })
 }
 
 /// Return exit intent separately from status; every frontend uses this exact dispatch function.
@@ -424,11 +462,18 @@ pub fn execute_run_tokens(
     output: &mut impl Write,
     errors: &mut impl Write,
 ) -> io::Result<(i32, bool)> {
-    let response = match dispatch_run_tokens(session, tokens, one_shot) {
+    let mut response = match dispatch_run_tokens(session, tokens, one_shot) {
         Ok(None) => return Ok((0, true)),
         Ok(Some(response)) => response,
         Err(error) => session.runtime.rejected_terminal_input(None, error),
     };
+    if session.context_help
+        && response.status == "ok"
+        && response.operation.as_deref() == Some("enter")
+    {
+        let help = run_help(session, &session.active_interface().context, None);
+        response.result.as_mut().unwrap()["help_text"] = help.result.unwrap()["help_text"].clone();
+    }
     let code = write_run_response(Some(session), &response, structured, output, errors)?;
     Ok((
         code,

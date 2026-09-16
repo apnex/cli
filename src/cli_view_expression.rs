@@ -17,6 +17,8 @@ pub(crate) enum OutputExpression {
     First(Box<Self>, Box<Self>, Vec<DocumentSegment>),
     Any(Box<Self>, Box<Self>),
     Concat(Vec<Self>),
+    Entries(Box<Self>),
+    Length(Box<Self>),
 }
 
 fn expression_error(message: impl Into<String>) -> AuthoringError {
@@ -80,6 +82,7 @@ pub(crate) fn compile_output_expression(
         "if" => &["op", "condition", "then", "else"],
         "first" => &["op", "input", "where", "path"],
         "any" => &["op", "input", "where"],
+        "entries" | "length" => &["op", "input"],
         _ => {
             return Err(expression_error(format!(
                 "Unsupported output expression operator: {op}"
@@ -183,6 +186,8 @@ pub(crate) fn compile_output_expression(
             }
         }
         "concat" => OutputExpression::Concat(list(remaining)?),
+        "entries" => OutputExpression::Entries(Box::new(compile("input", remaining)?)),
+        "length" => OutputExpression::Length(Box::new(compile("input", remaining)?)),
         _ => unreachable!("Operators checked above"),
     })
 }
@@ -290,6 +295,42 @@ impl OutputExpression {
                 budget.copy(value)?
             }
             Self::Literal(value) => budget.copy(Some(value))?,
+            Self::Entries(input) => {
+                let Some(DocumentValue::Object(values)) = input.evaluate(scope, budget)? else {
+                    return Err(output_view_error(
+                        "OUTPUT_VIEW_INPUT",
+                        "Output entries requires an object.",
+                    ));
+                };
+                if values.len() > 4096 {
+                    return Err(output_view_error(
+                        "OUTPUT_VIEW_LIMIT",
+                        "Output entries exceeds 4096 members.",
+                    ));
+                }
+                let mut rows = Vec::with_capacity(values.len());
+                for (key, value) in values {
+                    budget.step()?;
+                    rows.push(DocumentValue::Object(BTreeMap::from([
+                        ("key".into(), DocumentValue::String(key)),
+                        ("value".into(), value),
+                    ])));
+                }
+                budget.copy(Some(&DocumentValue::Array(rows)))?
+            }
+            Self::Length(input) => {
+                let length = match input.evaluate(scope, budget)? {
+                    Some(DocumentValue::Object(values)) => values.len(),
+                    Some(DocumentValue::Array(values)) => values.len(),
+                    _ => {
+                        return Err(output_view_error(
+                            "OUTPUT_VIEW_INPUT",
+                            "Output length requires an array or object.",
+                        ));
+                    }
+                };
+                Some(DocumentValue::parse_document(&length.to_string())?)
+            }
             Self::Coalesce(values, skip_false) => {
                 let mut result = None;
                 for value in values {

@@ -1,0 +1,27 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running unittests src/main.rs (target/debug/deps/cli_layer_scaffold-7c083a71a2839dd0)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/project_records.rs (target/debug/deps/project_records-7f9f9aa28f0559bd)
+
+running 1 test
+test project_records_resolve_and_keep_design_and_application_evidence_distinct ... FAILED
+
+failures:
+
+---- project_records_resolve_and_keep_design_and_application_evidence_distinct stdout ----
+
+thread 'project_records_resolve_and_keep_design_and_application_evidence_distinct' (67954) panicked at tests/project_records.rs:191:18:
+Unknown board state
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    project_records_resolve_and_keep_design_and_application_evidence_distinct
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--test project_records`

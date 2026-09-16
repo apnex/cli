@@ -27,6 +27,10 @@ pub struct CliRunSession {
     pub runtime: AuthoringRuntime,
     pub routes: CliRunRoutes,
     pub output_selection: crate::cli_view_frontend::CliOutputSelection,
+    pub context_help: bool,
+    pub capability_help: Option<String>,
+    pub launch_help: Option<String>,
+    pub exit_codes: std::collections::BTreeMap<String, i32>,
     _temporary: Option<TemporaryRunDirectory>,
 }
 
@@ -53,6 +57,46 @@ impl CliRunSession {
             CliRunRoutes::from_cli_definition(&active.definition)?;
             Some(active)
         };
+        Self::open_supplied_cli_run(
+            supplied,
+            checkpoint,
+            grants,
+            crate::cli_http_get::JsonHttpGetGrants::default(),
+            faults,
+        )
+    }
+
+    /// An embedded application uses exactly the same checkpoint and route runtime as file-based run.
+    pub fn open_embedded_cli_run(
+        source: &[u8],
+        checkpoint: Option<&Path>,
+        http: crate::cli_http_get::JsonHttpGetGrants,
+    ) -> Result<Self, AuthoringError> {
+        let active = parse_cli_interface_source(
+            source,
+            None,
+            CliInterfaceOrigin {
+                intent_text: RUN_INTENT.into(),
+                revision: SessionRevision(0),
+            },
+        )?;
+        CliRunRoutes::from_cli_definition(&active.definition)?;
+        Self::open_supplied_cli_run(
+            Some(active),
+            checkpoint,
+            JsonFileReadGrants::default(),
+            http,
+            StorageFaultControl::from_test_environment()?,
+        )
+    }
+
+    fn open_supplied_cli_run(
+        supplied: Option<ActiveCliInterface>,
+        checkpoint: Option<&Path>,
+        grants: JsonFileReadGrants,
+        http: crate::cli_http_get::JsonHttpGetGrants,
+        faults: StorageFaultControl,
+    ) -> Result<Self, AuthoringError> {
         if supplied.is_none() && checkpoint.is_none_or(|path| !path.exists()) {
             return Err(AuthoringError::new(
                 "RUN_SESSION_REQUIRED",
@@ -84,8 +128,9 @@ impl CliRunSession {
         let path = checkpoint
             .map(Path::to_path_buf)
             .unwrap_or_else(|| temporary.as_ref().unwrap().0.join("session.json"));
-        let declaration =
-            OperationDefinition::embedded_composition_definition()?.with_json_read_grants(grants);
+        let declaration = OperationDefinition::embedded_composition_definition()?
+            .with_json_read_grants(grants)
+            .with_http_get_grants(http);
         let runtime = if path.exists() {
             let runtime =
                 AuthoringRuntime::open_authoring_session(&path, declaration, None, faults)?;
@@ -122,6 +167,10 @@ impl CliRunSession {
             runtime,
             routes,
             output_selection: crate::cli_view_frontend::CliOutputSelection::default(),
+            context_help: false,
+            capability_help: None,
+            launch_help: None,
+            exit_codes: std::collections::BTreeMap::new(),
             _temporary: temporary,
         })
     }

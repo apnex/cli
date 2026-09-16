@@ -200,6 +200,6 @@ Use the normal `cli` binary for authoring; test controls are absent from its def
 The scaffold commands check documentation consistency separately from application assertions.\
 The [implementation record](CLI-002.md) identifies retained evidence and its limits.
 
-The application installs no service and opens no network connection.\
+The authoring workflow installs no service and opens no network connection.\
 To remove a local build, use `cargo clean`.\
 Retain session checkpoints and exports you intend to keep; remove their files and inactive sibling lock files only when their sessions are closed.
