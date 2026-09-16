@@ -5,7 +5,7 @@ use crate::authoring_frontend::read_authoring_line;
 use crate::authoring_protocol::{AuthoringRequest, AuthoringResponse, RequestIdentity};
 use crate::authoring_runtime::checked_response_bytes;
 use crate::cli_definition::{CliBehaviorBinding, CliCommand};
-use crate::cli_run_routes::{CliRunTarget, RUN_CONTROLS, run_usage_error};
+use crate::cli_run_routes::{CliRunTarget, run_usage_error};
 use crate::cli_run_session::CliRunSession;
 use crate::cli_terminal::compile_cli_terminal_arguments;
 use crate::cli_verb_tree::{cli_binding_label, render_run_verb_tree};
@@ -89,6 +89,13 @@ fn command_help(session: &CliRunSession, word: &str, command: &CliCommand) -> Va
     if let Some(view) = &command.view {
         result["view"] = json!(view);
     }
+    if let Some(target) = session
+        .operator
+        .as_ref()
+        .and_then(|settings| settings.profile.command_aliases.get(&command.id))
+    {
+        result["alias_of"] = json!(target);
+    }
     result
 }
 
@@ -96,6 +103,15 @@ fn run_help(
     session: &CliRunSession,
     context: &str,
     command_word: Option<&str>,
+) -> AuthoringResponse {
+    run_help_details(session, context, command_word, false)
+}
+
+fn run_help_details(
+    session: &CliRunSession,
+    context: &str,
+    command_word: Option<&str>,
+    detailed: bool,
 ) -> AuthoringResponse {
     let active = session.active_interface();
     let context_definition = &active.definition.contexts[context];
@@ -176,7 +192,7 @@ fn run_help(
         }
     }
     text.push_str("Controls:");
-    for (word, _) in RUN_CONTROLS {
+    for (word, _) in session.routes.available_run_controls() {
         text.push(' ');
         text.push_str(word);
         if word == ":export" {
@@ -198,11 +214,131 @@ fn run_help(
         }
         text.push('\n');
     }
-    run_view(
-        session,
-        ":help",
-        json!({"help_text":text,"definition_id":active.definition.id,"context":context,"path":path,"commands":commands,"contexts":children,"controls":RUN_CONTROLS,"control_aliases":session.routes.control_aliases}),
-    )
+    if session.operator.is_some() && !detailed {
+        text = crate::cli_operator_help::render_operator_help(
+            session,
+            context,
+            command_word,
+            &commands,
+            &children,
+        );
+    }
+    let controls: Vec<_> = session.routes.available_run_controls().collect();
+    let mut result = json!({"help_text":text,"definition_id":active.definition.id,"context":context,"path":path,"commands":commands,"contexts":children,"controls":controls,"control_aliases":session.routes.control_aliases});
+    if let Some(settings) = &session.operator {
+        result["management"] = settings.operator_settings_status();
+        result["context_help"] = json!(context_definition.help);
+        result["operator"] = serde_json::to_value(&settings.profile).unwrap();
+        result["endpoint_control"] = json!({
+            "word": session.routes.preferred_run_control(":endpoint"),
+            "actions": crate::cli_operator_settings::CLI_ENDPOINT_ACTIONS.map(|(word, help)| json!({
+                "word": word, "help": help,
+                "parameters": if word == "set" { json!([{"name":"url","type":"string","required":true}]) } else { json!([]) },
+                "options": if word == "set" || word == "clear" { json!([{"word":"--save","type":"boolean"}]) } else { json!([]) },
+                "one_shot_requires_save": word == "set" || word == "clear"
+            }))
+        });
+    }
+    run_view(session, ":help", result)
+}
+
+fn run_endpoint_control(
+    session: &mut CliRunSession,
+    words: &[TerminalToken],
+    one_shot: bool,
+) -> Result<AuthoringResponse, AuthoringError> {
+    let control = session.routes.preferred_run_control(":endpoint");
+    let args: Vec<_> = words.iter().map(|token| token.text.as_str()).collect();
+    let settings = session
+        .operator
+        .as_mut()
+        .ok_or_else(|| run_usage_error("Endpoint configuration requires an operator profile."))?;
+    let mut grants = None;
+    let message = match args.as_slice() {
+        [] | ["show"] | ["--help"] => String::new(),
+        ["set", url] if !one_shot => {
+            grants = Some(settings.select_operator_endpoint(Some(url))?);
+            format!(
+                "Endpoint set to {} for this session.\nUse {control} save to keep this selection.\n",
+                settings.endpoint.as_deref().unwrap()
+            )
+        }
+        ["clear"] if !one_shot => {
+            grants = Some(settings.select_operator_endpoint(None)?);
+            format!(
+                "Endpoint cleared for this session.\nUse {control} save to clear the saved default too.\n"
+            )
+        }
+        ["set", url, "--save"] => {
+            grants = Some(settings.select_persistent_endpoint(Some(url))?);
+            format!(
+                "Endpoint set to {} and saved for future launches.\n",
+                settings.endpoint.as_deref().unwrap()
+            )
+        }
+        ["clear", "--save"] => {
+            grants = Some(settings.select_persistent_endpoint(None)?);
+            "Endpoint cleared and saved for future launches.\n".into()
+        }
+        ["set", _] | ["clear"] => {
+            return Err(run_usage_error(format!(
+                "A one-shot endpoint change requires --save. Use {control} set <url> --save or {control} clear --save."
+            )));
+        }
+        ["load"] => {
+            grants = Some(settings.reload_operator_settings()?);
+            "Loaded saved management settings.\n".into()
+        }
+        ["save"] => {
+            settings.save_operator_settings().map_err(|mut error| {
+                if error.code == "MANAGEMENT_SETTINGS_CHANGED" { error.recovery = format!("Use {control} load to inspect the new selection before changing and saving it again."); }
+                error
+            })?;
+            "Saved management settings for future launches.\n".into()
+        }
+        _ => {
+            return Err(run_usage_error(format!(
+                "Use {control} show | set <url> | clear | save | load."
+            )));
+        }
+    };
+    let mut result = settings.operator_settings_status();
+    let mut text = message;
+    if text.is_empty() {
+        text = format!(
+            "Endpoint: {}\nSaved default: {}\nConfig file: {}\n",
+            settings.endpoint.as_deref().unwrap_or("not configured"),
+            result["saved_endpoint"]
+                .as_str()
+                .unwrap_or("not configured"),
+            escape_run_metadata(
+                result["config_file"]
+                    .as_str()
+                    .unwrap_or("unavailable; use --config <file>")
+            )
+        );
+        text.push_str(&format!(
+            "Selection source: {}\n",
+            result["source"].as_str().unwrap()
+        ));
+        text.push_str(&format!("Use {control} set <url>, clear, save, or load.\n"));
+        text.push_str(&format!(
+            "One-shot changes: {control} set <url> --save; {control} clear --save.\n"
+        ));
+    }
+    result["help_text"] = json!(text);
+    result["action"] = json!(args.first().copied().unwrap_or("show"));
+    result["scope"] = json!("operator");
+    result["effect"] = json!(match args.first().copied() {
+        Some("save") => "local_configuration_write",
+        _ if args.last() == Some(&"--save") => "local_configuration_write",
+        Some("set" | "clear" | "load") => "process_configuration",
+        _ => "none",
+    });
+    if let Some(grants) = grants {
+        session.runtime.replace_runtime_http_grants(grants);
+    }
+    Ok(run_view(session, ":endpoint", result))
 }
 
 fn dispatch_run_tokens(
@@ -235,6 +371,7 @@ fn dispatch_run_tokens(
         }
     };
     match first {
+        ":endpoint" => return Ok(Some(run_endpoint_control(session, &tokens[1..], one_shot)?)),
         ":views" => {
             exact(1)?;
             return Ok(Some(run_view(
@@ -270,9 +407,16 @@ fn dispatch_run_tokens(
             return Ok(None);
         }
         ":tree" => {
-            exact(1)?;
-            let text =
-                render_run_verb_tree(&session.active_interface().definition, &session.routes);
+            let detailed =
+                tokens.len() == 2 && tokens[1].text == "--all" && session.operator.is_some();
+            if !detailed {
+                exact(1)?;
+            }
+            let text = render_run_verb_tree(
+                &session.active_interface().definition,
+                &session.routes,
+                detailed,
+            );
             return Ok(Some(run_view(
                 session,
                 ":tree",
@@ -297,6 +441,20 @@ fn dispatch_run_tokens(
         _ => {}
     }
     let help_only = first == ":help";
+    if help_only && session.operator.is_some() && tokens.len() == 2 {
+        if tokens[1].text == "--all" {
+            return Ok(Some(run_help_details(session, &start, None, true)));
+        }
+        if tokens[1].text == ":endpoint"
+            || session
+                .routes
+                .control_aliases
+                .get(&tokens[1].text)
+                .is_some_and(|target| target == ":endpoint")
+        {
+            return Ok(Some(run_endpoint_control(session, &[], one_shot)?));
+        }
+    }
     let words = if help_only && !tokens.is_empty() {
         &tokens[1..]
     } else {
@@ -351,6 +509,17 @@ fn dispatch_run_tokens(
                 })?;
             let request = run_request(session, "invoke", json!({"command":target,"values":values}));
             let mut response = session.runtime.execute_authoring_request(request);
+            if let Some(settings) = &session.operator
+                && settings.endpoint.is_none()
+                && let Some(error) = &mut response.error
+                && error.code == "CAPABILITY_NOT_GRANTED"
+            {
+                error.message = "No management endpoint configured.".into();
+                error.recovery = format!(
+                    "Use {} set <url>, then retry the command.",
+                    session.routes.preferred_run_control(":endpoint")
+                );
+            }
             if let Some(view) = view {
                 attach_output_presentation(
                     &session.active_interface().definition,
@@ -382,6 +551,13 @@ pub fn write_run_response(
     if let Some(error) = &response.error {
         if structured {
             errors.write_all(&bytes)?;
+        } else if session.is_some_and(|session| session.operator.is_some()) {
+            writeln!(
+                errors,
+                "{}\n{}",
+                escape_run_metadata(&error.message),
+                escape_run_metadata(&error.recovery)
+            )?;
         } else {
             writeln!(errors, "{}", escape_run_metadata(&error.to_string()))?;
         }
@@ -465,14 +641,29 @@ pub fn execute_run_tokens(
     let mut response = match dispatch_run_tokens(session, tokens, one_shot) {
         Ok(None) => return Ok((0, true)),
         Ok(Some(response)) => response,
-        Err(error) => session.runtime.rejected_terminal_input(None, error),
+        Err(mut error) => {
+            if session.operator.is_some() && error.code == "INVALID_RUN_COMMAND" {
+                error.recovery = format!(
+                    "Use {} to see this context's commands.",
+                    session.routes.preferred_run_control(":help")
+                );
+            }
+            session.runtime.rejected_terminal_input(None, error)
+        }
     };
     if session.context_help
         && response.status == "ok"
         && response.operation.as_deref() == Some("enter")
     {
-        let help = run_help(session, &session.active_interface().context, None);
-        response.result.as_mut().unwrap()["help_text"] = help.result.unwrap()["help_text"].clone();
+        if session.operator.is_some() {
+            response.result.as_mut().unwrap()["help_text"] = json!(
+                crate::cli_operator_help::render_operator_context_hint(session)
+            );
+        } else {
+            let help = run_help(session, &session.active_interface().context, None);
+            response.result.as_mut().unwrap()["help_text"] =
+                help.result.unwrap()["help_text"].clone();
+        }
     }
     let code = write_run_response(Some(session), &response, structured, output, errors)?;
     Ok((

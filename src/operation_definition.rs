@@ -175,6 +175,14 @@ fn declared_word_valid(word: &str) -> bool {
 }
 
 impl OperationDefinition {
+    /// Replace process HTTP authority without changing declaration identity or checkpoint contents.
+    pub(crate) fn replace_http_get_grants(
+        &mut self,
+        grants: crate::cli_http_get::JsonHttpGetGrants,
+    ) {
+        self.http_get_grants = grants;
+    }
+
     pub fn with_http_get_grants(mut self, grants: crate::cli_http_get::JsonHttpGetGrants) -> Self {
         self.http_get_grants = grants;
         self

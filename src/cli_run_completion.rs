@@ -2,7 +2,7 @@
 
 use crate::cli_interface::ActiveCliInterface;
 use crate::cli_run_frontend::escape_run_metadata;
-use crate::cli_run_routes::{CliRunRoutes, CliRunTarget, RUN_CONTROLS};
+use crate::cli_run_routes::{CliRunRoutes, CliRunTarget};
 use crate::document_value::MAX_REQUEST_BYTES;
 use crate::terminal_input::{quote_terminal_token, terminal_completion_fragment};
 use reedline::{Completer, CompletionResult, Span, Suggestion};
@@ -42,6 +42,22 @@ impl Completer for CliRunCompleter {
         let help = control == Some(":help");
         let words = if help { &previous[1..] } else { &previous[..] };
         let mut choices = Vec::new();
+        if control == Some(":endpoint")
+            && self.routes.operator.is_some()
+            && ((previous.len() == 2 && previous[1].text == "clear")
+                || (previous.len() == 3 && previous[1].text == "set"))
+        {
+            choices.push((
+                "--save".into(),
+                "Save this change for future launches".into(),
+            ));
+        }
+        if previous.len() == 1 && control == Some(":endpoint") && self.routes.operator.is_some() {
+            choices.extend(
+                crate::cli_operator_settings::CLI_ENDPOINT_ACTIONS
+                    .map(|(word, help)| (word.into(), help.into())),
+            );
+        }
         if previous.len() == 1
             && control == Some(":render")
             && let Some(views) = &active.definition.views
@@ -52,15 +68,22 @@ impl Completer for CliRunCompleter {
                     .map(|(id, view)| (id.clone(), view.help.clone())),
             );
         }
-        if previous.is_empty() {
+        if previous.is_empty() || (help && previous.len() == 1 && self.routes.operator.is_some()) {
+            choices.extend(self.routes.control_aliases.iter().map(|(alias, target)| {
+                (
+                    alias.clone(),
+                    self.routes
+                        .available_run_controls()
+                        .find(|(control, _)| control == target)
+                        .map(|(_, description)| description.to_owned())
+                        .unwrap_or_default(),
+                )
+            }));
             choices.extend(
                 self.routes
-                    .control_aliases
-                    .iter()
-                    .map(|(alias, target)| (alias.clone(), format!("Shortcut for {target}"))),
-            );
-            choices.extend(
-                RUN_CONTROLS.map(|(word, description)| (word.to_owned(), description.to_owned())),
+                    .available_run_controls()
+                    .filter(|_| self.routes.operator.is_none() || prefix.starts_with(':'))
+                    .map(|(word, description)| (word.to_owned(), description.to_owned())),
             );
         }
         if let Ok(target) =
@@ -69,6 +92,18 @@ impl Completer for CliRunCompleter {
         {
             match target {
                 CliRunTarget::Context { id, help: false } => {
+                    if let Some(profile) = &self.routes.operator {
+                        choices.extend(
+                            profile
+                                .context_listing
+                                .iter()
+                                .filter(|word| {
+                                    !active.definition.contexts[&id].commands.contains_key(*word)
+                                        && !self.routes.context_children(&id).contains_key(*word)
+                                })
+                                .map(|word| (word.clone(), "List this context".into())),
+                        );
+                    }
                     choices.extend(self.routes.context_children(&id).iter().map(|(word, id)| {
                         (word.clone(), active.definition.contexts[id].help.clone())
                     }));
@@ -76,6 +111,13 @@ impl Completer for CliRunCompleter {
                         active.definition.contexts[&id]
                             .commands
                             .iter()
+                            .filter(|(_, command)| {
+                                id != "root"
+                                    || !prefix.is_empty()
+                                    || !self.routes.operator.as_ref().is_some_and(|profile| {
+                                        profile.command_aliases.contains_key(&command.id)
+                                    })
+                            })
                             .map(|(word, command)| (word.clone(), command.help.clone())),
                     );
                 }

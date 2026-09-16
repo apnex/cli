@@ -7,6 +7,7 @@ use crate::cli_http_get::{
     JsonHttpGetGrants, validate_http_resource_path, validate_http_response_requirement,
 };
 use crate::cli_interface::CliInterfaceOrigin;
+use crate::cli_operator_settings::{CliEndpointSource, CliOperatorProfile, CliOperatorSettings};
 use crate::cli_run_frontend::{
     execute_run_tokens, run_cli_stream, run_cli_terminal, run_error_exit,
 };
@@ -39,6 +40,28 @@ pub struct CliHttpLaunchProfile {
     pub resources: BTreeMap<String, CliHttpResource>,
 }
 
+impl CliHttpLaunchProfile {
+    /// Construct the complete validated HTTP grant set for one selected endpoint, without a request.
+    pub fn grants_for_endpoint(
+        &self,
+        endpoint: Option<&str>,
+    ) -> Result<JsonHttpGetGrants, AuthoringError> {
+        let mut grants = JsonHttpGetGrants::default();
+        if let Some(base) = endpoint {
+            crate::cli_http_get::validate_loopback_http_base(base)?;
+            for (capability, resource) in &self.resources {
+                grants.grant_json_http_get(
+                    CliCapabilityId(capability.clone()),
+                    base,
+                    &resource.path,
+                    resource.require.clone(),
+                )?;
+            }
+        }
+        Ok(grants)
+    }
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum CliApplicationOutput {
@@ -56,6 +79,8 @@ pub struct CliApplicationProfile {
     pub context_help: bool,
     pub http: CliHttpLaunchProfile,
     pub exit_codes: BTreeMap<String, i32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub operator: Option<CliOperatorProfile>,
 }
 
 impl CliApplicationProfile {
@@ -82,6 +107,7 @@ impl CliApplicationProfile {
                 "--view",
                 "--events",
                 "--session",
+                "--config",
             ]
             .contains(&profile.http.option.as_str())
             || profile.http.environment.is_empty()
@@ -121,6 +147,7 @@ impl CliApplicationProfile {
             },
         )?;
         let mut routes = CliRunRoutes::from_cli_definition(&active.definition)?;
+        routes.configure_operator_routes(&active.definition, self.operator.clone())?;
         routes.configure_control_aliases(&active.definition, self.control_aliases.clone())?;
         let required: BTreeSet<_> = active
             .definition
@@ -157,6 +184,7 @@ fn run_application(
     let mut arguments = arguments.peekable();
     let mut endpoint = None;
     let mut checkpoint = None;
+    let mut config = None;
     let mut structured = false;
     let mut output = None;
     let mut words = Vec::new();
@@ -210,6 +238,19 @@ fn run_application(
                     checkpoint = Some(PathBuf::from(value()?));
                     continue;
                 }
+                "--config" => {
+                    if config.is_some() || profile.operator.is_none() {
+                        return Err(run_usage_error(
+                            "--config requires an operator profile and may appear only once.",
+                        ));
+                    }
+                    let path = value()?;
+                    if path.is_empty() {
+                        return Err(run_usage_error("--config requires a nonempty file path."));
+                    }
+                    config = Some(PathBuf::from(path));
+                    continue;
+                }
                 "--" => literal = true,
                 "-h" => {
                     words.push(TerminalToken {
@@ -228,6 +269,7 @@ fn run_application(
             text,
         });
     }
+    let explicit_endpoint = endpoint.is_some();
     let endpoint = match endpoint {
         Some(endpoint) => Some(endpoint),
         None => std::env::var(&profile.http.environment)
@@ -237,22 +279,40 @@ fn run_application(
                 _ => Err(run_usage_error("Endpoint environment must be UTF-8.")),
             })?,
     };
-    let mut grants = JsonHttpGetGrants::default();
-    if let Some(base) = &endpoint {
-        for (capability, resource) in &profile.http.resources {
-            grants.grant_json_http_get(
-                CliCapabilityId(capability.clone()),
-                base,
-                &resource.path,
-                resource.require.clone(),
-            )?;
-        }
-    }
+    let grants = profile.http.grants_for_endpoint(endpoint.as_deref())?;
     let mut session = CliRunSession::open_embedded_cli_run(source, checkpoint.as_deref(), grants)?;
+    session.routes.configure_operator_routes(
+        &session.active_interface().definition.clone(),
+        profile.operator.clone(),
+    )?;
     session.routes.configure_control_aliases(
         &session.active_interface().definition.clone(),
         profile.control_aliases.clone(),
     )?;
+    if let Some(operator) = &profile.operator {
+        let settings = CliOperatorSettings::open_operator_settings(
+            &session.active_interface().definition.id,
+            operator.clone(),
+            profile.http.clone(),
+            config,
+            endpoint.map(|url| {
+                (
+                    url,
+                    if explicit_endpoint {
+                        CliEndpointSource::Option
+                    } else {
+                        CliEndpointSource::Environment
+                    },
+                )
+            }),
+        )?;
+        session.runtime.replace_runtime_http_grants(
+            settings
+                .http
+                .grants_for_endpoint(settings.endpoint.as_deref())?,
+        );
+        session.operator = Some(settings);
+    }
     session.context_help = profile.context_help;
     session.capability_help = Some(format!(
         "Endpoint: {} <loopback-url> or {}",
@@ -262,6 +322,13 @@ fn run_application(
         "Options: {} <loopback-url>, --table, --json (raw result), --view <name>, --events (runtime events), --session <file>. Use -- before literal command arguments.",
         profile.http.option
     ));
+    if session.operator.is_some() {
+        session
+            .launch_help
+            .as_mut()
+            .unwrap()
+            .push_str(" --config <file> selects saved management settings.");
+    }
     session.exit_codes = profile.exit_codes.clone();
     session.output_selection = output.unwrap_or(match profile.default_output {
         CliApplicationOutput::Json => CliOutputSelection::Json,

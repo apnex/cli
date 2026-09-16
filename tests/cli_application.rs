@@ -39,10 +39,20 @@ fn fixture() -> AuthoringFixture {
     fixture
 }
 fn launch(fixture: &AuthoringFixture, args: &[&str], input: &str) -> Output {
+    launch_environment(fixture, args, input, &[])
+}
+fn launch_environment(
+    fixture: &AuthoringFixture,
+    args: &[&str],
+    input: &str,
+    environment: &[(&str, &str)],
+) -> Output {
     let mut child = Command::new(env!("CARGO_BIN_EXE_cli"))
         .current_dir(&fixture.directory)
         .env("PATH", "")
+        .env("XDG_CONFIG_HOME", fixture.directory.join("config"))
         .env_remove("CATALOG_TEST_URL")
+        .envs(environment.iter().copied())
         .env("HTTP_PROXY", "http://127.0.0.1:1")
         .env("ALL_PROXY", "http://127.0.0.1:1")
         .env("NO_PROXY", "")
@@ -60,6 +70,404 @@ fn launch(fixture: &AuthoringFixture, args: &[&str], input: &str) -> Output {
         .write_all(input.as_bytes())
         .unwrap();
     child.wait_with_output().unwrap()
+}
+
+fn operator_fixture() -> AuthoringFixture {
+    let fixture = fixture();
+    let mut application = profile();
+    application["operator"] =
+        json!({"command_aliases":{"catalog.read":"catalog.show"},"context_listing":["ls","show"]});
+    application["control_aliases"]["management"] = json!(":endpoint");
+    application["control_aliases"]["/"] = json!(":top");
+    fs::write(fixture.directory.join("app.json"), application.to_string()).unwrap();
+    fixture
+}
+
+fn output_events(output: &Output) -> Vec<Value> {
+    String::from_utf8_lossy(&output.stdout)
+        .lines()
+        .map(|line| serde_json::from_str(line).unwrap())
+        .collect()
+}
+
+#[test]
+fn operator_help_is_compact_while_structured_discovery_and_compatibility_commands_remain_complete()
+{
+    let fixture = operator_fixture();
+    let result = launch(
+        &fixture,
+        &[],
+        "?\n/\nls\nshow\ncatalog\n?\nup\ntree\nexit\n",
+    );
+    code(&result, 0);
+    let text = String::from_utf8_lossy(&result.stdout);
+    assert!(!text.contains("connected:json-http-get-v1"));
+    assert!(!text.contains("granted:"));
+    assert!(!text.contains("up=:up"));
+    assert!(text.contains("management set <url>"));
+    assert!(text.contains("Commands: show. Use help for details."));
+    assert!(text.contains("`-- management\n"));
+    assert!(text.contains("set <url> [--save]"));
+    let help = launch(&fixture, &["--help"], "");
+    code(&help, 0);
+    assert!(help.stdout.len() < 800);
+    let details = launch(&fixture, &["help", "--all"], "");
+    code(&details, 0);
+    assert!(String::from_utf8_lossy(&details.stdout).contains("read [connected:json-http-get-v1]"));
+    let discovery = launch(&fixture, &["--events", "help"], "");
+    code(&discovery, 0);
+    let event = &output_events(&discovery)[0];
+    assert_eq!(event["result"]["commands"][0]["word"], "read");
+    assert_eq!(event["result"]["commands"][0]["alias_of"], "catalog.show");
+    assert_eq!(event["result"]["context_help"], "Inspect catalogs.");
+    assert_eq!(event["result"]["endpoint_control"]["word"], "management");
+    assert!(
+        event["result"]["endpoint_control"]["actions"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|action| action["word"] == "set" && action["parameters"][0]["name"] == "url")
+    );
+    assert_eq!(
+        event["result"]["commands"][0]["requirement"]["granted"],
+        false
+    );
+    let missing = launch(&fixture, &["catalog", "show"], "");
+    code(&missing, 2);
+    assert_eq!(
+        String::from_utf8_lossy(&missing.stderr),
+        "No management endpoint configured.\nUse management set <url>, then retry the command.\n"
+    );
+    let machine = launch(&fixture, &["--events", "read"], "");
+    code(&machine, 2);
+    let error: Value = serde_json::from_slice(&machine.stderr).unwrap();
+    assert_eq!(error["error"]["code"], "CAPABILITY_NOT_GRANTED");
+}
+
+#[test]
+fn operator_endpoint_switch_and_invalid_replacement_preserve_observations_without_exporting_authority()
+ {
+    let fixture = operator_fixture();
+    let (first, first_server) = server(vec![(200, RESPONSE.to_vec()), (200, RESPONSE.to_vec())]);
+    let (second, second_server) = server(vec![(
+        200,
+        br#"{"kind":"Catalog","items":[{"id":42}]}"#.to_vec(),
+    )]);
+    let result = launch(
+        &fixture,
+        &["--events"],
+        &format!(
+            "management set {first}\nread\nmanagement set http://localhost:80\nread\nmanagement set {second}\nread\nmanagement clear\nread\n:render items\n:export operator-export.json\nexit\n"
+        ),
+    );
+    code(&result, 2);
+    first_server.join().unwrap();
+    second_server.join().unwrap();
+    let events = output_events(&result);
+    let reads: Vec<_> = events
+        .iter()
+        .filter(|event| event["operation"] == "invoke")
+        .collect();
+    assert_eq!(reads.len(), 3);
+    assert!(
+        reads[0]["result"]["invocation"]["output_json_text"]
+            .as_str()
+            .unwrap()
+            .contains("9007199254740993")
+    );
+    assert_eq!(
+        reads[0]["result"]["invocation"]["output_json_text"],
+        reads[1]["result"]["invocation"]["output_json_text"]
+    );
+    assert!(
+        reads[2]["result"]["invocation"]["output_json_text"]
+            .as_str()
+            .unwrap()
+            .contains("42")
+    );
+    let historical = events
+        .iter()
+        .find(|event| event["result"]["historical"] == true)
+        .unwrap();
+    assert_eq!(
+        historical["result"]["invocation"],
+        reads[2]["result"]["invocation"]
+    );
+    let exported = fs::read_to_string(fixture.directory.join("operator-export.json")).unwrap();
+    assert!(!exported.contains(&first));
+    assert!(!exported.contains(&second));
+    assert!(!fixture.directory.join("config").exists());
+}
+
+#[test]
+fn saved_endpoint_reopens_with_explicit_option_then_environment_then_saved_precedence() {
+    let fixture = operator_fixture();
+    let saved = "http://127.0.0.1:47101";
+    code(
+        &launch(
+            &fixture,
+            &[],
+            &format!("management set {saved}/\nmanagement save\nexit\n"),
+        ),
+        0,
+    );
+    let state = launch(&fixture, &["--events", "management", "show"], "");
+    code(&state, 0);
+    assert_eq!(output_events(&state)[0]["result"]["endpoint"], saved);
+    assert_eq!(output_events(&state)[0]["result"]["source"], "saved");
+    let environment = launch_environment(
+        &fixture,
+        &["--events", "management", "show"],
+        "",
+        &[("CATALOG_TEST_URL", "http://127.0.0.1:47102")],
+    );
+    code(&environment, 0);
+    assert_eq!(
+        output_events(&environment)[0]["result"]["endpoint"],
+        "http://127.0.0.1:47102"
+    );
+    let explicit = launch_environment(
+        &fixture,
+        &[
+            "--events",
+            "--endpoint",
+            "http://127.0.0.1:47103",
+            "management",
+            "show",
+        ],
+        "",
+        &[("CATALOG_TEST_URL", "http://127.0.0.1:47102")],
+    );
+    code(&explicit, 0);
+    assert_eq!(
+        output_events(&explicit)[0]["result"]["endpoint"],
+        "http://127.0.0.1:47103"
+    );
+    let restored = launch(
+        &fixture,
+        &["--events"],
+        "management clear\nmanagement load\nmanagement show\n",
+    );
+    code(&restored, 0);
+    assert_eq!(output_events(&restored)[2]["result"]["endpoint"], saved);
+    code(
+        &launch(&fixture, &[], "management clear\nmanagement save\n"),
+        0,
+    );
+    let cleared = launch(&fixture, &["--events", "management"], "");
+    code(&cleared, 0);
+    assert!(output_events(&cleared)[0]["result"]["endpoint"].is_null());
+    let separate = launch(
+        &fixture,
+        &["--config", "separate.json", "--events", "management"],
+        "",
+    );
+    code(&separate, 0);
+    assert!(output_events(&separate)[0]["result"]["endpoint"].is_null());
+}
+
+#[test]
+fn one_shot_management_changes_require_explicit_persistence() {
+    let fixture = operator_fixture();
+    let url = "http://127.0.0.1:47104";
+    code(&launch(&fixture, &["management", "set", url], ""), 2);
+    assert!(!fixture.directory.join("config").exists());
+    code(
+        &launch(&fixture, &["management", "set", url, "--save"], ""),
+        0,
+    );
+    let reopened = launch(&fixture, &["--events", "management"], "");
+    code(&reopened, 0);
+    assert_eq!(output_events(&reopened)[0]["result"]["endpoint"], url);
+    code(&launch(&fixture, &["management", "clear", "--save"], ""), 0);
+    let cleared = launch(&fixture, &["--events", "management"], "");
+    code(&cleared, 0);
+    assert!(output_events(&cleared)[0]["result"]["endpoint"].is_null());
+}
+
+#[test]
+fn management_settings_reject_stale_saves_and_invalid_reload_without_destroying_a_selection() {
+    use programmable_cli::cli_operator_settings::CliOperatorSettings;
+    let fixture = operator_fixture();
+    let profile = CliApplicationProfile::parse_application_profile(
+        &fs::read(fixture.directory.join("app.json")).unwrap(),
+    )
+    .unwrap();
+    let path = fixture.directory.join("settings.json");
+    let open = || {
+        CliOperatorSettings::open_operator_settings(
+            "catalog",
+            profile.operator.clone().unwrap(),
+            profile.http.clone(),
+            Some(path.clone()),
+            None,
+        )
+        .unwrap()
+    };
+    let mut first = open();
+    let mut second = open();
+    first
+        .select_operator_endpoint(Some("http://127.0.0.1:47101"))
+        .unwrap();
+    second
+        .select_operator_endpoint(Some("http://127.0.0.1:47102"))
+        .unwrap();
+    first.save_operator_settings().unwrap();
+    let bytes = fs::read(&path).unwrap();
+    assert_eq!(
+        second.save_operator_settings().unwrap_err().code,
+        "MANAGEMENT_SETTINGS_CHANGED"
+    );
+    assert_eq!(fs::read(&path).unwrap(), bytes);
+    second.reload_operator_settings().unwrap();
+    assert_eq!(second.endpoint, first.endpoint);
+    fs::write(&path, br#"{"format":"cli-management-v1","application":"other","endpoint":"http://127.0.0.1:47103"}"#).unwrap();
+    assert!(second.reload_operator_settings().is_err());
+    assert_eq!(second.endpoint, first.endpoint);
+    assert!(second.save_operator_settings().is_err());
+    assert!(fs::read_to_string(&path).unwrap().contains("other"));
+}
+
+#[test]
+fn operator_aliases_reject_behavior_changes_unknown_targets_chains_and_listing_collisions() {
+    let fixture = operator_fixture();
+    let application: Value =
+        serde_json::from_slice(&fs::read(fixture.directory.join("app.json")).unwrap()).unwrap();
+    let mut definition = specification();
+    definition["contexts"]["catalog"]["commands"]["show"]["view"] = Value::Null;
+    let profile =
+        CliApplicationProfile::parse_application_profile(application.to_string().as_bytes())
+            .unwrap();
+    assert!(
+        profile
+            .validate_application_definition(definition.to_string().as_bytes())
+            .is_err()
+    );
+    for alias in [
+        json!({"missing":"catalog.show"}),
+        json!({"catalog.read":"catalog.read"}),
+        json!({"catalog.read":"catalog.show","catalog.show":"catalog.read"}),
+    ] {
+        let mut invalid = application.clone();
+        invalid["operator"]["command_aliases"] = alias;
+        let profile =
+            CliApplicationProfile::parse_application_profile(invalid.to_string().as_bytes())
+                .unwrap();
+        assert!(
+            profile
+                .validate_application_definition(specification().to_string().as_bytes())
+                .is_err()
+        );
+    }
+    let mut invalid = application;
+    invalid["operator"]["context_listing"] = json!(["management"]);
+    let profile =
+        CliApplicationProfile::parse_application_profile(invalid.to_string().as_bytes()).unwrap();
+    assert!(
+        profile
+            .validate_application_definition(specification().to_string().as_bytes())
+            .is_err()
+    );
+}
+
+#[test]
+fn operator_completion_exposes_root_listing_navigation_and_management_actions() {
+    use programmable_cli::authoring_protocol::SessionRevision;
+    use programmable_cli::cli_definition::CliDefinition;
+    use programmable_cli::cli_interface::{ActiveCliInterface, CliInterfaceOrigin};
+    use programmable_cli::cli_run_completion::CliRunCompleter;
+    use programmable_cli::cli_run_routes::CliRunRoutes;
+    use reedline::Completer;
+    let fixture = operator_fixture();
+    let profile = CliApplicationProfile::parse_application_profile(
+        &fs::read(fixture.directory.join("app.json")).unwrap(),
+    )
+    .unwrap();
+    let definition =
+        CliDefinition::parse_cli_definition(specification().to_string().as_bytes()).unwrap();
+    let mut routes = CliRunRoutes::from_cli_definition(&definition).unwrap();
+    routes
+        .configure_operator_routes(&definition, profile.operator)
+        .unwrap();
+    routes
+        .configure_control_aliases(&definition, profile.control_aliases)
+        .unwrap();
+    let active = ActiveCliInterface::initialize_cli_interface(
+        definition,
+        CliInterfaceOrigin {
+            intent_text: "Operator completion.".into(),
+            revision: SessionRevision(0),
+        },
+    );
+    let mut completer = CliRunCompleter::new_run_completer(active, routes);
+    for (line, wanted) in [
+        ("", "ls"),
+        ("", "/"),
+        ("", "management"),
+        ("management ", "set"),
+        ("management ", "save"),
+        ("management ", "load"),
+    ] {
+        assert!(
+            completer
+                .complete(line, line.len())
+                .suggestions()
+                .iter()
+                .any(|item| item.value == wanted),
+            "{line:?} -> {wanted}"
+        );
+    }
+}
+
+#[test]
+fn operator_settings_reject_invalid_documents_and_application_directory_aliases() {
+    let fixture = operator_fixture();
+    let display = launch(
+        &fixture,
+        &["--config", "settings\tescaped.json", "management"],
+        "",
+    );
+    code(&display, 0);
+    assert!(String::from_utf8_lossy(&display.stdout).contains("settings\\tescaped.json"));
+    assert!(!display.stdout.contains(&b'\t'));
+    let path = fixture.directory.join("invalid-settings.json");
+    for body in [
+        b"not json".to_vec(),
+        br#"{"format":"cli-management-v1","application":"other","endpoint":null}"#.to_vec(),
+        br#"{"format":"cli-management-v1","application":"catalog","endpoint":"http://localhost:80"}"#.to_vec(),
+        br#"{"format":"cli-management-v1","application":"catalog","endpoint":null,"unknown":true}"#.to_vec(),
+        vec![b' '; 4097],
+    ] {
+        fs::write(&path, &body).unwrap();
+        let rejected = launch(&fixture, &["--config", "invalid-settings.json", "management", "set", "http://127.0.0.1:47101", "--save"], "");
+        assert!(!rejected.status.success());
+        assert_eq!(fs::read(&path).unwrap(), body);
+    }
+    let profile = CliApplicationProfile::parse_application_profile(
+        &fs::read(fixture.directory.join("app.json")).unwrap(),
+    )
+    .unwrap();
+    for id in [".", ".."] {
+        let mut definition = specification();
+        definition["id"] = json!(id);
+        assert!(
+            profile
+                .validate_application_definition(definition.to_string().as_bytes())
+                .is_err()
+        );
+    }
+    #[cfg(unix)]
+    {
+        let link = fixture.directory.join("linked-settings.json");
+        std::os::unix::fs::symlink(&path, &link).unwrap();
+        let rejected = launch(
+            &fixture,
+            &["--config", "linked-settings.json", "management"],
+            "",
+        );
+        assert!(!rejected.status.success());
+        assert!(String::from_utf8_lossy(&rejected.stderr).contains("symlink"));
+    }
 }
 fn code(output: &Output, expected: i32) {
     assert_eq!(

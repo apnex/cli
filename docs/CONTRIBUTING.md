@@ -36,6 +36,7 @@ Its build output can share the root `target` directory through `CARGO_TARGET_DIR
 | Reusable component composition | [assembly](../src/cli_assembly.rs) |
 | Granted external observations | [JSON file reads](../src/cli_file_read.rs), [loopback HTTP reads](../src/cli_http_get.rs), [shared receipts](../src/cli_read_observation.rs) |
 | Native configured applications | [Application profiles and launcher](../src/cli_application.rs), [consumer guide](native-app/USE.md) |
+| Compact operator discovery and management settings | [Operator help](../src/cli_operator_help.rs), [endpoint settings](../src/cli_operator_settings.rs), [contract](operator/CONTRACT.md) |
 | Direct commands, help, and completion | [run routes](../src/cli_run_routes.rs), [run frontend](../src/cli_run_frontend.rs) |
 | Authored output views and native tables | [view model](../src/cli_output_view.rs), [expressions](../src/cli_view_expression.rs), [table rendering](../src/cli_table_render.rs), [view frontend](../src/cli_view_frontend.rs) |
 | Acceptance tests and fault scenarios | [tests](../tests/), [test fault controls](../src/storage_faults.rs) |

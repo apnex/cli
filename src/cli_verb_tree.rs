@@ -6,7 +6,7 @@ use std::fmt::Write;
 /// Render the full CLI verb tree from a validated definition, with sorted commands before child contexts.
 pub(crate) fn render_cli_verb_tree(definition: &CliDefinition) -> String {
     let mut output = format!("{}\n", definition.id);
-    append_cli_context_tree(definition, None, "root", "", &mut output);
+    append_cli_context_tree(definition, None, "root", "", true, &mut output);
     output
 }
 
@@ -14,9 +14,17 @@ pub(crate) fn render_cli_verb_tree(definition: &CliDefinition) -> String {
 pub(crate) fn render_run_verb_tree(
     definition: &CliDefinition,
     routes: &crate::cli_run_routes::CliRunRoutes,
+    detailed: bool,
 ) -> String {
     let mut output = format!("{}\n", definition.id);
-    append_cli_context_tree(definition, Some(routes), "root", "", &mut output);
+    append_cli_context_tree(
+        definition,
+        Some(routes),
+        "root",
+        "",
+        detailed || routes.operator.is_none(),
+        &mut output,
+    );
     output
 }
 
@@ -40,6 +48,7 @@ fn append_cli_context_tree(
     routes: Option<&crate::cli_run_routes::CliRunRoutes>,
     context_id: &str,
     prefix: &str,
+    detailed: bool,
     output: &mut String,
 ) {
     let context = &definition.contexts[context_id];
@@ -58,8 +67,22 @@ fn append_cli_context_tree(
         })
         .map(|(id, _)| (id.as_str(), id.as_str())).collect()
     };
-    let count = context.commands.len() + children.len();
-    for (index, (word, command)) in context.commands.iter().enumerate() {
+    let commands: Vec<_> = context
+        .commands
+        .iter()
+        .filter(|(_, command)| {
+            detailed
+                || context_id != "root"
+                || !routes
+                    .and_then(|routes| routes.operator.as_ref())
+                    .is_some_and(|profile| profile.command_aliases.contains_key(&command.id))
+        })
+        .collect();
+    let endpoint_control = routes
+        .filter(|routes| routes.operator.is_some() && context_id == "root")
+        .map(|routes| routes.preferred_run_control(":endpoint"));
+    let count = commands.len() + children.len() + usize::from(endpoint_control.is_some());
+    for (index, (word, command)) in commands.iter().enumerate() {
         output.push_str(prefix);
         output.push_str(if index + 1 == count { "`-- " } else { "|-- " });
         if routes.is_none() {
@@ -70,10 +93,14 @@ fn append_cli_context_tree(
             write!(output, " <{}:{}>", parameter.name, parameter.value_type).unwrap();
         }
         let binding = cli_binding_label(&command.binding);
-        writeln!(output, " [{binding}]").unwrap();
+        if detailed || binding == "simulated" || binding == "unbound" {
+            writeln!(output, " [{binding}]").unwrap();
+        } else {
+            output.push('\n');
+        }
     }
     for (index, (word, id)) in children.iter().enumerate() {
-        let last = context.commands.len() + index + 1 == count;
+        let last = commands.len() + index + 1 == count;
         output.push_str(prefix);
         output.push_str(if last { "`-- " } else { "|-- " });
         writeln!(output, "{word}/").unwrap();
@@ -83,7 +110,27 @@ fn append_cli_context_tree(
             routes,
             id,
             &format!("{prefix}{continuation}"),
+            detailed,
             output,
         );
+    }
+    if let Some(control) = endpoint_control {
+        writeln!(output, "{prefix}`-- {control}").unwrap();
+        for (index, (action, _)) in crate::cli_operator_settings::CLI_ENDPOINT_ACTIONS
+            .iter()
+            .enumerate()
+        {
+            let branch = if index + 1 == crate::cli_operator_settings::CLI_ENDPOINT_ACTIONS.len() {
+                "`--"
+            } else {
+                "|--"
+            };
+            let arguments = match *action {
+                "set" => " <url> [--save]",
+                "clear" => " [--save]",
+                _ => "",
+            };
+            writeln!(output, "{prefix}    {branch} {action}{arguments}").unwrap();
+        }
     }
 }

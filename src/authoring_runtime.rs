@@ -174,6 +174,14 @@ impl AuthoringRuntime {
         &self.definition
     }
 
+    /// Operator selection changes transient HTTP grants and never rewrites portable session state.
+    pub(crate) fn replace_runtime_http_grants(
+        &mut self,
+        grants: crate::cli_http_get::JsonHttpGetGrants,
+    ) {
+        self.definition.replace_http_get_grants(grants);
+    }
+
     /// Read the acknowledged checkpoint without permitting frontend mutation.
     pub fn session_checkpoint(&self) -> &SessionCheckpoint {
         &self.state

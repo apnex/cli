@@ -10,6 +10,7 @@ use std::collections::BTreeMap;
 pub struct CliRunRoutes {
     children: BTreeMap<String, BTreeMap<String, String>>,
     pub(crate) control_aliases: BTreeMap<String, String>,
+    pub(crate) operator: Option<crate::cli_operator_settings::CliOperatorProfile>,
 }
 
 /// Parsing stops at a command so its remaining argument strings stay untouched.
@@ -77,7 +78,41 @@ impl CliRunRoutes {
         Ok(Self {
             children,
             control_aliases: BTreeMap::new(),
+            operator: None,
         })
+    }
+
+    /// Operator routing is opt-in, validated from the same definition used by execution and help.
+    pub fn configure_operator_routes(
+        &mut self,
+        definition: &CliDefinition,
+        profile: Option<crate::cli_operator_settings::CliOperatorProfile>,
+    ) -> Result<(), AuthoringError> {
+        if let Some(profile) = &profile {
+            profile.validate_operator_profile(definition)?;
+        }
+        self.operator = profile;
+        Ok(())
+    }
+
+    pub(crate) fn available_run_controls(
+        &self,
+    ) -> impl Iterator<Item = (&'static str, &'static str)> {
+        RUN_CONTROLS.into_iter().chain(
+            self.operator
+                .as_ref()
+                .map(|_| (":endpoint", "Configure the management endpoint")),
+        )
+    }
+
+    pub(crate) fn preferred_run_control(&self, control: &str) -> String {
+        self.control_aliases
+            .iter()
+            .find(|(alias, target)| {
+                target.as_str() == control && alias.bytes().all(|byte| byte.is_ascii_alphabetic())
+            })
+            .map(|(alias, _)| alias.clone())
+            .unwrap_or_else(|| control.to_owned())
     }
 
     /// Aliases are optional presentation data and must never hide a domain route.
@@ -90,8 +125,17 @@ impl CliRunRoutes {
             return Err(run_usage_error("At most 32 control aliases are supported."));
         }
         for (alias, target) in &aliases {
-            if (alias != "?" && crate::cli_definition::validate_cli_name(alias).is_err())
-                || !RUN_CONTROLS.iter().any(|(control, _)| *control == target)
+            if (alias != "?"
+                && alias != "/"
+                && crate::cli_definition::validate_cli_name(alias).is_err())
+                || (alias == "/" && (target != ":top" || self.operator.is_none()))
+                || !self
+                    .available_run_controls()
+                    .any(|(control, _)| control == target)
+                || self
+                    .operator
+                    .as_ref()
+                    .is_some_and(|profile| profile.context_listing.contains(alias))
                 || definition
                     .contexts
                     .values()
@@ -146,6 +190,21 @@ impl CliRunRoutes {
                     context: context.to_owned(),
                     word: word.to_owned(),
                     arguments_start: index + 1,
+                });
+            }
+            if !literal
+                && index + 1 == tokens.len()
+                && !self.context_children(context).contains_key(word)
+                && self.operator.as_ref().is_some_and(|profile| {
+                    profile
+                        .context_listing
+                        .iter()
+                        .any(|listing| listing == word)
+                })
+            {
+                return Ok(CliRunTarget::Context {
+                    id: context.to_owned(),
+                    help: true,
                 });
             }
             context = self.context_children(context).get(word).ok_or_else(|| {

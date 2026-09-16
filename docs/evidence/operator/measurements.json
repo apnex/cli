@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-09-16T02:05:47.768Z",
+  "cliBaseline": "76d79ef81d05aa3b8fbdfd056adfda2d9724ba6e",
+  "agpBaseline": "83f07c3c23c048eef7902b94fff68b51d4971b42",
+  "cliSourceManifest": "source.sha256",
+  "installedBinary": {
+    "path": "/home/apnex/.local/bin/agp",
+    "sha256": "f4a427caa0de8c4f0903815c89f8abb653a0b29d0cbb39791a90d8c756724285",
+    "releaseSha256": "f4a427caa0de8c4f0903815c89f8abb653a0b29d0cbb39791a90d8c756724285"
+  },
+  "help": {
+    "beforeLines": 55,
+    "afterLines": 21
+  },
+  "tests": {
+    "normal": 100,
+    "instrumented": 117,
+    "finalInstrumentedApplication": 17,
+    "scaffold": 13,
+    "agpNative": 6,
+    "agpE2e": 12
+  },
+  "finalRenderingCorrection": "After the full instrumented suite compiled, displayed configuration paths were escaped and a regression assertion added. Final normal suite, instrumented application suite, both strict application lint configurations, native gate, and release terminal journeys cover that final source.",
+  "claims": {
+    "hostedCi": false,
+    "productionDeployment": false,
+    "independentReview": false,
+    "successfulIPv6": false
+  }
+}

@@ -202,6 +202,8 @@ The selected native JSON read provider pins a parent directory and reads bounded
 Native applications can also grant bounded JSON GET reads from exact loopback HTTP resources.
 An [application profile](native-app/USE.md) supplies capability paths, response requirements, endpoint options, navigation aliases, and output preferences.
 The consumer embeds data and a shared launcher entry point; dispatch, completion, HTTP transport, and rendering remain kernel mechanisms.
+An optional [operator profile](operator/CONTRACT.md) supplies validated alias metadata and context-listing words for compact discovery.
+Shared endpoint controls select process authority and explicitly save local application preferences; portable interface exports and session checkpoints carry neither that selection nor its authority.
 The profile is process configuration and is not part of a persisted definition's identity or authority.
 
 A fresh connected call requires a current grant.\

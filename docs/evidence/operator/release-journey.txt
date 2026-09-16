@@ -1,0 +1,22 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'leaf.alpha'
+- 'alpha'
+
+    at file:///home/apnex/taceng/cli/target/operator-mode/operator-journey.mjs:100:45
+    at command (file:///home/apnex/taceng/cli/target/operator-mode/operator-journey.mjs:41:12)
+    at async file:///home/apnex/taceng/cli/target/operator-mode/operator-journey.mjs:99:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'leaf.alpha',
+  expected: 'alpha',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.12.0

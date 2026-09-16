@@ -1,0 +1,33 @@
+
+=== rustcli/test (2 files) ===
+✔ given a frozen live node pair, when every native management verb and view executes, then SDK HTTP JSON and independent table cells agree without shell helpers (12640.085804ms)
+✔ given populated resource gauges at the HTTP boundary, when the native resource view renders them, then every current maximum and high-water value is preserved in sorted rows (178.583825ms)
+✔ given a configured native operator shell, when contexts shortcuts help and saved sessions are used, then domain verbs stay direct and exported observations grant no endpoint authority (1321.539543ms)
+✔ given invalid endpoints and management responses, when native verbs execute, then usage transport status contract and presentation failures remain distinguishable (1635.391711ms)
+✔ given an HTTP peer that never completes its body, when a native read reaches its total deadline, then it fails as transport without printing partial JSON (7200.561489ms)
+✖ given an unconfigured operator shell, when management is selected saved and reopened, then real AGP reads work and portable exports retain no endpoint (9.136953ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24091.705512
+
+✖ failing tests:
+
+test at rustcli/test/operator-shell.test.js:124:1
+✖ given an unconfigured operator shell, when management is selected saved and reopened, then real AGP reads work and portable exports retain no endpoint (9.136953ms)
+  RangeError [LoopbackConfigurationError]: Transport must declare at least one acquisition capability
+      at configurationError (file:///home/apnex/taceng/agp/packages/transport-loopback/dist/errors.js:14:19)
+      at validateTransportConfig (file:///home/apnex/taceng/agp/packages/transport-loopback/dist/validation.js:32:15)
+      at LoopbackFabricRuntime.createTransport (file:///home/apnex/taceng/agp/packages/transport-loopback/dist/fabric.js:77:9)
+      at createLoopbackNode (file:///home/apnex/taceng/agp/test/support/uniform-topology.js:105:34)
+      at TestContext.<anonymous> (file:///home/apnex/taceng/agp/rustcli/test/operator-shell.test.js:126:16)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+
+=== suite summary ===
+FAIL  rustcli/test (2 files)
+0/1 suites passed, 2 files.

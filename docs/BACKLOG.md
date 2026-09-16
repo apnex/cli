@@ -1,6 +1,6 @@
 # Programmable CLI backlog
 
-**Status: CLI-014 full native AGP integration is complete for local acceptance; two follow-ups remain parked.**
+**Status: CLI-015 operator usability and in-shell management configuration is complete; two follow-ups remain parked.**
 The [board](BOARD.md) proposes ordering and dependencies.
 This record retains findings and their disposition when that ordering changes.
 
@@ -24,6 +24,20 @@ A trigger returns a record to triage; it does not authorize or automatically res
 The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns the correspondence between these records and board items.
 
 ---
+
+## Closed operator usability
+
+### CLI-015
+
+| Field | Record |
+|---|---|
+| Finding | The owner's first-use transcript exposes repetitive help, inconsistent root navigation, and no way to configure management access inside the CLI. |
+| Evidence and selection | The [owner selection](context/cli-015-selection.json) approves compact operator presentation and requests in-shell management configuration. |
+| State | Closed for the selected operator workflow and local live acceptance. |
+| Scope | The [operator contract and preimplementation audit](operator/CONTRACT.md) define shared presentation, explicit management selection/save, and acceptance. |
+| Prerequisites | CLI-014 native application integration is complete. |
+| Closure evidence | [Measured results](operator/RESULTS.md) cover fresh-shell recovery, live endpoint selection/switching, persistence and failure boundaries, structured discovery, existing AGP parity, required checks, and installed use. |
+| Remaining limits and triggers | A concrete consumer needing remote endpoints, authentication, or server mutation requires its own provider contract. A supported input violating selection, persistence, alias fidelity, or recovery guarantees reopens this record. |
 
 ## Closed native application integration
 

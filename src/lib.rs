@@ -13,6 +13,8 @@ pub mod cli_definition;
 pub mod cli_file_read;
 pub mod cli_http_get;
 pub mod cli_interface;
+mod cli_operator_help;
+pub mod cli_operator_settings;
 pub mod cli_output_view;
 pub mod cli_read_observation;
 pub mod cli_run_completion;

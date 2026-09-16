@@ -40,6 +40,7 @@ Print AGP's connection view from an included result fixture:
 Rust performs projection and table rendering without Bash, jq, or column; the original JSON result remains accessible.
 
 [Native application profiles](docs/native-app/USE.md) turn the same runtime into a named executable with contextual verbs, navigation shortcuts, and explicitly granted loopback HTTP reads.
+The optional operator interface provides compact help and in-shell endpoint selection, with explicit saving of local management settings.
 AGP's `rustcli` consumer supplies its management surface as authored configuration.
 
 ---
