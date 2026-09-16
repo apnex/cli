@@ -1,0 +1,74 @@
+{
+  "date": "2026-09-16",
+  "scope": "Offline AGP projection and non-TTY rendering; no management HTTP invocation.",
+  "source_revision": "da1a03a370f522bfb2a3afc66fb781b295cb6af7",
+  "node_version": "v24.12.0",
+  "jq_version": "jq-1.6",
+  "column_version": "column from util-linux 2.34",
+  "source_sha256": {
+    "agpctl": "ba473402fd4c9399901e7ad89ba8ec8bbe6b728ccf7b277ebc604f3aa9d5a419",
+    "lib/command.sh": "0a25d6bd6b180a4090d0770c2d9dbdf358886d642882517f3f44170d638bd9de",
+    "lib/render.sh": "7a836f154061fd8ce9a7a45a6047084a30ac35653aec5cc35714d4e42d427b4b",
+    "tpl/tpl.connections.list.jq": "588d663504d52151ab61d54adbd8a1069e59cb26f26c8a9a5895890789b7b4ba",
+    "tpl/tpl.routes.list.jq": "cc80acb43022e4994078eef9a4c0d5793a996f24e8bd28349e5ce504026370ea",
+    "test/unit/connections-template.test.js": "85907cd8da36ce653c0d9b97acc110b02436558a60afb1b4e84af34fa6650e80",
+    "test/unit/route-template.test.js": "16362ade53f95d8aec6f95ef302a8306b6e49b429c2db331a39f28f02c01bb0d",
+    "test/unit/cli-renderer.test.js": "293f1a150b15e481a1e2bc9cb5ecd698e552e3d0c6c48abb12443a1c19ef5862",
+    "test/fixtures/connections-cases.json": "9212d89b9c5ce5669b2dd694cd3a852de779be426d1db7643afbe96d212c55e0",
+    "test/fixtures/routes-cases.json": "ad23b0c9533c96261488afc748f692ce0be30849ffd64b7f81f21ffc08570908"
+  },
+  "cases": [
+    {
+      "name": "connections-fixture",
+      "input_json_text": "{\n  \"apiVersion\": \"agp.management/v1\",\n  \"kind\": \"ConnectionList\",\n  \"meta\": {\n    \"nodeId\": \"hub.local\",\n    \"instanceId\": \"instance-hub-local\",\n    \"capturedAt\": \"2026-07-29T06:00:00.000Z\",\n    \"revision\": \"42\"\n  },\n  \"items\": [\n    {\n      \"identityState\": \"admitted\",\n      \"sessionId\": \"75c4ae\",\n      \"remoteNodeId\": \"leaf.alpha\",\n      \"remoteSessionId\": \"3fa0fa\",\n      \"direction\": \"inbound\",\n      \"state\": \"Established\",\n      \"stateSince\": \"2026-07-29T06:00:00.000Z\",\n      \"establishedAt\": \"2026-07-29T05:00:00.000Z\",\n      \"establishedDurationMs\": 3600000,\n      \"lastTransition\": {\n        \"event\": \"KeepaliveReceived\",\n        \"from\": \"Established\",\n        \"to\": \"Established\",\n        \"at\": \"2026-07-29T06:00:00.000Z\",\n        \"reasonCode\": \"KeepaliveReceived\"\n      },\n      \"timers\": [\n        {\n          \"name\": \"hold\",\n          \"state\": \"armed\",\n          \"durationMs\": 30000,\n          \"remainingMs\": 21000,\n          \"expiresAt\": \"2026-07-29T06:00:21.000Z\"\n        }\n      ]\n    },\n    {\n      \"identityState\": \"admitted\",\n      \"sessionId\": \"bad\\u001b[31m\\nid\",\n      \"remoteNodeId\": \"spoke\\u202e.beta\",\n      \"direction\": \"inbound\",\n      \"state\": \"OpenSent\",\n      \"stateSince\": \"now\\tlater\",\n      \"lastTransition\": {\n        \"event\": \"WAIT\\u0007\",\n        \"from\": \"Active\",\n        \"to\": \"OpenSent\",\n        \"at\": \"now\"\n      },\n      \"timers\": []\n    }\n  ]\n}\n",
+      "projection": {
+        "code": 0,
+        "signal": null,
+        "stdout": "[\n  {\n    \"session_id\": \"75c4ae\",\n    \"remote_node\": \"leaf.alpha\",\n    \"direction\": \"inbound\",\n    \"state\": \"Established\",\n    \"uptime\": \"01:00:00\",\n    \"ttl\": \"21s\",\n    \"last_event\": \"KeepaliveReceived\"\n  },\n  {\n    \"session_id\": \"bad [31m id\",\n    \"remote_node\": \"spoke .beta\",\n    \"direction\": \"inbound\",\n    \"state\": \"OpenSent\",\n    \"uptime\": \"-\",\n    \"ttl\": \"-\",\n    \"last_event\": \"WAIT \"\n  }\n]\n",
+        "stderr": ""
+      },
+      "rendering": {
+        "code": 0,
+        "signal": null,
+        "stdout": "SESSION_ID   REMOTE_NODE  DIRECTION  STATE        UPTIME    TTL  LAST_EVENT\n75c4ae       leaf.alpha   inbound    Established  01:00:00  21s  KeepaliveReceived\nbad [31m id  spoke .beta  inbound    OpenSent     -         -    WAIT \n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "routes-fixture",
+      "input_json_text": "{\n  \"apiVersion\": \"agp.management/v1\",\n  \"kind\": \"RouteTable\",\n  \"meta\": {\n    \"nodeId\": \"hub.local\",\n    \"instanceId\": \"instance-hub-local\",\n    \"capturedAt\": \"2026-07-29T06:00:00.000Z\",\n    \"revision\": \"42\"\n  },\n  \"candidates\": [\n    {\n      \"routeId\": \"route-local\",\n      \"endpoint\": \"hub/health\",\n      \"routeClass\": \"local\",\n      \"originNodeId\": \"hub.local\",\n      \"path\": [\"hub.local\"],\n      \"nextHop\": {\n        \"kind\": \"local\",\n        \"bindingId\": \"binding-1\"\n      },\n      \"eligible\": true,\n      \"selectionStatus\": \"selected\",\n      \"selectionReason\": \"PREFER_LOCAL\"\n    },\n    {\n      \"routeId\": \"route-session\",\n      \"endpoint\": \"orders\\u001b[2J/submit\",\n      \"routeClass\": \"learned\",\n      \"learnedKind\": \"direct\",\n      \"originNodeId\": \"leaf.alpha\",\n      \"path\": [\"leaf.alpha\", \"hub.local\"],\n      \"source\": {\n        \"kind\": \"session\",\n        \"owningSessionId\": \"75c4ae\",\n        \"advertisingNodeId\": \"leaf.alpha\",\n        \"advertisementId\": \"advertisement-1\"\n      },\n      \"nextHop\": {\n        \"kind\": \"session\",\n        \"nodeId\": \"leaf.alpha\",\n        \"owningSessionId\": \"75c4ae\"\n      },\n      \"eligible\": false,\n      \"selectionStatus\": \"ineligible\",\n      \"selectionReason\": \"SESSION_NOT_ESTABLISHED\"\n    }\n  ],\n  \"selected\": [\n    {\n      \"routeId\": \"route-local\",\n      \"endpoint\": \"hub/health\"\n    }\n  ]\n}\n",
+      "projection": {
+        "code": 0,
+        "signal": null,
+        "stdout": "[\n  {\n    \"selected\": \">\",\n    \"endpoint\": \"hub/health\",\n    \"route_class\": \"local\",\n    \"learned_kind\": \"\",\n    \"next_hop\": \"local\",\n    \"origin_node\": \"hub.local\",\n    \"path\": \"hub.local\",\n    \"eligible\": \"true\",\n    \"reason\": \"PREFER_LOCAL\"\n  },\n  {\n    \"selected\": \"\",\n    \"endpoint\": \"orders [2J/submit\",\n    \"route_class\": \"learned\",\n    \"learned_kind\": \"direct\",\n    \"next_hop\": \"leaf.alpha@75c4ae\",\n    \"origin_node\": \"leaf.alpha\",\n    \"path\": \"leaf.alpha>hub.local\",\n    \"eligible\": \"false\",\n    \"reason\": \"SESSION_NOT_ESTABLISHED\"\n  }\n]\n",
+        "stderr": ""
+      },
+      "rendering": {
+        "code": 0,
+        "signal": null,
+        "stdout": "SELECTED  ENDPOINT           ROUTE_CLASS  LEARNED_KIND  NEXT_HOP           ORIGIN_NODE  PATH                  ELIGIBLE  REASON\n>         hub/health         local                      local              hub.local    hub.local             true      PREFER_LOCAL\n          orders [2J/submit  learned      direct        leaf.alpha@75c4ae  leaf.alpha   leaf.alpha>hub.local  false     SESSION_NOT_ESTABLISHED\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "numeric-cell-with-local-jq-1.6",
+      "input_json_text": "[{\"session_id\":9007199254740993,\"remote_node\":\"precision-probe\",\"direction\":\"inbound\",\"state\":\"Established\",\"uptime\":\"00:00:00\",\"ttl\":\"0s\",\"last_event\":\"None\"}]\n",
+      "rendering": {
+        "code": 0,
+        "signal": null,
+        "stdout": "SESSION_ID        REMOTE_NODE      DIRECTION  STATE        UPTIME    TTL  LAST_EVENT\n9007199254740992  precision-probe  inbound    Established  00:00:00  0s   None\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "non-tty-columns-32",
+      "input_json_text": "[{\"session_id\":\"x\",\"remote_node\":\"nodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenode\",\"direction\":\"inbound\",\"state\":\"Established\",\"uptime\":\"00:00:00\",\"ttl\":\"0s\",\"last_event\":\"None\"}]\n",
+      "rendering": {
+        "code": 0,
+        "signal": null,
+        "stdout": "SESSION_ID  REMOTE_NODE                                                                                                                                                       DIRECTION  STATE        UPTIME    TTL  LAST_EVENT\nx           nodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenodenode  inbound    Established  00:00:00  0s   None\n",
+        "stderr": ""
+      }
+    }
+  ]
+}

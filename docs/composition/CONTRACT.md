@@ -6,6 +6,7 @@ The [authoring contract](../authoring/SESSION-CONTRACT.md) continues to govern o
 This contract retains the plain `cli-definition-v1` scope.
 The later [component assembly contract](../components/CONTRACT.md) defines `assemble` and the distinct assembled `cli-definition-v2` format.
 The later [connected read contract](../connected/CONTRACT.md) extends the binding vocabulary with `connected`, the native `json-file-read-v1` provider, and separately supplied runtime grants.
+The later [output-view contract](../output-views/CONTRACT.md) adds `cli-definition-v3`, named views, and optional command view references; existing v1/v2 serialization remains unchanged.
 The original CLI-003 task and evidence remain scoped to simulated and unbound behavior.
 
 ## Scope and fixed intent

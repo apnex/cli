@@ -9,6 +9,7 @@ use crate::cli_run_frontend::{
 };
 use crate::cli_run_routes::run_usage_error;
 use crate::cli_run_session::CliRunSession;
+use crate::cli_view_frontend::CliOutputSelection;
 use crate::document_value::MAX_REQUEST_BYTES;
 use crate::storage_faults::StorageFaultControl;
 use crate::terminal_input::TerminalToken;
@@ -16,7 +17,7 @@ use std::ffi::OsString;
 use std::io::{self, IsTerminal, Write};
 use std::path::PathBuf;
 
-pub const RUN_LAUNCH_HELP: &str = "cli run [--json] [--session <checkpoint>] [--grant-json-read <capability> <file>] <spec.json> [context ... command arguments ...]\n\nLoad a definition, assembled definition, or interface export and use its commands directly.\nOmit the command for a contextual shell (or command lines on stdin).\nUse --help after the specification, a context, or a command for generated help.\nUse -- before a command argument to pass a literal --help value.\n--session retains state across launches; use - as the specification to reopen it without its source.\nControls: :help :tree :up :top :status :export <file> :exit\nExit status: 0 success, 2 usage/arguments, 1 execution/storage. Mocks are labeled on stderr.\n";
+pub const RUN_LAUNCH_HELP: &str = "cli run [--json] [--table | --view <name>] [--session <checkpoint>] [--grant-json-read <capability> <file>] <spec.json> [context ... command arguments ...]\n\nLoad a definition, assembled definition, or interface export and use its commands directly.\nOmit the command for a contextual shell (or command lines on stdin).\nUse --help after the specification, a context, or a command for generated help.\nUse -- before a command argument to pass a literal --help value.\n--table uses the command's declared view; --view selects a named view. Both use native Rust and retain original JSON under --json.\n--session retains state across launches; use - as the specification to reopen it without its source.\nControls: :help :tree :up :top :status :views :render <view> :export <file> :exit\nExit status: 0 success, 2 usage/arguments, 1 execution/storage/presentation. Mocks are labeled on stderr.\n";
 
 fn launch_run(
     arguments: impl Iterator<Item = OsString>,
@@ -28,6 +29,7 @@ fn launch_run(
     let mut grants = Vec::new();
     let mut words = Vec::new();
     let mut options = true;
+    let mut output_selection = CliOutputSelection::default();
     while let Some(argument) = arguments.next() {
         match argument.to_str() {
             Some("--help" | "-h") if options && source.is_none() => {
@@ -43,6 +45,19 @@ fn launch_run(
                 return Ok(0);
             }
             Some("--json") if options && !*structured => *structured = true,
+            Some("--table") if options && matches!(output_selection, CliOutputSelection::Json) => {
+                output_selection = CliOutputSelection::CommandView
+            }
+            Some("--view") if options && matches!(output_selection, CliOutputSelection::Json) => {
+                output_selection = CliOutputSelection::NamedView(
+                    arguments
+                        .next()
+                        .and_then(|word| word.into_string().ok())
+                        .ok_or_else(|| {
+                            run_usage_error("--view requires a UTF-8 view identifier.")
+                        })?,
+                );
+            }
             Some("--session") if options && checkpoint.is_none() => {
                 checkpoint = Some(PathBuf::from(arguments.next().ok_or_else(|| {
                     run_usage_error("--session requires a checkpoint path.")
@@ -127,6 +142,13 @@ fn launch_run(
         authority,
         StorageFaultControl::from_test_environment()?,
     )?;
+    if let CliOutputSelection::NamedView(name) = &output_selection {
+        crate::cli_view_frontend::require_output_view(
+            &session.active_interface().definition,
+            name,
+        )?;
+    }
+    session.output_selection = output_selection;
     let result = if !words.is_empty() {
         execute_run_tokens(
             &mut session,

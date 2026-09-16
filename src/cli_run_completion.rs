@@ -35,6 +35,16 @@ impl Completer for CliRunCompleter {
         let help = previous.first().is_some_and(|token| token.text == ":help");
         let words = if help { &previous[1..] } else { &previous[..] };
         let mut choices = Vec::new();
+        if previous.len() == 1
+            && previous[0].text == ":render"
+            && let Some(views) = &active.definition.views
+        {
+            choices.extend(
+                views
+                    .iter()
+                    .map(|(id, view)| (id.clone(), view.help.clone())),
+            );
+        }
         if previous.is_empty() {
             choices.extend(
                 RUN_CONTROLS.map(|(word, description)| (word.to_owned(), description.to_owned())),

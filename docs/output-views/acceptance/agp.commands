@@ -1,0 +1,529 @@
+set "" object
+set /format string "cli-definition-v3"
+set /id string "agp-views"
+set /description string "Inspect AGP fixture documents through native output views."
+set /contexts object
+set /contexts/root object
+set /contexts/root/parent null
+set /contexts/root/help string "Read explicitly granted AGP JSON snapshots."
+set /contexts/root/related array
+set /contexts/root/commands object
+set /mock_state object
+set /views object
+set /contexts/root/commands/connections.list object
+edit /contexts/root/commands/connections.list
+set ./id string "agp.connections.list"
+set ./help string "Display connection identities, states, supplied uptime and hold TTL."
+set ./parameters array
+set ./binding object
+set ./binding/kind string "connected"
+set ./binding/provider string "json-file-read-v1"
+set ./binding/capability string "agp.connections"
+set ./view string "connections"
+top
+set /views/connections object
+edit /views/connections
+set ./help string "Display connection identities, states, supplied uptime and hold TTL."
+set ./require object
+set ./require/op string "and"
+set ./require/values array
+append ./require/values object
+set ./require/values/0 object
+set ./require/values/0/op string "eq"
+set ./require/values/0/left object
+set ./require/values/0/left/op string "root"
+set ./require/values/0/left/path array
+append ./require/values/0/left/path object
+set ./require/values/0/left/path/0/key string "apiVersion"
+set ./require/values/0/right object
+set ./require/values/0/right/op string "literal"
+set ./require/values/0/right/value string "agp.management/v1"
+append ./require/values object
+set ./require/values/1 object
+set ./require/values/1/op string "eq"
+set ./require/values/1/left object
+set ./require/values/1/left/op string "root"
+set ./require/values/1/left/path array
+append ./require/values/1/left/path object
+set ./require/values/1/left/path/0/key string "kind"
+set ./require/values/1/right object
+set ./require/values/1/right/op string "literal"
+set ./require/values/1/right/value string "ConnectionList"
+append ./require/values object
+set ./require/values/2 object
+set ./require/values/2/op string "is"
+set ./require/values/2/value object
+set ./require/values/2/value/op string "root"
+set ./require/values/2/value/path array
+append ./require/values/2/value/path object
+set ./require/values/2/value/path/0/key string "items"
+set ./require/values/2/type string "array"
+set ./rows object
+set ./rows/op string "root"
+set ./rows/path array
+append ./rows/path object
+set ./rows/path/0/key string "items"
+set ./columns array
+append ./columns object
+edit ./columns/0
+set ./id string "session_id"
+set ./heading string "SESSION_ID"
+set ./value object
+set ./value/op string "coalesce"
+set ./value/values array
+append ./value/values object
+set ./value/values/0 object
+set ./value/values/0/op string "row"
+set ./value/values/0/path array
+append ./value/values/0/path object
+set ./value/values/0/path/0/key string "sessionId"
+append ./value/values object
+set ./value/values/1 object
+set ./value/values/1/op string "row"
+set ./value/values/1/path array
+append ./value/values/1/path object
+set ./value/values/1/path/0/key string "localSessionId"
+set ./value/skip_false boolean true
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/1
+set ./id string "remote_node"
+set ./heading string "REMOTE_NODE"
+set ./value object
+set ./value/op string "coalesce"
+set ./value/values array
+append ./value/values object
+set ./value/values/0 object
+set ./value/values/0/op string "row"
+set ./value/values/0/path array
+append ./value/values/0/path object
+set ./value/values/0/path/0/key string "remoteNodeId"
+append ./value/values object
+set ./value/values/1 object
+set ./value/values/1/op string "literal"
+set ./value/values/1/value string "-"
+set ./value/skip_false boolean true
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/2
+set ./id string "direction"
+set ./heading string "DIRECTION"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "direction"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/3
+set ./id string "state"
+set ./heading string "STATE"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "state"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/4
+set ./id string "uptime"
+set ./heading string "UPTIME"
+set ./value object
+set ./value/op string "if"
+set ./value/condition object
+set ./value/condition/op string "eq"
+set ./value/condition/left object
+set ./value/condition/left/op string "row"
+set ./value/condition/left/path array
+append ./value/condition/left/path object
+set ./value/condition/left/path/0/key string "state"
+set ./value/condition/right object
+set ./value/condition/right/op string "literal"
+set ./value/condition/right/value string "Established"
+set ./value/then object
+set ./value/then/op string "row"
+set ./value/then/path array
+append ./value/then/path object
+set ./value/then/path/0/key string "establishedDurationMs"
+set ./value/else object
+set ./value/else/op string "literal"
+set ./value/else/value null
+set ./format object
+set ./format/kind string "duration_hms"
+set ./format/fallback string "-"
+up
+up
+append ./columns object
+edit ./columns/5
+set ./id string "ttl"
+set ./heading string "TTL"
+set ./value object
+set ./value/op string "first"
+set ./value/input object
+set ./value/input/op string "row"
+set ./value/input/path array
+append ./value/input/path object
+set ./value/input/path/0/key string "timers"
+set ./value/where object
+set ./value/where/op string "and"
+set ./value/where/values array
+append ./value/where/values object
+set ./value/where/values/0 object
+set ./value/where/values/0/op string "eq"
+set ./value/where/values/0/left object
+set ./value/where/values/0/left/op string "item"
+set ./value/where/values/0/left/path array
+append ./value/where/values/0/left/path object
+set ./value/where/values/0/left/path/0/key string "name"
+set ./value/where/values/0/right object
+set ./value/where/values/0/right/op string "literal"
+set ./value/where/values/0/right/value string "hold"
+append ./value/where/values object
+set ./value/where/values/1 object
+set ./value/where/values/1/op string "eq"
+set ./value/where/values/1/left object
+set ./value/where/values/1/left/op string "item"
+set ./value/where/values/1/left/path array
+append ./value/where/values/1/left/path object
+set ./value/where/values/1/left/path/0/key string "state"
+set ./value/where/values/1/right object
+set ./value/where/values/1/right/op string "literal"
+set ./value/where/values/1/right/value string "armed"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "remainingMs"
+set ./format object
+set ./format/kind string "seconds_ceil"
+set ./format/fallback string "-"
+up
+up
+append ./columns object
+edit ./columns/6
+set ./id string "last_event"
+set ./heading string "LAST_EVENT"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "lastTransition"
+append ./value/path object
+set ./value/path/1/key string "event"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+top
+set /contexts/root/commands/routes.list object
+edit /contexts/root/commands/routes.list
+set ./id string "agp.routes.list"
+set ./help string "Display route candidates and supplied selected-route membership."
+set ./parameters array
+set ./binding object
+set ./binding/kind string "connected"
+set ./binding/provider string "json-file-read-v1"
+set ./binding/capability string "agp.routes"
+set ./view string "routes"
+top
+set /views/routes object
+edit /views/routes
+set ./help string "Display route candidates and supplied selected-route membership."
+set ./require object
+set ./require/op string "and"
+set ./require/values array
+append ./require/values object
+set ./require/values/0 object
+set ./require/values/0/op string "eq"
+set ./require/values/0/left object
+set ./require/values/0/left/op string "root"
+set ./require/values/0/left/path array
+append ./require/values/0/left/path object
+set ./require/values/0/left/path/0/key string "apiVersion"
+set ./require/values/0/right object
+set ./require/values/0/right/op string "literal"
+set ./require/values/0/right/value string "agp.management/v1"
+append ./require/values object
+set ./require/values/1 object
+set ./require/values/1/op string "eq"
+set ./require/values/1/left object
+set ./require/values/1/left/op string "root"
+set ./require/values/1/left/path array
+append ./require/values/1/left/path object
+set ./require/values/1/left/path/0/key string "kind"
+set ./require/values/1/right object
+set ./require/values/1/right/op string "literal"
+set ./require/values/1/right/value string "RouteTable"
+append ./require/values object
+set ./require/values/2 object
+set ./require/values/2/op string "is"
+set ./require/values/2/value object
+set ./require/values/2/value/op string "root"
+set ./require/values/2/value/path array
+append ./require/values/2/value/path object
+set ./require/values/2/value/path/0/key string "candidates"
+set ./require/values/2/type string "array"
+append ./require/values object
+set ./require/values/3 object
+set ./require/values/3/op string "is"
+set ./require/values/3/value object
+set ./require/values/3/value/op string "root"
+set ./require/values/3/value/path array
+append ./require/values/3/value/path object
+set ./require/values/3/value/path/0/key string "selected"
+set ./require/values/3/type string "array"
+set ./rows object
+set ./rows/op string "root"
+set ./rows/path array
+append ./rows/path object
+set ./rows/path/0/key string "candidates"
+set ./columns array
+append ./columns object
+edit ./columns/0
+set ./id string "selected"
+set ./heading string "SELECTED"
+set ./value object
+set ./value/op string "if"
+set ./value/condition object
+set ./value/condition/op string "any"
+set ./value/condition/input object
+set ./value/condition/input/op string "root"
+set ./value/condition/input/path array
+append ./value/condition/input/path object
+set ./value/condition/input/path/0/key string "selected"
+set ./value/condition/where object
+set ./value/condition/where/op string "eq"
+set ./value/condition/where/left object
+set ./value/condition/where/left/op string "item"
+set ./value/condition/where/left/path array
+append ./value/condition/where/left/path object
+set ./value/condition/where/left/path/0/key string "routeId"
+set ./value/condition/where/right object
+set ./value/condition/where/right/op string "row"
+set ./value/condition/where/right/path array
+append ./value/condition/where/right/path object
+set ./value/condition/where/right/path/0/key string "routeId"
+set ./value/then object
+set ./value/then/op string "literal"
+set ./value/then/value string ">"
+set ./value/else object
+set ./value/else/op string "literal"
+set ./value/else/value string ""
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/1
+set ./id string "endpoint"
+set ./heading string "ENDPOINT"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "endpoint"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/2
+set ./id string "route_class"
+set ./heading string "ROUTE_CLASS"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "routeClass"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/3
+set ./id string "learned_kind"
+set ./heading string "LEARNED_KIND"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "learnedKind"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/4
+set ./id string "next_hop"
+set ./heading string "NEXT_HOP"
+set ./value object
+set ./value/op string "if"
+set ./value/condition object
+set ./value/condition/op string "and"
+set ./value/condition/values array
+append ./value/condition/values object
+set ./value/condition/values/0 object
+set ./value/condition/values/0/op string "eq"
+set ./value/condition/values/0/left object
+set ./value/condition/values/0/left/op string "row"
+set ./value/condition/values/0/left/path array
+append ./value/condition/values/0/left/path object
+set ./value/condition/values/0/left/path/0/key string "nextHop"
+append ./value/condition/values/0/left/path object
+set ./value/condition/values/0/left/path/1/key string "kind"
+set ./value/condition/values/0/right object
+set ./value/condition/values/0/right/op string "literal"
+set ./value/condition/values/0/right/value string "local"
+append ./value/condition/values object
+set ./value/condition/values/1 object
+set ./value/condition/values/1/op string "is"
+set ./value/condition/values/1/value object
+set ./value/condition/values/1/value/op string "row"
+set ./value/condition/values/1/value/path array
+append ./value/condition/values/1/value/path object
+set ./value/condition/values/1/value/path/0/key string "nextHop"
+append ./value/condition/values/1/value/path object
+set ./value/condition/values/1/value/path/1/key string "bindingId"
+set ./value/condition/values/1/type string "string"
+set ./value/then object
+set ./value/then/op string "literal"
+set ./value/then/value string "local"
+set ./value/else object
+set ./value/else/op string "if"
+set ./value/else/condition object
+set ./value/else/condition/op string "and"
+set ./value/else/condition/values array
+append ./value/else/condition/values object
+set ./value/else/condition/values/0 object
+set ./value/else/condition/values/0/op string "eq"
+set ./value/else/condition/values/0/left object
+set ./value/else/condition/values/0/left/op string "row"
+set ./value/else/condition/values/0/left/path array
+append ./value/else/condition/values/0/left/path object
+set ./value/else/condition/values/0/left/path/0/key string "nextHop"
+append ./value/else/condition/values/0/left/path object
+set ./value/else/condition/values/0/left/path/1/key string "kind"
+set ./value/else/condition/values/0/right object
+set ./value/else/condition/values/0/right/op string "literal"
+set ./value/else/condition/values/0/right/value string "session"
+append ./value/else/condition/values object
+set ./value/else/condition/values/1 object
+set ./value/else/condition/values/1/op string "is"
+set ./value/else/condition/values/1/value object
+set ./value/else/condition/values/1/value/op string "row"
+set ./value/else/condition/values/1/value/path array
+append ./value/else/condition/values/1/value/path object
+set ./value/else/condition/values/1/value/path/0/key string "nextHop"
+append ./value/else/condition/values/1/value/path object
+set ./value/else/condition/values/1/value/path/1/key string "nodeId"
+set ./value/else/condition/values/1/type string "string"
+append ./value/else/condition/values object
+set ./value/else/condition/values/2 object
+set ./value/else/condition/values/2/op string "is"
+set ./value/else/condition/values/2/value object
+set ./value/else/condition/values/2/value/op string "row"
+set ./value/else/condition/values/2/value/path array
+append ./value/else/condition/values/2/value/path object
+set ./value/else/condition/values/2/value/path/0/key string "nextHop"
+append ./value/else/condition/values/2/value/path object
+set ./value/else/condition/values/2/value/path/1/key string "owningSessionId"
+set ./value/else/condition/values/2/type string "string"
+set ./value/else/then object
+set ./value/else/then/op string "concat"
+set ./value/else/then/values array
+append ./value/else/then/values object
+set ./value/else/then/values/0 object
+set ./value/else/then/values/0/op string "row"
+set ./value/else/then/values/0/path array
+append ./value/else/then/values/0/path object
+set ./value/else/then/values/0/path/0/key string "nextHop"
+append ./value/else/then/values/0/path object
+set ./value/else/then/values/0/path/1/key string "nodeId"
+append ./value/else/then/values object
+set ./value/else/then/values/1 object
+set ./value/else/then/values/1/op string "literal"
+set ./value/else/then/values/1/value string "@"
+append ./value/else/then/values object
+set ./value/else/then/values/2 object
+set ./value/else/then/values/2/op string "row"
+set ./value/else/then/values/2/path array
+append ./value/else/then/values/2/path object
+set ./value/else/then/values/2/path/0/key string "nextHop"
+append ./value/else/then/values/2/path object
+set ./value/else/then/values/2/path/1/key string "owningSessionId"
+set ./value/else/else object
+set ./value/else/else/op string "literal"
+set ./value/else/else/value string ""
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/5
+set ./id string "origin_node"
+set ./heading string "ORIGIN_NODE"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "originNodeId"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/6
+set ./id string "path"
+set ./heading string "PATH"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "path"
+set ./format object
+set ./format/kind string "join"
+set ./format/separator string ">"
+set ./format/fallback string ""
+up
+up
+append ./columns object
+edit ./columns/7
+set ./id string "eligible"
+set ./heading string "ELIGIBLE"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "eligible"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+append ./columns object
+edit ./columns/8
+set ./id string "reason"
+set ./heading string "REASON"
+set ./value object
+set ./value/op string "row"
+set ./value/path array
+append ./value/path object
+set ./value/path/0/key string "selectionReason"
+set ./format object
+set ./format/kind string "plain"
+up
+up
+top
+commit
+save agp.json
+activate
+export-interface agp-interface.json

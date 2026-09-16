@@ -1,0 +1,132 @@
+{
+  "record": "CLI-013",
+  "observed_at_utc": "2026-09-15T23:01:05Z",
+  "status": "passed selected local application acceptance and contributor checks",
+  "baseline_cli_revision": "543de9bb666b6ab4be45b9b069bf855d3771de80",
+  "upstream_agp_revision": "da1a03a370f522bfb2a3afc66fb781b295cb6af7",
+  "implementation_identity": {
+    "source_files": "source.sha256",
+    "release_binary": "release-binary.sha256",
+    "state_at_verification": "Local uncommitted implementation over the measured baseline; no new hosted CI or deployment claim."
+  },
+  "toolchain": {
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)"
+  },
+  "checks": [
+    {
+      "name": "clippy-normal",
+      "command": "cargo clippy --locked --all-targets -- -D warnings",
+      "exit_code": 0,
+      "log": "clippy-normal.log"
+    },
+    {
+      "name": "clippy-instrumented",
+      "command": "cargo clippy --locked --all-features --all-targets -- -D warnings",
+      "exit_code": 0,
+      "log": "clippy-instrumented.log"
+    },
+    {
+      "name": "clippy-scaffold",
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo clippy --locked --manifest-path tools/scaffold/Cargo.toml --all-targets -- -D warnings",
+      "exit_code": 0,
+      "log": "clippy-scaffold.log"
+    },
+    {
+      "name": "tests-normal",
+      "command": "cargo test --locked --all-targets",
+      "exit_code": 0,
+      "log": "tests-normal.log"
+    },
+    {
+      "name": "tests-instrumented",
+      "command": "cargo test --locked --all-features --all-targets",
+      "exit_code": 0,
+      "log": "tests-instrumented.log"
+    },
+    {
+      "name": "format-root",
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "log": "format-root.log"
+    },
+    {
+      "name": "tests-scaffold",
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml",
+      "exit_code": 0,
+      "log": "tests-scaffold.log"
+    },
+    {
+      "name": "scaffold-drift",
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo run --locked --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "log": "scaffold-drift.log"
+    },
+    {
+      "name": "format-scaffold",
+      "command": "cargo fmt --manifest-path tools/scaffold/Cargo.toml -- --check",
+      "exit_code": 0,
+      "log": "format-scaffold.log"
+    },
+    {
+      "name": "build-release",
+      "command": "cargo build --locked --release --bin cli",
+      "exit_code": 0,
+      "log": "build-release.log"
+    },
+    {
+      "name": "guide-replay",
+      "command": "/bin/sh target/output-views/guide-replay.sh (all USE.md sh blocks extracted in document order, with set -eu)",
+      "exit_code": 0,
+      "log": "guide-replay.log"
+    },
+    {
+      "name": "oracle-recheck",
+      "command": "sha256sum -c docs/evidence/output-views/agp-oracle.sha256",
+      "exit_code": 0,
+      "log": "oracle-recheck.log"
+    },
+    {
+      "name": "tests-scaffold-closeout",
+      "command": "CARGO_TARGET_DIR=\"$PWD/target\" cargo test --locked --manifest-path tools/scaffold/Cargo.toml",
+      "exit_code": 0,
+      "log": "tests-scaffold-closeout.log",
+      "reason": "Recheck documentation after completion disposition and verification evidence were added."
+    },
+    {
+      "name": "source-recheck",
+      "command": "sha256sum -c docs/evidence/output-views/source.sha256",
+      "exit_code": 0,
+      "log": "source-recheck.log"
+    }
+  ],
+  "asserted_acceptance": {
+    "contract": "../../output-views/acceptance/TASK.md",
+    "rust_tests": "../../../tests/cli_output_views.rs",
+    "dedicated_tests_passed": 11,
+    "normal_tests_passed": 83,
+    "instrumented_tests_passed": 100,
+    "scaffold_tests_passed": 13,
+    "frozen_table_comparisons": 4,
+    "display_row_oracles": 4,
+    "contextual_recipe_lines": 529,
+    "helper_executables_available_in_native_process_path": 0,
+    "retained_render_assertion": "Checkpoint bytes and revision remain unchanged after removing sources and omitting grants.",
+    "failed_presentation_assertion": "Successful invocation, applied effect, original output, and runtime labels survive; process exits 1 and a compatible view can render without invoking again."
+  },
+  "preservation": {
+    "frozen_oracle_manifest": "agp-oracle.sha256",
+    "tracked_prior_evidence_changes": [],
+    "raw_failures": [
+      "first-native-tests.log",
+      "second-native-tests.log"
+    ],
+    "focused_pass_after_corrections": "third-native-tests.log"
+  },
+  "limits": [
+    "No live AGP endpoint was invoked.",
+    "Plain table parity is limited to the four frozen reference fixtures and the additional asserted edge cases.",
+    "No full jq interpreter, arbitrary hooks, sorting, grouping, themes, or terminal-width truncation is claimed.",
+    "No independent implementation certification, agent-effort savings, hosted CI for these edits, or deployment proof is claimed."
+  ]
+}

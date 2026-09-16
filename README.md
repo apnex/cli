@@ -27,7 +27,17 @@ Explore the included service-catalog specification and call one of its configure
 
 The quota command returns `{"quota":12}` on stdout and labels its simulated result on stderr.\
 [Getting started](docs/GETTING-STARTED.md) takes you from contextual JSON authoring to constructing, exporting, and running your own CLI without manually editing JSON.\
-The [workflow index](docs/README.md#choose-a-workflow) covers schemas, reusable components, connected reads, and agent continuation.
+The [workflow index](docs/README.md#choose-a-workflow) covers schemas, reusable components, connected reads, output views, and agent continuation.
+
+Print AGP's connection view from an included result fixture:
+```sh
+./target/release/cli run --table \
+  --grant-json-read agp.connections docs/output-views/acceptance/fixtures/connections-cases.json \
+  docs/output-views/acceptance/agp.json connections.list
+```
+
+[Output views](docs/output-views/USE.md) are authored and transferred with the CLI specification.\
+Rust performs projection and table rendering without Bash, jq, or column; the original JSON result remains accessible.
 
 ---
 

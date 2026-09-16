@@ -1,6 +1,6 @@
 # Programmable CLI backlog
 
-**Status: CLI-011 strict lint gate is complete; two follow-ups remain parked.**
+**Status: CLI-013 native AGP output views are complete; two follow-ups remain parked.**
 The [board](BOARD.md) proposes ordering and dependencies.
 This record retains findings and their disposition when that ordering changes.
 
@@ -25,9 +25,24 @@ The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns
 
 ---
 
-## Open
+## Closed output views
 
-No selected release or implementation work remains open.
+### CLI-013
+
+| Field | Record |
+|---|---|
+| Finding | Configured verbs expose JSON results but cannot declare reusable table views; AGP supplies concrete connection and route consumers. |
+| Evidence | The [source research](research/command-output-views/README.md) records AGP templates, frozen inputs, and the current CLI delivery boundary. |
+| State | Closed for the selected native AGP view implementation. |
+| Selection | The owner selected rebuilding AGP's views as the first consumer and clarified that Rust must replace Bash and jq at runtime; the [source record](context/cli-013-selection.json) retains both statements. |
+| Selected scope | The [contract](output-views/CONTRACT.md) covers bounded declarative projections, native tables, contextual construction, transfer, direct verbs, and retained-result rendering. |
+| Prerequisites | CLI-003 definitions, CLI-005 transfer/assembly, CLI-006 file reads, CLI-008 direct run, and CLI-011 required checks are complete. |
+| Continuation trigger at selection | Continue the selected implementation through the acceptance journey and required verification. |
+| Closure evidence required | Both AGP views match the frozen references; author/export/import/run works without manual JSON; runtime uses no Bash/jq executable; raw data and effect evidence survive presentation and failures. |
+| Disposition | The [native implementation and results](output-views/RESULTS.md) satisfy all eight acceptance observations, eleven dedicated tests, both full application suites, strict lint, documentation checks, and the literal consumer guide. |
+| State history | Opened after the owner selected the AGP consumer and native runtime; closed after the unchanged oracle, construction/transfer, retained-result recovery, and required checks passed. |
+| Revival trigger | A concrete consumer needs an unsupported projection, format, output mode, or provider; define its expected behavior before expanding the bounded vocabulary. |
+
 CLI-011 retains its earlier hold, development selection, and completed verification below.
 
 ---

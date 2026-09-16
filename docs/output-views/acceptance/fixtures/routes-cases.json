@@ -1,0 +1,54 @@
+{
+  "apiVersion": "agp.management/v1",
+  "kind": "RouteTable",
+  "meta": {
+    "nodeId": "hub.local",
+    "instanceId": "instance-hub-local",
+    "capturedAt": "2026-07-29T06:00:00.000Z",
+    "revision": "42"
+  },
+  "candidates": [
+    {
+      "routeId": "route-local",
+      "endpoint": "hub/health",
+      "routeClass": "local",
+      "originNodeId": "hub.local",
+      "path": ["hub.local"],
+      "nextHop": {
+        "kind": "local",
+        "bindingId": "binding-1"
+      },
+      "eligible": true,
+      "selectionStatus": "selected",
+      "selectionReason": "PREFER_LOCAL"
+    },
+    {
+      "routeId": "route-session",
+      "endpoint": "orders\u001b[2J/submit",
+      "routeClass": "learned",
+      "learnedKind": "direct",
+      "originNodeId": "leaf.alpha",
+      "path": ["leaf.alpha", "hub.local"],
+      "source": {
+        "kind": "session",
+        "owningSessionId": "75c4ae",
+        "advertisingNodeId": "leaf.alpha",
+        "advertisementId": "advertisement-1"
+      },
+      "nextHop": {
+        "kind": "session",
+        "nodeId": "leaf.alpha",
+        "owningSessionId": "75c4ae"
+      },
+      "eligible": false,
+      "selectionStatus": "ineligible",
+      "selectionReason": "SESSION_NOT_ESTABLISHED"
+    }
+  ],
+  "selected": [
+    {
+      "routeId": "route-local",
+      "endpoint": "hub/health"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ The [root README](../README.md) is the short entrance; this index routes to deep
 | Assemble reusable local components | [Components](components/USE.md) | [Assembly](components/CONTRACT.md) | [Component results](components/RESULTS.md) |
 | Attach a granted JSON file read | [Connected reads](connected/USE.md) | [Authority and observations](connected/CONTRACT.md) | [Connected results](connected/RESULTS.md) |
 | Use configured verbs directly | [Run mode](run/USE.md) | [Routing, output, and persistence](run/CONTRACT.md) | [Run results](run/RESULTS.md) |
+| Author reusable tables and project command results | [Output views](output-views/USE.md) | [Native projection and rendering](output-views/CONTRACT.md), [format](output-views/FORMAT.md) | [AGP consumer results](output-views/RESULTS.md) |
 | Prepare another actor to continue | [Reuse](reuse/USE.md) | [Continuation experiment](reuse/CONTRACT.md) | [Fresh-agent trial](reuse/FRESH-ACTOR-TRIAL.md) |
 | Reproduce measured workflow costs | [Comparison](reuse/COMPARISON-USE.md) | [Fixed comparison](reuse/COMPARISON-CONTRACT.md) | [Latest comparison](authoring/IMPORT-RESULTS.md) |
 
@@ -29,6 +30,7 @@ The [root README](../README.md) is the short entrance; this index routes to deep
 | CLI definitions describe nested contexts and scalar command signatures. | Optional parameters, named flags, and arbitrary argument grammars are not implemented. |
 | Explicit mocks can show proposed functionality. | Simulation is labeled; a mock is not an external observation. |
 | A connected command can read a granted local JSON file. | There is no network, executable-hook, or mutation provider; authority is supplied for each process. |
+| Authored views project typed rows and print native Rust tables. | Bounded expressions cover the AGP consumers; sorting, grouping, scripts, themes, and terminal-width truncation are outside this increment. |
 | Components assemble with checked dependencies and isolated state. | Nested assemblies, shared mutable state, and version negotiation need new contracts. |
 | OpenAPI descriptions can be authored as data. | Automatic API command generation and invocation remain held on the [board](BOARD.md#held). |
 | One fresh-agent continuation passed its fixed task. | Comparative agent effort or token savings have not been established. |
@@ -47,6 +49,7 @@ The [root README](../README.md) is the short entrance; this index routes to deep
 | [Resume work](resume-work.md) | How a new contributor or agent recovers the relevant state. |
 | [Scaffold workflow](scaffold-workflow.md) | Regeneration and checking of the layer declaration's views. |
 | [Publication](PUBLISHING.md) | Source distribution and remaining release decisions. |
+| [Output-view research](research/command-output-views/README.md) | Original AGP template research and proposal; the implemented consumer has its own contract and results. |
 
 ---
 

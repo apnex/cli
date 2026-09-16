@@ -9,7 +9,8 @@ The [workspace instructions](../AGENTS.md) govern engineering claims and evidenc
 Use the [getting-started prerequisites](GETTING-STARTED.md#prerequisites).\
 The pinned toolchain is declared in [rust-toolchain.toml](../rust-toolchain.toml), and dependency resolution is retained in both Cargo lockfiles.\
 The Linux terminal test also requires `script` from util-linux.\
-Shell walkthroughs use `jq`; individual advanced guides name additional commands such as `rg`.
+Some earlier shell walkthroughs use `jq`; individual guides name their prerequisites.\
+The native output-view workflow and its Rust tests require no Bash, jq, or column for projection or rendering.
 
 Build the production executable from the repository root:
 ```sh
@@ -35,6 +36,7 @@ Its build output can share the root `target` directory through `CARGO_TARGET_DIR
 | Reusable component composition | [assembly](../src/cli_assembly.rs) |
 | Granted external observations | [JSON file reads](../src/cli_file_read.rs) |
 | Direct commands, help, and completion | [run routes](../src/cli_run_routes.rs), [run frontend](../src/cli_run_frontend.rs) |
+| Authored output views and native tables | [view model](../src/cli_output_view.rs), [expressions](../src/cli_view_expression.rs), [table rendering](../src/cli_table_render.rs), [view frontend](../src/cli_view_frontend.rs) |
 | Acceptance tests and fault scenarios | [tests](../tests/), [test fault controls](../src/storage_faults.rs) |
 | Documentation declarations and rendering | [layer registry](layers.json), [scaffold renderer](../tools/scaffold/src/main.rs) |
 

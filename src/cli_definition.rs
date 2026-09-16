@@ -199,6 +199,12 @@ pub struct CliCommand {
     pub help: String,
     pub parameters: Vec<CliParameter>,
     pub binding: CliBehaviorBinding,
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "deserialize_present_view"
+    )]
+    pub view: Option<String>,
 }
 
 /// A stable context owns local command words and explicit non-parent relationships.
@@ -223,9 +229,27 @@ pub struct CliDefinition {
     #[serde(
         default,
         skip_serializing_if = "Option::is_none",
+        deserialize_with = "deserialize_present_views"
+    )]
+    pub views: Option<BTreeMap<String, crate::cli_output_view::CliOutputView>>,
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
         deserialize_with = "crate::cli_assembly::deserialize_assembly_sources"
     )]
     pub assembly: Option<crate::cli_assembly::CliAssemblySources>,
+}
+
+fn deserialize_present_view<'de, D: serde::Deserializer<'de>>(
+    input: D,
+) -> Result<Option<String>, D::Error> {
+    String::deserialize(input).map(Some)
+}
+
+fn deserialize_present_views<'de, D: serde::Deserializer<'de>>(
+    input: D,
+) -> Result<Option<BTreeMap<String, crate::cli_output_view::CliOutputView>>, D::Error> {
+    BTreeMap::deserialize(input).map(Some)
 }
 
 /// Activation diagnostics identify invalid definition content without changing the active interface.
@@ -300,8 +324,10 @@ impl CliDefinition {
         // Reparse the whole definition as a document to enforce aggregate depth and scalar limits.
         DocumentValue::parse_document(&serde_json::to_string(self).unwrap())?;
         if !matches!(
-            (self.format.as_str(), &self.assembly),
-            ("cli-definition-v1", None) | ("cli-definition-v2", Some(_))
+            (self.format.as_str(), &self.assembly, &self.views),
+            ("cli-definition-v1", None, None)
+                | ("cli-definition-v2", Some(_), None)
+                | ("cli-definition-v3", _, Some(_))
         ) {
             return Err(cli_definition_error(
                 "CLI definition format is unsupported.",
@@ -309,6 +335,17 @@ impl CliDefinition {
         }
         validate_cli_name(&self.id)?;
         validate_cli_help(&self.description)?;
+        if let Some(views) = &self.views {
+            if views.is_empty() || views.len() > 64 {
+                return Err(cli_definition_error(
+                    "CLI requires 1 through 64 output views.",
+                ));
+            }
+            for (id, view) in views {
+                validate_cli_name(id)?;
+                view.validate_output_view()?;
+            }
+        }
         if self.contexts.is_empty() || self.contexts.len() > 128 {
             return Err(authoring_limit_error(
                 "CLI definition requires 1 through 128 contexts.",
@@ -362,6 +399,19 @@ impl CliDefinition {
                 validate_cli_name(word)?;
                 validate_cli_name(&command.id)?;
                 validate_cli_help(&command.help)?;
+                if let Some(view) = &command.view {
+                    validate_cli_name(view)?;
+                    if self
+                        .views
+                        .as_ref()
+                        .is_none_or(|views| !views.contains_key(view))
+                    {
+                        return Err(cli_definition_error(format!(
+                            "CLI command {} references missing output view {view}.",
+                            command.id
+                        )));
+                    }
+                }
                 if !operation_ids.insert(command.id.as_str()) {
                     return Err(cli_definition_error(
                         "CLI stable operation identity is duplicated.",

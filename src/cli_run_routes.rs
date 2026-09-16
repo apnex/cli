@@ -25,12 +25,14 @@ pub enum CliRunTarget {
     },
 }
 
-pub const RUN_CONTROLS: [(&str, &str); 7] = [
+pub const RUN_CONTROLS: [(&str, &str); 9] = [
     (":help", "Describe this context or a command"),
     (":tree", "Print the complete configured verb tree"),
     (":up", "Enter the parent context"),
     (":top", "Return to root"),
     (":status", "Inspect state, grants, and historical outcome"),
+    (":views", "Inspect declared output views"),
+    (":render", "Render the historical result with a named view"),
     (":export", "Create a portable interface export"),
     (":exit", "Close this run"),
 ];

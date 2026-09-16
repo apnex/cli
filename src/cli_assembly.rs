@@ -119,7 +119,10 @@ fn valid_source_digest(digest: &str) -> bool {
 
 fn validate_component_document(component: &CliComponentDocument) -> Result<(), AuthoringError> {
     if component.format != "cli-component-v1"
-        || component.definition.format != "cli-definition-v1"
+        || !matches!(
+            component.definition.format.as_str(),
+            "cli-definition-v1" | "cli-definition-v3"
+        )
         || component.definition.assembly.is_some()
     {
         return Err(cli_assembly_error(
@@ -236,8 +239,19 @@ fn expand_component_sources(
     )]);
     let mut state = BTreeMap::new();
     let mut operations = BTreeSet::new();
+    let mut views = BTreeMap::new();
     for (mount, snapshot) in &sources.components {
         let definition = &snapshot.component.definition;
+        if let Some(component_views) = &definition.views {
+            for (id, view) in component_views {
+                let scoped = format!("{}.{id}", mount.0);
+                if views.insert(scoped.clone(), view.clone()).is_some() {
+                    return Err(component_collision(format!(
+                        "CLI assembled view identity collides: {scoped}"
+                    )));
+                }
+            }
+        }
         let names: BTreeMap<_, _> = definition
             .contexts
             .keys()
@@ -266,6 +280,9 @@ fn expand_component_sources(
                 .collect();
             for command in context.commands.values_mut() {
                 command.id = format!("{}.{}", mount.0, command.id);
+                if let Some(view) = &mut command.view {
+                    *view = format!("{}.{}", mount.0, view);
+                }
                 if !operations.insert(command.id.clone()) {
                     return Err(component_collision(format!(
                         "CLI assembled operation identity collides: {}",
@@ -290,15 +307,23 @@ fn expand_component_sources(
     }
     // Validate the ordinary executable model first, without recursive assembly validation.
     let mut definition = CliDefinition {
-        format: "cli-definition-v1".into(),
+        format: if views.is_empty() {
+            "cli-definition-v1"
+        } else {
+            "cli-definition-v3"
+        }
+        .into(),
         id: id.into(),
         description: description.into(),
         contexts,
         mock_state: DocumentValue::Object(state),
+        views: (!views.is_empty()).then_some(views),
         assembly: None,
     };
     definition.validate_cli_definition()?;
-    definition.format = "cli-definition-v2".into();
+    if definition.views.is_none() {
+        definition.format = "cli-definition-v2".into();
+    }
     definition.assembly = Some(sources.clone());
     DocumentValue::parse_document(&serde_json::to_string(&definition).unwrap())?;
     Ok(definition)

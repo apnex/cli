@@ -1,0 +1,54 @@
+{
+  "apiVersion": "agp.management/v1",
+  "kind": "ConnectionList",
+  "meta": {
+    "nodeId": "hub.local",
+    "instanceId": "instance-hub-local",
+    "capturedAt": "2026-07-29T06:00:00.000Z",
+    "revision": "42"
+  },
+  "items": [
+    {
+      "identityState": "admitted",
+      "sessionId": "75c4ae",
+      "remoteNodeId": "leaf.alpha",
+      "remoteSessionId": "3fa0fa",
+      "direction": "inbound",
+      "state": "Established",
+      "stateSince": "2026-07-29T06:00:00.000Z",
+      "establishedAt": "2026-07-29T05:00:00.000Z",
+      "establishedDurationMs": 3600000,
+      "lastTransition": {
+        "event": "KeepaliveReceived",
+        "from": "Established",
+        "to": "Established",
+        "at": "2026-07-29T06:00:00.000Z",
+        "reasonCode": "KeepaliveReceived"
+      },
+      "timers": [
+        {
+          "name": "hold",
+          "state": "armed",
+          "durationMs": 30000,
+          "remainingMs": 21000,
+          "expiresAt": "2026-07-29T06:00:21.000Z"
+        }
+      ]
+    },
+    {
+      "identityState": "admitted",
+      "sessionId": "bad\u001b[31m\nid",
+      "remoteNodeId": "spoke\u202e.beta",
+      "direction": "inbound",
+      "state": "OpenSent",
+      "stateSince": "now\tlater",
+      "lastTransition": {
+        "event": "WAIT\u0007",
+        "from": "Active",
+        "to": "OpenSent",
+        "at": "now"
+      },
+      "timers": []
+    }
+  ]
+}

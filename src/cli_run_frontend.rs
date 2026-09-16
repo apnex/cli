@@ -9,6 +9,10 @@ use crate::cli_run_routes::{CliRunTarget, RUN_CONTROLS, run_usage_error};
 use crate::cli_run_session::CliRunSession;
 use crate::cli_terminal::compile_cli_terminal_arguments;
 use crate::cli_verb_tree::{cli_binding_label, render_run_verb_tree};
+use crate::cli_view_frontend::{
+    attach_output_presentation, discover_output_views, require_output_view,
+    select_command_output_view,
+};
 use crate::document_value::MAX_RESPONSE_BYTES;
 use crate::terminal_input::{TerminalToken, tokenize_terminal_input};
 use reedline::{
@@ -37,6 +41,8 @@ pub fn run_error_exit(error: &AuthoringError) -> i32 {
         | "INVALID_CLI_ARGUMENTS"
         | "UNKNOWN_CLI_COMMAND"
         | "UNKNOWN_CLI_CONTEXT"
+        | "UNKNOWN_OUTPUT_VIEW"
+        | "OUTPUT_VIEW_REQUIRED"
         | "INVALID_REQUEST" => 2,
         _ => 1,
     }
@@ -76,7 +82,11 @@ fn command_help(session: &CliRunSession, word: &str, command: &CliCommand) -> Va
         CliBehaviorBinding::Unbound { reason } => json!({"reason":reason}),
         _ => Value::Null,
     };
-    json!({"word":word, "id":command.id, "help":command.help, "parameters":command.parameters, "binding":cli_binding_label(&command.binding), "requirement":requirement})
+    let mut result = json!({"word":word, "id":command.id, "help":command.help, "parameters":command.parameters, "binding":cli_binding_label(&command.binding), "requirement":requirement});
+    if let Some(view) = &command.view {
+        result["view"] = json!(view);
+    }
+    result
 }
 
 fn run_help(
@@ -138,6 +148,12 @@ fn run_help(
         if let Some(reason) = command["requirement"]["reason"].as_str() {
             text.push_str(&format!("    {}\n", escape_run_metadata(reason)));
         }
+        if let Some(view) = command["view"].as_str() {
+            text.push_str(&format!(
+                "    Output view: {} (use --table)\n",
+                escape_run_metadata(view)
+            ));
+        }
         if command_word.is_some() {
             for parameter in command["parameters"].as_array().unwrap() {
                 text.push_str(&format!(
@@ -148,7 +164,18 @@ fn run_help(
             }
         }
     }
-    text.push_str("Controls: :help :tree :up :top :status :export <file> :exit\n");
+    text.push_str("Controls:");
+    for (word, _) in RUN_CONTROLS {
+        text.push(' ');
+        text.push_str(word);
+        if word == ":export" {
+            text.push_str(" <file>");
+        }
+        if word == ":render" {
+            text.push_str(" <view>");
+        }
+    }
+    text.push('\n');
     run_view(
         session,
         ":help",
@@ -180,6 +207,36 @@ fn dispatch_run_tokens(
         }
     };
     match first {
+        ":views" => {
+            exact(1)?;
+            return Ok(Some(run_view(
+                session,
+                ":views",
+                discover_output_views(&session.active_interface().definition),
+            )));
+        }
+        ":render" => {
+            exact(2)?;
+            let name = &tokens[1].text;
+            require_output_view(&session.active_interface().definition, name)?;
+            let invocation = session
+                .active_interface()
+                .last_invocation
+                .as_ref()
+                .ok_or_else(|| {
+                    crate::cli_output_view::output_view_error(
+                        "NO_OUTPUT_RESULT",
+                        "There is no retained invocation result to render.",
+                    )
+                })?;
+            let mut response = run_view(
+                session,
+                ":render",
+                json!({"historical":true,"invocation":invocation}),
+            );
+            attach_output_presentation(&session.active_interface().definition, name, &mut response);
+            return Ok(Some(response));
+        }
         ":exit" => {
             exact(1)?;
             return Ok(None);
@@ -252,6 +309,11 @@ fn dispatch_run_tokens(
                 arguments
             };
             let target = format!("{context}/{word}");
+            let view = select_command_output_view(
+                &session.active_interface().definition,
+                &session.active_interface().definition.contexts[&context].commands[&word],
+                &session.output_selection,
+            )?;
             let values = compile_cli_terminal_arguments(session.active_interface(), &target, arguments)
                 .map_err(|mut error| {
                     if error.code == "INVALID_CLI_ARGUMENTS" {
@@ -260,7 +322,15 @@ fn dispatch_run_tokens(
                     error
                 })?;
             let request = run_request(session, "invoke", json!({"command":target,"values":values}));
-            Ok(Some(session.runtime.execute_authoring_request(request)))
+            let mut response = session.runtime.execute_authoring_request(request);
+            if let Some(view) = view {
+                attach_output_presentation(
+                    &session.active_interface().definition,
+                    &view,
+                    &mut response,
+                );
+            }
+            Ok(Some(response))
         }
     }
 }
@@ -290,12 +360,38 @@ pub fn write_run_response(
         errors.flush()?;
         return Ok(run_error_exit(error));
     }
+    let result = response.result.as_ref().expect("Successful result");
+    let presentation_failed = result["presentation"]["status"] == "error";
     if structured {
         output.write_all(&bytes)?;
     } else {
-        let result = response.result.as_ref().expect("Successful result");
         let invocation = &result["invocation"];
-        let text = if let Some(text) = invocation["output_json_text"].as_str() {
+        if result["historical"] == true {
+            writeln!(errors, "[historical] retained result; no command invoked")?;
+        }
+        if invocation["binding"] == "simulated" {
+            writeln!(
+                errors,
+                "[simulated] {} {}",
+                invocation["context"].as_str().unwrap(),
+                invocation["operation_id"].as_str().unwrap()
+            )?;
+            errors.flush()?;
+        }
+        if presentation_failed {
+            let error = &result["presentation"]["error"];
+            writeln!(
+                errors,
+                "{}: {} Invocation outcome is retained; rendering failed. Inspect :status or use :render with a compatible view; do not repeat the invocation to repair its display.",
+                escape_run_metadata(error["code"].as_str().unwrap_or("OUTPUT_VIEW_FAILED")),
+                escape_run_metadata(error["message"].as_str().unwrap_or("Output view failed."))
+            )?;
+            errors.flush()?;
+            return Ok(1);
+        }
+        let text = if let Some(text) = result["presentation"]["table_text"].as_str() {
+            text.to_owned()
+        } else if let Some(text) = invocation["output_json_text"].as_str() {
             format!("{text}\n")
         } else if let Some(text) = result["help_text"]
             .as_str()
@@ -313,19 +409,10 @@ pub fn write_run_response(
         } else {
             text
         };
-        if invocation["binding"] == "simulated" {
-            writeln!(
-                errors,
-                "[simulated] {} {}",
-                invocation["context"].as_str().unwrap(),
-                invocation["operation_id"].as_str().unwrap()
-            )?;
-            errors.flush()?;
-        }
         output.write_all(text.as_bytes())?;
     }
     output.flush()?;
-    Ok(0)
+    Ok(i32::from(presentation_failed))
 }
 
 /// Return exit intent separately from status; every frontend uses this exact dispatch function.

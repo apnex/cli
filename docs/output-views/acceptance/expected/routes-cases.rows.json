@@ -1,0 +1,24 @@
+[
+  {
+    "selected": ">",
+    "endpoint": "hub/health",
+    "route_class": "local",
+    "learned_kind": "",
+    "next_hop": "local",
+    "origin_node": "hub.local",
+    "path": "hub.local",
+    "eligible": "true",
+    "reason": "PREFER_LOCAL"
+  },
+  {
+    "selected": "",
+    "endpoint": "orders [2J/submit",
+    "route_class": "learned",
+    "learned_kind": "direct",
+    "next_hop": "leaf.alpha@75c4ae",
+    "origin_node": "leaf.alpha",
+    "path": "leaf.alpha>hub.local",
+    "eligible": "false",
+    "reason": "SESSION_NOT_ESTABLISHED"
+  }
+]

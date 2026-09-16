@@ -3,6 +3,7 @@
 **Status: implemented within the selected CLI-008 scope; [measured results](RESULTS.md) retain acceptance and limits.**
 The [approval](../context/cli-008-approval.json) fixes direct configured verbs as the user-facing experience.
 The [task](acceptance/TASK.md) defines acceptance independently of the implementation.
+The later [output-view contract](../output-views/CONTRACT.md) adds native table selection and retained-result rendering, with separate [consumer evidence](../output-views/RESULTS.md).
 
 ## Launch and interface
 
@@ -13,7 +14,7 @@ With no command, a terminal receives a contextual REPL and piped input is interp
 Empty piped input prints root help.
 Existing authoring launches remain available.
 
-Options are `--json`, `--session <checkpoint>`, and repeated `--grant-json-read <capability> <file>`.
+Options are `--json`, `--table` or `--view <name>`, `--session <checkpoint>`, and repeated `--grant-json-read <capability> <file>`.
 They occur before the first configured command/context word; `--` ends launcher option parsing.
 `--help` before the specification prints launcher help.
 After the specification, `--help` at a context or immediately after a command requests generated help.
@@ -42,6 +43,8 @@ Control words use a colon, which configured identifiers cannot contain:
 | `:tree` | Entire configured verb tree without the `invoke` prefix |
 | `:up`, `:top` | Navigate the parent or root context |
 | `:status` | Current interface, process grant availability, and historical outcome |
+| `:views` | Declared output views and their definitions |
+| `:render <view>` | Present the retained invocation without calling its provider or changing state |
 | `:export <file>` | Export the active interface through existing create-only publication |
 | `:exit` | Close the command stream or interactive session |
 
@@ -79,7 +82,9 @@ Previous binary/declaration pairs are preserved before changing the embedded inv
 Successful invocations write only the exact JSON result text and a newline to stdout by default.
 Simulated results are labeled on stderr so a mock cannot silently resemble a connected observation.
 Connected output retains its full provenance in the receipt and `--json` output.
-Errors go to stderr with no success payload on stdout.
+Invocation errors go to stderr with no success payload on stdout.
+With `--table` or `--view`, plain stdout contains the native table.\
+Presentation failure after successful invocation preserves that success and exits 1; plain output explains the failure on stderr, while `--json` retains the successful response on stdout with `result.presentation.status: error`.
 Explicit help, tree, and status requests produce their requested views; startup emits no authoring checkpoint dump.
 `--json` emits structured response events with runtime-owned outcome labels, request identity, revision, and errors.
 Generated help and tree views also have structured forms; there is no implicit startup event.
@@ -89,7 +94,7 @@ Human-readable metadata escapes terminal control characters.
 |---|---|
 | 0 | Requested work succeeded, including help and explicitly labeled mocks |
 | 2 | Launcher usage, route, or argument error |
-| 1 | Definition, source, grant, unbound operation, provider, storage, or delivery failure |
+| 1 | Definition, source, grant, unbound operation, provider, storage, presentation, or delivery failure |
 
 Piped and interactive sessions retain a nonzero outcome if any submitted command fails, even if a later command succeeds.
 They continue after ordinary errors to permit correction; uncertain publication or transport failure ends execution.

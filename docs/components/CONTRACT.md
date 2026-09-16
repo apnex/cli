@@ -1,5 +1,8 @@
 # Component assembly contract
 
+The later [output-view contract](../output-views/CONTRACT.md) extends the formats below: a component may contain a plain v3 definition, and an assembly with views produces v3.\
+Assembly scopes view identities and command references by mount while leaving paths into result documents unchanged; assemblies without views retain v2.
+
 **Status: implemented and verified within the selected local scope.**
 The [results](RESULTS.md) retain the application checks and executed walkthrough.
 The [approval](../context/cli-005-assembly-approval.json) selects the [acceptance task](acceptance/TASK.md).

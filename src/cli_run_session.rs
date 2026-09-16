@@ -26,6 +26,7 @@ impl Drop for TemporaryRunDirectory {
 pub struct CliRunSession {
     pub runtime: AuthoringRuntime,
     pub routes: CliRunRoutes,
+    pub output_selection: crate::cli_view_frontend::CliOutputSelection,
     _temporary: Option<TemporaryRunDirectory>,
 }
 
@@ -120,6 +121,7 @@ impl CliRunSession {
         Ok(Self {
             runtime,
             routes,
+            output_selection: crate::cli_view_frontend::CliOutputSelection::default(),
             _temporary: temporary,
         })
     }

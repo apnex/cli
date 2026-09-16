@@ -53,6 +53,7 @@ rg -q UNBOUND_OPERATION "$run_demo/consumer/unbound.stderr"
 ```
 
 Successful invocation output is exact JSON on stdout.
+Choose `--table` for a v3 command's declared output view, or `--view <name>` for a named override; [native output views](../output-views/USE.md) gives the complete AGP author/export/import/run journey without jq.
 Mocks announce `[simulated]` on stderr; an unbound operation exits 1.
 A malformed command or argument exits 2.
 Use `--json` before the command path to receive the full response, including binding and observation metadata; structured errors go to stderr.

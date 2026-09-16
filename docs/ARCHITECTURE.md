@@ -118,6 +118,7 @@ flowchart TD
 | Capability grant | Process authority to use a specific connected capability. | [Connected read authority](connected/CONTRACT.md) |
 | Invocation record | Definition identity, inputs, outcome classification, and any supported observation evidence. | [Invocation and transfer](connected/CONTRACT.md) |
 | Presentation route | A validated path from command words to the same operation contract used by the runtime. | [Direct run mode](run/CONTRACT.md) |
+| Output view | Authored input requirements, row/column expressions, and cell formats interpreted over an existing result. | [Native output views](output-views/CONTRACT.md) |
 
 The [authoring declaration](authoring/operations.json) and its [composition](composition/operations.json) and [constraint](constraints/operations.json) extensions describe the kernel's supported operation surface.\
 The authoring document, accepted baseline, and active CLI definition have separate identities and transitions.\
@@ -142,6 +143,7 @@ flowchart LR
     invocation --> outcomes["Unbound / simulated / observed outcome"]
     dispatch --> checkpoint["Checkpoint with revision and receipt"]
     outcomes --> checkpoint
+    outcomes --> views["Authored projection / native table"]
 ```
 
 ### Authoring and acceptance
@@ -166,6 +168,17 @@ A context-only command changes the run cursor in a stream or terminal session.\
 A qualified invocation resolves an operation without publishing a separate navigation change.\
 One-shot command paths start at root.\
 Command argument text reaches the same typed invocation engine without a second shell expansion.
+
+### Result presentation
+
+Definitions own named output views and command references.\
+Interaction owns their bounded interpretation and native table layout over supplied documents or retained invocation results.\
+Typed projections and display cells remain separate from the original result and its effect evidence.\
+No provider authority is needed to re-render a retained result, and presentation does not publish a new session revision.
+
+The [output-view contract](output-views/CONTRACT.md) specifies expression scopes, exact decimal formatting, limits, and transfer.\
+The same Rust evaluator serves command output, retained-result rendering, and document previews.\
+A failed presentation preserves a successful invocation and directs recovery to its receipt rather than repeating the operation.
 
 ### Persistence and recovery
 
@@ -206,6 +219,7 @@ Local transaction atomicity does not imply atomicity of external effects.
 | Composable reuse | State or command identities collide without rejection or source meaning changes on transfer. | [Component results](components/RESULTS.md) |
 | Bounded external authority | A definition or receipt permits a fresh ungranted read. | [Connected results](connected/RESULTS.md) |
 | Presentation parity | Direct and authoring invocation interpret equivalent commands differently. | [Run results](run/RESULTS.md) |
+| Result fidelity | A view changes original JSON or effect labels, requires a helper executable, or re-rendering invokes a provider. | [Output-view results](output-views/RESULTS.md) |
 | Resumption | A fresh actor cannot complete the original task from the provided artifacts. | [Fresh-agent trial and exposure limits](reuse/FRESH-ACTOR-TRIAL.md) |
 | Reproducible source use | A new consumer needs undocumented local products to build or execute a guide. | [Publication review](publication/REVIEW.md) |
 

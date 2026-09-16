@@ -13,7 +13,7 @@ use programmable_cli::storage_faults::StorageFaultControl;
 use std::io::{self, IsTerminal, Write};
 use std::path::PathBuf;
 
-const LAUNCH_HELP: &str = "cli run <spec.json> [context ... command arguments ...]  (use cli run --help for options)\n\ncli --definition <operations.json> --session <checkpoint> [--create --intent-file <task>] [--compose] [--constraints] [--grant-json-read <capability> <file>] [--machine | --commands]\n\nOmit --create to reopen a saved draft. --create requires original task text in --intent-file.\n--compose enables CLI definition activation, contextual discovery, simulated commands, and declared connected reads.\n--grant-json-read grants one logical capability access to one local JSON file for this process only; repeat for distinct capabilities (at most 32). Requires --compose.\n--constraints enables explicit schema attachment, contextual guidance, validation, and constrained commits.\nUse the same profile when reopening a checkpoint; read grants must be supplied again for fresh connected invocations.\n--machine reads JSON request lines; --commands reads terminal command lines and emits JSON events.\nWithout either flag, a terminal gets interactive editing and other input gets plain command output.\nInside the session, use help to discover operations from the loaded definition.\nCtrl-D closes the session; every acknowledged edit is already checkpointed.\n";
+const LAUNCH_HELP: &str = "cli run <spec.json> [context ... command arguments ...]  (use cli run --help for options)\ncli render [--json] <spec.json> <view> <document.json>  (native document preview)\n\ncli --definition <operations.json> --session <checkpoint> [--create --intent-file <task>] [--compose] [--constraints] [--grant-json-read <capability> <file>] [--machine | --commands]\n\nOmit --create to reopen a saved draft. --create requires original task text in --intent-file.\n--compose enables CLI definition activation, contextual discovery, simulated commands, and declared connected reads.\n--grant-json-read grants one logical capability access to one local JSON file for this process only; repeat for distinct capabilities (at most 32). Requires --compose.\n--constraints enables explicit schema attachment, contextual guidance, validation, and constrained commits.\nUse the same profile when reopening a checkpoint; read grants must be supplied again for fresh connected invocations.\n--machine reads JSON request lines; --commands reads terminal command lines and emits JSON events.\nWithout either flag, a terminal gets interactive editing and other input gets plain command output.\nInside the session, use help to discover operations from the loaded definition.\nCtrl-D closes the session; every acknowledged edit is already checkpointed.\n";
 
 fn launch_authoring() -> Result<i32, AuthoringError> {
     let invalid = || {
@@ -138,6 +138,14 @@ fn launch_authoring() -> Result<i32, AuthoringError> {
 }
 
 fn main() {
+    if std::env::args_os()
+        .nth(1)
+        .is_some_and(|word| word == "render")
+    {
+        std::process::exit(programmable_cli::cli_view_frontend::launch_cli_render(
+            std::env::args_os().skip(2),
+        ));
+    }
     if std::env::args_os().nth(1).is_some_and(|word| word == "run") {
         std::process::exit(programmable_cli::cli_run_launcher::launch_cli_run(
             std::env::args_os().skip(2),
