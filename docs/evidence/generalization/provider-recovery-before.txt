@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running tests/cli_application.rs (target/debug/deps/cli_application-ca814814a6043dfa)
+
+running 1 test
+test http_endpoint_recovery_does_not_replace_an_unrelated_provider_error ... FAILED
+
+failures:
+
+---- http_endpoint_recovery_does_not_replace_an_unrelated_provider_error stdout ----
+
+thread 'http_endpoint_recovery_does_not_replace_an_unrelated_provider_error' (129967) panicked at tests/cli_application.rs:168:5:
+assertion `left == right` failed
+  left: String("OUTPUT_VIEW_REQUIRED")
+ right: "CAPABILITY_NOT_GRANTED"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    http_endpoint_recovery_does_not_replace_an_unrelated_provider_error
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test cli_application`

@@ -1,17 +1,17 @@
 # Programmable CLI backlog
 
-**Status: CLI-015 operator usability and in-shell management configuration is complete; two follow-ups remain parked.**
-The [board](BOARD.md) proposes ordering and dependencies.
+**Status: CLI-016 consumer neutrality is complete; two follow-ups remain parked.**\
+The [board](BOARD.md) proposes ordering and dependencies.\
 This record retains findings and their disposition when that ordering changes.
 
 ## Row contract
 
-Add a record when source intent, an open architectural question, or an observed failure identifies work that is not complete.
-Each record has a stable identifier, a finding, source evidence, state, and an observable reconsideration trigger.
+Add a record when source intent, an open architectural question, or an observed failure identifies work that is not complete.\
+Each record has a stable identifier, a finding, source evidence, state, and an observable reconsideration trigger.\
 The identifiers below are created here; they are local project records, not external issue numbers.
 
-Keep the original finding and evidence when changing a disposition.
-Append the reason and evidence for a state change; do not delete or reuse an identifier.
+Keep the original finding and evidence when changing a disposition.\
+Append the reason and evidence for a state change; do not delete or reuse an identifier.\
 Retain a correction under an explicit correction banner when the original finding was wrong.
 
 | Record state | Meaning | Board state |
@@ -20,8 +20,23 @@ Retain a correction under an explicit correction banner when the original findin
 | Parked | Work is retained outside the proposed sequence until its trigger fires. | Held. |
 | Closed | A cited change or ruling resolves the recorded scope. | Done. |
 
-A trigger returns a record to triage; it does not authorize or automatically resume implementation.
+A trigger returns a record to triage; it does not authorize or automatically resume implementation.\
 The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns the correspondence between these records and board items.
+
+---
+
+## Closed consumer neutrality
+
+### CLI-016
+
+| Field | Record |
+|---|---|
+| Finding | Native application and operator presentation require HTTP setup even for a local mock; HTTP recovery can overwrite an unrelated provider's failure. |
+| Evidence and selection | The [owner instruction](context/cli-016-selection.json) selects generalization for every shared change. The [source audit](native-app/GENERALIZATION.md) bounds the concrete repairs. |
+| State | Closed for the selected boundary and local acceptance. |
+| Prerequisite | CLI-015 provides the existing operator mechanisms. |
+| Closure evidence | [Measured acceptance](native-app/GENERALIZATION.md#measured-acceptance) passes a provider-free authored CLI, alternate endpoint vocabulary and data, provider-specific recovery, a failing domain-leak probe, the shared gates, and existing AGP acceptance. |
+| Remaining limits and triggers | A supported consumer exposing domain assumptions in a shared mechanism reopens this record. Broader provider features require their own concrete consumers; passing fixtures do not establish universal coverage. |
 
 ---
 
@@ -38,6 +53,8 @@ The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns
 | Prerequisites | CLI-014 native application integration is complete. |
 | Closure evidence | [Measured results](operator/RESULTS.md) cover fresh-shell recovery, live endpoint selection/switching, persistence and failure boundaries, structured discovery, existing AGP parity, required checks, and installed use. |
 | Remaining limits and triggers | A concrete consumer needing remote endpoints, authentication, or server mutation requires its own provider contract. A supported input violating selection, persistence, alias fidelity, or recovery guarantees reopens this record. |
+
+---
 
 ## Closed native application integration
 
@@ -56,6 +73,8 @@ The [board-record contract](BOARD.md#the-contract-between-board-and-record) owns
 | State history | Selected by the owner, implemented across CLI and AGP, and closed after local live and installed-terminal acceptance. |
 | Remaining limit | Successful IPv6 transport is unmeasured on this host because loopback IPv6 is disabled; the unavailable transport path is tested explicitly. |
 | Revival trigger | A concrete consumer requires a missing transport, identity context, response projection, or configuration-reuse capability. |
+
+---
 
 ## Closed output views
 
@@ -96,10 +115,10 @@ CLI-011 retains its earlier hold, development selection, and completed verificat
 | Remaining boundary at preparation closeout | No actual release, license selection, configured remote, hosted CI result, or independent verifier assurance is claimed; publication remains CLI-010. |
 | Later update | Decision 0002 under CLI-010 settles MIT licensing after this preparation closeout. |
 
-The earlier statement "No selected work remains open" described the board before this publication request.
+The earlier statement "No selected work remains open" described the board before this publication request.\
 CLI-007 retains its concrete-consumer trigger below.
 
-Correction: the prior status headline said CLI-005 was the latest closed item and connected hooks remained parked after the CLI-006 record had already closed its local read scope.
+Correction: the prior status headline said CLI-005 was the latest closed item and connected hooks remained parked after the CLI-006 record had already closed its local read scope.\
 The corrected headline above follows the durable rows; broader providers remain unselected.
 
 ---

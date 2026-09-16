@@ -199,11 +199,12 @@ Mocks retain simulation labels through presentation, receipts, and export.\
 Connected operations use authority granted outside the imported definition.\
 The selected native JSON read provider pins a parent directory and reads bounded regular-file bytes through an explicit process grant.
 
-Native applications can also grant bounded JSON GET reads from exact loopback HTTP resources.
-An [application profile](native-app/USE.md) supplies capability paths, response requirements, endpoint options, navigation aliases, and output preferences.
-The consumer embeds data and a shared launcher entry point; dispatch, completion, HTTP transport, and rendering remain kernel mechanisms.
-An optional [operator profile](operator/CONTRACT.md) supplies validated alias metadata and context-listing words for compact discovery.
-Shared endpoint controls select process authority and explicitly save local application preferences; portable interface exports and session checkpoints carry neither that selection nor its authority.
+Native applications can also grant bounded JSON GET reads from exact loopback HTTP resources.\
+An [application profile](native-app/USE.md) supplies capability paths, response requirements, endpoint options, navigation aliases, and output preferences.\
+The consumer embeds data and a shared launcher entry point; dispatch, completion, HTTP transport, and rendering remain kernel mechanisms.\
+An optional [operator profile](operator/CONTRACT.md) supplies validated alias metadata and context-listing words for compact discovery.\
+Operator presentation works without a provider; the [platform application](native-app/examples/platform/README.md) authors and runs a local mock with no HTTP configuration.\
+When optional HTTP configuration is supplied, shared endpoint controls select process authority and explicitly save local application preferences; portable interface exports and session checkpoints carry neither that selection nor its authority.\
 The profile is process configuration and is not part of a persisted definition's identity or authority.
 
 A fresh connected call requires a current grant.\
@@ -254,7 +255,7 @@ The [publication review](publication/REVIEW.md) examines every mission-kit axiom
 It does not claim blanket axiom conformance or replace independent verification with an author's own review.
 
 Correction retained from the earlier architecture: the A5 statement "application parity remains untested" was withdrawn after the retained application comparisons were checked.\
-The [run results](run/RESULTS.md) and earlier linked results carry the tested local scopes; general remote and mutating providers remain untested.
+The [run results](run/RESULTS.md) and earlier linked results carry the tested local scopes; general remote and mutating providers remain untested.\
 The selected [native AGP integration](native-app/CONTRACT.md) adds a separate local live-suite acceptance boundary.
 
 ---

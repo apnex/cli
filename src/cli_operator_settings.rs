@@ -104,7 +104,6 @@ pub enum CliEndpointSource {
 
 /// Local management settings are process-owned; only an explicit save updates the user's file.
 pub struct CliOperatorSettings {
-    pub profile: CliOperatorProfile,
     pub endpoint: Option<String>,
     pub source: CliEndpointSource,
     pub http: CliHttpLaunchProfile,
@@ -170,7 +169,6 @@ impl CliOperatorSettings {
     /// Load saved preferences without performing a request; explicit launch selection takes precedence.
     pub fn open_operator_settings(
         application: &str,
-        profile: CliOperatorProfile,
         http: CliHttpLaunchProfile,
         path: Option<PathBuf>,
         selected: Option<(String, CliEndpointSource)>,
@@ -200,7 +198,6 @@ impl CliOperatorSettings {
             None => (None, CliEndpointSource::Unconfigured),
         };
         Ok(Self {
-            profile,
             endpoint,
             source,
             http,

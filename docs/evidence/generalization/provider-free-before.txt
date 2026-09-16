@@ -1,0 +1,25 @@
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.77s
+     Running tests/cli_application.rs (target/debug/deps/cli_application-ca814814a6043dfa)
+
+running 1 test
+test provider_free_operator_application_uses_authored_mock_commands_without_endpoint_setup ... FAILED
+
+failures:
+
+---- provider_free_operator_application_uses_authored_mock_commands_without_endpoint_setup stdout ----
+
+thread 'provider_free_operator_application_uses_authored_mock_commands_without_endpoint_setup' (129948) panicked at tests/cli_application.rs:555:5:
+assertion `left == right` failed: stdout= stderr=INVALID_RUN_COMMAND: Invalid application profile: missing field `http` at line 1 column 269 Recovery: Use :help for available contexts, commands, and ordered arguments.
+
+  left: Some(2)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    provider_free_operator_application_uses_authored_mock_commands_without_endpoint_setup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.27s
+
+error: test failed, to rerun pass `--test cli_application`

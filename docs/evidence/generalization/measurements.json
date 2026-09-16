@@ -1,0 +1,52 @@
+{
+  "recordedAt": "2026-09-16T02:43:57.534Z",
+  "cliBaseline": "8979faac5d5e6ff4c6a124eb1d74af93566e4ebb",
+  "agpBaseline": "a430cef9bd29a6e2e877be3a0776039b10913c52",
+  "cliSourceManifest": "source.sha256",
+  "consumerSourceManifest": "agp-source.sha256",
+  "consumerFilesUnchangedFromBaseline": true,
+  "installedBinary": {
+    "path": "/home/apnex/.local/bin/agp",
+    "sha256": "428be053808f9c997cf405639b4f1a3171f694440e354d12daf7d87f876b2850"
+  },
+  "kernelReleaseSha256": "349a476e0241da6354b976936f7d0207cccabb2fb3786aa702883b5801043296",
+  "userDefaultAbsentBeforeAndAfterInstalledJourney": true,
+  "tests": {
+    "normal": 105,
+    "instrumented": 122,
+    "scaffold": 13,
+    "agpNative": 6,
+    "agpE2e": 12
+  },
+  "platformGuide": {
+    "directory": "/home/apnex/taceng/cli/target/platform-app-5znjHu",
+    "constructionExit": 0,
+    "terminal": {
+      "code": 0,
+      "signal": null,
+      "stage": 7
+    },
+    "reopenExit": 0,
+    "shellBlocks": 4,
+    "interactiveCommands": 7
+  },
+  "sourceScan": {
+    "files": 40,
+    "consumerDataMatches": 0,
+    "patternRecord": "consumer-data-scan.json"
+  },
+  "sourceGuard": {
+    "source": "src/lib.rs",
+    "originalSha256": "02a5de1893803740ac4b0f121f28db9b8f413bc671df5670c6feca4e52a3aa39",
+    "appliedSha256": "1148c732593a2916e078abf59000de39385af8aca6023e7c8dcdbebc16f816cd",
+    "exit": 101,
+    "restoredSha256": "02a5de1893803740ac4b0f121f28db9b8f413bc671df5670c6feca4e52a3aa39"
+  },
+  "claims": {
+    "hostedCi": false,
+    "productionDeployment": false,
+    "independentReview": false,
+    "successfulIPv6": false,
+    "secondDeployedConsumer": false
+  }
+}

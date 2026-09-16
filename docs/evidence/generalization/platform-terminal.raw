@@ -1,0 +1,29 @@
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [/][96m> [35m[0m[0m[37mservices[0m78[?25h[J
+Commands: inspect, restart, scale. Use help for details.
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m[37minspect[0m78[?25h[J
+[simulated] services services.inspect
+{"name":"api","replicas":2}
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m[37mscale 5[0m78[?25h[J
+[simulated] services services.scale
+{"name":"api","replicas":5}
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m[37minspect[0m78[?25h[J
+[simulated] services services.inspect
+{"name":"api","replicas":5}
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [services][96m> [35m[0m[0m[37mup[0m78[?25h[J
+Commands: version. Use help for details.
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [/][96m> [35m[0m[0m[37mls[0m78[?25h[J
+platform
+
+Contexts
+  deployments   Explore deployment plans and release operations.
+  environments  List and select a simulated working environment.
+  services      Inspect and simulate scaling the api service.
+
+Commands
+  version  Describe this mock platform CLI. [simulated]
+
+ls, show: list this context
+Navigation: <context>, up, top (/)
+Help: ? or help <command>; help --all for full details
+Structure: tree    Leave: exit
+[6n[0m[?25l[1;2H[J[1;1H[92mplatform [/][96m> [35m[0m[0m7[37m[0m8[?25h[0m[?25l[1;2H[J[1;1H[92mplatform [/][96m> [35m[0m[0m[37mexit[0m78[?25h[J

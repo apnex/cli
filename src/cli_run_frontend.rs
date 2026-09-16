@@ -90,9 +90,10 @@ fn command_help(session: &CliRunSession, word: &str, command: &CliCommand) -> Va
         result["view"] = json!(view);
     }
     if let Some(target) = session
+        .routes
         .operator
         .as_ref()
-        .and_then(|settings| settings.profile.command_aliases.get(&command.id))
+        .and_then(|profile| profile.command_aliases.get(&command.id))
     {
         result["alias_of"] = json!(target);
     }
@@ -214,7 +215,7 @@ fn run_help_details(
         }
         text.push('\n');
     }
-    if session.operator.is_some() && !detailed {
+    if session.routes.operator.is_some() && !detailed {
         text = crate::cli_operator_help::render_operator_help(
             session,
             context,
@@ -225,10 +226,12 @@ fn run_help_details(
     }
     let controls: Vec<_> = session.routes.available_run_controls().collect();
     let mut result = json!({"help_text":text,"definition_id":active.definition.id,"context":context,"path":path,"commands":commands,"contexts":children,"controls":controls,"control_aliases":session.routes.control_aliases});
-    if let Some(settings) = &session.operator {
-        result["management"] = settings.operator_settings_status();
+    if let Some(profile) = &session.routes.operator {
         result["context_help"] = json!(context_definition.help);
-        result["operator"] = serde_json::to_value(&settings.profile).unwrap();
+        result["operator"] = serde_json::to_value(profile).unwrap();
+    }
+    if let Some(settings) = &session.endpoint_settings {
+        result["management"] = settings.operator_settings_status();
         result["endpoint_control"] = json!({
             "word": session.routes.preferred_run_control(":endpoint"),
             "actions": crate::cli_operator_settings::CLI_ENDPOINT_ACTIONS.map(|(word, help)| json!({
@@ -249,10 +252,9 @@ fn run_endpoint_control(
 ) -> Result<AuthoringResponse, AuthoringError> {
     let control = session.routes.preferred_run_control(":endpoint");
     let args: Vec<_> = words.iter().map(|token| token.text.as_str()).collect();
-    let settings = session
-        .operator
-        .as_mut()
-        .ok_or_else(|| run_usage_error("Endpoint configuration requires an operator profile."))?;
+    let settings = session.endpoint_settings.as_mut().ok_or_else(|| {
+        run_usage_error("Endpoint configuration requires an HTTP-enabled operator profile.")
+    })?;
     let mut grants = None;
     let message = match args.as_slice() {
         [] | ["show"] | ["--help"] => String::new(),
@@ -408,7 +410,7 @@ fn dispatch_run_tokens(
         }
         ":tree" => {
             let detailed =
-                tokens.len() == 2 && tokens[1].text == "--all" && session.operator.is_some();
+                tokens.len() == 2 && tokens[1].text == "--all" && session.routes.operator.is_some();
             if !detailed {
                 exact(1)?;
             }
@@ -441,7 +443,7 @@ fn dispatch_run_tokens(
         _ => {}
     }
     let help_only = first == ":help";
-    if help_only && session.operator.is_some() && tokens.len() == 2 {
+    if help_only && session.routes.operator.is_some() && tokens.len() == 2 {
         if tokens[1].text == "--all" {
             return Ok(Some(run_help_details(session, &start, None, true)));
         }
@@ -509,8 +511,16 @@ fn dispatch_run_tokens(
                 })?;
             let request = run_request(session, "invoke", json!({"command":target,"values":values}));
             let mut response = session.runtime.execute_authoring_request(request);
-            if let Some(settings) = &session.operator
+            if let Some(settings) = &session.endpoint_settings
                 && settings.endpoint.is_none()
+                && matches!(
+                    &session.active_interface().definition.contexts[&context].commands[&word]
+                        .binding,
+                    CliBehaviorBinding::Connected {
+                        provider: crate::cli_definition::CliConnectedProvider::JsonHttpGet,
+                        ..
+                    }
+                )
                 && let Some(error) = &mut response.error
                 && error.code == "CAPABILITY_NOT_GRANTED"
             {
@@ -551,7 +561,7 @@ pub fn write_run_response(
     if let Some(error) = &response.error {
         if structured {
             errors.write_all(&bytes)?;
-        } else if session.is_some_and(|session| session.operator.is_some()) {
+        } else if session.is_some_and(|session| session.routes.operator.is_some()) {
             writeln!(
                 errors,
                 "{}\n{}",
@@ -642,7 +652,7 @@ pub fn execute_run_tokens(
         Ok(None) => return Ok((0, true)),
         Ok(Some(response)) => response,
         Err(mut error) => {
-            if session.operator.is_some() && error.code == "INVALID_RUN_COMMAND" {
+            if session.routes.operator.is_some() && error.code == "INVALID_RUN_COMMAND" {
                 error.recovery = format!(
                     "Use {} to see this context's commands.",
                     session.routes.preferred_run_control(":help")
@@ -655,7 +665,7 @@ pub fn execute_run_tokens(
         && response.status == "ok"
         && response.operation.as_deref() == Some("enter")
     {
-        if session.operator.is_some() {
+        if session.routes.operator.is_some() {
             response.result.as_mut().unwrap()["help_text"] = json!(
                 crate::cli_operator_help::render_operator_context_hint(session)
             );

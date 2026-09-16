@@ -79,7 +79,7 @@ fn append_cli_context_tree(
         })
         .collect();
     let endpoint_control = routes
-        .filter(|routes| routes.operator.is_some() && context_id == "root")
+        .filter(|routes| routes.endpoint_control && context_id == "root")
         .map(|routes| routes.preferred_run_control(":endpoint"));
     let count = commands.len() + children.len() + usize::from(endpoint_control.is_some());
     for (index, (word, command)) in commands.iter().enumerate() {

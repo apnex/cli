@@ -11,9 +11,9 @@ pub(crate) fn operator_alias_target(
     current: &str,
 ) -> Option<String> {
     let target = session
+        .routes
         .operator
         .as_ref()?
-        .profile
         .command_aliases
         .get(command_id)?;
     for (context, definition) in &session.active_interface().definition.contexts {
@@ -43,7 +43,7 @@ pub(crate) fn render_operator_help(
     children: &[Value],
 ) -> String {
     let active = session.active_interface();
-    let settings = session.operator.as_ref().unwrap();
+    let profile = session.routes.operator.as_ref().unwrap();
     let path = session.routes.context_path(&active.definition, context);
     let mut output = format!(
         "{}{}\n",
@@ -54,15 +54,17 @@ pub(crate) fn render_operator_help(
             format!(" / {path}")
         }
     );
-    let endpoint = settings.endpoint.as_deref().unwrap_or("not configured");
-    writeln!(output, "Endpoint: {endpoint}").unwrap();
     let endpoint_control = session.routes.preferred_run_control(":endpoint");
-    if settings.endpoint.is_none() {
-        writeln!(
-            output,
-            "Use {endpoint_control} set <url> to select an endpoint."
-        )
-        .unwrap();
+    if let Some(settings) = &session.endpoint_settings {
+        let endpoint = settings.endpoint.as_deref().unwrap_or("not configured");
+        writeln!(output, "Endpoint: {endpoint}").unwrap();
+        if settings.endpoint.is_none() {
+            writeln!(
+                output,
+                "Use {endpoint_control} set <url> to select an endpoint."
+            )
+            .unwrap();
+        }
     }
     if let Some(word) = command_word {
         let command = &active.definition.contexts[context].commands[word];
@@ -118,8 +120,7 @@ pub(crate) fn render_operator_help(
         .iter()
         .filter(|command| {
             context != "root"
-                || !settings
-                    .profile
+                || !profile
                     .command_aliases
                     .contains_key(command["id"].as_str().unwrap())
         })
@@ -148,8 +149,7 @@ pub(crate) fn render_operator_help(
             .unwrap();
         }
     }
-    let listing: Vec<_> = settings
-        .profile
+    let listing: Vec<_> = profile
         .context_listing
         .iter()
         .filter(|word| {
@@ -163,11 +163,13 @@ pub(crate) fn render_operator_help(
     if !listing.is_empty() {
         writeln!(output, "\n{}: list this context", listing.join(", ")).unwrap();
     }
-    writeln!(
-        output,
-        "Management: {endpoint_control} show | set <url> | clear | save | load"
-    )
-    .unwrap();
+    if session.endpoint_settings.is_some() {
+        writeln!(
+            output,
+            "Management: {endpoint_control} show | set <url> | clear | save | load"
+        )
+        .unwrap();
+    }
     writeln!(
         output,
         "Navigation: <context>, {}, {}{}",
@@ -220,10 +222,10 @@ pub(crate) fn render_operator_context_hint(session: &CliRunSession) -> String {
         .filter(|word| {
             active.context != "root"
                 || !session
+                    .routes
                     .operator
                     .as_ref()
                     .unwrap()
-                    .profile
                     .command_aliases
                     .contains_key(&context.commands[*word].id)
         })

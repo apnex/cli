@@ -1,0 +1,29 @@
+platform
+
+Contexts
+  deployments   Explore deployment plans and release operations.
+  environments  List and select a simulated working environment.
+  services      Inspect and simulate scaling the api service.
+
+Commands
+  version  Describe this mock platform CLI. [simulated]
+
+ls, show: list this context
+Navigation: <context>, up, top (/)
+Help: ? or help <command>; help --all for full details
+Structure: tree    Leave: exit
+platform
+|-- version [simulated]
+|-- deployments/
+|   |-- apply <release:string> [unbound]
+|   |-- plan <environment:string> [simulated]
+|   `-- releases/
+|       |-- list [simulated]
+|       `-- rollback <version:string> [unbound]
+|-- environments/
+|   |-- list [simulated]
+|   `-- select <name:string> [simulated]
+`-- services/
+    |-- inspect [simulated]
+    |-- restart [unbound]
+    `-- scale <replicas:number> [simulated]

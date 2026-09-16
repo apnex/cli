@@ -99,6 +99,21 @@ Update board and backlog together when work changes state.
 
 ---
 
+## Keep the shared runtime consumer-neutral
+
+Changes published to `apnex/cli` must implement mechanisms reusable by other projects.\
+Project names, domain commands, resource paths, response contracts, table columns, and defaults belong in consumer configuration or consumer code.\
+An optional provider must not become a prerequisite for navigation, discovery, local simulation, or rendering.\
+Keep recovery specific to the capability that failed.
+
+The [source guard](../tests/consumer_neutrality.rs) rejects the first consumer's name in production Rust sources; fixtures, examples, and evidence may name their consumer.\
+The [application tests](../tests/cli_application.rs) additionally exercise an authored platform mock without HTTP, a catalog with different command words and response data, and provider-specific failure recovery.\
+A name scan is insufficient on its own: a reusable change needs a contrasting behavior case that would fail if it assumed the original consumer.\
+Preserve that consumer's integration assertions as well.\
+Broader transport or plugin mechanisms require an actual consumer need, not anticipated universality.
+
+---
+
 ## Propose a change
 
 A useful issue or patch states the concrete task, observed behavior, expected behavior, and a reproduction with sensitive data removed.\

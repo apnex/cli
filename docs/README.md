@@ -16,6 +16,7 @@ The [root README](../README.md) is the short entrance; this index routes to deep
 | Attach a granted JSON file read | [Connected reads](connected/USE.md) | [Authority and observations](connected/CONTRACT.md) | [Connected results](connected/RESULTS.md) |
 | Use configured verbs directly | [Run mode](run/USE.md) | [Routing, output, and persistence](run/CONTRACT.md) | [Run results](run/RESULTS.md) |
 | Package a named CLI with contextual verbs and live HTTP reads | [Native applications](native-app/USE.md) | [Application and provider contract](native-app/CONTRACT.md) | [Measured integration](native-app/RESULTS.md) |
+| Run an authored local prototype without HTTP | [Platform application](native-app/examples/platform/README.md) | [Consumer-neutral boundary](native-app/GENERALIZATION.md) | [Generalization acceptance](native-app/GENERALIZATION.md#measured-acceptance) |
 | Configure management and discover commands inside an operator shell | [In-shell management](native-app/USE.md#configure-management-inside-the-cli) | [Operator contract](operator/CONTRACT.md) | [Measured operator results](operator/RESULTS.md) |
 | Author reusable tables and project command results | [Output views](output-views/USE.md) | [Native projection and rendering](output-views/CONTRACT.md), [format](output-views/FORMAT.md) | [AGP consumer results](output-views/RESULTS.md) |
 | Prepare another actor to continue | [Reuse](reuse/USE.md) | [Continuation experiment](reuse/CONTRACT.md) | [Fresh-agent trial](reuse/FRESH-ACTOR-TRIAL.md) |

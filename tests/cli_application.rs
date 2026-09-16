@@ -90,6 +90,291 @@ fn output_events(output: &Output) -> Vec<Value> {
         .collect()
 }
 
+fn authored_platform_application() -> AuthoringFixture {
+    use authoring_fixture::{AuthoringProcess, repository_path};
+    let fixture = AuthoringFixture::new();
+    let profile = AuthoringFixture::new();
+    for (target, recipe, compose) in [
+        (
+            &fixture,
+            "docs/composition/examples/platform/platform.commands",
+            true,
+        ),
+        (
+            &profile,
+            "docs/native-app/examples/platform/application.commands",
+            false,
+        ),
+    ] {
+        let mut command = target.command(true, true);
+        if compose {
+            command.arg("--compose");
+        }
+        let mut author = AuthoringProcess::spawn(command);
+        for line in fs::read_to_string(repository_path(recipe)).unwrap().lines() {
+            assert!(!line.contains(['{', '}', '[', ']']));
+            let event = author.terminal(line);
+            assert_eq!(event["status"], "ok", "{recipe}: {line}: {event}");
+        }
+        assert!(author.close().success());
+    }
+    fs::rename(
+        fixture.directory.join("platform-definition.json"),
+        fixture.directory.join("spec.json"),
+    )
+    .unwrap();
+    fs::copy(
+        profile.directory.join("platform-application.json"),
+        fixture.directory.join("app.json"),
+    )
+    .unwrap();
+    fixture
+}
+
+#[test]
+fn provider_free_operator_application_uses_authored_mock_commands_without_endpoint_setup() {
+    let fixture = authored_platform_application();
+    let settings = fixture
+        .directory
+        .join("config/programmable-cli/platform/management.json");
+    fs::create_dir_all(settings.parent().unwrap()).unwrap();
+    fs::write(&settings, b"unrelated invalid endpoint settings").unwrap();
+    let result = launch_environment(
+        &fixture,
+        &[],
+        "help\nls\nshow\n/\nservices\nhelp\ntree\nexit\n",
+        &[("CATALOG_TEST_URL", "invalid")],
+    );
+    code(&result, 0);
+    let text = String::from_utf8_lossy(&result.stdout);
+    for irrelevant in ["Endpoint:", ":endpoint", "management", "--config"] {
+        assert!(!text.contains(irrelevant), "{text}");
+    }
+    assert!(text.contains("[simulated]"));
+    assert!(text.contains("[unbound]"));
+    let result = launch(
+        &fixture,
+        &["--events", "--session", "run.json"],
+        "help\nservices\ninspect\nscale 5\ninspect\nup\n:export portable.json\nexit\n",
+    );
+    code(&result, 0);
+    let events = output_events(&result);
+    assert!(events.iter().all(|event| event["status"] == "ok"));
+    let help = &events[0]["result"];
+    assert!(help.get("operator").is_some());
+    assert!(help.get("management").is_none());
+    assert!(help.get("endpoint_control").is_none());
+    assert!(
+        !help["controls"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|control| control[0] == ":endpoint")
+    );
+    let reads: Vec<_> = events
+        .iter()
+        .filter(|event| event["operation"] == "invoke")
+        .collect();
+    assert_eq!(reads.len(), 3);
+    for (event, replicas) in reads.iter().zip([2, 5, 5]) {
+        let document: Value = serde_json::from_str(
+            event["result"]["invocation"]["output_json_text"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        assert_eq!(document["replicas"], replicas);
+        assert_eq!(document["name"], "api");
+    }
+    let resumed = launch(
+        &fixture,
+        &["--session", "run.json", "--events", "services", "inspect"],
+        "",
+    );
+    code(&resumed, 0);
+    let value: Value = serde_json::from_str(
+        output_events(&resumed)[0]["result"]["invocation"]["output_json_text"]
+            .as_str()
+            .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(value["replicas"], 5);
+    assert_eq!(
+        fs::read(&settings).unwrap(),
+        b"unrelated invalid endpoint settings"
+    );
+    code(
+        &launch(&fixture, &["--config", "unused.json", "help"], ""),
+        2,
+    );
+    code(&launch(&fixture, &[":endpoint", "save"], ""), 2);
+    assert!(!fixture.directory.join("unused.json").exists());
+}
+
+#[test]
+fn http_endpoint_recovery_does_not_replace_an_unrelated_provider_error() {
+    let fixture = operator_fixture();
+    let mut definition = specification();
+    definition["contexts"]["root"]["commands"]["local"] = json!({
+        "id":"catalog.local", "help":"Read a local file.", "parameters":[],
+        "binding":{"kind":"connected","provider":"json-file-read-v1","capability":"catalog.local"}
+    });
+    fs::write(fixture.directory.join("spec.json"), definition.to_string()).unwrap();
+    let result = launch(&fixture, &["--events", "--json", "local"], "");
+    code(&result, 2);
+    let event: Value = serde_json::from_slice(&result.stderr).unwrap();
+    assert_eq!(event["error"]["code"], "CAPABILITY_NOT_GRANTED");
+    let error = event["error"].to_string();
+    assert!(error.contains("catalog.local"), "{error}");
+    assert!(!error.contains("management set"), "{error}");
+    assert!(!error.contains("endpoint"), "{error}");
+}
+
+#[test]
+fn configured_http_application_owns_its_words_paths_requirements_and_table_cells() {
+    let fixture = operator_fixture();
+    let mut application: Value =
+        serde_json::from_slice(&fs::read(fixture.directory.join("app.json")).unwrap()).unwrap();
+    application["control_aliases"] = json!({"guide":":help","back":":up","root":":top","outline":":tree","quit":":exit","remote":":endpoint"});
+    application["operator"]["context_listing"] = json!(["browse"]);
+    application["http"]["option"] = json!("--server");
+    application["http"]["environment"] = json!("INVENTORY_TEST_URL");
+    application["http"]["resources"]["catalog.read"]["path"] = json!("/inventory/books");
+    application["http"]["resources"]["catalog.read"]["require"]["right"]["value"] =
+        json!("Inventory");
+    let mut definition = specification();
+    definition["views"]["items"]["columns"][0]["heading"] = json!("BOOK");
+    definition["views"]["items"]["columns"][0]["value"]["path"][0]["key"] = json!("title");
+    let commands = definition["contexts"]["catalog"]["commands"]
+        .as_object_mut()
+        .unwrap();
+    let command = commands.remove("show").unwrap();
+    commands.insert("fetch".into(), command);
+    fs::write(fixture.directory.join("spec.json"), definition.to_string()).unwrap();
+    fs::write(fixture.directory.join("app.json"), application.to_string()).unwrap();
+    let body = br#"{"kind":"Inventory","items":[{"title":"Rust Handbook"}]}"#;
+    let (url, server) = serve_listener_path(
+        TcpListener::bind("127.0.0.1:0").unwrap(),
+        "/inventory/books",
+        vec![
+            (200, body.to_vec()),
+            (200, body.to_vec()),
+            (200, body.to_vec()),
+        ],
+    );
+    let help = launch(&fixture, &["guide"], "");
+    code(&help, 0);
+    let help = String::from_utf8_lossy(&help.stdout);
+    for own_word in [
+        "remote set <url>",
+        "browse: list this context",
+        "back, root",
+        "outline",
+        "quit",
+    ] {
+        assert!(help.contains(own_word), "{help}");
+    }
+    let result = launch(
+        &fixture,
+        &[],
+        &format!("remote set {url}\nremote save\nbrowse\ncatalog\nfetch\nback\noutline\nquit\n"),
+    );
+    code(&result, 0);
+    assert!(String::from_utf8_lossy(&result.stdout).contains("BOOK\nRust Handbook\n"));
+    let resumed = launch(&fixture, &["catalog", "fetch", "--json"], "");
+    code(&resumed, 0);
+    assert_eq!(
+        serde_json::from_slice::<Value>(&resumed.stdout).unwrap(),
+        serde_json::from_slice::<Value>(body).unwrap()
+    );
+    let option = launch_environment(
+        &fixture,
+        &["--server", &url, "catalog", "fetch"],
+        "",
+        &[("INVENTORY_TEST_URL", "invalid")],
+    );
+    code(&option, 0);
+    assert_eq!(option.stdout, b"BOOK\nRust Handbook\n");
+    server.join().unwrap();
+}
+
+#[test]
+fn optional_http_configuration_preserves_capability_validation_and_control_discovery() {
+    use programmable_cli::authoring_protocol::SessionRevision;
+    use programmable_cli::cli_definition::CliDefinition;
+    use programmable_cli::cli_interface::{ActiveCliInterface, CliInterfaceOrigin};
+    use programmable_cli::cli_run_completion::CliRunCompleter;
+    use programmable_cli::cli_run_routes::CliRunRoutes;
+    use reedline::Completer;
+
+    let mut application = profile();
+    application.as_object_mut().unwrap().remove("http");
+    let parsed =
+        CliApplicationProfile::parse_application_profile(application.to_string().as_bytes())
+            .unwrap();
+    let missing = parsed
+        .validate_application_definition(specification().to_string().as_bytes())
+        .unwrap_err();
+    assert!(missing.message.contains("HTTP resources must match"));
+    assert!(serde_json::to_value(parsed).unwrap().get("http").is_none());
+
+    let fixture = authored_platform_application();
+    let definition = CliDefinition::parse_cli_definition(
+        &fs::read(fixture.directory.join("spec.json")).unwrap(),
+    )
+    .unwrap();
+    let mut application: Value =
+        serde_json::from_slice(&fs::read(fixture.directory.join("app.json")).unwrap()).unwrap();
+    let parsed =
+        CliApplicationProfile::parse_application_profile(application.to_string().as_bytes())
+            .unwrap();
+    let mut routes = CliRunRoutes::from_cli_definition(&definition).unwrap();
+    routes
+        .configure_operator_routes(&definition, parsed.operator, parsed.http.is_some())
+        .unwrap();
+    routes
+        .configure_control_aliases(&definition, parsed.control_aliases)
+        .unwrap();
+    let active = ActiveCliInterface::initialize_cli_interface(
+        definition,
+        CliInterfaceOrigin {
+            intent_text: "Provider-free completion".into(),
+            revision: SessionRevision(0),
+        },
+    );
+    let mut completer = CliRunCompleter::new_run_completer(active, routes);
+    for line in ["", ":", ":endpoint "] {
+        let suggestions = completer.complete(line, line.len());
+        assert!(!suggestions.suggestions().iter().any(|suggestion| [":endpoint", "set", "save"].contains(&suggestion.value.as_str())), "{line}");
+    }
+    assert!(
+        completer
+            .complete("", 0)
+            .suggestions()
+            .iter()
+            .any(|suggestion| suggestion.value == "/")
+    );
+    application["control_aliases"]["remote"] = json!(":endpoint");
+    fs::write(fixture.directory.join("app.json"), application.to_string()).unwrap();
+    code(&launch(&fixture, &["help"], ""), 2);
+
+    application["control_aliases"]
+        .as_object_mut()
+        .unwrap()
+        .remove("remote");
+    application["control_aliases"]
+        .as_object_mut()
+        .unwrap()
+        .remove("/");
+    application.as_object_mut().unwrap().remove("operator");
+    fs::write(fixture.directory.join("app.json"), application.to_string()).unwrap();
+    let plain = launch(&fixture, &["help"], "");
+    code(&plain, 0);
+    let text = String::from_utf8_lossy(&plain.stdout);
+    assert!(!text.contains("Endpoint:") && !text.contains("--config"));
+    code(&launch(&fixture, &["version"], ""), 0);
+}
+
 #[test]
 fn operator_help_is_compact_while_structured_discovery_and_compatibility_commands_remain_complete()
 {
@@ -297,8 +582,7 @@ fn management_settings_reject_stale_saves_and_invalid_reload_without_destroying_
     let open = || {
         CliOperatorSettings::open_operator_settings(
             "catalog",
-            profile.operator.clone().unwrap(),
-            profile.http.clone(),
+            profile.http.clone().unwrap(),
             Some(path.clone()),
             None,
         )
@@ -387,7 +671,7 @@ fn operator_completion_exposes_root_listing_navigation_and_management_actions() 
         CliDefinition::parse_cli_definition(specification().to_string().as_bytes()).unwrap();
     let mut routes = CliRunRoutes::from_cli_definition(&definition).unwrap();
     routes
-        .configure_operator_routes(&definition, profile.operator)
+        .configure_operator_routes(&definition, profile.operator, profile.http.is_some())
         .unwrap();
     routes
         .configure_control_aliases(&definition, profile.control_aliases)
@@ -486,6 +770,14 @@ fn serve_listener(
     listener: TcpListener,
     responses: Vec<(u16, Vec<u8>)>,
 ) -> (String, thread::JoinHandle<()>) {
+    serve_listener_path(listener, "/v1/items", responses)
+}
+
+fn serve_listener_path(
+    listener: TcpListener,
+    path: &'static str,
+    responses: Vec<(u16, Vec<u8>)>,
+) -> (String, thread::JoinHandle<()>) {
     listener.set_nonblocking(true).unwrap();
     let url = format!("http://{}", listener.local_addr().unwrap());
     let thread = thread::spawn(move || {
@@ -516,7 +808,7 @@ fn serve_listener(
             }
             let request = String::from_utf8(request).unwrap();
             assert!(
-                request.starts_with("GET /v1/items HTTP/1.1\r\n"),
+                request.starts_with(&format!("GET {path} HTTP/1.1\r\n")),
                 "{request}"
             );
             assert!(

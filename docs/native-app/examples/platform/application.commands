@@ -1,0 +1,19 @@
+set /format string cli-application-v1
+set /default_output string json
+set /context_help boolean true
+set /control_aliases object
+set /control_aliases/help string :help
+set /control_aliases/up string :up
+set /control_aliases/top string :top
+set /control_aliases/tree string :tree
+set /control_aliases/exit string :exit
+set /control_aliases/? string :help
+set /control_aliases/~1 string :top
+set /exit_codes object
+set /operator object
+set /operator/command_aliases object
+set /operator/context_listing array
+append /operator/context_listing string ls
+append /operator/context_listing string show
+commit
+save platform-application.json

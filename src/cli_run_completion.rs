@@ -43,7 +43,7 @@ impl Completer for CliRunCompleter {
         let words = if help { &previous[1..] } else { &previous[..] };
         let mut choices = Vec::new();
         if control == Some(":endpoint")
-            && self.routes.operator.is_some()
+            && self.routes.endpoint_control
             && ((previous.len() == 2 && previous[1].text == "clear")
                 || (previous.len() == 3 && previous[1].text == "set"))
         {
@@ -52,7 +52,7 @@ impl Completer for CliRunCompleter {
                 "Save this change for future launches".into(),
             ));
         }
-        if previous.len() == 1 && control == Some(":endpoint") && self.routes.operator.is_some() {
+        if previous.len() == 1 && control == Some(":endpoint") && self.routes.endpoint_control {
             choices.extend(
                 crate::cli_operator_settings::CLI_ENDPOINT_ACTIONS
                     .map(|(word, help)| (word.into(), help.into())),

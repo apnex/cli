@@ -41,6 +41,42 @@ pub struct CliHttpLaunchProfile {
 }
 
 impl CliHttpLaunchProfile {
+    fn validate_http_launch_profile(&self) -> Result<(), AuthoringError> {
+        if self.resources.len() > 32
+            || !self.option.starts_with("--")
+            || self.option.len() < 3
+            || !self.option[2..]
+                .bytes()
+                .all(|b| b.is_ascii_lowercase() || b == b'-')
+            || [
+                "--help",
+                "--json",
+                "--table",
+                "--view",
+                "--events",
+                "--session",
+                "--config",
+            ]
+            .contains(&self.option.as_str())
+            || self.environment.is_empty()
+            || self.environment.len() > 128
+            || !self
+                .environment
+                .bytes()
+                .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b == b'_')
+        {
+            return Err(run_usage_error(
+                "Invalid application HTTP endpoint option/environment or resource limits.",
+            ));
+        }
+        for (capability, resource) in &self.resources {
+            crate::cli_definition::validate_cli_name(capability)?;
+            validate_http_resource_path(&resource.path)?;
+            validate_http_response_requirement(&resource.require)?;
+        }
+        Ok(())
+    }
+
     /// Construct the complete validated HTTP grant set for one selected endpoint, without a request.
     pub fn grants_for_endpoint(
         &self,
@@ -77,7 +113,9 @@ pub struct CliApplicationProfile {
     pub default_output: CliApplicationOutput,
     pub control_aliases: BTreeMap<String, String>,
     pub context_help: bool,
-    pub http: CliHttpLaunchProfile,
+    /// HTTP configuration is optional; local mock applications need no endpoint or settings file.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub http: Option<CliHttpLaunchProfile>,
     pub exit_codes: BTreeMap<String, i32>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub operator: Option<CliOperatorProfile>,
@@ -94,29 +132,6 @@ impl CliApplicationProfile {
         let profile: Self = serde_json::from_str(text)
             .map_err(|error| run_usage_error(format!("Invalid application profile: {error}")))?;
         if profile.format != "cli-application-v1"
-            || profile.http.resources.len() > 32
-            || !profile.http.option.starts_with("--")
-            || profile.http.option.len() < 3
-            || !profile.http.option[2..]
-                .bytes()
-                .all(|b| b.is_ascii_lowercase() || b == b'-')
-            || [
-                "--help",
-                "--json",
-                "--table",
-                "--view",
-                "--events",
-                "--session",
-                "--config",
-            ]
-            .contains(&profile.http.option.as_str())
-            || profile.http.environment.is_empty()
-            || profile.http.environment.len() > 128
-            || !profile
-                .http
-                .environment
-                .bytes()
-                .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b == b'_')
             || profile.exit_codes.len() > 64
             || profile.exit_codes.iter().any(|(key, code)| {
                 key.is_empty()
@@ -126,13 +141,11 @@ impl CliApplicationProfile {
             })
         {
             return Err(run_usage_error(
-                "Invalid application format, endpoint option/environment, limits, or error status mapping.",
+                "Invalid application format or error status mapping.",
             ));
         }
-        for (capability, resource) in &profile.http.resources {
-            crate::cli_definition::validate_cli_name(capability)?;
-            validate_http_resource_path(&resource.path)?;
-            validate_http_response_requirement(&resource.require)?;
+        if let Some(http) = &profile.http {
+            http.validate_http_launch_profile()?;
         }
         Ok(profile)
     }
@@ -147,7 +160,11 @@ impl CliApplicationProfile {
             },
         )?;
         let mut routes = CliRunRoutes::from_cli_definition(&active.definition)?;
-        routes.configure_operator_routes(&active.definition, self.operator.clone())?;
+        routes.configure_operator_routes(
+            &active.definition,
+            self.operator.clone(),
+            self.http.is_some(),
+        )?;
         routes.configure_control_aliases(&active.definition, self.control_aliases.clone())?;
         let required: BTreeSet<_> = active
             .definition
@@ -166,7 +183,13 @@ impl CliApplicationProfile {
                 }
             })
             .collect();
-        if required != self.http.resources.keys().cloned().collect() {
+        if required
+            != self
+                .http
+                .iter()
+                .flat_map(|http| http.resources.keys().cloned())
+                .collect()
+        {
             return Err(run_usage_error(
                 "Application HTTP resources must match the definition's HTTP capabilities exactly.",
             ));
@@ -205,7 +228,11 @@ fn run_application(
                 .ok_or_else(|| run_usage_error(format!("{text} requires a UTF-8 value.")))
         };
         if !literal {
-            if text == profile.http.option {
+            if profile
+                .http
+                .as_ref()
+                .is_some_and(|http| text == http.option)
+            {
                 if endpoint.is_some() {
                     return Err(run_usage_error("Duplicate endpoint option."));
                 }
@@ -239,9 +266,9 @@ fn run_application(
                     continue;
                 }
                 "--config" => {
-                    if config.is_some() || profile.operator.is_none() {
+                    if config.is_some() || profile.operator.is_none() || profile.http.is_none() {
                         return Err(run_usage_error(
-                            "--config requires an operator profile and may appear only once.",
+                            "--config requires an HTTP-enabled operator profile and may appear only once.",
                         ));
                     }
                     let path = value()?;
@@ -272,28 +299,38 @@ fn run_application(
     let explicit_endpoint = endpoint.is_some();
     let endpoint = match endpoint {
         Some(endpoint) => Some(endpoint),
-        None => std::env::var(&profile.http.environment)
-            .map(|value| if value.is_empty() { None } else { Some(value) })
-            .or_else(|error| match error {
-                std::env::VarError::NotPresent => Ok(None),
-                _ => Err(run_usage_error("Endpoint environment must be UTF-8.")),
-            })?,
+        None => match &profile.http {
+            Some(http) => std::env::var(&http.environment)
+                .map(|value| if value.is_empty() { None } else { Some(value) })
+                .or_else(|error| match error {
+                    std::env::VarError::NotPresent => Ok(None),
+                    _ => Err(run_usage_error("Endpoint environment must be UTF-8.")),
+                })?,
+            None => None,
+        },
     };
-    let grants = profile.http.grants_for_endpoint(endpoint.as_deref())?;
+    let grants = profile
+        .http
+        .as_ref()
+        .map(|http| http.grants_for_endpoint(endpoint.as_deref()))
+        .transpose()?
+        .unwrap_or_default();
     let mut session = CliRunSession::open_embedded_cli_run(source, checkpoint.as_deref(), grants)?;
     session.routes.configure_operator_routes(
         &session.active_interface().definition.clone(),
         profile.operator.clone(),
+        profile.http.is_some(),
     )?;
     session.routes.configure_control_aliases(
         &session.active_interface().definition.clone(),
         profile.control_aliases.clone(),
     )?;
-    if let Some(operator) = &profile.operator {
+    if profile.operator.is_some()
+        && let Some(http) = &profile.http
+    {
         let settings = CliOperatorSettings::open_operator_settings(
             &session.active_interface().definition.id,
-            operator.clone(),
-            profile.http.clone(),
+            http.clone(),
             config,
             endpoint.map(|url| {
                 (
@@ -311,18 +348,24 @@ fn run_application(
                 .http
                 .grants_for_endpoint(settings.endpoint.as_deref())?,
         );
-        session.operator = Some(settings);
+        session.endpoint_settings = Some(settings);
     }
     session.context_help = profile.context_help;
-    session.capability_help = Some(format!(
-        "Endpoint: {} <loopback-url> or {}",
-        profile.http.option, profile.http.environment
-    ));
+    session.capability_help = profile.http.as_ref().map(|http| {
+        format!(
+            "Endpoint: {} <loopback-url> or {}",
+            http.option, http.environment
+        )
+    });
+    let endpoint_option = profile
+        .http
+        .as_ref()
+        .map(|http| format!("{} <loopback-url>, ", http.option))
+        .unwrap_or_default();
     session.launch_help = Some(format!(
-        "Options: {} <loopback-url>, --table, --json (raw result), --view <name>, --events (runtime events), --session <file>. Use -- before literal command arguments.",
-        profile.http.option
+        "Options: {endpoint_option}--table, --json (raw result), --view <name>, --events (runtime events), --session <file>. Use -- before literal command arguments."
     ));
-    if session.operator.is_some() {
+    if session.endpoint_settings.is_some() {
         session
             .launch_help
             .as_mut()

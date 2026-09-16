@@ -31,7 +31,7 @@ pub struct CliRunSession {
     pub capability_help: Option<String>,
     pub launch_help: Option<String>,
     pub exit_codes: std::collections::BTreeMap<String, i32>,
-    pub operator: Option<crate::cli_operator_settings::CliOperatorSettings>,
+    pub endpoint_settings: Option<crate::cli_operator_settings::CliOperatorSettings>,
     _temporary: Option<TemporaryRunDirectory>,
 }
 
@@ -172,7 +172,7 @@ impl CliRunSession {
             capability_help: None,
             launch_help: None,
             exit_codes: std::collections::BTreeMap::new(),
-            operator: None,
+            endpoint_settings: None,
             _temporary: temporary,
         })
     }

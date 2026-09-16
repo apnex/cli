@@ -1,6 +1,6 @@
 # Programmable CLI board
 
-**Status: CLI-015 operator usability is complete; fourteen records are done and two follow-ups remain held.**
+**Status: CLI-016 consumer neutrality is complete; fifteen records are done and two follow-ups remain held.**
 
 The owner selected [repository bootstrap](context/cli-010-bootstrap.json) for `apnex/cli`.\
 The owner selected [MIT](BACKLOG.md#decision-0002-use-the-mit-license).\
@@ -55,6 +55,7 @@ The selected repository bootstrap is complete; broader moves retain explicit con
 
 | Record | Candidate | Impact | Principle breach | Board state | Evidence and priority reason |
 |---|---|---|---|---|---|
+| [CLI-016](BACKLOG.md#cli-016) | Separate reusable operator presentation from optional provider setup | 0 | 0 | Done | The [generalization results](native-app/GENERALIZATION.md) verify a provider-free authored application, alternate consumer vocabulary and data, provider-specific recovery, a checked source guard, and unchanged AGP behavior. |
 | [CLI-015](BACKLOG.md#cli-015) | Compact operator help and configure management inside the shell | 0 | 0 | Done | [Measured operator results](operator/RESULTS.md) cover compact discovery, root navigation, saved management settings, recovery, and installed use against live AGP nodes. |
 | [CLI-014](BACKLOG.md#cli-014) | Integrate AGP as a native configured application | 0 | 0 | Done | [Measured integration](native-app/RESULTS.md) covers ten resources, thirty configured commands, native views, live AGP parity, contextual authoring, and an installed terminal workflow. |
 | [CLI-013](BACKLOG.md#cli-013) | Rebuild AGP views with native configurable output | 0 | 0 | Done | [Measured AGP results](output-views/RESULTS.md) establish exact reference tables, contextual construction, transfer, native execution with empty PATH, and recovery that retains original results and effects. |
@@ -95,6 +96,7 @@ Ready means available for selection, not that implementation is already authoriz
 | M11: Author native output views | [CLI-013](BACKLOG.md#cli-013) | Done | CLI-003, CLI-005, CLI-006, CLI-008, CLI-011 | Both AGP views match frozen outputs after contextual construction and transfer; rendering and recovery preserve original results without runtime shell tools. |
 | M12: Integrate the native AGP consumer | [CLI-014](BACKLOG.md#cli-014) | Done | CLI-008, CLI-013 | [Native integration results](native-app/RESULTS.md) cover the full existing management surface, shared mechanisms, original local live suite, and installed contextual use. |
 | M13: Make operator discovery and setup usable | [CLI-015](BACKLOG.md#cli-015) | Done | CLI-014 | [Operator acceptance](operator/RESULTS.md) verifies compact help, root navigation, in-shell management configuration, saved settings, and live reads. |
+| M14: Keep configured applications consumer-neutral | [CLI-016](BACKLOG.md#cli-016) | Done | CLI-015 | [Generalization acceptance](native-app/GENERALIZATION.md) covers provider-free operation, alternate vocabulary, provider-specific recovery, and existing AGP compatibility. |
 
 Arrows below mean prerequisite to dependent move.\
 M3 and M4 are independent after M2; their ordering expresses the proposed emphasis on the self-authoring loop, not a mandatory product lifecycle.

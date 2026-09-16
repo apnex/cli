@@ -1,0 +1,22 @@
+
+running 1 test
+test shared_runtime_contains_no_first_consumer_names ... FAILED
+
+failures:
+
+---- shared_runtime_contains_no_first_consumer_names stdout ----
+
+thread 'shared_runtime_contains_no_first_consumer_names' (132069) panicked at tests/consumer_neutrality.rs:21:13:
+Consumer-specific name in /home/apnex/taceng/cli/src/lib.rs: keep consumer data and dispatch outside the runtime
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    shared_runtime_contains_no_first_consumer_names
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Compiling programmable-cli v0.1.0 (/home/apnex/taceng/cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.28s
+     Running tests/consumer_neutrality.rs (target/debug/deps/consumer_neutrality-3543379724025eaf)
+error: test failed, to rerun pass `--test consumer_neutrality`

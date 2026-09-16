@@ -11,6 +11,7 @@ pub struct CliRunRoutes {
     children: BTreeMap<String, BTreeMap<String, String>>,
     pub(crate) control_aliases: BTreeMap<String, String>,
     pub(crate) operator: Option<crate::cli_operator_settings::CliOperatorProfile>,
+    pub(crate) endpoint_control: bool,
 }
 
 /// Parsing stops at a command so its remaining argument strings stay untouched.
@@ -79,18 +80,21 @@ impl CliRunRoutes {
             children,
             control_aliases: BTreeMap::new(),
             operator: None,
+            endpoint_control: false,
         })
     }
 
-    /// Operator routing is opt-in, validated from the same definition used by execution and help.
+    /// Operator routing is opt-in; endpoint controls additionally require provider settings.
     pub fn configure_operator_routes(
         &mut self,
         definition: &CliDefinition,
         profile: Option<crate::cli_operator_settings::CliOperatorProfile>,
+        endpoint_settings: bool,
     ) -> Result<(), AuthoringError> {
         if let Some(profile) = &profile {
             profile.validate_operator_profile(definition)?;
         }
+        self.endpoint_control = profile.is_some() && endpoint_settings;
         self.operator = profile;
         Ok(())
     }
@@ -99,9 +103,8 @@ impl CliRunRoutes {
         &self,
     ) -> impl Iterator<Item = (&'static str, &'static str)> {
         RUN_CONTROLS.into_iter().chain(
-            self.operator
-                .as_ref()
-                .map(|_| (":endpoint", "Configure the management endpoint")),
+            self.endpoint_control
+                .then_some((":endpoint", "Configure the management endpoint")),
         )
     }
 
